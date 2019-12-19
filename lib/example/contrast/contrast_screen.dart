@@ -206,9 +206,6 @@ class _MultipleContrastScreen extends StatelessWidget {
               colorsMap: colorsList,
             );
           } else {
-            print(
-                "COLOR LIST IS  $colorsList || $index || ${colorsList[index]}");
-
             if (currentState.locked[mdcList[index]] == true)
               return SameAs(
                 selected: mdcList[index],
@@ -279,7 +276,7 @@ class HSLuvSelector2 extends StatelessWidget {
   }
 }
 
-const mdcList = [kPrimary, kSecondary, kBackground, kSurface];
+const mdcList = [kPrimary, kBackground, kSurface];
 
 class ContrastHorizontalPicker extends StatelessWidget {
   const ContrastHorizontalPicker({

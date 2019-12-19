@@ -5,17 +5,19 @@ import 'package:flutter/material.dart';
 import 'circle_percentage_painter.dart';
 
 class CirclePercentageWidget extends StatefulWidget {
-  final String title;
-  final double percent;
-  final double contrastValue;
-  final Color color;
-
-  CirclePercentageWidget({
+  const CirclePercentageWidget({
     this.title = "",
+    this.subtitle = "",
     this.percent = 0.0,
     this.contrastValue = 0.0,
     this.color = Colors.white,
   });
+
+  final String title;
+  final String subtitle;
+  final double percent;
+  final double contrastValue;
+  final Color color;
 
   @override
   State createState() => _CirclePercentageWidgetState();
@@ -67,6 +69,7 @@ class _CirclePercentageWidgetState extends State<CirclePercentageWidget>
     return Column(
       children: [
         Text(widget.title, style: titleStyle),
+        Text(widget.subtitle, style: titleStyle),
         Container(
           width: 48 * ScalingInfo.scaleY,
           height: 48 * ScalingInfo.scaleY,

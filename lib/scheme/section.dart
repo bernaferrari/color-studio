@@ -46,7 +46,7 @@ class ColorSchemeSection extends StatelessWidget {
           ),
           onPressed: () {
             BlocProvider.of<MdcSelectedBloc>(context).add(
-              MDCUpdateAllEvent(colors: getShuffledColors(4)),
+              MDCUpdateAllEvent(colors: getShuffledColors(3)),
             );
           },
         ),

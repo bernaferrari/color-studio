@@ -16,7 +16,6 @@ class ColorBlindnessTheme extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final mappedValues = Map<String, List<ColorWithBlind>>();
 //    final Map<String, Color> mutableMap = Map.from(contrastedList);
 //    mutableMap.removeWhere((String key, Color _) => locked[key] == true);
@@ -37,8 +36,7 @@ class ColorBlindnessTheme extends StatelessWidget {
               groupValue: state,
               backgroundColor: surfaceBlind[i].color,
               colorWithBlindList: [
-                for (String item in mappedValues.keys)
-                  mappedValues[item][i],
+                for (String item in mappedValues.keys) mappedValues[item][i],
               ],
               primaryColor: primaryBlind[i].color,
               onChanged: (int event) {
@@ -139,7 +137,7 @@ class _RadioTile extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: 64,
+                width: 12 + 12.0 * colorWithBlindList.length,
                 child: Stack(
                   children: <Widget>[
                     SizedBox(height: 24),
@@ -170,7 +168,8 @@ class _RadioTile extends StatelessWidget {
                       ),
                   ],
                 ),
-              )
+              ),
+              SizedBox(width: 8),
             ],
           ),
         ),

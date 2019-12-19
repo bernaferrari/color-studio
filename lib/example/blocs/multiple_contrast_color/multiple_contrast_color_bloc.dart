@@ -40,12 +40,12 @@ class MultipleContrastColorBloc
   ) async* {
     if (event is MultipleContrastUpdated) {
       yield* _mapInit(event);
-    } else if (event is MCMoveColor) {
-      yield* _mapColor(event);
     }
   }
 
-  Stream<MultipleContrastColorState> _mapInit(MultipleContrastUpdated load) async* {
+  Stream<MultipleContrastColorState> _mapInit(
+    MultipleContrastUpdated load,
+  ) async* {
     final List<ContrastedColor> loadedColors = <ContrastedColor>[];
 
     for (int i = 0; i < load.colors.length; i++) {
@@ -61,38 +61,5 @@ class MultipleContrastColorBloc
     }
 
     yield MultipleContrastColorLoaded(loadedColors, 0);
-  }
-
-  Stream<MultipleContrastColorState> _mapColor(MCMoveColor load) async* {
-    final loadedState = state as MultipleContrastColorLoaded;
-
-    // this is necessary, else you modify the original list but this change
-    // is gone when you call yield, so it appears the list didn't change.
-    final newList = List<ContrastedColor>.from(loadedState.colorsList);
-    final index = load.index ?? loadedState.selected;
-
-    final initColor = newList[0].rgbColor;
-
-    newList[index] = ContrastedColor(
-      load.color,
-      calculateContrast(
-        load.color,
-        initColor,
-      ),
-    );
-
-    if (index == 0) {
-      for (int i = 1; i < newList.length; i++) {
-        newList[i] = ContrastedColor(
-          newList[i].rgbColor,
-          calculateContrast(
-            newList[i].rgbColor,
-            newList[0].rgbColor,
-          ),
-        );
-      }
-    }
-
-    yield MultipleContrastColorLoaded(newList, index);
   }
 }

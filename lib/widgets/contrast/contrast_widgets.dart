@@ -6,10 +6,12 @@ class ContrastCircleBar extends StatelessWidget {
   const ContrastCircleBar({
     this.contrast = 0.5,
     this.title = "",
+    this.subtitle = "",
   });
 
   final double contrast;
   final String title;
+  final String subtitle;
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +19,7 @@ class ContrastCircleBar extends StatelessWidget {
 
     return CirclePercentageWidget(
       title: title,
+      subtitle: subtitle,
       percent: getNormalised(contrast) / 100,
       contrastValue: contrast,
       color: contrastColor0,

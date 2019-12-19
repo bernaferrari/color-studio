@@ -56,9 +56,9 @@ class ContrastRatioBloc extends Bloc<ContrastRatioEvent, ContrastRatioState> {
     final rgb = load.rgbColorsWithBlindness;
 
     yield ContrastRatioSuccess(contrastValues: [
-      calculateContrast(rgb[kPrimary], rgb[kSecondary]),
       calculateContrast(rgb[kPrimary], rgb[kBackground]),
       calculateContrast(rgb[kPrimary], rgb[kSurface]),
+      calculateContrast(rgb[kBackground], rgb[kSurface]),
     ], elevationValues: [
       for (int i = 0; i < elevationEntriesList.length; i++)
         ColorContrast(

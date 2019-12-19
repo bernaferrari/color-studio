@@ -86,7 +86,7 @@ class RectangularPercentageWidget extends StatefulWidget {
     this.size = 30,
     this.direction = Axis.horizontal,
     this.verticalDirection = VerticalDirection.down,
-    this.borderRadius = 8,
+    this.borderRadius = 4,
     this.borderColor = const Color(0xFFFA7268),
     this.borderWidth = 0.2,
     this.backgroundColor = const Color(0x00FFFFFF),
@@ -149,7 +149,9 @@ class _RectangularPercentageWidgetState
     final Widget progressWidget = Container(
       decoration: BoxDecoration(
         color: widget.progressColor,
-        borderRadius: BorderRadius.circular(widget.borderRadius),
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(widget.borderRadius),
+        ),
       ),
     );
 
@@ -162,14 +164,45 @@ class _RectangularPercentageWidgetState
         height: widget.direction == Axis.horizontal ? widget.size : null,
         decoration: BoxDecoration(
           color: widget.backgroundColor,
-          borderRadius: BorderRadius.circular(widget.borderRadius),
           border: widget.borderWidth == 0
               ? null
               : Border.all(
-                  color: widget.borderColor, width: widget.borderWidth),
+                  color: widget.borderColor,
+                  width: widget.borderWidth,
+                ),
         ),
         child: Stack(
           children: <Widget>[
+            Positioned(
+              right: 0,
+              left: 0,
+              bottom: 75,
+              // 7.0:1 normalized
+              child: Container(
+                height: 1,
+                color: Colors.grey.withOpacity(0.40),
+              ),
+            ),
+            Positioned(
+              right: 0,
+              left: 0,
+              bottom: 43,
+              // 4.5:1 normalized
+              child: Container(
+                height: 1,
+                color: Colors.grey.withOpacity(0.30),
+              ),
+            ),
+            Positioned(
+              right: 0,
+              left: 0,
+              bottom: 25,
+              // 3.0:1 normalized
+              child: Container(
+                height: 1,
+                color: Colors.grey.withOpacity(0.20),
+              ),
+            ),
             Flex(
               direction: widget.direction,
               verticalDirection: widget.verticalDirection,
@@ -184,6 +217,7 @@ class _RectangularPercentageWidgetState
                 )
               ],
             ),
+
           ],
         ),
       ),

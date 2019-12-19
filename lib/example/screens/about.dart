@@ -183,7 +183,7 @@ class ShuffleSection extends StatelessWidget {
     return InkWell(
       onTap: () {
         BlocProvider.of<MdcSelectedBloc>(context).add(
-          MDCUpdateAllEvent(colors: getShuffledColors(4)),
+          MDCUpdateAllEvent(colors: getShuffledColors(3)),
         );
       },
       child: Padding(

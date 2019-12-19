@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:colorstudio/example/contrast/inter_color_with_contrast.dart';
-import 'package:colorstudio/example/contrast/contrast_util.dart';
 import 'package:colorstudio/example/mdc/widgets/container_with_number.dart';
 import 'package:colorstudio/example/util/color_util.dart';
 import 'package:colorstudio/example/util/constants.dart';
 import 'package:colorstudio/example/util/selected.dart';
+import 'package:flutter/material.dart';
 
 import 'util/elevation_overlay.dart';
 import 'widgets/FAProgressBar.dart';
@@ -48,8 +47,8 @@ class ContrastComparison extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           if (backgroundColor.computeLuminance() > kLumContrast) ...[
-            VerticalContrastCompare(ColorSchemeData(kPrimary, primaryColor),
-                ColorSchemeData(kSurface, surfaceColor)),
+//            VerticalContrastCompare(ColorSchemeData(kPrimary, primaryColor),
+//                ColorSchemeData(kSurface, surfaceColor)),
             const SizedBox(height: 16),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -132,7 +131,11 @@ class RowContrastCompare extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Row(
         children: <Widget>[
-          ContainerWithNumber(index.toString(), defaultColor, colorWithContrast.color),
+          ContainerWithNumber(
+            index.toString(),
+            defaultColor,
+            colorWithContrast.color,
+          ),
           Expanded(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -279,73 +282,75 @@ class ContrastProgressBar extends StatelessWidget {
   }
 }
 
-class VerticalContrastCompare extends StatelessWidget {
-  const VerticalContrastCompare(this.first, this.second);
-
-  final ColorSchemeData first;
-  final ColorSchemeData second;
-
-  @override
-  Widget build(BuildContext context) {
-    final double contrast = calculateContrast(first.color, second.color);
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: OutlineButton(
-        onPressed: () {},
-        child: Container(
-          margin: const EdgeInsets.all(16),
-          child: IntrinsicHeight(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  child: Column(
-                    children: <Widget>[
-                      ColorCompareWidget(first, second),
-                      const SizedBox(height: 16),
-                      ColorCompareWidget(second, first),
-                    ],
-                  ),
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      "contrast",
-                      style: Theme.of(context)
-                          .textTheme
-                          .overline
-                          .copyWith(fontSize: 12),
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        text: contrast.toStringAsPrecision(3),
-                        style: Theme.of(context).textTheme.headline,
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: ':1',
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline
-                                .copyWith(fontSize: 18),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(width: 16),
-                ContrastProgressBar(
-                    contrast: contrast, direction: Axis.vertical),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
+//class VerticalContrastCompare extends StatelessWidget {
+//  const VerticalContrastCompare(this.first, this.second);
+//
+//  final ColorSchemeData first;
+//  final ColorSchemeData second;
+//
+//  @override
+//  Widget build(BuildContext context) {
+//    final double contrast = calculateContrast(first.color, second.color);
+//
+//    return Padding(
+//      padding: const EdgeInsets.symmetric(horizontal: 16),
+//      child: OutlineButton(
+//        onPressed: () {},
+//        child: Container(
+//          margin: const EdgeInsets.all(16),
+//          child: IntrinsicHeight(
+//            child: Row(
+//              mainAxisAlignment: MainAxisAlignment.start,
+//              children: <Widget>[
+//                Expanded(
+//                  child: Column(
+//                    children: <Widget>[
+//                      ColorCompareWidget(first, second),
+//                      const SizedBox(height: 16),
+//                      ColorCompareWidget(second, first),
+//                    ],
+//                  ),
+//                ),
+//                Column(
+//                  mainAxisAlignment: MainAxisAlignment.center,
+//                  children: <Widget>[
+//                    Text(
+//                      "contrast",
+//                      style: Theme.of(context)
+//                          .textTheme
+//                          .overline
+//                          .copyWith(fontSize: 12),
+//                    ),
+//                    RichText(
+//                      text: TextSpan(
+//                        text: contrast.toStringAsPrecision(3),
+//                        style: Theme.of(context).textTheme.headline,
+//                        children: <TextSpan>[
+//                          TextSpan(
+//                            text: ':1',
+//                            style: Theme.of(context)
+//                                .textTheme
+//                                .headline
+//                                .copyWith(fontSize: 18),
+//                          ),
+//                        ],
+//                      ),
+//                    ),
+//                  ],
+//                ),
+//                const SizedBox(width: 16),
+//                ContrastProgressBar(
+//                  contrast: contrast,
+//                  direction: Axis.vertical,
+//                ),
+//              ],
+//            ),
+//          ),
+//        ),
+//      ),
+//    );
+//  }
+//}
 
 class ColorCompareWidget extends StatelessWidget {
   const ColorCompareWidget(this.firstData, this.secondData);

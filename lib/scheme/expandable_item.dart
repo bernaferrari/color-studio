@@ -199,12 +199,12 @@ class SameAs extends StatelessWidget {
   }
 
   String sameAs() {
-    if (selected == kSecondary) {
-      return "SAME AS ${kPrimary.toUpperCase()}";
-    } else if (selected == kSurface) {
+    if (selected == kSurface) {
       return "SAME AS ${kBackground.toUpperCase()}";
     } else if (selected == kBackground) {
       return "8% PRIMARY + #121212";
+    } else if (selected == kSecondary) {
+      return "SAME AS ${kPrimary.toUpperCase()}";
     }
     return "Error";
   }

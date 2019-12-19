@@ -45,14 +45,13 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
 
   final initial = {
     kPrimary: const Color(0xffFFCC80),
-    kSecondary: const Color(0xffAA1212),
+//    kSecondary: const Color(0xffAA1212),
     kBackground: const Color(0xff121212),
     kSurface: const Color(0xff131024),
   };
 
   final initialLocked = {
-    kSecondary: true,
-    kSurface: false,
+    kBackground: true,
   };
 
   @override
@@ -99,7 +98,11 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
 
     // Background needs to call [findColor] before Surface does, else
     // Surface will receive the previous Background color.
-    [kBackground, kSurface, kSecondary].forEach((key) {
+    [
+      kBackground,
+      kSurface,
+      /*kSecondary,*/
+    ].forEach((key) {
       // if it is null, Dart throws an exception
       if (lock[key] == true) {
         final updatedColor = findColor(allRgb, key);
@@ -221,12 +224,12 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
   }
 
   Color findColor(Map<String, Color> mappedList, String category) {
-    if (category == kSecondary) {
-      return mappedList[kPrimary];
+    if (category == kBackground) {
+      return blendColorWithBackground(mappedList[kPrimary]);
     } else if (category == kSurface) {
       return mappedList[kBackground];
-    } else if (category == kBackground) {
-      return blendColorWithBackground(mappedList[kPrimary]);
+    } else if (category == kSecondary) {
+      return mappedList[kPrimary];
     }
 
     return const Color(0xffffffff);

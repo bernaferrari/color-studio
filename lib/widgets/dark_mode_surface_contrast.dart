@@ -31,8 +31,16 @@ class DarkModeSurfaceContrast extends StatelessWidget {
               ],
             ),
             const SizedBox(width: 8),
-            for (int i = 0; i < elevationEntriesList.length; i++)
-              _VerticalBar(elevationValues[i], i),
+            Stack(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    for (int i = 0; i < elevationEntriesList.length; i++)
+                      _VerticalBar(elevationValues[i], i),
+                  ],
+                ),
+              ],
+            ),
             const SizedBox(width: 8),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,

@@ -18,17 +18,3 @@ class MultipleContrastUpdated extends MultipleContrastColorEvent {
   @override
   List<Object> get props => colors;
 }
-
-// all classes get C in front of them to differentiate from SliderColorBloc.
-class MCMoveColor extends MultipleContrastColorEvent {
-  const MCMoveColor(this.color, [this.index]);
-
-  final Color color;
-  final int index;
-
-  @override
-  String toString() => "MCMoveColor $color..";
-
-  @override
-  List<Object> get props => [color, index];
-}

@@ -25,22 +25,20 @@ class Home2 extends StatelessWidget {
       final currentState = state as MDCLoadedState;
 
       final primary = currentState.rgbColorsWithBlindness[kPrimary];
-      final secondary = currentState.rgbColorsWithBlindness[kSecondary];
+//      final secondary = currentState.rgbColorsWithBlindness[kSecondary];
       final background = currentState.rgbColorsWithBlindness[kBackground];
       final surface = currentState.rgbColorsWithBlindness[kSurface];
-
-      print("Secundary is $secondary | ${currentState.rgbColorsWithBlindness}");
 
       final colorScheme = (background.computeLuminance() > kLumContrast)
           ? ColorScheme.light(
               primary: primary,
-              secondary: secondary,
+              secondary: primary,
               background: background,
               surface: surface,
             )
           : ColorScheme.dark(
               primary: primary,
-              secondary: secondary,
+              secondary: primary,
               background: background,
               surface: surface,
             );
@@ -134,16 +132,16 @@ class ColorBlindness2 extends StatelessWidget {
     final surfaceHSLuv = HSLuvColor.fromColor(contrastedColors[kBackground]);
     final surfaceColor = surfaceHSLuv.toColor();
 
-    final colorScheme = (surfaceHSLuv.lightness > kLumContrast * 100)
+    final colorScheme = (surfaceHSLuv.lightness > 100 - kLumContrast * 100)
         ? ColorScheme.light(
             primary: contrastedColors[kPrimary],
-            secondary: contrastedColors[kSecondary],
+//            secondary: contrastedColors[kSecondary],
             background: surfaceColor,
             surface: contrastedColors[kSurface],
           )
         : ColorScheme.dark(
             primary: contrastedColors[kPrimary],
-            secondary: contrastedColors[kSecondary],
+//            secondary: contrastedColors[kSecondary],
             background: surfaceColor,
             surface: contrastedColors[kSurface],
           );
@@ -268,7 +266,7 @@ class ContrastRatio2 extends StatelessWidget {
 
     final colorScheme = ColorScheme.dark(
       primary: contrastedColors[kPrimary],
-      secondary: contrastedColors[kSecondary],
+//      secondary: contrastedColors[kSecondary],
       background: surfaceHSLuv.withLightness(10).toColor(),
       surface: contrastedColors[kSurface],
     );
@@ -303,7 +301,9 @@ class ContrastRatio2 extends StatelessWidget {
                       ),
                       onPressed: () {
                         Navigator.pushNamed(
-                            context, "/multiplecontrastcompare");
+                          context,
+                          "/multiplecontrastcompare",
+                        );
                       },
                     ),
                     IconButton(
@@ -321,31 +321,34 @@ class ContrastRatio2 extends StatelessWidget {
                   endIndent: 1,
                   color: colorScheme.onSurface.withOpacity(0.30),
                 ),
-                SizedBox(height: 16),
-                Text(
-                  'PRIMARY',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: colorScheme.onSurface,
-                    fontFamily: 'Lato',
-                    fontWeight: FontWeight.bold,
-                    fontSize: 13,
-                  ),
-                ),
+//                SizedBox(height: 16),
+//                Text(
+//                  "PRIMARY",
+//                  textAlign: TextAlign.center,
+//                  style: TextStyle(
+//                    color: colorScheme.onSurface,
+//                    fontFamily: 'Lato',
+//                    fontWeight: FontWeight.bold,
+//                    fontSize: 13,
+//                  ),
+//                ),
                 SizedBox(height: 16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ContrastCircleBar(
-                      title: kSecondary,
+                      title: kPrimary,
+                      subtitle: kBackground,
                       contrast: currentState.contrastValues[0],
                     ),
                     ContrastCircleBar(
-                      title: kBackground,
+                      title: kPrimary,
+                      subtitle: kSurface,
                       contrast: currentState.contrastValues[1],
                     ),
                     ContrastCircleBar(
-                      title: kSurface,
+                      title: kBackground,
+                      subtitle: kSurface,
                       contrast: currentState.contrastValues[2],
                     ),
                   ],
@@ -353,7 +356,7 @@ class ContrastRatio2 extends StatelessWidget {
                 // surface qualifies as dark mode
                 if (shouldDisplayElevation) ...[
                   Text(
-                    'Surface with elevation',
+                    "Primary / Surface with elevation",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: colorScheme.onSurface,
