@@ -1,0 +1,61 @@
+name: colorstudio
+description: A new Flutter project.
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.6.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  hsluv: ^1.0.4
+  bloc: ^2.0.0
+  flutter_bloc: ^2.1.1
+  equatable: ^1.0.1
+  rxdart: ^0.22.6
+  flutter_feather_icons: ^1.0.3
+  infinite_listview: ^1.0.1+1
+#  url_launcher: ^5.3.0
+  hive: ^1.1.1
+  hive_flutter: ^0.2.1
+  path_provider: ^1.4.5
+
+dev_dependencies:
+  hive_generator: ^0.5.2
+  build_runner: ^1.7.2
+  flutter_launcher_icons: ^0.7.4
+  flutter_test:
+    sdk: flutter
+
+flutter_icons:
+  # unfortunately, this only works without bugs for iOS.
+  # you need to open Android Studio and generate asset if you want a decent Android icon.
+  image_path_android: "assets/full icon.png"
+  image_path_ios: "assets/full icon.png"
+  android: false
+  ios: true
+  adaptive_icon_background: "assets/sample_bg.png" # Android 8+
+  adaptive_icon_foreground: "assets/sample_fg.png" # Android 8+
+
+
+flutter:
+  uses-material-design: true
+
+  fonts:
+    - family: B612Mono
+      fonts:
+        - asset: fonts/B612Mono-Regular.ttf
+          weight: 400
+        - asset: fonts/B612Mono-Bold.ttf
+          weight: 700
