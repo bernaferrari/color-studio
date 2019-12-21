@@ -35,11 +35,11 @@ class _InfoScreenState extends State<InfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: widget.list[0].rgbColor,
       body: Column(
         children: <Widget>[
           Container(
             width: 500,
-            color: widget.list[0].rgbColor,
             padding: const EdgeInsets.only(
                 left: 16.0, right: 16, top: 16, bottom: 12),
             child: CupertinoSlidingSegmentedControl<int>(
@@ -278,7 +278,9 @@ class _InfoScreenState extends State<InfoScreen> {
                 children: <Widget>[
                   Container(
                     decoration: BoxDecoration(
-                        color: color, borderRadius: BorderRadius.circular(4)),
+                      color: color,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
                     padding: const EdgeInsets.all(2),
                     child: Text(
                       "$sign${(valueOrig - valueNew).abs().toStringAsFixed(0)}",

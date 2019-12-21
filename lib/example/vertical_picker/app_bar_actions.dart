@@ -1,11 +1,15 @@
 import 'package:colorstudio/example/util/color_util.dart';
 import 'package:colorstudio/example/util/constants.dart';
+import 'package:colorstudio/example/util/selected.dart';
 import 'package:colorstudio/example/widgets/update_color_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 class ColorSearchButton extends StatelessWidget {
-  const ColorSearchButton({this.color, this.selected});
+  const ColorSearchButton({
+    @required this.color,
+    @required this.selected,
+  });
 
   final Color color;
   final String selected;
@@ -31,6 +35,9 @@ class ColorSearchButton extends StatelessWidget {
           textColor: onSurface,
           onPressed: () {
             showSlidersDialog(context, color, selected);
+          },
+          onLongPress: () {
+            copyToClipboard(context, color.toHexStr());
           },
         ),
       ),

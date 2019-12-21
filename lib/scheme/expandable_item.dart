@@ -1,11 +1,12 @@
 import 'package:colorstudio/example/blocs/blocs.dart';
 import 'package:colorstudio/example/util/constants.dart';
+import 'package:colorstudio/scheme/expandable_header_item.dart';
 import 'package:colorstudio/scheme/expanded_item.dart';
-import 'package:colorstudio/scheme/header_item.dart';
 import 'package:colorstudio/widgets/expanded_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
 class SchemeExpandableItem extends StatefulWidget {
@@ -109,6 +110,13 @@ class _ExpandedAnimated extends StatelessWidget {
       child: Theme(
         data: ThemeData.from(
           colorScheme: scheme,
+          textTheme: TextTheme(
+            button: GoogleFonts.lato(),
+            body1: GoogleFonts.lato(
+              fontWeight: FontWeight.w400,
+              fontSize: 14,
+            ),
+          ),
         ).copyWith(
           buttonTheme: ButtonThemeData(
             shape: RoundedRectangleBorder(
@@ -139,11 +147,13 @@ class SameAs extends StatelessWidget {
     @required this.selected,
     @required this.color,
     @required this.contrast,
+    this.children,
   });
 
   final String selected;
   final Color color;
   final double contrast;
+  final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
@@ -164,12 +174,7 @@ class SameAs extends StatelessWidget {
           SizedBox(height: 16),
           Text(
             sameAs(),
-            style: TextStyle(
-              color: textColor,
-              fontFamily: 'Lato',
-              fontWeight: FontWeight.bold,
-              fontSize: 13,
-            ),
+            style: TextStyle(color: textColor, fontWeight: FontWeight.w600),
           ),
           SizedBox(height: 8),
           OutlineButton.icon(
@@ -190,9 +195,11 @@ class SameAs extends StatelessWidget {
             ),
             label: Text(
               "Manual",
+              style: TextStyle(fontWeight: FontWeight.w700),
             ),
           ),
           SizedBox(height: 8),
+          if (children != null) ...children
         ],
       ),
     );

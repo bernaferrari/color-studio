@@ -10,7 +10,7 @@ import 'package:colorstudio/example/screens/single_color_blindness.dart';
 import 'package:colorstudio/example/util/constants.dart';
 import 'package:colorstudio/example/util/selected.dart';
 
-import 'blindness.dart';
+import '../../color_blindness/list.dart';
 import 'components.dart';
 import 'contrast_compare.dart';
 
@@ -108,7 +108,7 @@ class MDCHome extends StatelessWidget {
                           surfaceColor: surfaceColor,
                           backgroundColor: backgroundColor,
                         ),
-                        ColorBlindnessTheme(
+                        ColorBlindnessList(
                           // it should receive them pure, not the colorblind color.
 //                          primaryColor: pureColors[kPrimary],
 //                          surfaceColor: pureColors[kSurface],

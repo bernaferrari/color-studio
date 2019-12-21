@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:colorstudio/example/vertical_picker/app_bar_actions.dart';
 import 'package:colorstudio/example/widgets/loading_indicator.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../blocs/slider_color/slider_color.dart';
 import '../widgets/color_sliders.dart';
@@ -35,20 +35,30 @@ class MultipleSliders extends StatelessWidget {
             BlocProvider.of<SliderColorBloc>(context).add(MoveHSV(h, s, v));
           });
 
-      return Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 818),
-          child: ListView(
-            shrinkWrap: true,
-            children: <Widget>[
-              wrapInCard(rgb),
-              wrapInCard(hsv),
-              wrapInCard(hsl),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: ColorSearchButton(color: (state as SliderColorLoaded).rgbColor),
-              ),
-            ],
+      final rgbColor = Theme.of(context).colorScheme.primary;
+
+      return Scaffold(
+        appBar: AppBar(
+          title: Text("Multiple Sliders"),
+          centerTitle: false,
+          elevation: 0,
+          backgroundColor: rgbColor,
+          actions: <Widget>[
+            ColorSearchButton(color: rgbColor),
+          ],
+        ),
+        backgroundColor: rgbColor,
+        body: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 818),
+            child: ListView(
+              shrinkWrap: true,
+              children: <Widget>[
+                wrapInCard(rgb),
+                wrapInCard(hsv),
+                wrapInCard(hsl),
+              ],
+            ),
           ),
         ),
       );

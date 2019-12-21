@@ -19,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../util/constants.dart';
 import '../widgets/update_color_dialog.dart';
@@ -74,9 +75,9 @@ class _MultipleContrastScreenState extends State<MultipleContrastScreen> {
       return Theme(
         data: ThemeData.from(
           colorScheme: colorScheme,
-          textTheme: const TextTheme(
-            caption: TextStyle(fontFamily: "B612Mono"),
-            button: TextStyle(fontFamily: "B612Mono"),
+          textTheme: TextTheme(
+            caption: GoogleFonts.b612Mono(),
+            button: GoogleFonts.lato(),
           ),
         ).copyWith(
           buttonTheme: Theme.of(context).buttonTheme.copyWith(
@@ -206,33 +207,146 @@ class _MultipleContrastScreen extends StatelessWidget {
               colorsMap: colorsList,
             );
           } else {
-            if (currentState.locked[mdcList[index]] == true)
-              return SameAs(
-                selected: mdcList[index],
-                color: colorsList[index].rgbColor,
-                contrast: colorsList[index].hsluvColor.lightness,
-              );
-
-            return Container(
-              padding: const EdgeInsets.only(top: 12, bottom: 16),
-              color: colorsList[index].rgbColor,
-              child: Column(
-                children: <Widget>[
-                  _UpperPart(
-                    colorsList[index].rgbColor,
-                    colorsList[0].rgbColor,
-                    colorsList[index].contrast,
-                    index,
-                    colorsList,
-                  ),
-                  _Minimized("HSLuv", index, interListOfLists[index]),
-                ],
-              ),
+            return AnimatedSwitcher(
+              duration: Duration(milliseconds: 500),
+              switchInCurve: Curves.easeInOut,
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                return SizeTransition(child: child, sizeFactor: animation);
+              },
+              child: (currentState.locked[mdcList[index]] == true)
+                  ? SameAs(
+                      selected: mdcList[index],
+                      color: colorsList[index].rgbColor,
+                      contrast: colorsList[index].hsluvColor.lightness,
+                      children: <Widget>[
+                        _ComparisonPart(
+                          colorsList[0].rgbColor,
+                          colorsList[index].contrast,
+                        ),
+                        SizedBox(height: 16),
+                      ],
+                    )
+                  : Container(
+                      padding: const EdgeInsets.only(top: 12, bottom: 16),
+                      color: colorsList[index].rgbColor,
+                      child: Column(
+                        children: <Widget>[
+                          _UpperPart(
+                            colorsList[index].rgbColor,
+                            colorsList[0].rgbColor,
+                            colorsList[index].contrast,
+                            index,
+                            colorsList,
+                          ),
+                          _Minimized("HSLuv", index, interListOfLists[index]),
+                          SizedBox(height: 16),
+                          _ComparisonPart(
+                            colorsList[0].rgbColor,
+                            colorsList[index].contrast,
+                          ),
+                        ],
+                      ),
+                    ),
             );
           }
         },
       );
     });
+  }
+}
+
+class _ComparisonPart extends StatelessWidget {
+  const _ComparisonPart(this.otherColor, this.contrast);
+
+  final Color otherColor;
+  final double contrast;
+
+  @override
+  Widget build(BuildContext context) {
+    final checkIcon = Icon(
+      FeatherIcons.checkCircle,
+      color: otherColor,
+    );
+
+    final removeIcon = Icon(
+      FeatherIcons.xSquare,
+      color: otherColor,
+    );
+
+    final style = TextStyle(
+      fontSize: 10,
+      fontWeight: FontWeight.w500,
+      color: otherColor,
+    );
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Row(
+          children: <Widget>[
+            if (contrast > 7.0) checkIcon else removeIcon,
+            const SizedBox(width: 8),
+            Column(
+              children: <Widget>[
+                Text(
+                  "Optimal",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: otherColor,
+                  ),
+                ),
+                Text("AAA", style: style),
+              ],
+            ),
+          ],
+        ),
+        const SizedBox(width: 48),
+        Row(
+          children: <Widget>[
+            if (contrast > 4.5) checkIcon else removeIcon,
+            const SizedBox(width: 8),
+            Column(
+              children: <Widget>[
+                Text(
+                  "Small",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: otherColor,
+                  ),
+                ),
+                Text("AA", style: style),
+              ],
+            ),
+          ],
+        ),
+        const SizedBox(width: 48),
+        Row(
+          children: <Widget>[
+            if (contrast > 3.0) checkIcon else removeIcon,
+            const SizedBox(width: 8),
+            Column(
+              children: <Widget>[
+                Text(
+                  "Large",
+                  style: TextStyle(
+                    // similar to H6
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: otherColor,
+                  ),
+                ),
+                Text("AA Large", style: style),
+              ],
+            ),
+//            const SizedBox(width: 8),
+//            Icon(
+//              Icons.brightness_4,
+//              color: otherColor,
+//            ),
+          ],
+        ),
+      ],
+    );
   }
 }
 
@@ -321,9 +435,6 @@ class ContrastHorizontalPicker extends StatelessWidget {
   void contrastColorSelected(BuildContext context, Color color) {
     BlocProvider.of<MdcSelectedBloc>(context)
         .add(MDCLoadEvent(currentColor: color, selected: mdcList[index]));
-
-//    BlocProvider.of<MultipleContrastColorBloc>(context)
-//        .add(MCMoveColor(color, index));
   }
 
   @override

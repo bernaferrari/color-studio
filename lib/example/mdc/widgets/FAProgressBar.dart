@@ -180,7 +180,7 @@ class _RectangularPercentageWidgetState
               // 7.0:1 normalized
               child: Container(
                 height: 1,
-                color: Colors.grey.withOpacity(0.40),
+                color: Colors.grey.withOpacity(0.30),
               ),
             ),
             Positioned(
@@ -200,7 +200,7 @@ class _RectangularPercentageWidgetState
               // 3.0:1 normalized
               child: Container(
                 height: 1,
-                color: Colors.grey.withOpacity(0.20),
+                color: Colors.grey.withOpacity(0.30),
               ),
             ),
             Flex(

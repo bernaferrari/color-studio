@@ -15,28 +15,37 @@ class About extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 818),
-        child: ListView(
-          key: const PageStorageKey("about"),
-          shrinkWrap: true,
-          children: const <Widget>[
-            Padding(padding: EdgeInsets.all(4)),
-            TranslucentCard(
-              child: _ContactInfo(),
-            ),
-            TranslucentCard(
-              child: ColorCompare(),
-            ),
-            TranslucentCard(
-              child: ShuffleSection(),
-            ),
-            TranslucentCard(
-              child: GDPR(),
-            ),
-            Padding(padding: EdgeInsets.all(4)),
-          ],
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      appBar: AppBar(
+        title: Text("About"),
+        centerTitle: false,
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        elevation: 0,
+      ),
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 818),
+          child: ListView(
+            key: const PageStorageKey("about"),
+            shrinkWrap: true,
+            children: const <Widget>[
+              Padding(padding: EdgeInsets.all(4)),
+              TranslucentCard(
+                child: _ContactInfo(),
+              ),
+              TranslucentCard(
+                child: ColorCompare(),
+              ),
+              TranslucentCard(
+                child: ShuffleSection(),
+              ),
+              TranslucentCard(
+                child: GDPR(),
+              ),
+              Padding(padding: EdgeInsets.all(4)),
+            ],
+          ),
         ),
       ),
     );

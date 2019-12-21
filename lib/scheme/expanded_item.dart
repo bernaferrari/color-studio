@@ -33,19 +33,18 @@ class SchemeExpandedItem extends StatelessWidget {
             ? ColorScheme.light(primary: color, surface: surface)
             : ColorScheme.dark(primary: color, surface: surface);
 
+        const valuesList = [-5, -1, 0, 1, 5];
+
         final listOfLists = [
-          [
-            for (int i = -10; i < 15; i += 5)
-              luv.withHue((luv.hue + i * 2) % 360),
-          ],
-          [
-            for (int i = -10; i < 15; i += 5)
-              luv.withSaturation(interval(luv.saturation + i, 5.0, 100.0)),
-          ],
-          [
-            for (int i = -10; i < 15; i += 5)
-              luv.withLightness(interval(luv.lightness + i, 5.0, 95.0)),
-          ],
+          valuesList.map((i) => luv.withHue((luv.hue + i * 2) % 360)).toList(),
+          valuesList
+              .map((i) =>
+                  luv.withSaturation(interval(luv.saturation + i, 5.0, 100.0)))
+              .toList(),
+          valuesList
+              .map((i) =>
+                  luv.withLightness(interval(luv.lightness + i, 5.0, 95.0)))
+              .toList(),
         ];
 
         return Theme(

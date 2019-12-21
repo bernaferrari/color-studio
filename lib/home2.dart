@@ -1,17 +1,12 @@
-import 'package:colorstudio/example/widgets/loading_indicator.dart';
+import 'package:colorstudio/color_blindness/screen.dart';
+import 'package:colorstudio/contrast_ratio/screen.dart';
 import 'package:colorstudio/scheme/section.dart';
-import 'package:colorstudio/widgets/contrast/contrast_widgets.dart';
-import 'package:colorstudio/widgets/contrast/scaling_info.dart';
-import 'package:colorstudio/widgets/dark_mode_surface_contrast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:hsluv/hsluvcolor.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'example/blocs/blocs.dart';
-import 'example/mdc/blindness.dart';
-import 'example/screens/single_color_blindness.dart';
-import 'example/util/color_blindness.dart';
 import 'example/util/constants.dart';
 import 'example/vertical_picker/app_bar_actions.dart';
 
@@ -46,6 +41,8 @@ class Home2 extends StatelessWidget {
       final bool shouldDisplayElevation =
           currentState.rgbColors[kSurface].computeLuminance() < kLumContrast;
 
+      final isiPad = MediaQuery.of(context).size.width > 600;
+
       return Theme(
         data: ThemeData.from(
           // todo it would be nice if there were a ThemeData.join
@@ -62,170 +59,100 @@ class Home2 extends StatelessWidget {
         ),
         child: Scaffold(
           body: SafeArea(
-            child: Column(
-              children: <Widget>[
-                Expanded(
-                  child: ListView(
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          SizedBox(width: 16),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 16.0),
-                            child: Text(
-                              "Material Design",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .title
-                                  .copyWith(color: colorScheme.onSurface),
+            child: isiPad
+                ? Center(
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: SingleChildScrollView(
+                            child: schemeContrast(
+                              context,
+                              colorScheme,
+                              currentState,
+                              shouldDisplayElevation,
                             ),
                           ),
-                          Expanded(
-                            child: SizedBox.shrink(),
+                        ),
+                        Expanded(
+                          child: SingleChildScrollView(
+                            child: ColorBlindnessScreen(
+                              currentState.rgbColors,
+                              currentState.locked,
+                            ),
                           ),
-                          BorderedIconButton(
-                            child: Icon(FeatherIcons.maximize, size: 16),
-                            onPressed: () {
-                              Navigator.pushNamed(context, "/colordetails");
-                            },
-                          ),
-                          SizedBox(width: 16),
-                        ],
-                      ),
-                      ColorSchemeSection(
-                        currentState.rgbColorsWithBlindness,
-                        currentState.hsluvColors,
-                        currentState.locked,
-                      ),
-                      ContrastRatio2(
-                        currentState.rgbColorsWithBlindness,
+                        ),
+                      ],
+                    ),
+                  )
+                : ListView(
+                    children: <Widget>[
+                      schemeContrast(
+                        context,
+                        colorScheme,
+                        currentState,
                         shouldDisplayElevation,
                       ),
-                      ColorBlindness2(
+                      ColorBlindnessScreen(
                         currentState.rgbColors,
                         currentState.locked,
                       ),
-                      SizedBox(height: 8),
                     ],
                   ),
-                ),
-              ],
-            ),
           ),
         ),
       );
     });
   }
-}
 
-class ColorBlindness2 extends StatelessWidget {
-  const ColorBlindness2(
-    this.contrastedColors,
-    this.locked,
-  );
-
-  final Map<String, Color> contrastedColors;
-  final Map<String, bool> locked;
-
-  @override
-  Widget build(BuildContext context) {
-    final surfaceHSLuv = HSLuvColor.fromColor(contrastedColors[kBackground]);
-    final surfaceColor = surfaceHSLuv.toColor();
-
-    final colorScheme = (surfaceHSLuv.lightness > 100 - kLumContrast * 100)
-        ? ColorScheme.light(
-            primary: contrastedColors[kPrimary],
-//            secondary: contrastedColors[kSecondary],
-            background: surfaceColor,
-            surface: contrastedColors[kSurface],
-          )
-        : ColorScheme.dark(
-            primary: contrastedColors[kPrimary],
-//            secondary: contrastedColors[kSecondary],
-            background: surfaceColor,
-            surface: contrastedColors[kSurface],
-          );
-
-    return Theme(
-      data: ThemeData.from(colorScheme: colorScheme),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-        child: GenericMaterial(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              TitleBar(
-                title: "Color Blindness",
-                children: <Widget>[
-                  IconButton(
-                    icon: Icon(
-                      Icons.chevron_left,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    onPressed: () {
-                      int newState =
-                          (BlocProvider.of<ColorBlindBloc>(context)).state - 1;
-                      if (newState < 0) {
-                        newState = 8;
-                      }
-                      BlocProvider.of<ColorBlindBloc>(context).add(newState);
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.chevron_right,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    onPressed: () {
-                      int newState =
-                          (BlocProvider.of<ColorBlindBloc>(context)).state + 1;
-                      if (newState > 8) {
-                        newState = 0;
-                      }
-                      BlocProvider.of<ColorBlindBloc>(context).add(newState);
-                    },
-                  ),
-                ],
+  Widget schemeContrast(
+    BuildContext context,
+    ColorScheme colorScheme,
+    MDCLoadedState currentState,
+    bool shouldDisplayElevation,
+  ) {
+    return Column(
+      children: <Widget>[
+        Row(
+          children: <Widget>[
+            SizedBox(width: 28),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Text(
+                  "Color Studio",
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.title.copyWith(
+                        color: colorScheme.onSurface,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 24,
+                      ),
+                ),
               ),
-              Divider(
-                height: 0,
-                indent: 1,
-                endIndent: 1,
-                color: colorScheme.onSurface.withOpacity(0.30),
-              ),
-              ColorBlindnessTheme(
-                contrastedList: contrastedColors,
-                locked: locked,
-              ),
-            ],
-          ),
+            ),
+//            Expanded(
+//              child: SizedBox.shrink(),
+//            ),
+            BorderedIconButton(
+              child: Icon(FeatherIcons.maximize, size: 16),
+              onPressed: () {
+                Navigator.pushNamed(context, "/colordetails");
+              },
+            ),
+            SizedBox(width: 16),
+          ],
         ),
-      ),
+        ColorSchemeSection(
+          currentState.rgbColorsWithBlindness,
+          currentState.hsluvColors,
+          currentState.locked,
+        ),
+        ContrastRatioScreen(
+          currentState.rgbColorsWithBlindness,
+          shouldDisplayElevation,
+        ),
+      ],
     );
   }
-}
-
-// sources:
-// https://www.color-blindness.com/
-// https://www.color-blindness.com/category/tools/
-// https://en.wikipedia.org/wiki/Color_blindness
-// https://en.wikipedia.org/wiki/Dichromacy
-List<ColorWithBlind> retrieveColorBlindList(Color color) {
-  const m = "of males";
-  const f = "of females";
-  const p = "of population";
-
-  return [
-    ColorWithBlind(color, "None", "default"),
-    ColorWithBlind(protanomaly(color), "Protanomaly", "1% $m, 0.01% $f"),
-    ColorWithBlind(deuteranomaly(color), "Deuteranomaly", "6% $m, 0.4% $f"),
-    ColorWithBlind(tritanomaly(color), "Tritanomaly", "0.01% $p"),
-    ColorWithBlind(protanopia(color), "Protanopia", "1% $m"),
-    ColorWithBlind(deuteranopia(color), "Deuteranopia", "1% $m"),
-    ColorWithBlind(tritanopia(color), "Tritanopia", "less than 1% $p"),
-    ColorWithBlind(achromatopsia(color), "Achromatopsia", "0.003% $p"),
-    ColorWithBlind(achromatomaly(color), "Achromatomaly", "0.001% $p"),
-  ];
 }
 
 class TitleBar extends StatelessWidget {
@@ -242,139 +169,15 @@ class TitleBar extends StatelessWidget {
         Expanded(
           child: Text(
             title,
-            style: TextStyle(
+            style: GoogleFonts.openSans(
               fontSize: 20,
-              fontWeight: FontWeight.w800,
+              fontWeight: FontWeight.w700,
             ),
           ),
         ),
         ...children,
       ],
     );
-  }
-}
-
-class ContrastRatio2 extends StatelessWidget {
-  const ContrastRatio2(this.contrastedColors, this.shouldDisplayElevation);
-
-  final Map<String, Color> contrastedColors;
-  final bool shouldDisplayElevation;
-
-  @override
-  Widget build(BuildContext context) {
-    final surfaceHSLuv = HSLuvColor.fromColor(contrastedColors[kBackground]);
-
-    final colorScheme = ColorScheme.dark(
-      primary: contrastedColors[kPrimary],
-//      secondary: contrastedColors[kSecondary],
-      background: surfaceHSLuv.withLightness(10).toColor(),
-      surface: contrastedColors[kSurface],
-    );
-
-    if (!ScalingInfo.initialized) {
-      ScalingInfo.init(context);
-    }
-
-    return BlocBuilder<ContrastRatioBloc, ContrastRatioState>(
-        builder: (context, state) {
-      if (state is InitialContrastRatioState) {
-        return Center(child: LoadingIndicator());
-      }
-
-      final currentState = (state as ContrastRatioSuccess);
-
-      return Theme(
-        data: ThemeData.from(colorScheme: colorScheme),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-          child: GenericMaterial(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                TitleBar(
-                  title: "Contrast Ratio",
-                  children: <Widget>[
-                    IconButton(
-                      icon: Icon(
-                        FeatherIcons.menu,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                      onPressed: () {
-                        Navigator.pushNamed(
-                          context,
-                          "/multiplecontrastcompare",
-                        );
-                      },
-                    ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.help_outline,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                      onPressed: () {},
-                    ),
-                  ],
-                ),
-                Divider(
-                  height: 0,
-                  indent: 1,
-                  endIndent: 1,
-                  color: colorScheme.onSurface.withOpacity(0.30),
-                ),
-//                SizedBox(height: 16),
-//                Text(
-//                  "PRIMARY",
-//                  textAlign: TextAlign.center,
-//                  style: TextStyle(
-//                    color: colorScheme.onSurface,
-//                    fontFamily: 'Lato',
-//                    fontWeight: FontWeight.bold,
-//                    fontSize: 13,
-//                  ),
-//                ),
-                SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ContrastCircleBar(
-                      title: kPrimary,
-                      subtitle: kBackground,
-                      contrast: currentState.contrastValues[0],
-                    ),
-                    ContrastCircleBar(
-                      title: kPrimary,
-                      subtitle: kSurface,
-                      contrast: currentState.contrastValues[1],
-                    ),
-                    ContrastCircleBar(
-                      title: kBackground,
-                      subtitle: kSurface,
-                      contrast: currentState.contrastValues[2],
-                    ),
-                  ],
-                ),
-                // surface qualifies as dark mode
-                if (shouldDisplayElevation) ...[
-                  Text(
-                    "Primary / Surface with elevation",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: colorScheme.onSurface,
-                      fontFamily: 'Lato',
-                      fontWeight: FontWeight.w300,
-                      fontSize: 14,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  DarkModeSurfaceContrast(currentState.elevationValues),
-                ],
-                SizedBox(height: 16),
-              ],
-            ),
-          ),
-        ),
-      );
-    });
   }
 }
 

@@ -46,7 +46,7 @@ class SchemeHeaderItem extends StatelessWidget {
               children: <Widget>[
                 Text(
                   title,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                  style: Theme.of(context).textTheme.title,
                 ),
               ],
             ),

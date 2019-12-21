@@ -26,10 +26,11 @@ dependencies:
   rxdart: ^0.22.6
   flutter_feather_icons: ^1.0.3
   infinite_listview: ^1.0.1+1
-#  url_launcher: ^5.3.0
+  #  url_launcher: ^5.3.0
   hive: ^1.1.1
   hive_flutter: ^0.2.1
   path_provider: ^1.4.5
+  google_fonts: ^0.2.0
 
 dev_dependencies:
   hive_generator: ^0.5.2

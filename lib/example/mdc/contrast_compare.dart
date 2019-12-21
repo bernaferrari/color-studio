@@ -191,7 +191,7 @@ class ContrastText extends StatelessWidget {
     final widget = RichText(
       text: TextSpan(
         text: contrast.toStringAsPrecision(3),
-        style: Theme.of(context).textTheme.title.copyWith(fontSize: 18),
+        style: Theme.of(context).textTheme.title,
         children: <TextSpan>[
           TextSpan(
             text: ':1',

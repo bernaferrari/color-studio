@@ -4,6 +4,7 @@ import 'package:colorstudio/example/util/constants.dart';
 import 'package:colorstudio/scheme/expandable_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
 import '../home2.dart';
@@ -53,8 +54,20 @@ class ColorSchemeSection extends StatelessWidget {
       ],
     );
 
+    final isiPad = MediaQuery.of(context).size.width > 600;
+
     return Theme(
-      data: ThemeData.from(colorScheme: colorScheme).copyWith(
+      data: ThemeData.from(
+        colorScheme: colorScheme,
+        textTheme: TextTheme(
+          body1: GoogleFonts.lato(),
+          button: GoogleFonts.openSans(),
+          title: GoogleFonts.openSans(
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ).copyWith(
         buttonTheme: ButtonThemeData(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
@@ -62,7 +75,12 @@ class ColorSchemeSection extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+        padding: EdgeInsets.only(
+          top: 8.0,
+          bottom: 8.0,
+          left: (isiPad == true) ? 24.0 : 16.0,
+          right: isiPad ? 8.0 : 16.0,
+        ),
         child: GenericMaterial(
           color: Theme.of(context).colorScheme.surface,
           child: Column(

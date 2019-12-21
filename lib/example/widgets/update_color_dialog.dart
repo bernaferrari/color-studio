@@ -3,12 +3,15 @@ import 'package:colorstudio/example/blocs/mdc_selected/mdc_selected_bloc.dart';
 import 'package:colorstudio/example/blocs/mdc_selected/mdc_selected_event.dart';
 import 'package:colorstudio/example/util/color_util.dart';
 import 'package:colorstudio/example/util/constants.dart';
+import 'package:colorstudio/example/util/selected.dart';
 import 'package:colorstudio/example/widgets/color_sliders.dart';
 import 'package:colorstudio/example/widgets/loading_indicator.dart';
 import 'package:colorstudio/example/widgets/selectable_sliders.dart';
 import 'package:colorstudio/example/widgets/text_form_colored.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import '../blocs/slider_color/slider_color.dart';
 
@@ -48,6 +51,14 @@ class UpdateColorDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextEditingController controller = TextEditingController();
+
+    Future<void> getClipBoardData() async {
+      ClipboardData data = await Clipboard.getData(Clipboard.kTextPlain);
+      controller.text = data.text;
+      BlocProvider.of<SliderColorBloc>(context).add(
+        MoveColor(Color(int.parse("0xFF${data.text.padRight(6, "F")}")), false),
+      );
+    }
 
     return BlocBuilder<SliderColorBloc, SliderColorState>(
       builder: (context, state) {
@@ -135,19 +146,57 @@ class UpdateColorDialog extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 16),
+//                const SizedBox(height: 8),
+//                SizedBox(
+//                  width: 500,
+//                  height: 36,
+//                  child: Row(
+//                    children: <Widget>[
+//                      Expanded(
+//                        child: FlatButton.icon(
+//                          color: selectableColor,
+//                          onPressed: () {
+//                            copyToClipboard(context, controller.text);
+//                          },
+//                          shape: RoundedRectangleBorder(
+//                            side: BorderSide(color: surface),
+//                            borderRadius: BorderRadius.circular(24.0),
+//                          ),
+//                          icon: Icon(FeatherIcons.copy, size: 16),
+//                          label: const Text("Copy"),
+//                        ),
+//                      ),
+//                      SizedBox(width: 8),
+//                      Expanded(
+//                        child: FlatButton.icon(
+//                          color: selectableColor,
+//                          onPressed: () => getClipBoardData(),
+//                          shape: RoundedRectangleBorder(
+//                            side: BorderSide(color: surface),
+//                            borderRadius: BorderRadius.circular(24.0),
+//                          ),
+//                          icon: Icon(FeatherIcons.clipboard, size: 16),
+//                          label: const Text("Paste"),
+//                        ),
+//                      ),
+//                    ],
+//                  ),
+//                ),
+                const SizedBox(height: 8),
                 SizedBox(
                   width: 500,
                   height: 36,
-                  child: FlatButton(
+                  child: FlatButton.icon(
                     color: selectableColor,
                     onPressed: () {
                       Navigator.of(context).pop(color);
                     },
                     shape: RoundedRectangleBorder(
-                        side: BorderSide(color: surface),
-                        borderRadius: BorderRadius.circular(24.0)),
-                    child: const Text("Select"),
+                      side: BorderSide(color: surface),
+                      borderRadius: BorderRadius.circular(24.0),
+                    ),
+                    icon: Icon(FeatherIcons.check, size: 16),
+                    label: const Text("Select"),
                   ),
                 ),
 //                   const SizedBox(height: 16),
@@ -165,8 +214,9 @@ class UpdateColorDialog extends StatelessWidget {
       {int caretPosition}) {
     final int offset = caretPosition ?? newText.length;
     controller.value = controller.value.copyWith(
-        text: newText,
-        selection: TextSelection.collapsed(offset: offset),
-        composing: TextRange.empty);
+      text: newText,
+      selection: TextSelection.collapsed(offset: offset),
+      composing: TextRange.empty,
+    );
   }
 }

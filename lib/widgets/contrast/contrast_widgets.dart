@@ -15,14 +15,12 @@ class ContrastCircleBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final contrastColor0 = getProgressColor(contrast);
-
     return CirclePercentageWidget(
       title: title,
       subtitle: subtitle,
       percent: getNormalised(contrast) / 100,
       contrastValue: contrast,
-      color: contrastColor0,
+      color: getProgressColor(contrast),
     );
   }
 

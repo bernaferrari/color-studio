@@ -36,6 +36,7 @@ class _ColorLibraryState extends State<ColorLibrary> {
       backgroundColor: widget.color,
       appBar: AppBar(
         title: Text("Color Library"),
+        centerTitle: false,
         backgroundColor: widget.color,
         elevation: 0,
       ),

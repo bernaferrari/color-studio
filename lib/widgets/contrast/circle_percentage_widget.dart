@@ -59,17 +59,10 @@ class _CirclePercentageWidgetState extends State<CirclePercentageWidget>
 
   @override
   Widget build(context) {
-    final titleStyle = TextStyle(
-//      color: widget.textColor,
-      fontFamily: 'Lato',
-      fontWeight: FontWeight.w300,
-      fontSize: 14,
-    );
-
     return Column(
       children: [
-        Text(widget.title, style: titleStyle),
-        Text(widget.subtitle, style: titleStyle),
+        Text(widget.title),
+        Text(widget.subtitle),
         Container(
           width: 48 * ScalingInfo.scaleY,
           height: 48 * ScalingInfo.scaleY,
@@ -88,10 +81,7 @@ class _CirclePercentageWidgetState extends State<CirclePercentageWidget>
                     textAlign: TextAlign.center,
                     text: TextSpan(
                       text: widget.contrastValue.toStringAsPrecision(3),
-                      style: Theme.of(context)
-                          .textTheme
-                          .title
-                          .copyWith(fontSize: 18),
+                      style: Theme.of(context).textTheme.title,
                       children: <TextSpan>[
                         TextSpan(
                           text: ':1',

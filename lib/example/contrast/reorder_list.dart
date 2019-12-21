@@ -25,7 +25,7 @@ class _ReorderListState extends State<ReorderList> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: elements.length * 48.0,
+      height: 300,
       child: Scaffold(
         body: Column(
           children: <Widget>[
