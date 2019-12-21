@@ -173,7 +173,20 @@ class TopRow extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
           ),
         ),
-        SizedBox(width: 24),
+        BorderedIconButton(
+          child: Icon(FeatherIcons.maximize, size: 16),
+          onPressed: () {
+            BlocProvider.of<MdcSelectedBloc>(context).add(
+              MDCLoadEvent(
+                currentColor: color,
+                selected: selected,
+              ),
+            );
+
+            Navigator.pushNamed(context, "/colordetails", arguments: selected);
+          },
+        ),
+        SizedBox(width: 16),
       ],
     );
   }
@@ -201,43 +214,43 @@ class _BottomRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        OutlineButton.icon(
-          label: Text("Details"),
-          borderSide: BorderSide(color: onSurface.withOpacity(0.70)),
-          highlightedBorderColor: onSurface.withOpacity(0.70),
-          icon: Icon(
-            FeatherIcons.maximize,
-            size: 16,
-          ),
-          onPressed: () {
-            BlocProvider.of<MdcSelectedBloc>(context).add(
-              MDCLoadEvent(
-                currentColor: color,
-                selected: selected,
-              ),
-            );
-
-            Navigator.pushNamed(context, "/colordetails");
-          },
-        ),
-        if (selected != kPrimary)
-          OutlineButton.icon(
-            label: Text("Auto"),
-            borderSide: BorderSide(color: onSurface.withOpacity(0.70)),
-            highlightedBorderColor: onSurface.withOpacity(0.70),
-            icon: Icon(
-              FeatherIcons.lock,
-              size: 16,
-            ),
-            onPressed: () {
-              BlocProvider.of<MdcSelectedBloc>(context).add(
-                MDCUpdateLock(
-                  isLock: true,
-                  selected: selected,
-                ),
-              );
-            },
-          ),
+//        OutlineButton.icon(
+//          label: Text("Details"),
+//          borderSide: BorderSide(color: onSurface.withOpacity(0.70)),
+//          highlightedBorderColor: onSurface.withOpacity(0.70),
+//          icon: Icon(
+//            FeatherIcons.maximize,
+//            size: 16,
+//          ),
+//          onPressed: () {
+//            BlocProvider.of<MdcSelectedBloc>(context).add(
+//              MDCLoadEvent(
+//                currentColor: color,
+//                selected: selected,
+//              ),
+//            );
+//
+//            Navigator.pushNamed(context, "/colordetails");
+//          },
+//        ),
+//        if (selected != kPrimary)
+//          OutlineButton.icon(
+//            label: Text("Auto"),
+//            borderSide: BorderSide(color: onSurface.withOpacity(0.70)),
+//            highlightedBorderColor: onSurface.withOpacity(0.70),
+//            icon: Icon(
+//              FeatherIcons.lock,
+//              size: 16,
+//            ),
+//            onPressed: () {
+//              BlocProvider.of<MdcSelectedBloc>(context).add(
+//                MDCUpdateLock(
+//                  isLock: true,
+//                  selected: selected,
+//                ),
+//              );
+//            },
+//          ),
       ],
     );
   }

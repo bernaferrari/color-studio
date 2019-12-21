@@ -17,14 +17,14 @@ import '../blocs/blocs.dart';
 import '../util/constants.dart';
 import 'color_library.dart';
 
-class Home extends StatefulWidget {
-  const Home();
+class SingleColorHome extends StatefulWidget {
+  const SingleColorHome();
 
   @override
-  _HomeState createState() => _HomeState();
+  _SingleColorHomeState createState() => _SingleColorHomeState();
 }
 
-class _HomeState extends State<Home> {
+class _SingleColorHomeState extends State<SingleColorHome> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MdcSelectedBloc, MdcSelectedState>(

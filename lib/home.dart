@@ -1,17 +1,16 @@
 import 'package:colorstudio/color_blindness/screen.dart';
 import 'package:colorstudio/contrast_ratio/screen.dart';
-import 'package:colorstudio/scheme/section.dart';
+import 'package:colorstudio/scheme/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'example/blocs/blocs.dart';
 import 'example/util/constants.dart';
 import 'example/vertical_picker/app_bar_actions.dart';
 
-class Home2 extends StatelessWidget {
-  const Home2();
+class Home extends StatelessWidget {
+  const Home();
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +19,6 @@ class Home2 extends StatelessWidget {
       final currentState = state as MDCLoadedState;
 
       final primary = currentState.rgbColorsWithBlindness[kPrimary];
-//      final secondary = currentState.rgbColorsWithBlindness[kSecondary];
       final background = currentState.rgbColorsWithBlindness[kBackground];
       final surface = currentState.rgbColorsWithBlindness[kSurface];
 
@@ -138,10 +136,10 @@ class Home2 extends StatelessWidget {
                 Navigator.pushNamed(context, "/colordetails");
               },
             ),
-            SizedBox(width: 16),
+            SizedBox(width: 8),
           ],
         ),
-        ColorSchemeSection(
+        ColorSchemeScreen(
           currentState.rgbColorsWithBlindness,
           currentState.hsluvColors,
           currentState.locked,
@@ -151,55 +149,6 @@ class Home2 extends StatelessWidget {
           shouldDisplayElevation,
         ),
       ],
-    );
-  }
-}
-
-class TitleBar extends StatelessWidget {
-  const TitleBar({this.title, this.children});
-
-  final String title;
-  final List<Widget> children;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        SizedBox(width: 16),
-        Expanded(
-          child: Text(
-            title,
-            style: GoogleFonts.openSans(
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ),
-        ...children,
-      ],
-    );
-  }
-}
-
-class GenericMaterial extends StatelessWidget {
-  const GenericMaterial({this.child, this.color});
-
-  final Widget child;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-        side: BorderSide(
-          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.30),
-          width: 1,
-        ),
-      ),
-      color: color,
-      child: child,
     );
   }
 }

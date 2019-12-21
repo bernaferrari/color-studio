@@ -1,12 +1,14 @@
-import 'package:colorstudio/example/blocs/color_blind/color_blind_bloc.dart';
 import 'package:colorstudio/color_blindness/list.dart';
+import 'package:colorstudio/example/blocs/color_blind/color_blind_bloc.dart';
 import 'package:colorstudio/example/util/constants.dart';
+import 'package:colorstudio/widgets/section_card.dart';
+import 'package:colorstudio/widgets/title_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
-import '../home2.dart';
+import '../home.dart';
 
 class ColorBlindnessScreen extends StatelessWidget {
   const ColorBlindnessScreen(
@@ -54,7 +56,7 @@ class ColorBlindnessScreen extends StatelessWidget {
           left: (isiPad == true) ? 8.0 : 16.0,
           right: isiPad ? 24.0 : 16.0,
         ),
-        child: GenericMaterial(
+        child: SectionCard(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,

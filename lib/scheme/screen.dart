@@ -2,15 +2,15 @@ import 'package:colorstudio/example/blocs/blocs.dart';
 import 'package:colorstudio/example/contrast/shuffle_color.dart';
 import 'package:colorstudio/example/util/constants.dart';
 import 'package:colorstudio/scheme/expandable_item.dart';
+import 'package:colorstudio/widgets/section_card.dart';
+import 'package:colorstudio/widgets/title_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
-import '../home2.dart';
-
-class ColorSchemeSection extends StatelessWidget {
-  const ColorSchemeSection(
+class ColorSchemeScreen extends StatelessWidget {
+  const ColorSchemeScreen(
     this.rgbColorsWithBlindness,
     this.hsluvColors,
     this.locked,
@@ -36,23 +36,6 @@ class ColorSchemeSection extends StatelessWidget {
                 background: rgbColorsWithBlindness[kBackground],
                 surface: rgbColorsWithBlindness[kSurface],
               );
-
-    final title = TitleBar(
-      title: "Color Scheme",
-      children: <Widget>[
-        IconButton(
-          icon: Icon(
-            Icons.shuffle,
-            color: Theme.of(context).colorScheme.primary,
-          ),
-          onPressed: () {
-            BlocProvider.of<MdcSelectedBloc>(context).add(
-              MDCUpdateAllEvent(colors: getShuffledColors(3)),
-            );
-          },
-        ),
-      ],
-    );
 
     final isiPad = MediaQuery.of(context).size.width > 600;
 
@@ -81,12 +64,27 @@ class ColorSchemeSection extends StatelessWidget {
           left: (isiPad == true) ? 24.0 : 16.0,
           right: isiPad ? 8.0 : 16.0,
         ),
-        child: GenericMaterial(
+        child: SectionCard(
           color: Theme.of(context).colorScheme.surface,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              title,
+              TitleBar(
+                title: "Color Scheme",
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(
+                      Icons.shuffle,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    onPressed: () {
+                      BlocProvider.of<MdcSelectedBloc>(context).add(
+                        MDCUpdateAllEvent(colors: getShuffledColors(3)),
+                      );
+                    },
+                  ),
+                ],
+              ),
               Divider(
                 height: 0,
                 indent: 1,

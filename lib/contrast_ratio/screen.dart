@@ -1,17 +1,19 @@
 import 'package:colorstudio/contrast_ratio/dark_mode_surface_contrast.dart';
+import 'package:colorstudio/contrast_ratio/widgets/contrast_widgets.dart';
+import 'package:colorstudio/contrast_ratio/widgets/scaling_info.dart';
 import 'package:colorstudio/example/blocs/blocs.dart';
 import 'package:colorstudio/example/blocs/contrast_ratio/contrast_ratio_state.dart';
 import 'package:colorstudio/example/util/constants.dart';
 import 'package:colorstudio/example/widgets/loading_indicator.dart';
-import 'package:colorstudio/widgets/contrast/contrast_widgets.dart';
-import 'package:colorstudio/widgets/contrast/scaling_info.dart';
+import 'package:colorstudio/widgets/section_card.dart';
+import 'package:colorstudio/widgets/title_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
-import '../home2.dart';
+import '../home.dart';
 
 class ContrastRatioScreen extends StatelessWidget {
   const ContrastRatioScreen(this.contrastedColors, this.shouldDisplayElevation);
@@ -61,7 +63,7 @@ class ContrastRatioScreen extends StatelessWidget {
             left: (isiPad == true) ? 24.0 : 16.0,
             right: isiPad ? 8.0 : 16.0,
           ),
-          child: GenericMaterial(
+          child: SectionCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[

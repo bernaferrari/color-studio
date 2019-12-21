@@ -1,5 +1,5 @@
+import 'package:colorstudio/contrast_ratio/widgets/scaling_info.dart';
 import 'package:colorstudio/example/contrast/contrast_util.dart';
-import 'package:colorstudio/widgets/contrast/scaling_info.dart';
 import 'package:flutter/material.dart';
 
 import 'circle_percentage_painter.dart';

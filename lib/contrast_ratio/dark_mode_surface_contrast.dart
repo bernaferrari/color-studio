@@ -36,7 +36,7 @@ class DarkModeSurfaceContrast extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     for (int i = 0; i < elevationEntriesList.length; i++)
-                      _VerticalBar(elevationValues[i], i),
+                      _VerticalBarWithText(elevationValues[i], i),
                   ],
                 ),
               ],
@@ -66,8 +66,8 @@ class DarkModeSurfaceContrast extends StatelessWidget {
   }
 }
 
-class _VerticalBar extends StatelessWidget {
-  const _VerticalBar(this.colorContrast, this.i);
+class _VerticalBarWithText extends StatelessWidget {
+  const _VerticalBarWithText(this.colorContrast, this.i);
 
   final ColorContrast colorContrast;
   final int i;
@@ -105,6 +105,5 @@ class _VerticalBar extends StatelessWidget {
         ],
       ),
     );
-    ;
   }
 }

@@ -15,7 +15,7 @@ import 'example/blocs/mdc_selected/mdc_selected_bloc.dart';
 import 'example/blocs/slider_color/slider_color_bloc.dart';
 import 'example/blocs/slider_color/slider_color_event.dart';
 import 'example/screens/home.dart';
-import 'home2.dart';
+import 'home.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -85,7 +85,7 @@ class _BoxedAppState extends State<BoxedApp> {
         title: 'Flutter Demo',
         routes: {
           "/": (context) {
-            return Home2();
+            return Home();
           },
           "/multiplecontrastcompare": (context) {
             return BlocProvider<MultipleContrastColorBloc>(
@@ -95,7 +95,9 @@ class _BoxedAppState extends State<BoxedApp> {
               child: const MultipleContrastScreen(),
             );
           },
-          "/colordetails": (context) => Home(),
+          "/colordetails": (context) {
+            return SingleColorHome();
+          },
           "/theme": (context) => MDCHome()
         },
         theme: base.copyWith(

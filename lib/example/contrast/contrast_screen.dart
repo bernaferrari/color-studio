@@ -14,6 +14,8 @@ import 'package:colorstudio/example/util/hsluv_tiny.dart';
 import 'package:colorstudio/example/util/selected.dart';
 import 'package:colorstudio/example/widgets/loading_indicator.dart';
 import 'package:colorstudio/scheme/expandable_item.dart';
+import 'package:colorstudio/scheme/expandable_item.dart';
+import 'package:colorstudio/scheme/same_as.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
