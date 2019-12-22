@@ -60,7 +60,7 @@ List<Color> getShuffledMaterial() {
   // # Material colors in HSLuv:
   // H: 272 S: 100 L: 36
   // H: 177 S: 100 L: 79
-  // Therefore, S > 90 and 30 < L < 90
+  // Therefore, S > 90 and 35 < L < 80
   //
   // ## Dark Theme
   // # Material colors in HSV:
@@ -82,7 +82,7 @@ List<Color> getShuffledMaterial() {
           HSLuvColor.fromHSL(
             rng.nextInt(360).toDouble(),
             50 + rng.nextInt(50).toDouble(),
-            80 + rng.nextInt(20).toDouble(),
+            60 + rng.nextInt(20).toDouble(),
           ).toColor(),
           HSLuvColor.fromHSL(
             rng.nextInt(360).toDouble(),
@@ -99,7 +99,7 @@ List<Color> getShuffledMaterial() {
           HSLuvColor.fromHSL(
             rng.nextInt(360).toDouble(),
             80 + rng.nextInt(10).toDouble(),
-            30 + rng.nextInt(60).toDouble(),
+            35 + rng.nextInt(45).toDouble(),
           ).toColor(),
           HSLuvColor.fromHSL(
             rng.nextInt(360).toDouble(),

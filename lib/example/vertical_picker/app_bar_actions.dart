@@ -59,7 +59,8 @@ class BorderedIconButton extends StatelessWidget {
         child: child,
         shape: CircleBorder(
           side: BorderSide(
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),
+            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+          ),
         ),
         elevation: 0.0,
         padding: EdgeInsets.zero,

@@ -14,6 +14,7 @@ import 'example/blocs/color_blind/color_blind_bloc.dart';
 import 'example/blocs/mdc_selected/mdc_selected_bloc.dart';
 import 'example/blocs/slider_color/slider_color_bloc.dart';
 import 'example/blocs/slider_color/slider_color_event.dart';
+import 'example/screens/home.dart';
 import 'home.dart';
 
 Future<void> main() async {
@@ -103,10 +104,10 @@ class _BoxedAppState extends State<BoxedApp> {
               MoveColor(currentState.rgbColors[currentState.selected], false),
             );
 
-
-
+            return SingleColorHome();
+          },
+          "/componentspreview": (context) {
             return MDCHome();
-//            return SingleColorHome();
           },
           "/theme": (context) => MDCHome()
         },

@@ -2,6 +2,7 @@ import 'package:colorstudio/example/blocs/blocs.dart';
 import 'package:colorstudio/example/mdc/showcase.dart';
 import 'package:colorstudio/example/screens/home.dart';
 import 'package:colorstudio/example/util/constants.dart';
+import 'package:colorstudio/example/vertical_picker/app_bar_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -21,18 +22,30 @@ class MDCHome extends StatelessWidget {
       final Color backgroundColor = allItems[kBackground];
       final HSLuvColor backgroundLuv = currentState.hsluvColors[kBackground];
 
+      final Color onPrimary = primaryColor.computeLuminance() > kLumContrast
+          ? Colors.black
+          : Colors.white;
+
+      final Color onSurface = surfaceColor.computeLuminance() > kLumContrast
+          ? Colors.black
+          : Colors.white;
+
       final isiPad = MediaQuery.of(context).size.width > 600;
 
       final scheme = backgroundLuv.lightness > 100 - kLumContrast * 100
           ? ColorScheme.light(
               primary: primaryColor,
               secondary: primaryColor,
+              onPrimary: onPrimary,
+              onSurface: onSurface,
               surface: surfaceColor,
               background: backgroundColor,
             )
           : ColorScheme.dark(
               primary: primaryColor,
               secondary: primaryColor,
+              onPrimary: onPrimary,
+              onSecondary: onSurface,
               surface: surfaceColor,
               background: backgroundColor,
             );
@@ -52,6 +65,14 @@ class MDCHome extends StatelessWidget {
             backgroundColor: backgroundColor,
             appBar: AppBar(
               title: Text("Components Preview"),
+              actions: <Widget>[
+                BorderedIconButton(
+                  child: Icon(FeatherIcons.maximize, size: 16),
+                  onPressed: () {
+                    Navigator.pushNamed(context, "/colordetails");
+                  },
+                ),
+              ],
             ),
             body: isiPad
                 ? Center(

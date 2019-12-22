@@ -137,6 +137,12 @@ class Home extends StatelessWidget {
                 Navigator.pushNamed(context, "/colordetails");
               },
             ),
+            BorderedIconButton(
+              child: Icon(FeatherIcons.send, size: 16),
+              onPressed: () {
+                Navigator.pushNamed(context, "/componentspreview");
+              },
+            ),
             SizedBox(width: 8),
           ],
         ),

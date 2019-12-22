@@ -28,9 +28,9 @@ class HSLuvSelector extends StatelessWidget {
       kind: kind,
       fetchHue: () => hsluvAlternatives(color, hueSize),
       fetchSat: (Color c) =>
-          hsluvTones(c, toneSize, 5, 100).convertToInter(kind),
+          hsluvTones(c, toneSize, 0, 100).convertToInter(kind),
       fetchLight: (Color c) =>
-          hsluvLightness(c, toneSize, 5, 90).convertToInter(kind),
+          hsluvLightness(c, toneSize, 0, 100).convertToInter(kind),
       hueTitle: hueStr,
       satTitle: satStr,
       lightTitle: lightStr,
