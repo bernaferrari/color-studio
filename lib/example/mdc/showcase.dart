@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'components.dart';
 import 'util/elevation_overlay.dart';
@@ -20,23 +21,20 @@ class Showcase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: backgroundColor,
-      child: ListView(
-        key: const PageStorageKey("PreviewList"),
-        children: <Widget>[
-//          _PrevPhotos(primary: primaryColor, surface: surfaceColor),
-          _PrevCupertino(
-              primary: primaryColor, backgroundColor: backgroundColor),
-          _PrevSocial(primary: primaryColor, surface: surfaceColor),
-          _PrevClock(primary: primaryColor),
-          _PrevStore(primary: primaryColor, surface: surfaceColor),
-          _PrevPodcast(primary: primaryColor, surface: surfaceColor),
-          _PrevSDKMonitor(primary: primaryColor),
-          _PrevHighlights(primary: primaryColor),
-          const SizedBox(height: 16),
-        ],
-      ),
+    return ListView(
+      key: const PageStorageKey("PreviewList"),
+      children: <Widget>[
+        _PrevClock(primary: primaryColor),
+        _PrevStore(primary: primaryColor, surface: surfaceColor),
+        _PrevPhotos(primary: primaryColor, surface: surfaceColor),
+        _PrevSpotify(primary: primaryColor, background: backgroundColor),
+//        _PrevCupertino(primary: primaryColor, backgroundColor: backgroundColor),
+        _PrevSocial(primary: primaryColor, surface: surfaceColor),
+        _PrevPodcast(primary: primaryColor, surface: surfaceColor),
+        _PrevSDKMonitor(primary: primaryColor),
+        _PrevHighlights(primary: primaryColor),
+        const SizedBox(height: 16),
+      ],
     );
   }
 }
@@ -51,6 +49,7 @@ class SafariBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WrapWithFrostyBackground(
+      backgroundColor: bgColor,
       child: Row(
         children: <Widget>[
           const SizedBox(width: 16),
@@ -117,8 +116,11 @@ class _PrevPodcast extends StatelessWidget {
   Widget build(BuildContext context) {
     return Theme(
       data: Theme.of(context).copyWith(
-          cardTheme: const CardTheme(
-              shape: ContinuousRectangleBorder(), margin: EdgeInsets.all(0))),
+        cardTheme: const CardTheme(
+          shape: ContinuousRectangleBorder(),
+          margin: EdgeInsets.all(0),
+        ),
+      ),
       child: Column(
         children: <Widget>[
           const SizedBox(height: 8),
@@ -324,6 +326,94 @@ class _PrevClock extends StatelessWidget {
   }
 }
 
+class _PrevSpotify extends StatelessWidget {
+  const _PrevSpotify({this.primary, this.background});
+
+  final Color primary;
+  final Color background;
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(top: 24),
+          child: _ShowcaseTitle("Music"),
+        ),
+        SizedBox(height: 16),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(width: 16),
+            Column(
+              children: <Widget>[
+                Text(
+                  "Here's your 2019, wrapped.",
+                  style: GoogleFonts.hind(
+                      fontSize: 24, fontWeight: FontWeight.w600),
+                ),
+                Text(
+                  "Dig into the music that made your year.",
+                  style: GoogleFonts.hind(fontSize: 16),
+                ),
+                Text(
+                  "What's your #1?",
+                  style: GoogleFonts.hind(fontSize: 16),
+                ),
+                SizedBox(height: 8),
+                FlatButton(
+                  color: primary,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16)),
+                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                  child: Text(
+                    "TAKE A LOOK",
+                    style: GoogleFonts.hind(fontWeight: FontWeight.w600),
+                  ),
+                  onPressed: () {},
+                )
+              ],
+            ),
+            SizedBox(width: 16),
+            Container(
+              width: 136,
+              height: 136,
+              color: primary,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Your Top Songs",
+                      style: GoogleFonts.hind(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 24,
+                        textStyle: TextStyle(height: 1),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    "2019",
+                    style: GoogleFonts.hind(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 60,
+                      textStyle: TextStyle(height: 0.5, color: background),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(width: 16),
+          ],
+        )
+      ],
+    );
+  }
+}
+
 class _PrevSocial extends StatelessWidget {
   const _PrevSocial({this.primary, this.surface});
 
@@ -333,6 +423,22 @@ class _PrevSocial extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final onBg = Theme.of(context).colorScheme.onBackground;
+
+    const icons1 = [
+      FeatherIcons.send,
+      FeatherIcons.bookmark,
+      FeatherIcons.heart,
+      FeatherIcons.home,
+    ];
+
+    const icons2 = [
+      FeatherIcons.grid,
+      FeatherIcons.truck,
+      FeatherIcons.watch,
+      FeatherIcons.gift,
+    ];
+
+    final isiPad = MediaQuery.of(context).size.width > 600;
 
     return Column(
       children: <Widget>[
@@ -344,22 +450,17 @@ class _PrevSocial extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            IconButton(
-              icon: Icon(FeatherIcons.send),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(FeatherIcons.bookmark),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(FeatherIcons.heart),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(FeatherIcons.home),
-              onPressed: () {},
-            ),
+            for (var i in icons1)
+              IconButton(
+                icon: Icon(i),
+                onPressed: () {},
+              ),
+            if (isiPad)
+              for (var i in icons2)
+                IconButton(
+                  icon: Icon(i, color: primary),
+                  onPressed: () {},
+                ),
           ],
         ),
         Row(
@@ -386,27 +487,17 @@ class _PrevSocial extends StatelessWidget {
             ),
           ],
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            IconButton(
-              icon: Icon(FeatherIcons.grid, color: primary),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(FeatherIcons.truck, color: primary),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(FeatherIcons.watch, color: primary),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(FeatherIcons.gift, color: primary),
-              onPressed: () {},
-            ),
-          ],
-        ),
+        if (!isiPad)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              for (var i in icons2)
+                IconButton(
+                  icon: Icon(i, color: primary),
+                  onPressed: () {},
+                ),
+            ],
+          ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
@@ -553,12 +644,13 @@ class _PrevCupertino extends StatelessWidget {
       ),
       SafariBar(
         color: primary,
-        bgColor: backgroundColor,
+        bgColor: Theme.of(context).colorScheme.surface,
         secondaryColor: primary,
       ),
       const SizedBox(height: 16),
       WrapWithFrostyBackground(
-        // can't use CupertinoNavigationBar because of:
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        // avoiding CupertinoNavigationBar because of:
         // https://github.com/flutter/flutter/issues/42979
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -589,18 +681,21 @@ class _PrevCupertino extends StatelessWidget {
 }
 
 class WrapWithFrostyBackground extends StatelessWidget {
-  const WrapWithFrostyBackground(
-      {this.border, this.child, this.updateSystemUiOverlay = true});
+  const WrapWithFrostyBackground({
+    this.border,
+    this.child,
+    this.updateSystemUiOverlay = true,
+    this.backgroundColor,
+  });
 
   final Border border;
   final Widget child;
   final bool updateSystemUiOverlay;
+  final Color backgroundColor;
 
   @override
   Widget build(BuildContext context) {
     Widget result = child;
-
-    final Color backgroundColor = CupertinoTheme.of(context).barBackgroundColor;
 
     if (updateSystemUiOverlay) {
       final bool darkBackground = backgroundColor.computeLuminance() < 0.179;
@@ -620,8 +715,6 @@ class WrapWithFrostyBackground extends StatelessWidget {
       ),
       child: result,
     );
-
-    if (backgroundColor.alpha == 0xFF) return childWithBackground;
 
     return ClipRect(
       child: BackdropFilter(
@@ -870,6 +963,7 @@ class _PhotosSemiTransparent extends StatelessWidget {
         RawMaterialButton(
           onPressed: () {},
           constraints: const BoxConstraints(minHeight: 0, minWidth: 56),
+          highlightElevation: 0,
           child: Icon(
             FeatherIcons.film,
             color: primary,

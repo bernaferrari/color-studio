@@ -14,7 +14,6 @@ import 'example/blocs/color_blind/color_blind_bloc.dart';
 import 'example/blocs/mdc_selected/mdc_selected_bloc.dart';
 import 'example/blocs/slider_color/slider_color_bloc.dart';
 import 'example/blocs/slider_color/slider_color_event.dart';
-import 'example/screens/home.dart';
 import 'home.dart';
 
 Future<void> main() async {
@@ -46,7 +45,7 @@ class _BoxedAppState extends State<BoxedApp> {
   @override
   void initState() {
     super.initState();
-    _sliderBloc = SliderColorBloc()..add(MoveColor(Colors.orange[200], true));
+    _sliderBloc = SliderColorBloc();
     colorBlindBloc = ColorBlindBloc();
     _mdcSelectedBloc = MdcSelectedBloc(_sliderBloc, colorBlindBloc);
   }
@@ -56,6 +55,7 @@ class _BoxedAppState extends State<BoxedApp> {
     super.dispose();
     _sliderBloc.close();
     colorBlindBloc.close();
+    _mdcSelectedBloc.close();
   }
 
   @override
@@ -96,7 +96,17 @@ class _BoxedAppState extends State<BoxedApp> {
             );
           },
           "/colordetails": (context) {
-            return SingleColorHome();
+            final currentState = (BlocProvider.of<MdcSelectedBloc>(context)
+                .state as MDCLoadedState);
+
+            BlocProvider.of<SliderColorBloc>(context).add(
+              MoveColor(currentState.rgbColors[currentState.selected], false),
+            );
+
+
+
+            return MDCHome();
+//            return SingleColorHome();
           },
           "/theme": (context) => MDCHome()
         },

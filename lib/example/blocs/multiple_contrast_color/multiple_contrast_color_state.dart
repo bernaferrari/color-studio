@@ -25,7 +25,7 @@ class MultipleContrastColorLoaded extends MultipleContrastColorState {
   final int selected;
 
   @override
-  String toString() => 'BlindColorsLoaded state $colorsList';
+  String toString() => 'MultipleContrastColorLoaded $colorsList';
 
   @override
   List<Object> get props => [colorsList, selected];

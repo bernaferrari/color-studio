@@ -1,111 +1,100 @@
+import 'package:colorstudio/example/util/color_blindness.dart';
+import 'package:colorstudio/example/util/selected.dart';
+import 'package:colorstudio/example/vertical_picker/app_bar_actions.dart';
+import 'package:colorstudio/example/widgets/update_color_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:colorstudio/example/blocs/blocs.dart';
-import 'package:colorstudio/example/util/color_blindness.dart';
-import 'package:colorstudio/example/util/selected.dart';
-import 'package:colorstudio/example/vertical_picker/app_bar_actions.dart';
-import 'package:colorstudio/example/widgets/loading_indicator.dart';
-import 'package:colorstudio/example/widgets/update_color_dialog.dart';
 
 import '../mdc/components.dart';
 import '../util/color_util.dart';
 
 class SingleColorBlindness extends StatelessWidget {
-  const SingleColorBlindness();
+  const SingleColorBlindness({this.isSplitView, this.color});
+
+  final Color color;
+  final bool isSplitView;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MdcSelectedBloc, MdcSelectedState>(
-      builder: (context, state) {
-//        if (state is MultipleContrastColorLoading) {
-//          return const Scaffold(body: Center(child: LoadingIndicator()));
-//        }
+    final values = retrieveColorBlind(color);
 
-        final currentState = state as MDCLoadedState;
-        final color = currentState.rgbColors[currentState.selected];
-        final values = retrieveColorBlind(color);
-
-        return Scaffold(
-          appBar: AppBar(
-            backgroundColor: color,
-            elevation: 0,
-            title: const Text("Color Blindness"),
-            actions: <Widget>[
-              ColorSearchButton(color: color),
-              const SizedBox(width: 8),
-            ],
-          ),
-          backgroundColor: color,
-          body: Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 818),
-              child: Card(
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: color,
+        elevation: 0,
+        centerTitle: isSplitView,
+        leading: isSplitView ? SizedBox.shrink() : null,
+        title: const Text("Color Blindness"),
+        actions: <Widget>[
+          ColorSearchButton(color: color),
+          const SizedBox(width: 8),
+        ],
+      ),
+      backgroundColor: color,
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 818),
+          child: Card(
+            color: Theme.of(context).colorScheme.background.withOpacity(0.20),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+              side: BorderSide(
                 color:
-                    Theme.of(context).colorScheme.background.withOpacity(0.20),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  side: BorderSide(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .onSurface
-                        .withOpacity(0.40),
-                  ),
-                ),
-                elevation: 0,
-                margin: const EdgeInsets.all(16),
-                child: ListView(
-                  key: const PageStorageKey("color_blind"),
-                  children: <Widget>[
-                    const SizedBox(height: 24),
-                    for (var key in values.keys) ...[
-                      Text(
-                        key,
-                        style: Theme.of(context).textTheme.title,
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 8),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                        child: LayoutBuilder(
-                          builder: (context, builder) {
-                            final numOfItems = (builder.maxWidth / 280).floor();
-                            return Wrap(
-                              children: <Widget>[
-                                for (var value in values[key]) ...[
-                                  SizedBox(
-                                    width: builder.maxWidth / numOfItems,
-                                    height: 80,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: _ColorBlindCard(value, color),
-                                    ),
-                                  )
-                                ],
-                              ],
-                            );
-                          },
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      if (key != "Monochromacy")
-                        Divider(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onSurface
-                              .withOpacity(0.40),
-                        ),
-                      const SizedBox(height: 12),
-                    ],
-                  ],
-                ),
+                    Theme.of(context).colorScheme.onSurface.withOpacity(0.40),
               ),
             ),
+            elevation: 0,
+            margin: const EdgeInsets.all(16),
+            child: ListView(
+              key: const PageStorageKey("color_blind"),
+              children: <Widget>[
+                const SizedBox(height: 24),
+                for (var key in values.keys) ...[
+                  Text(
+                    key,
+                    style: Theme.of(context).textTheme.title,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: LayoutBuilder(
+                      builder: (context, builder) {
+                        final numOfItems = (builder.maxWidth / 280).floor();
+                        return Wrap(
+                          children: <Widget>[
+                            for (var value in values[key]) ...[
+                              SizedBox(
+                                width: builder.maxWidth / numOfItems,
+                                height: 80,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: _ColorBlindCard(value, color),
+                                ),
+                              )
+                            ],
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  if (key != "Monochromacy")
+                    Divider(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withOpacity(0.40),
+                    ),
+                  const SizedBox(height: 12),
+                ],
+              ],
+            ),
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 

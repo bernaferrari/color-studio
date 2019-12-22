@@ -1,16 +1,16 @@
 import 'dart:math' as math;
 
+import 'package:colorstudio/example/hsinter.dart';
+import 'package:colorstudio/example/util/color_util.dart';
+import 'package:colorstudio/example/util/constants.dart';
+import 'package:colorstudio/example/util/selected.dart';
+import 'package:colorstudio/example/vertical_picker/picker_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:colorstudio/example/hsinter.dart';
-import 'package:colorstudio/example/util/color_util.dart';
-import 'package:colorstudio/example/util/constants.dart';
-import 'package:colorstudio/example/util/selected.dart';
-import 'package:colorstudio/example/vertical_picker/picker_list.dart';
 
 import '../color_with_inter.dart';
 import '../screens/about.dart';
@@ -28,9 +28,10 @@ const valueStr = "Value";
 const lightStr = "Lightness";
 
 class HSVerticalPicker extends StatefulWidget {
-  const HSVerticalPicker({this.color});
+  const HSVerticalPicker({this.color, this.isSplitView = false});
 
   final Color color;
+  final bool isSplitView;
 
   @override
   _HSVerticalPickerState createState() => _HSVerticalPickerState();
@@ -70,6 +71,8 @@ class _HSVerticalPickerState extends State<HSVerticalPicker> {
       appBar: AppBar(
         title: Text("${currentSegment == 0 ? "HSLuv" : "HSV"} Picker"),
         elevation: 0,
+        centerTitle: widget.isSplitView,
+        leading: widget.isSplitView ? SizedBox.shrink() : null,
         backgroundColor: widget.color,
         actions: <Widget>[
           ColorSearchButton(color: widget.color),

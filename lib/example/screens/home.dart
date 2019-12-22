@@ -2,12 +2,11 @@ import 'dart:math' as math;
 
 import 'package:colorstudio/example/mdc/components.dart';
 import 'package:colorstudio/example/screens/about.dart';
-import 'package:colorstudio/example/screens/multiple_sliders.dart';
 import 'package:colorstudio/example/screens/single_color_blindness.dart';
-import 'package:colorstudio/example/util/color_util.dart';
 import 'package:colorstudio/example/util/selected.dart';
 import 'package:colorstudio/example/util/when.dart';
 import 'package:colorstudio/example/vertical_picker/vertical_picker_main.dart';
+import 'package:colorstudio/example/widgets/update_color_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -17,38 +16,41 @@ import '../blocs/blocs.dart';
 import '../util/constants.dart';
 import 'color_library.dart';
 
-class SingleColorHome extends StatefulWidget {
-  const SingleColorHome();
+class SingleColorHome extends StatelessWidget {
+  const SingleColorHome({this.isSplitView = false});
 
-  @override
-  _SingleColorHomeState createState() => _SingleColorHomeState();
-}
+  final bool isSplitView;
 
-class _SingleColorHomeState extends State<SingleColorHome> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MdcSelectedBloc, MdcSelectedState>(
         builder: (context, state) {
       final currentState = state as MDCLoadedState;
 
-      final color = currentState.rgbColors[currentState.selected];
+      Color color;
+      String selected;
+      if (currentState.locked[currentState.selected] == true) {
+        color = currentState.rgbColors[kPrimary];
+        selected = kPrimary;
+      } else {
+        color = currentState.rgbColors[currentState.selected];
+        selected = currentState.selected;
+      }
 
       final contrastedColor = (color.computeLuminance() > kLumContrast)
           ? Colors.black
           : Colors.white;
 
-      final surfaceColor = blendColorWithBackground(color);
-
       final colorScheme = (color.computeLuminance() > kLumContrast)
           ? ColorScheme.light(
               primary: color,
               secondary: color,
-              surface: surfaceColor,
+              surface: color,
             )
           : ColorScheme.dark(
               primary: color,
               secondary: color,
-              surface: surfaceColor,
+              surface: color,
             );
 
       return Theme(
@@ -67,19 +69,28 @@ class _SingleColorHomeState extends State<SingleColorHome> {
         child: Scaffold(
           backgroundColor: color,
           body: DefaultTabController(
-            length: 5,
-            initialIndex: 1,
+            length: 4,
+            initialIndex: 0,
             child: SafeArea(
               child: Column(
                 children: <Widget>[
                   Expanded(
                     child: TabBarView(
                       children: [
-                        const MultipleSliders(),
-                        HSVerticalPicker(color: color),
-                        const SingleColorBlindness(),
-                        const About(),
-                        ColorLibrary(color: color),
+//                        MultipleSliders(isSplitView: widget.isSplitView),
+                        HSVerticalPicker(
+                          color: color,
+                          isSplitView: isSplitView,
+                        ),
+                        SingleColorBlindness(
+                          color: color,
+                          isSplitView: isSplitView,
+                        ),
+                        About(isSplitView: isSplitView),
+                        ColorLibrary(
+                          color: color,
+                          isSplitView: isSplitView,
+                        ),
                       ],
                     ),
                   ),
@@ -95,7 +106,11 @@ class _SingleColorHomeState extends State<SingleColorHome> {
                     ),
                     child: Column(
                       children: <Widget>[
-                        ThemeBar(),
+                        ThemeBar(
+                          selected: selected,
+                          rgbColors: currentState.rgbColors,
+                          locked: currentState.locked,
+                        ),
                         TabBar(
                           labelColor: contrastedColor,
                           indicatorColor: contrastedColor,
@@ -110,12 +125,12 @@ class _SingleColorHomeState extends State<SingleColorHome> {
                             ),
                           ),
                           tabs: [
-                            Tab(
-                              icon: Transform.rotate(
-                                angle: 0.5 * math.pi,
-                                child: const Icon(FeatherIcons.sliders),
-                              ),
-                            ),
+//                            Tab(
+//                              icon: Transform.rotate(
+//                                angle: 0.5 * math.pi,
+//                                child: const Icon(FeatherIcons.sliders),
+//                              ),
+//                            ),
                             const Tab(icon: Icon(FeatherIcons.barChart2)),
                             Tab(icon: Icon(Icons.invert_colors)),
                             Tab(icon: Icon(FeatherIcons.info)),
@@ -214,83 +229,90 @@ List<ColorWithDiff> generateLuvVariations(HSLuvColor luv, String kind) {
 }
 
 class ThemeBar extends StatelessWidget {
+  const ThemeBar({this.selected, this.rgbColors, this.locked});
+
+  final String selected;
+  final Map<String, Color> rgbColors;
+  final Map<String, bool> locked;
+
+  void colorSelected(
+    BuildContext context,
+    String selected,
+    Color color,
+  ) {
+    BlocProvider.of<MdcSelectedBloc>(context).add(
+      MDCLoadEvent(
+        currentColor: color,
+        selected: selected,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final Map<String, Color> colorsList = Map.from(rgbColors);
+
+    // remove from the bar items that were locked in the previous screen.
+    colorsList.removeWhere((String a, Color b) => locked[a] == true);
+
+    final mappedList = colorsList.values.toList();
+    final keysList = colorsList.keys.toList();
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: BlocBuilder<MdcSelectedBloc, MdcSelectedState>(
-          builder: (context, state) {
-//        if (state is MultipleContrastColorLoading) {
-//          return const Center(child: LoadingIndicator());
-//        }
-
-        final currentState = (state as MDCLoadedState);
-
-        final selected = currentState.selected;
-        final Map<String, Color> colorsList = Map.from(currentState.rgbColors);
-
-        // remove from the bar items that were locked in the previous screen.
-        colorsList
-            .removeWhere((String a, Color b) => currentState.locked[a] == true);
-
-        final mappedList = colorsList.values.toList();
-        final keysList = colorsList.keys.toList();
-
-        return Column(
-          children: <Widget>[
-            SizedBox(
-              height: 36,
-              child: ListView(
-                  physics: const BouncingScrollPhysics(),
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  children: <Widget>[
-                    const SizedBox(width: 16),
-                    for (int i = 0; i < mappedList.length; i++) ...[
-                      SizedBox(
-                        width: 32,
-                        height: 32,
-                        child: RawMaterialButton(
-                          onPressed: () {
-                            BlocProvider.of<MdcSelectedBloc>(context).add(
-                              MDCLoadEvent(
-                                currentColor: mappedList[i],
-                                selected: keysList[i],
-                              ),
-                            );
-                          },
-                          onLongPress: () {
-//                            showSlidersDialog(context, mappedList[i], i);
-                          },
-                          fillColor: mappedList[i],
-                          shape: CircleBorder(
-                            side: BorderSide(
-                              width: 2,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onSurface
-                                  .withOpacity(0.7),
-                            ),
+      child: Column(
+        children: <Widget>[
+          SizedBox(
+            height: 36,
+            child: ListView(
+                physics: const BouncingScrollPhysics(),
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                children: <Widget>[
+                  const SizedBox(width: 16),
+                  for (int i = 0; i < mappedList.length; i++) ...[
+                    SizedBox(
+                      width: 32,
+                      height: 32,
+                      child: RawMaterialButton(
+                        onPressed: () {
+                          colorSelected(
+                            context,
+                            keysList[i],
+                            mappedList[i],
+                          );
+                        },
+                        onLongPress: () {
+                          showSlidersDialog(context, mappedList[i]);
+                        },
+                        fillColor: mappedList[i],
+                        shape: CircleBorder(
+                          side: BorderSide(
+                            width: 2,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSurface
+                                .withOpacity(0.7),
                           ),
-                          child: selected == keysList[i]
-                              ? Icon(
-                                  FeatherIcons.check,
-                                  size: 16,
-                                  color: contrastingColor(mappedList[i]),
-                                )
-                              : null,
-                          elevation: 0.0,
-                          padding: EdgeInsets.zero,
                         ),
+                        child: selected == keysList[i]
+                            ? Icon(
+                                FeatherIcons.check,
+                                size: 16,
+                                color: contrastingColor(mappedList[i]),
+                              )
+                            : null,
+                        elevation: 0.0,
+                        padding: EdgeInsets.zero,
                       ),
-                      const SizedBox(width: 8),
-                    ],
+                    ),
                     const SizedBox(width: 8),
-                  ]),
-            ),
-          ],
-        );
-      }),
+                  ],
+                  const SizedBox(width: 8),
+                ]),
+          ),
+        ],
+      ),
     );
   }
 }

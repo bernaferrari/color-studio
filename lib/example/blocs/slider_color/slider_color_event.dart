@@ -14,7 +14,7 @@ class MoveColor extends SliderColorEvent {
   final bool updateTextField;
 
   @override
-  String toString() => "MoveColor...";
+  String toString() => "MoveColor... $color";
 
   @override
   List<Object> get props => [color, updateTextField];
@@ -56,7 +56,7 @@ class MoveHSLuv extends SliderColorEvent {
   final double l;
 
   @override
-  String toString() => "MoveHSL...";
+  String toString() => "MoveHSLuv...";
 
   @override
   List<Object> get props => [h, s, l];

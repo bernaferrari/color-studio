@@ -31,7 +31,7 @@ class SliderColorLoaded extends SliderColorState {
   final bool updateTextField;
 
   @override
-  String toString() => 'BlindColorsLoaded state';
+  String toString() => 'SliderColorLoaded $rgbColor';
 
   @override
   List<Object> get props => [hsvColor, rgbColor, hsluvColor, updateTextField];

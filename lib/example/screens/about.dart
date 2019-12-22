@@ -11,7 +11,9 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class About extends StatelessWidget {
-  const About();
+  const About({this.isSplitView = false});
+
+  final bool isSplitView;
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +21,10 @@ class About extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
         title: Text("About"),
-        centerTitle: false,
         backgroundColor: Theme.of(context).colorScheme.primary,
         elevation: 0,
+        centerTitle: isSplitView,
+        leading: isSplitView ? SizedBox.shrink() : null,
       ),
       body: Center(
         child: ConstrainedBox(

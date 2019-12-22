@@ -28,61 +28,62 @@ class Components extends StatelessWidget {
 
     return Container(
       color: surfaceColor,
-      child: ListView(
-        key: const PageStorageKey("mdc"),
-        children: <Widget>[
-          Padding(padding: EdgeInsets.all(4)),
-          Text(
-            "Material Components",
-            style: Theme.of(context).textTheme.title,
-            textAlign: TextAlign.center,
-          ),
-          ComponentsSample(
-            primaryColor: primaryColor,
-            surfaceColor: surfaceColor,
-            contrastColor: primaryContrastingColor,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 24.0, bottom: 16.0),
-            child: Text(
-              "surface/elevation",
+      child: Center(
+        child: ListView(
+          shrinkWrap: true,
+          key: const PageStorageKey("mdc"),
+          children: <Widget>[
+            Padding(padding: EdgeInsets.all(4)),
+            Text(
+              "Material Components",
+              style: Theme.of(context).textTheme.title,
               textAlign: TextAlign.center,
-              style: TextStyle(fontFamily: "B612Mono"),
             ),
-          ),
-          NavigationBarSample(
-            primaryColor,
-            compositeColors(
-              Colors.white,
-              surfaceColor,
-              0.12,
+            ComponentsSample(
+              primaryColor: primaryColor,
+              surfaceColor: surfaceColor,
+              contrastColor: primaryContrastingColor,
             ),
-          ),
-          LayoutBuilder(builder: (context, builder) {
-            final numOfItems = (builder.maxWidth / 80).floor();
+            Padding(
+              padding: const EdgeInsets.only(top: 24.0, bottom: 16.0),
+              child: Text(
+                "surface/elevation",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontFamily: "B612Mono"),
+              ),
+            ),
+            NavigationBarSample(
+              primaryColor,
+              compositeColors(
+                Colors.white,
+                surfaceColor,
+                0.12,
+              ),
+            ),
+            LayoutBuilder(builder: (context, builder) {
+              final numOfItems = (builder.maxWidth / 80).floor();
 
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Wrap(
-                children: <Widget>[
-                  for (int i = 0; i < elevationEntriesList.length; i++)
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: SizedBox(
-                        width: builder.maxWidth / numOfItems - 12,
-                        height: 56,
-                        child: ElevatedCardSample(
-                          elevationEntries[i],
-                          primaryColor,
-                          surfaceColor,
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Wrap(
+                  children: <Widget>[
+                    for (int i = 0; i < elevationEntriesList.length; i++)
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: SizedBox(
+                          width: builder.maxWidth / numOfItems - 12,
+                          height: 56,
+                          child: ElevatedCardSample(
+                            elevationEntries[i],
+                            primaryColor,
+                            surfaceColor,
+                          ),
                         ),
                       ),
-                    ),
-                ],
-              ),
-            );
-          }),
-
+                  ],
+                ),
+              );
+            }),
 //          Padding(
 //            padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
 //            sliver: SliverGrid(
@@ -105,133 +106,134 @@ class Components extends StatelessWidget {
 //              ),
 //            ),
 //          ),
-          const Padding(
-            padding: const EdgeInsets.only(top: 24.0),
-            child: Text(
-              "background",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontFamily: "B612Mono"),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: MaterialButton(
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                  side: BorderSide(color: Colors.white24),
-                  borderRadius: BorderRadius.circular(8)),
-              color: bgFromPrimary,
-              child: ListTile(
-                title: Text(
-                  "Recommended Background",
-                  style: TextStyle(color: Colors.white),
-                ),
-                subtitle: Text(
-                  "${bgFromPrimary.toHexStr()} = 8% of Primary + #121212",
-                  style: TextStyle(
-                      fontSize: 12, color: Colors.white.withOpacity(0.8)),
-                ),
-                trailing: Icon(FeatherIcons.chevronRight, color: Colors.white),
-              ),
-              onPressed: () {
-                colorSelected(context, bgFromPrimary);
-              },
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(top: 8.0),
-            child: Text(
-              "out of creativity?",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontFamily: "B612Mono"),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: OutlineButton(
-              child: ListTile(
-                title: Text("Generate a Random Theme"),
-                trailing: Icon(FeatherIcons.chevronRight),
-              ),
-              onPressed: () async {
-                Color primary = Colors.black;
-                Color surface;
-
-                while (primary == Colors.black) {
-                  // generates a pseudo-random list
-                  List<String> randomList = getColorsListShuffled();
-                  surface = findDarkMatchingPair(randomList);
-                  primary = findMatchingPair(randomList, surface, 5.5);
-                }
-
-//                BlocProvider.of<MdcSelectedBloc>(context).add(MDCUpdateAllEvent(
-//                  primaryColor: primary,
-//                  surfaceColor: surface,
-//                  selectedTitle: kPrimary,
-//                ));
-                colorSelected(context, primary);
-              },
-            ),
-          ),
-          Row(
-            children: <Widget>[
-              SizedBox(width: 16),
-              Expanded(
-                child: OutlineButton(
-                  padding: EdgeInsets.all(16),
-                  child: Text("Random Primary"),
-                  onPressed: () async {
-                    // generates a pseudo-random list
-                    final randomList = getColorsListShuffled();
-
-                    final surface = (BlocProvider.of<MdcSelectedBloc>(context)
-                            .state as MDCLoadedState)
-                        .rgbColorsWithBlindness[kSurface];
-                    final newPrimaryColor =
-                        findMatchingPair(randomList, surface, 4.5);
-
-//                    BlocProvider.of<MdcSelectedBloc>(context)
-//                        .add(MDCUpdateAllEvent(
-//                      primaryColor: newPrimaryColor,
-//                      surfaceColor: surface,
-//                      selectedTitle: kPrimary,
-//                    ));
-
-                    colorSelected(context, newPrimaryColor);
-                  },
-                ),
-              ),
-              SizedBox(width: 16),
-              Expanded(
-                child: OutlineButton(
-                  padding: EdgeInsets.all(16),
-                  child: Text("Random Surface"),
-                  onPressed: () async {
-                    // generates a pseudo-random list
-                    final randomList = getColorsListShuffled();
-
-                    final primary = (BlocProvider.of<MdcSelectedBloc>(context)
-                            .state as MDCLoadedState)
-                        .rgbColorsWithBlindness[kPrimary];
-
-                    final newSurfaceColor =
-                        findMatchingPair(randomList, primary, 4.5);
-
-//                    BlocProvider.of<MdcSelectedBloc>(context)
-//                        .add(MDCUpdateAllEvent(
-//                      primaryColor: primary,
-//                      surfaceColor: newSurfaceColor,
-//                      selectedTitle: kSurface,
-//                    ));
-                    colorSelected(context, newSurfaceColor);
-                  },
-                ),
-              ),
-              const SizedBox(width: 16),
-            ],
-          ),
-          const Padding(padding: EdgeInsets.all(8)),
-        ],
+//          const Padding(
+//            padding: const EdgeInsets.only(top: 24.0),
+//            child: Text(
+//              "background",
+//              textAlign: TextAlign.center,
+//              style: TextStyle(fontFamily: "B612Mono"),
+//            ),
+//          ),
+//          Padding(
+//            padding: const EdgeInsets.all(16.0),
+//            child: MaterialButton(
+//              elevation: 0,
+//              shape: RoundedRectangleBorder(
+//                  side: BorderSide(color: Colors.white24),
+//                  borderRadius: BorderRadius.circular(8)),
+//              color: bgFromPrimary,
+//              child: ListTile(
+//                title: Text(
+//                  "Recommended Background",
+//                  style: TextStyle(color: Colors.white),
+//                ),
+//                subtitle: Text(
+//                  "${bgFromPrimary.toHexStr()} = 8% of Primary + #121212",
+//                  style: TextStyle(
+//                      fontSize: 12, color: Colors.white.withOpacity(0.8)),
+//                ),
+//                trailing: Icon(FeatherIcons.chevronRight, color: Colors.white),
+//              ),
+//              onPressed: () {
+//                colorSelected(context, bgFromPrimary);
+//              },
+//            ),
+//          ),
+//          const Padding(
+//            padding: EdgeInsets.only(top: 8.0),
+//            child: Text(
+//              "out of creativity?",
+//              textAlign: TextAlign.center,
+//              style: TextStyle(fontFamily: "B612Mono"),
+//            ),
+//          ),
+//          Padding(
+//            padding: const EdgeInsets.all(16.0),
+//            child: OutlineButton(
+//              child: ListTile(
+//                title: Text("Generate a Random Theme"),
+//                trailing: Icon(FeatherIcons.chevronRight),
+//              ),
+//              onPressed: () async {
+//                Color primary = Colors.black;
+//                Color surface;
+//
+//                while (primary == Colors.black) {
+//                  // generates a pseudo-random list
+//                  List<String> randomList = getColorsListShuffled();
+//                  surface = findDarkMatchingPair(randomList);
+//                  primary = findMatchingPair(randomList, surface, 5.5);
+//                }
+//
+////                BlocProvider.of<MdcSelectedBloc>(context).add(MDCUpdateAllEvent(
+////                  primaryColor: primary,
+////                  surfaceColor: surface,
+////                  selectedTitle: kPrimary,
+////                ));
+//                colorSelected(context, primary);
+//              },
+//            ),
+//          ),
+//          Row(
+//            children: <Widget>[
+//              SizedBox(width: 16),
+//              Expanded(
+//                child: OutlineButton(
+//                  padding: EdgeInsets.all(16),
+//                  child: Text("Random Primary"),
+//                  onPressed: () async {
+//                    // generates a pseudo-random list
+//                    final randomList = getColorsListShuffled();
+//
+//                    final surface = (BlocProvider.of<MdcSelectedBloc>(context)
+//                            .state as MDCLoadedState)
+//                        .rgbColorsWithBlindness[kSurface];
+//                    final newPrimaryColor =
+//                        findMatchingPair(randomList, surface, 4.5);
+//
+////                    BlocProvider.of<MdcSelectedBloc>(context)
+////                        .add(MDCUpdateAllEvent(
+////                      primaryColor: newPrimaryColor,
+////                      surfaceColor: surface,
+////                      selectedTitle: kPrimary,
+////                    ));
+//
+//                    colorSelected(context, newPrimaryColor);
+//                  },
+//                ),
+//              ),
+//              SizedBox(width: 16),
+//              Expanded(
+//                child: OutlineButton(
+//                  padding: EdgeInsets.all(16),
+//                  child: Text("Random Surface"),
+//                  onPressed: () async {
+//                    // generates a pseudo-random list
+//                    final randomList = getColorsListShuffled();
+//
+//                    final primary = (BlocProvider.of<MdcSelectedBloc>(context)
+//                            .state as MDCLoadedState)
+//                        .rgbColorsWithBlindness[kPrimary];
+//
+//                    final newSurfaceColor =
+//                        findMatchingPair(randomList, primary, 4.5);
+//
+////                    BlocProvider.of<MdcSelectedBloc>(context)
+////                        .add(MDCUpdateAllEvent(
+////                      primaryColor: primary,
+////                      surfaceColor: newSurfaceColor,
+////                      selectedTitle: kSurface,
+////                    ));
+//                    colorSelected(context, newSurfaceColor);
+//                  },
+//                ),
+//              ),
+//              const SizedBox(width: 16),
+//            ],
+//          ),
+            const Padding(padding: EdgeInsets.all(8)),
+          ],
+        ),
       ),
     );
   }

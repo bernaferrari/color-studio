@@ -51,8 +51,8 @@ class ContrastRatioScreen extends StatelessWidget {
               fontWeight: FontWeight.w400,
               fontSize: 14,
             ),
-            title: GoogleFonts.firaMono(fontSize: 13),
-            subtitle: GoogleFonts.firaMono(fontSize: 11),
+            title: GoogleFonts.firaMono(fontSize: isiPad ? 16 : 13),
+            subtitle: GoogleFonts.firaMono(fontSize: isiPad ? 14 : 11),
           ),
         ),
         child: Padding(

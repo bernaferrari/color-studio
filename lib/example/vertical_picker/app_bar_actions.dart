@@ -8,7 +8,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 class ColorSearchButton extends StatelessWidget {
   const ColorSearchButton({
     @required this.color,
-    @required this.selected,
+    this.selected,
   });
 
   final Color color;
