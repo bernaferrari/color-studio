@@ -130,64 +130,84 @@ class TopRow extends StatelessWidget {
     final contrastWhite = calculateContrast(color, Colors.white);
     final contrastBlack = calculateContrast(color, Colors.black);
 
-    return Row(
-      children: <Widget>[
-        SizedBox(width: 8),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: ColorSearchButton(
-            color: color,
-            selected: selected,
-          ),
-        ),
-        Expanded(
-          child: SizedBox.shrink(),
-        ),
-        SizedBox(width: 16),
-        Container(
-          height: 36,
-          padding: const EdgeInsets.all(8.0),
-          child: Center(
-            child: Text(
-              "${contrastWhite.toStringAsPrecision(3)} ${getContrastLetters(contrastWhite)}",
-              style: TextStyle(color: Theme.of(context).colorScheme.primary),
-            ),
-          ),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(16),
-          ),
-        ),
-        SizedBox(width: 8),
-        Container(
-          height: 36,
-          padding: const EdgeInsets.all(8.0),
-          child: Center(
-            child: Text(
-              "${contrastBlack.toStringAsPrecision(3)} ${getContrastLetters(contrastBlack)}",
-              style: TextStyle(color: Theme.of(context).colorScheme.primary),
-            ),
-          ),
-          decoration: BoxDecoration(
-            color: Colors.black,
-            borderRadius: BorderRadius.circular(16),
-          ),
-        ),
-        BorderedIconButton(
-          child: Icon(FeatherIcons.maximize, size: 16),
-          onPressed: () {
-            BlocProvider.of<MdcSelectedBloc>(context).add(
-              MDCLoadEvent(
-                currentColor: color,
+    return LayoutBuilder(
+      builder: (context, builder) {
+        // if screen is not large, hide the button for detailed color screen.
+        // that screen is optimized for larger sizes.
+        final largeScreen = builder.maxWidth > 380;
+
+        // if screen is tiny (like in split-view), hide the AA/AAA letters.
+        final smallScreen = builder.maxWidth < 320;
+
+        final whiteLetter =
+            smallScreen ? "" : " ${getContrastLetters(contrastWhite)}";
+        final blackLetter =
+            smallScreen ? "" : " ${getContrastLetters(contrastBlack)}";
+
+        return Row(
+          children: <Widget>[
+            SizedBox(width: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: ColorSearchButton(
+                color: color,
                 selected: selected,
               ),
-            );
+            ),
+            Expanded(
+              child: SizedBox.shrink(),
+            ),
+            Container(
+              height: 36,
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
+                child: Text(
+                  "${contrastWhite.toStringAsPrecision(3)}$whiteLetter",
+                  style:
+                      TextStyle(color: Theme.of(context).colorScheme.primary),
+                ),
+              ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+              ),
+            ),
+            SizedBox(width: 8),
+            Container(
+              height: 36,
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
+                child: Text(
+                  "${contrastBlack.toStringAsPrecision(3)}$blackLetter",
+                  style:
+                      TextStyle(color: Theme.of(context).colorScheme.primary),
+                ),
+              ),
+              decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(16),
+              ),
+            ),
+            if (largeScreen)
+              BorderedIconButton(
+                child: Icon(FeatherIcons.maximize, size: 16),
+                onPressed: () {
+                  BlocProvider.of<MdcSelectedBloc>(context).add(
+                    MDCLoadEvent(
+                      currentColor: color,
+                      selected: selected,
+                    ),
+                  );
 
-            Navigator.pushNamed(context, "/colordetails", arguments: selected);
-          },
-        ),
-        SizedBox(width: 16),
-      ],
+                  Navigator.pushNamed(context, "/colordetails");
+                },
+              )
+            else
+              SizedBox(width: 8),
+            SizedBox(width: 16),
+          ],
+        );
+      },
     );
   }
 

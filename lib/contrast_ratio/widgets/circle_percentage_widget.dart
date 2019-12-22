@@ -1,5 +1,6 @@
 import 'package:colorstudio/contrast_ratio/widgets/scaling_info.dart';
 import 'package:colorstudio/example/contrast/contrast_util.dart';
+import 'package:colorstudio/example/mdc/contrast_compare.dart';
 import 'package:flutter/material.dart';
 
 import 'circle_percentage_painter.dart';
@@ -77,22 +78,7 @@ class _CirclePercentageWidgetState extends State<CirclePercentageWidget>
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      text: widget.contrastValue.toStringAsPrecision(3),
-                      style: Theme.of(context).textTheme.title,
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: ':1',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline
-                              .copyWith(fontSize: 14),
-                        ),
-                      ],
-                    ),
-                  ),
+                  ContrastText(widget.contrastValue),
                   Text(
                     getContrastLetters(widget.contrastValue),
                     style: Theme.of(context).textTheme.overline,

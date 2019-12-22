@@ -56,6 +56,7 @@ class SchemeHeaderItem extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         title,
+                        overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.title,
                       ),
                     ],
@@ -84,9 +85,10 @@ class SchemeHeaderItem extends StatelessWidget {
           ),
 //          SizedBox(width: 8),
           SizedBox(
-            width: 72,
+            width: 112,
             height: 47,
             child: FlatButton(
+              padding: EdgeInsets.symmetric(horizontal: 8),
               onPressed: () {
                 BlocProvider.of<MdcSelectedBloc>(context).add(
                   MDCUpdateLock(
@@ -96,10 +98,52 @@ class SchemeHeaderItem extends StatelessWidget {
                 );
               },
               shape: RoundedRectangleBorder(),
-              child: Icon(
-                locked ? FeatherIcons.lock : FeatherIcons.unlock,
-                size: 20,
-                color: Theme.of(context).colorScheme.onSurface.withOpacity(locked ? 1.0 : 0.5),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: !locked
+                      ? null
+                      : Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withOpacity(0.10),
+                  border: Border.all(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withOpacity(0.20),
+                  ),
+                  // even the tiniest detail must be honored.
+                  borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(
+                      (title == kSurface) ? 8.0 : 0.0,
+                    ),
+                  ),
+                ),
+                padding: EdgeInsets.all(8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      locked ? "AUTO" : "MANUAL",
+                      style: Theme.of(context).textTheme.caption.copyWith(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSurface
+                                .withOpacity(locked ? 1.0 : 0.5),
+                          ),
+                    ),
+                    SizedBox(width: 8),
+                    Icon(
+                      locked ? FeatherIcons.lock : FeatherIcons.unlock,
+                      size: 16,
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withOpacity(locked ? 1.0 : 0.5),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

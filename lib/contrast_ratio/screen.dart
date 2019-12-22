@@ -13,8 +13,6 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
-import '../home.dart';
-
 class ContrastRatioScreen extends StatelessWidget {
   const ContrastRatioScreen(this.contrastedColors, this.shouldDisplayElevation);
 
@@ -53,7 +51,8 @@ class ContrastRatioScreen extends StatelessWidget {
               fontWeight: FontWeight.w400,
               fontSize: 14,
             ),
-            title: GoogleFonts.firaMono(fontSize: 18),
+            title: GoogleFonts.firaMono(fontSize: 13),
+            subtitle: GoogleFonts.firaMono(fontSize: 11),
           ),
         ),
         child: Padding(

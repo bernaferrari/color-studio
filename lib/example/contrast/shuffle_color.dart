@@ -1,6 +1,8 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:colorstudio/example/contrast/inter_color_with_contrast.dart';
+import 'package:hsluv/hsluvcolor.dart';
 
 class _ColorContrast {
   const _ColorContrast(this.color, this.contrast);
@@ -43,6 +45,76 @@ Color getShuffleColor() {
 List<Color> getShuffledColors([int n = 8]) {
   final colorsList = colorClaim.toList()..shuffle();
   return [for (int i = 0; i < n; i++) colorsList[i].hexToColor()];
+}
+
+List<Color> getShuffledMaterial() {
+  var rng = Random();
+
+  // ### Primary Color Study
+  // ## Light Theme
+  // # Material colors in HSV:
+  // H: 265 S: 100 V: 93
+  // H: 174 S: 99 V: 85
+  // Therefore, S > 90 and V > 80
+  //
+  // # Material colors in HSLuv:
+  // H: 272 S: 100 L: 36
+  // H: 177 S: 100 L: 79
+  // Therefore, S > 90 and 30 < L < 90
+  //
+  // ## Dark Theme
+  // # Material colors in HSV:
+  // H: 267 S: 47 V: 99
+  // H: 174 S: 99 V: 85
+  // OWL - H: 345 S: 54 V: 100
+  // Therefore, 50 < S < 100 and V > 80
+  //
+  // # Material colors in HSLuv:
+  // H: 281 S: 97 L: 65
+  // H: 176 S: 100 L: 79
+  // OWL - H: 360 S: 100 L: 67
+  // Therefore, S > 90 and 60 < L < 80
+
+  final isDark = rng.nextInt(1) % 2 == 0;
+
+  return isDark
+      ? [
+          HSLuvColor.fromHSL(
+            rng.nextInt(360).toDouble(),
+            50 + rng.nextInt(50).toDouble(),
+            80 + rng.nextInt(20).toDouble(),
+          ).toColor(),
+          HSLuvColor.fromHSL(
+            rng.nextInt(360).toDouble(),
+            rng.nextInt(100).toDouble(),
+            rng.nextInt(30).toDouble(),
+          ).toColor(),
+          HSLuvColor.fromHSL(
+            rng.nextInt(360).toDouble(),
+            5 + rng.nextInt(80).toDouble(),
+            rng.nextInt(30).toDouble(),
+          ).toColor(),
+        ]
+      : [
+          HSLuvColor.fromHSL(
+            rng.nextInt(360).toDouble(),
+            80 + rng.nextInt(10).toDouble(),
+            30 + rng.nextInt(60).toDouble(),
+          ).toColor(),
+          HSLuvColor.fromHSL(
+            rng.nextInt(360).toDouble(),
+            60 + rng.nextInt(40).toDouble(),
+            60 + rng.nextInt(40).toDouble(),
+          ).toColor(),
+          HSLuvColor.fromHSL(
+            rng.nextInt(360).toDouble(),
+            rng.nextInt(100).toDouble(),
+            60 + rng.nextInt(40).toDouble(),
+          ).toColor(),
+        ];
+
+//  final colorsList = colorClaim.toList()..shuffle();
+//  return [for (int i = 0; i < n; i++) colorsList[i].hexToColor()];
 }
 
 // https://www.vanschneider.com/colors

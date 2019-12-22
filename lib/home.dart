@@ -36,8 +36,9 @@ class Home extends StatelessWidget {
               surface: surface,
             );
 
+      // this should be faster than rgbColors[kSurface].computeLuminance < kLumContrast
       final bool shouldDisplayElevation =
-          currentState.rgbColors[kSurface].computeLuminance() < kLumContrast;
+          currentState.hsluvColors[kSurface].lightness < kLumContrast * 100;
 
       final isiPad = MediaQuery.of(context).size.width > 600;
 
