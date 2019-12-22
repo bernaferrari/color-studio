@@ -128,9 +128,6 @@ class Home extends StatelessWidget {
                 ),
               ),
             ),
-//            Expanded(
-//              child: SizedBox.shrink(),
-//            ),
             BorderedIconButton(
               child: Icon(FeatherIcons.maximize, size: 16),
               onPressed: () {

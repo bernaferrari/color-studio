@@ -1,9 +1,14 @@
 import 'dart:ui';
 
+import 'package:colorstudio/example/blocs/blocs.dart';
+import 'package:colorstudio/example/blocs/color_blind/color_blind_bloc.dart';
+import 'package:colorstudio/example/mdc/util/color_blind_from_index.dart';
+import 'package:colorstudio/example/screens/single_color_blindness.dart';
 import 'package:colorstudio/example/widgets/color_sliders/slider_that_works.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -50,7 +55,18 @@ class _ShowcaseState extends State<Showcase> {
           child: ListView(
             key: const PageStorageKey("PreviewList"),
             children: <Widget>[
-              SizedBox(height: 24),
+              SizedBox(height: 8),
+              _PrevSpotify(primary: primaryColor, background: backgroundColor),
+              _PrevFacebook(
+                primary: primaryColor,
+                background: backgroundColor,
+                elevation: currentElevation,
+              ),
+              _PrevTrip(
+                primary: primaryColor,
+                surface: surfaceColor,
+                elevation: currentElevation,
+              ),
               if (isiPad)
                 Row(
                   children: <Widget>[
@@ -70,17 +86,6 @@ class _ShowcaseState extends State<Showcase> {
                   surface: surfaceColor,
                 ),
               ],
-              _PrevSpotify(primary: primaryColor, background: backgroundColor),
-              _PrevFacebook(
-                primary: primaryColor,
-                background: backgroundColor,
-                elevation: currentElevation,
-              ),
-              _PrevTrip(
-                primary: primaryColor,
-                surface: surfaceColor,
-                elevation: currentElevation,
-              ),
 //        _PrevCupertino(primary: primaryColor, backgroundColor: backgroundColor),
               _PrevPhotos(primary: primaryColor, surface: surfaceColor),
               _PrevPodcast(
@@ -92,7 +97,7 @@ class _ShowcaseState extends State<Showcase> {
                 primary: primaryColor,
                 elevation: currentElevation,
               ),
-              _PrevHighlights(
+              _PrevPodcasts(
                 primary: primaryColor,
                 elevation: currentElevation,
               ),
@@ -100,10 +105,134 @@ class _ShowcaseState extends State<Showcase> {
             ],
           ),
         ),
+        BlocBuilder<MdcSelectedBloc, MdcSelectedState>(
+            builder: (BuildContext context, state) {
+          final currentState = state as MDCLoadedState;
+
+          final blindnessSelected = currentState.blindnessSelected;
+
+          final ColorWithBlind blindPrimary = getColorBlindFromIndex(
+            primaryColor,
+            blindnessSelected,
+          );
+
+          return Container(
+            height: 56,
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  child: Row(
+                    children: <Widget>[
+                      const SizedBox(width: 8),
+//                      IconButton(
+//                        icon: Icon(
+//                          FeatherIcons.chevronsUp,
+//                          size: 20,
+//                        ),
+//                        onPressed: () {
+//                        },
+//                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              blindPrimary?.name ?? "Color Blindness",
+                              style: GoogleFonts.openSans(
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Text(
+                              blindPrimary?.affects ?? "None selected",
+                              style: GoogleFonts.openSans(
+                                textStyle: Theme.of(context).textTheme.caption,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Text(
+                        "$blindnessSelected/8",
+                        style: GoogleFonts.b612Mono(),
+                      ),
+                      SizedBox(width: 8),
+                      Container(
+                          clipBehavior: Clip.antiAlias,
+                          decoration: BoxDecoration(
+                            color: backgroundColor,
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onBackground
+                                  .withOpacity(0.20),
+                            ),
+                          ),
+                          child: Row(
+                            children: <Widget>[
+                              SizedBox(
+                                width: 48,
+                                height: 48,
+                                child: FlatButton(
+                                  padding: EdgeInsets.zero,
+                                  shape: RoundedRectangleBorder(),
+                                  child: Icon(FeatherIcons.chevronLeft),
+                                  onPressed: () {
+                                    int newState = blindnessSelected - 1;
+                                    if (newState < 0) {
+                                      newState = 8;
+                                    }
+                                    BlocProvider.of<ColorBlindBloc>(context)
+                                        .add(newState);
+                                  },
+                                ),
+                              ),
+                              Container(
+                                width: 1,
+                                height: 48,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onBackground
+                                    .withOpacity(0.20),
+                              ),
+                              SizedBox(
+                                width: 48,
+                                height: 48,
+                                child: FlatButton(
+                                  padding: EdgeInsets.zero,
+                                  shape: RoundedRectangleBorder(),
+                                  child: Icon(FeatherIcons.chevronRight),
+                                  onPressed: () {
+                                    int newState = blindnessSelected + 1;
+                                    if (newState > 8) {
+                                      newState = 0;
+                                    }
+                                    BlocProvider.of<ColorBlindBloc>(context)
+                                        .add(newState);
+                                  },
+                                ),
+                              ),
+                            ],
+                          )),
+                      const SizedBox(width: 8),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        }),
         Row(
           children: <Widget>[
             const SizedBox(width: 16),
-            Text("elevation", style: Theme.of(context).textTheme.caption),
+            Text(
+              "Elevation",
+              style: GoogleFonts.openSans(
+                textStyle: Theme.of(context).textTheme.caption,
+              ),
+            ),
             Expanded(
               child: Slider2(
                 value: sliderValue,
@@ -898,8 +1027,8 @@ class _PrevSocial extends StatelessWidget {
   }
 }
 
-class _PrevHighlights extends StatelessWidget {
-  const _PrevHighlights({this.primary, this.elevation});
+class _PrevPodcasts extends StatelessWidget {
+  const _PrevPodcasts({this.primary, this.elevation});
 
   final Color primary;
   final int elevation;
