@@ -15,6 +15,7 @@ import 'package:hsluv/hsluvcolor.dart';
 import '../blocs/blocs.dart';
 import '../util/constants.dart';
 import 'color_library.dart';
+import 'multiple_sliders.dart';
 
 class SingleColorHome extends StatelessWidget {
   const SingleColorHome({this.isSplitView = false});
@@ -69,15 +70,18 @@ class SingleColorHome extends StatelessWidget {
         child: Scaffold(
           backgroundColor: color,
           body: DefaultTabController(
-            length: 4,
-            initialIndex: 0,
+            length: 5,
+            initialIndex: 1,
             child: SafeArea(
               child: Column(
                 children: <Widget>[
                   Expanded(
                     child: TabBarView(
                       children: [
-//                        MultipleSliders(isSplitView: widget.isSplitView),
+                        MultipleSliders(
+                          color: color,
+                          isSplitView: isSplitView,
+                        ),
                         HSVerticalPicker(
                           color: color,
                           isSplitView: isSplitView,
@@ -101,7 +105,8 @@ class SingleColorHome extends StatelessWidget {
                           colorScheme.background.withOpacity(kVeryTransparent),
                       border: Border(
                         top: BorderSide(
-                            color: colorScheme.onSurface.withOpacity(0.40)),
+                          color: colorScheme.onSurface.withOpacity(0.40),
+                        ),
                       ),
                     ),
                     child: Column(
@@ -125,12 +130,12 @@ class SingleColorHome extends StatelessWidget {
                             ),
                           ),
                           tabs: [
-//                            Tab(
-//                              icon: Transform.rotate(
-//                                angle: 0.5 * math.pi,
-//                                child: const Icon(FeatherIcons.sliders),
-//                              ),
-//                            ),
+                            Tab(
+                              icon: Transform.rotate(
+                                angle: 0.5 * math.pi,
+                                child: const Icon(FeatherIcons.sliders),
+                              ),
+                            ),
                             const Tab(icon: Icon(FeatherIcons.barChart2)),
                             Tab(icon: Icon(Icons.invert_colors)),
                             Tab(icon: Icon(FeatherIcons.info)),

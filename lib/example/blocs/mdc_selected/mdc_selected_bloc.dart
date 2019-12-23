@@ -170,18 +170,14 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
       }
     });
 
-    // this delay should be unnoticeable but helps the Multiple Slider screen be fast.
-    // This will be in place until a better solution is found.
-    yield await Future.delayed(Duration(milliseconds: 50), () {
-      return MDCLoadedState(
-        allRgb,
-        convertToHSLuv(allRgb),
-        getBlindness(allRgb, blindness),
-        currentState.locked,
-        selected,
-        blindness,
-      );
-    });
+    yield MDCLoadedState(
+      allRgb,
+      convertToHSLuv(allRgb),
+      getBlindness(allRgb, blindness),
+      currentState.locked,
+      selected,
+      blindness,
+    );
   }
 
   Stream<MdcSelectedState> _mapBlindnessToState(MDCBlindnessEvent load) async* {

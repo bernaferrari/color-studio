@@ -1,6 +1,5 @@
 import 'package:colorstudio/contrast_ratio/dark_mode_surface_contrast.dart';
 import 'package:colorstudio/contrast_ratio/widgets/contrast_widgets.dart';
-import 'package:colorstudio/contrast_ratio/widgets/scaling_info.dart';
 import 'package:colorstudio/example/blocs/blocs.dart';
 import 'package:colorstudio/example/blocs/contrast_ratio/contrast_ratio_state.dart';
 import 'package:colorstudio/example/util/constants.dart';
@@ -28,10 +27,6 @@ class ContrastRatioScreen extends StatelessWidget {
       background: surfaceHSLuv.withLightness(10).toColor(),
       surface: contrastedColors[kSurface],
     );
-
-    if (!ScalingInfo.initialized) {
-      ScalingInfo.init(context);
-    }
 
     return BlocBuilder<ContrastRatioBloc, ContrastRatioState>(
         builder: (context, state) {

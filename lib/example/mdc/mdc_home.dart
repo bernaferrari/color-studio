@@ -1,4 +1,5 @@
 import 'package:colorstudio/example/blocs/blocs.dart';
+import 'package:colorstudio/example/contrast/shuffle_color.dart';
 import 'package:colorstudio/example/mdc/showcase.dart';
 import 'package:colorstudio/example/screens/home.dart';
 import 'package:colorstudio/example/util/constants.dart';
@@ -30,7 +31,7 @@ class MDCHome extends StatelessWidget {
           ? Colors.black
           : Colors.white;
 
-      final isiPad = MediaQuery.of(context).size.width > 600;
+      final isiPad = MediaQuery.of(context).size.shortestSide > 600;
 
       final scheme = backgroundLuv.lightness > 100 - kLumContrast * 100
           ? ColorScheme.light(
@@ -70,6 +71,14 @@ class MDCHome extends StatelessWidget {
                   child: Icon(FeatherIcons.maximize, size: 16),
                   onPressed: () {
                     Navigator.pushNamed(context, "/colordetails");
+                  },
+                ),
+                BorderedIconButton(
+                  child: Icon(FeatherIcons.shuffle, size: 16),
+                  onPressed: () {
+                    BlocProvider.of<MdcSelectedBloc>(context).add(
+                      MDCUpdateAllEvent(colors: getShuffledMaterial()),
+                    );
                   },
                 ),
               ],

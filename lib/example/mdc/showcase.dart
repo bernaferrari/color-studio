@@ -341,84 +341,71 @@ class _PrevPodcast extends StatelessWidget {
       adaptivePrimary = Colors.white;
     }
 
-    final texts = ["Stats", "Downloads", "Files"];
+    final style = GoogleFonts.raleway(
+      textStyle: TextStyle(
+        color: Theme.of(context).colorScheme.onSurface,
+      ),
+    );
 
-    final icons = [
-      FeatherIcons.barChart,
-      FeatherIcons.download,
-      FeatherIcons.file
+    const List<String> texts = ["Stats", "Forecast", "CPU"];
+
+    const List<IconData> icons = [
+      FeatherIcons.batteryCharging,
+      FeatherIcons.cloudDrizzle,
+      FeatherIcons.cpu,
     ];
 
-    return Theme(
-      data: Theme.of(context).copyWith(
-        cardTheme: CardTheme(
+    return Column(
+      children: <Widget>[
+        const SizedBox(height: 24),
+        Text(
+          "List of Cards",
+          style: GoogleFonts.lato(
+            fontSize: 26,
+            fontWeight: FontWeight.w900,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        SizedBox(height: 16),
+        Card(
           shape: ContinuousRectangleBorder(),
           margin: EdgeInsets.all(0),
           elevation: elevation.toDouble(),
-        ),
-      ),
-      child: Column(
-        children: <Widget>[
-          const SizedBox(height: 24),
-          Text(
-            "List of Cards",
-            style: GoogleFonts.lato(
-              fontSize: 26,
-              fontWeight: FontWeight.w900,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: 16),
-          AppBar(
-            leading: BackButton(color: adaptivePrimary),
-            title: Text(
-              "New Releases",
-              style: GoogleFonts.raleway(
-                fontWeight: FontWeight.w600,
-                textStyle: TextStyle(color: adaptivePrimary),
-              ),
-            ),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(FeatherIcons.shuffle, color: adaptivePrimary),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: Icon(FeatherIcons.moreVertical, color: adaptivePrimary),
-                onPressed: () {},
-              ),
-            ],
-          ),
-          for (int i = 0; i < texts.length; i++) ...[
-            Card(
-              child: ListTile(
-                onTap: () {},
+          child: Column(
+            children: <Widget>[
+              AppBar(
+                leading: BackButton(color: adaptivePrimary),
                 title: Text(
-                  texts[i],
+                  "New Releases",
                   style: GoogleFonts.raleway(
-                    textStyle: TextStyle(
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
+                    fontWeight: FontWeight.w600,
+                    textStyle: TextStyle(color: adaptivePrimary),
                   ),
                 ),
-                leading: Icon(icons[i], color: primary),
+                actions: <Widget>[
+                  IconButton(
+                    icon: Icon(FeatherIcons.activity, color: adaptivePrimary),
+                    onPressed: () {},
+                  ),
+                  IconButton(
+                    icon:
+                        Icon(FeatherIcons.moreVertical, color: adaptivePrimary),
+                    onPressed: () {},
+                  ),
+                ],
               ),
-            ),
-            divider()
-          ]
-        ],
-      ),
-    );
-  }
-
-  Widget divider() {
-    return Container(
-      height: 1,
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: Colors.white24),
+              for (int i = 0; i < texts.length; i++) ...[
+                ListTile(
+                  onTap: () {},
+                  title: Text(texts[i], style: style),
+                  leading: Icon(icons[i], color: primary),
+                ),
+                const Divider(height: 1, color: Colors.white38),
+              ],
+            ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }
@@ -643,30 +630,37 @@ class _PrevSpotify extends StatelessWidget {
               width: 144,
               height: 144,
               color: primary,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Your Top Songs",
-                      style: GoogleFonts.hind(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 26,
-                        textStyle: TextStyle(height: 1),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Your Top Songs",
+                        style: GoogleFonts.hind(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 26,
+                          textStyle: TextStyle(height: 1),
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    "2019",
-                    style: GoogleFonts.hind(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 68,
-                      textStyle: TextStyle(height: 0.6, color: background),
+                    SizedBox(height: 20),
+                    SizedBox(
+                      width: 128,
+                      child: FittedBox(
+                        child: Text(
+                          "2019",
+                          style: GoogleFonts.hind(
+                            fontWeight: FontWeight.w600,
+                            textStyle:
+                                TextStyle(height: 0.6, color: background),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             SizedBox(width: 16),
@@ -701,7 +695,7 @@ class _PrevFacebook extends StatelessWidget {
 
     return Card(
       elevation: elevation.toDouble(),
-      margin: EdgeInsets.symmetric(horizontal: 48, vertical: 16),
+      margin: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Column(
         children: <Widget>[
           SizedBox(height: 16),
@@ -817,20 +811,20 @@ class _PrevTrip extends StatelessWidget {
       textStyle: TextStyle(color: Theme.of(context).colorScheme.onSurface),
     );
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 48.0),
-      child: Column(
-        children: <Widget>[
-          SizedBox(height: 16),
-          Text(
-            "Plan a Trip",
-            style: GoogleFonts.oxygen(
-              fontSize: 26,
-              fontWeight: FontWeight.w800,
-            ),
+    return Column(
+      children: <Widget>[
+        SizedBox(height: 16),
+        Text(
+          "Plan a Trip",
+          style: GoogleFonts.oxygen(
+            fontSize: 26,
+            fontWeight: FontWeight.w800,
           ),
-          SizedBox(height: 24),
-          Row(
+        ),
+        SizedBox(height: 24),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               // inspired from SkyScanner
@@ -868,16 +862,18 @@ class _PrevTrip extends StatelessWidget {
               ],
             ],
           ),
-          SizedBox(height: 16),
-          Card(
-            margin: const EdgeInsets.symmetric(vertical: 12),
-            elevation: elevation.toDouble(),
+        ),
+        SizedBox(height: 16),
+        Card(
+          margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+          elevation: elevation.toDouble(),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
             child: Column(
               children: <Widget>[
                 // inspired from Kayak
-                SizedBox(height: 16),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text("Time", style: boldStyle),
                     Text("To", style: boldStyle),
@@ -888,7 +884,7 @@ class _PrevTrip extends StatelessWidget {
                 SizedBox(height: 8),
                 for (int i = 0; i < time.length; i++)
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(time[i], style: style),
                       Text(airport[i], style: style),
@@ -902,14 +898,13 @@ class _PrevTrip extends StatelessWidget {
                       Text(flight[i], style: style),
                     ],
                   ),
-                SizedBox(height: 16),
               ],
             ),
-            color: surface,
           ),
-          SizedBox(height: 16),
-        ],
-      ),
+          color: surface,
+        ),
+        SizedBox(height: 16),
+      ],
     );
   }
 }
@@ -1041,7 +1036,7 @@ class _PrevPodcasts extends StatelessWidget {
       children: <Widget>[
         Card(
           elevation: elevation.toDouble(),
-          margin: EdgeInsets.symmetric(horizontal: 48),
+          margin: EdgeInsets.symmetric(horizontal: 16),
           child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: Column(
@@ -1098,6 +1093,8 @@ class _PrevPodcasts extends StatelessWidget {
                 SizedBox(height: 8),
                 Text(
                   "278 years of Alcatraz's history. From Silicon Valley's luxury condominium to a prison no one can escape.",
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.muli(
                     textStyle: TextStyle(
                       color: Theme.of(context).colorScheme.onSurface,
@@ -1113,13 +1110,12 @@ class _PrevPodcasts extends StatelessWidget {
                       color: Theme.of(context).colorScheme.onSurface,
                     ),
                     SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        "Yesterday • 34 MINS",
-                        style: GoogleFonts.muli(
-                          textStyle: TextStyle(
-                            color: Theme.of(context).colorScheme.onSurface,
-                          ),
+                    Text(
+                      "Yesterday • 34 MINS",
+                      maxLines: 1,
+                      style: GoogleFonts.muli(
+                        textStyle: TextStyle(
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                     ),

@@ -8,8 +8,9 @@ import '../blocs/slider_color/slider_color.dart';
 import '../widgets/color_sliders.dart';
 
 class MultipleSliders extends StatelessWidget {
-  const MultipleSliders({this.isSplitView = false});
+  const MultipleSliders({this.color, this.isSplitView = false});
 
+  final Color color;
   final bool isSplitView;
 
   @override
@@ -38,20 +39,18 @@ class MultipleSliders extends StatelessWidget {
             BlocProvider.of<SliderColorBloc>(context).add(MoveHSV(h, s, v));
           });
 
-      final rgbColor = (state as SliderColorLoaded).rgbColor;
-
       return Scaffold(
         appBar: AppBar(
           title: Text("Multiple Sliders"),
           centerTitle: isSplitView,
           elevation: 0,
-          backgroundColor: rgbColor,
+          backgroundColor: color,
           leading: isSplitView ? SizedBox.shrink() : null,
           actions: <Widget>[
-            ColorSearchButton(color: rgbColor),
+            ColorSearchButton(color: color),
           ],
         ),
-        backgroundColor: rgbColor,
+        backgroundColor: color,
         body: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 818),
