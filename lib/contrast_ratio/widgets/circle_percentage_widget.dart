@@ -11,6 +11,7 @@ class CirclePercentageWidget extends StatefulWidget {
     this.percent = 0.0,
     this.contrastValue = 0.0,
     this.color = Colors.white,
+    this.animatedInit = true,
   });
 
   final String title;
@@ -18,6 +19,7 @@ class CirclePercentageWidget extends StatefulWidget {
   final double percent;
   final double contrastValue;
   final Color color;
+  final bool animatedInit;
 
   @override
   State createState() => _CirclePercentageWidgetState();
@@ -38,7 +40,11 @@ class _CirclePercentageWidgetState extends State<CirclePercentageWidget>
       setState(() {});
     });
 
-    _controller.animateTo(widget.percent);
+    if (widget.animatedInit) {
+      _controller.animateTo(widget.percent);
+    } else {
+      _controller.value = widget.percent;
+    }
 
     super.initState();
   }
@@ -61,8 +67,8 @@ class _CirclePercentageWidgetState extends State<CirclePercentageWidget>
   Widget build(context) {
     return Column(
       children: [
-        Text(widget.title),
-        Text(widget.subtitle),
+        Text(widget.title, style: Theme.of(context).textTheme.body1),
+        Text(widget.subtitle, style: Theme.of(context).textTheme.body1),
         Container(
           width: 70,
           height: 70,

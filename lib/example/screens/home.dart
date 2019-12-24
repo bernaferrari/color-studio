@@ -1,21 +1,25 @@
 import 'dart:math' as math;
 
+import 'package:colorstudio/contrast_ratio/widgets/contrast_widgets.dart';
 import 'package:colorstudio/example/mdc/components.dart';
+import 'package:colorstudio/example/mdc/templates.dart';
 import 'package:colorstudio/example/screens/about.dart';
 import 'package:colorstudio/example/screens/single_color_blindness.dart';
 import 'package:colorstudio/example/util/selected.dart';
 import 'package:colorstudio/example/util/when.dart';
 import 'package:colorstudio/example/vertical_picker/vertical_picker_main.dart';
+import 'package:colorstudio/example/widgets/loading_indicator.dart';
 import 'package:colorstudio/example/widgets/update_color_dialog.dart';
+import 'package:colorstudio/scheme/widgets/expanded_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
 import '../blocs/blocs.dart';
 import '../util/constants.dart';
 import 'color_library.dart';
-import 'multiple_sliders.dart';
 
 class SingleColorHome extends StatelessWidget {
   const SingleColorHome({this.isSplitView = false});
@@ -28,30 +32,19 @@ class SingleColorHome extends StatelessWidget {
         builder: (context, state) {
       final currentState = state as MDCLoadedState;
 
-      Color color;
-      String selected;
-      if (currentState.locked[currentState.selected] == true) {
-        color = currentState.rgbColors[kPrimary];
-        selected = kPrimary;
-      } else {
-        color = currentState.rgbColors[currentState.selected];
-        selected = currentState.selected;
-      }
+      Color selectedColor = currentState.rgbColors[currentState.selected];
+      String selected = currentState.selected;
 
-      final contrastedColor = (color.computeLuminance() > kLumContrast)
-          ? Colors.black
-          : Colors.white;
-
-      final colorScheme = (color.computeLuminance() > kLumContrast)
+      final colorScheme = (selectedColor.computeLuminance() > kLumContrast)
           ? ColorScheme.light(
-              primary: color,
-              secondary: color,
-              surface: color,
+              primary: selectedColor,
+              secondary: selectedColor,
+              surface: selectedColor,
             )
           : ColorScheme.dark(
-              primary: color,
-              secondary: color,
-              surface: color,
+              primary: selectedColor,
+              secondary: selectedColor,
+              surface: selectedColor,
             );
 
       return Theme(
@@ -59,6 +52,15 @@ class SingleColorHome extends StatelessWidget {
           // todo it would be nice if there were a ThemeData.join
           // because you need to copyWith manually everything every time.
           colorScheme: colorScheme,
+          textTheme: TextTheme(
+            title: GoogleFonts.firaSans(fontWeight: FontWeight.w600),
+            subtitle: GoogleFonts.firaSans(fontWeight: FontWeight.w500),
+            body1: GoogleFonts.firaSans(),
+            // body2 is used in templates screen
+            body2: GoogleFonts.b612Mono(fontSize: 12),
+            caption: GoogleFonts.firaSans(),
+            button: GoogleFonts.b612Mono(),
+          ),
         ).copyWith(
           cardTheme: Theme.of(context).cardTheme,
           buttonTheme: Theme.of(context).buttonTheme.copyWith(
@@ -68,82 +70,44 @@ class SingleColorHome extends StatelessWidget {
               ),
         ),
         child: Scaffold(
-          backgroundColor: color,
+          backgroundColor: selectedColor,
           body: DefaultTabController(
             length: 5,
-            initialIndex: 1,
+            initialIndex: 0,
             child: SafeArea(
               child: Column(
                 children: <Widget>[
                   Expanded(
                     child: TabBarView(
                       children: [
-                        MultipleSliders(
-                          color: color,
-                          isSplitView: isSplitView,
-                        ),
+//                        MultipleSliders(
+//                          color: color,
+//                          isSplitView: isSplitView,
+//                        ),
                         HSVerticalPicker(
-                          color: color,
+                          color: selectedColor,
                           isSplitView: isSplitView,
                         ),
                         SingleColorBlindness(
-                          color: color,
+                          color: selectedColor,
                           isSplitView: isSplitView,
                         ),
                         About(isSplitView: isSplitView),
                         ColorLibrary(
-                          color: color,
+                          color: selectedColor,
                           isSplitView: isSplitView,
+                        ),
+                        ColorTemplates(
+                          backgroundColor: selectedColor,
                         ),
                       ],
                     ),
                   ),
-                  Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color:
-                          colorScheme.background.withOpacity(kVeryTransparent),
-                      border: Border(
-                        top: BorderSide(
-                          color: colorScheme.onSurface.withOpacity(0.40),
-                        ),
-                      ),
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        ThemeBar(
-                          selected: selected,
-                          rgbColors: currentState.rgbColors,
-                          locked: currentState.locked,
-                        ),
-                        TabBar(
-                          labelColor: contrastedColor,
-                          indicatorColor: contrastedColor,
-                          isScrollable: true,
-                          indicator: BoxDecoration(
-                            color: colorScheme.onSurface.withOpacity(0.10),
-                            border: Border(
-                              top: BorderSide(
-                                color: colorScheme.onSurface,
-                                width: 2.0,
-                              ),
-                            ),
-                          ),
-                          tabs: [
-                            Tab(
-                              icon: Transform.rotate(
-                                angle: 0.5 * math.pi,
-                                child: const Icon(FeatherIcons.sliders),
-                              ),
-                            ),
-                            const Tab(icon: Icon(FeatherIcons.barChart2)),
-                            Tab(icon: Icon(Icons.invert_colors)),
-                            Tab(icon: Icon(FeatherIcons.info)),
-                            Tab(icon: Icon(FeatherIcons.bookOpen)),
-                          ],
-                        ),
-                      ],
-                    ),
+                  _BottomHome(
+                    selected: selected,
+                    selectedColor: selectedColor,
+                    locked: currentState.locked,
+                    rgbColors: currentState.rgbColors,
                   ),
                 ],
               ),
@@ -166,6 +130,135 @@ class SingleColorHome extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class _BottomHome extends StatefulWidget {
+  const _BottomHome({
+    this.selected,
+    this.selectedColor,
+    this.rgbColors,
+    this.locked,
+  });
+
+  final String selected;
+  final Color selectedColor;
+  final Map<String, Color> rgbColors;
+  final Map<String, bool> locked;
+
+  @override
+  __BottomHomeState createState() => __BottomHomeState();
+}
+
+class __BottomHomeState extends State<_BottomHome> {
+  bool isContrastExpanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final contrastedColor =
+        (widget.selectedColor.computeLuminance() > kLumContrast)
+            ? Colors.black
+            : Colors.white;
+
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: colorScheme.background.withOpacity(kVeryTransparent),
+        border: Border(
+          top: BorderSide(
+            color: colorScheme.onSurface.withOpacity(0.40),
+          ),
+        ),
+      ),
+      child: Column(
+        children: <Widget>[
+          ExpandedSection(
+            expand: isContrastExpanded,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: _ColorContrastRow(),
+            ),
+          ),
+          ThemeBar(
+            selected: widget.selected,
+            rgbColors: widget.rgbColors,
+            locked: widget.locked,
+            isExpanded: isContrastExpanded,
+            onExpanded: () {
+              setState(() {
+                isContrastExpanded = !isContrastExpanded;
+              });
+            },
+          ),
+          TabBar(
+            labelColor: contrastedColor,
+            indicatorColor: contrastedColor,
+            isScrollable: true,
+            indicator: BoxDecoration(
+              color: colorScheme.onSurface.withOpacity(0.10),
+              border: Border(
+                top: BorderSide(
+                  color: colorScheme.onSurface,
+                  width: 2.0,
+                ),
+              ),
+            ),
+            tabs: [
+//                            Tab(
+//                              icon: Transform.rotate(
+//                                angle: 0.5 * math.pi,
+//                                child: const Icon(FeatherIcons.sliders),
+//                              ),
+//                            ),
+              const Tab(icon: Icon(FeatherIcons.barChart2)),
+              Tab(icon: Icon(Icons.invert_colors)),
+              Tab(icon: Icon(FeatherIcons.info)),
+              Tab(icon: Icon(FeatherIcons.bookOpen)),
+              Tab(icon: Icon(FeatherIcons.briefcase)),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ColorContrastRow extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ContrastRatioBloc, ContrastRatioState>(
+        builder: (context, state) {
+      if (state is InitialContrastRatioState) {
+        return Center(child: LoadingIndicator());
+      }
+
+      final currentState = (state as ContrastRatioSuccess);
+
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          ContrastCircleBar(
+            title: kPrimary,
+            subtitle: kBackground,
+            contrast: currentState.contrastValues[0],
+            animateOnInit: false,
+          ),
+          ContrastCircleBar(
+            title: kPrimary,
+            subtitle: kSurface,
+            contrast: currentState.contrastValues[1],
+            animateOnInit: false,
+          ),
+          ContrastCircleBar(
+            title: kBackground,
+            subtitle: kSurface,
+            contrast: currentState.contrastValues[2],
+            animateOnInit: false,
+          ),
+        ],
+      );
+    });
   }
 }
 
@@ -234,11 +327,19 @@ List<ColorWithDiff> generateLuvVariations(HSLuvColor luv, String kind) {
 }
 
 class ThemeBar extends StatelessWidget {
-  const ThemeBar({this.selected, this.rgbColors, this.locked});
+  const ThemeBar({
+    this.selected,
+    this.rgbColors,
+    this.locked,
+    this.isExpanded,
+    this.onExpanded,
+  });
 
   final String selected;
   final Map<String, Color> rgbColors;
   final Map<String, bool> locked;
+  final bool isExpanded;
+  final Function onExpanded;
 
   void colorSelected(
     BuildContext context,
@@ -263,58 +364,93 @@ class ThemeBar extends StatelessWidget {
     final mappedList = colorsList.values.toList();
     final keysList = colorsList.keys.toList();
 
+    final contrastedColors = [
+      for (int i = 0; i < mappedList.length; i++)
+        contrastingColor(mappedList[i])
+    ];
+
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
+      padding: const EdgeInsets.only(bottom: 8.0, top: 4.0),
+      child: Row(
         children: <Widget>[
-          SizedBox(
-            height: 36,
-            child: ListView(
-                physics: const BouncingScrollPhysics(),
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  const SizedBox(width: 16),
-                  for (int i = 0; i < mappedList.length; i++) ...[
-                    SizedBox(
-                      width: 32,
-                      height: 32,
-                      child: RawMaterialButton(
-                        onPressed: () {
-                          colorSelected(
-                            context,
-                            keysList[i],
-                            mappedList[i],
-                          );
-                        },
-                        onLongPress: () {
-                          showSlidersDialog(context, mappedList[i]);
-                        },
-                        fillColor: mappedList[i],
-                        shape: CircleBorder(
-                          side: BorderSide(
-                            width: 2,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSurface
-                                .withOpacity(0.7),
+          // this is necessary to counter-balance the chevronUp icon at the other side.
+//          SizedBox(width: 48),
+          Expanded(
+            child: Center(
+              child: SizedBox(
+                height: 36,
+                width: 500,
+                child: ListView(
+                  physics: const BouncingScrollPhysics(),
+                  // in a previous iteration, shrinkWrap
+                  scrollDirection: Axis.horizontal,
+                  children: <Widget>[
+                    const SizedBox(width: 16),
+                    for (int i = 0; i < mappedList.length; i++) ...[
+                      SizedBox(
+                        height: 32,
+                        child: RawMaterialButton(
+                          onPressed: () {
+                            colorSelected(
+                              context,
+                              keysList[i],
+                              mappedList[i],
+                            );
+                          },
+                          onLongPress: () {
+                            showSlidersDialog(context, mappedList[i]);
+                          },
+                          fillColor: mappedList[i],
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                            side: BorderSide(
+                              width: 2,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurface
+                                  .withOpacity(0.7),
+                            ),
                           ),
+                          textStyle: Theme.of(context).textTheme.body1.copyWith(
+                                color: contrastedColors[i],
+                              ),
+                          child: Row(
+                            children: <Widget>[
+                              SizedBox(width: 8),
+                              if (selected == keysList[i])
+                                Icon(
+                                  FeatherIcons.check,
+                                  size: 16,
+                                  color: contrastedColors[i],
+                                )
+                              else
+                                Icon(
+                                  FeatherIcons.circle,
+                                  size: 16,
+                                  color: contrastedColors[i],
+                                ),
+                              SizedBox(width: 4),
+                              Text(keysList[i]),
+                              SizedBox(width: 8),
+                            ],
+                          ),
+                          elevation: 0.0,
+                          padding: EdgeInsets.zero,
                         ),
-                        child: selected == keysList[i]
-                            ? Icon(
-                                FeatherIcons.check,
-                                size: 16,
-                                color: contrastingColor(mappedList[i]),
-                              )
-                            : null,
-                        elevation: 0.0,
-                        padding: EdgeInsets.zero,
                       ),
-                    ),
+                      const SizedBox(width: 8),
+                    ],
                     const SizedBox(width: 8),
                   ],
-                  const SizedBox(width: 8),
-                ]),
+                ),
+              ),
+            ),
+          ),
+          IconButton(
+            icon: Icon(
+              isExpanded ? FeatherIcons.chevronDown : FeatherIcons.chevronUp,
+            ),
+            onPressed: onExpanded,
           ),
         ],
       ),

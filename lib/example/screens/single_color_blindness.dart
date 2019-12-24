@@ -26,7 +26,10 @@ class SingleColorBlindness extends StatelessWidget {
         elevation: 0,
         centerTitle: isSplitView,
         leading: isSplitView ? SizedBox.shrink() : null,
-        title: const Text("Color Blindness"),
+        title: Text(
+          "Color Blindness",
+          style: Theme.of(context).textTheme.title,
+        ),
         actions: <Widget>[
           ColorSearchButton(color: color),
           const SizedBox(width: 8),
@@ -149,10 +152,11 @@ class _ColorBlindCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       color: blindColor.color,
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-          side: BorderSide(
-              color:
-                  Theme.of(context).colorScheme.onSurface.withOpacity(0.20))),
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(
+          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.20),
+        ),
+      ),
       elevation: 0,
       onPressed: () {
         colorSelected(context, blindColor.color);
@@ -185,7 +189,7 @@ class _ColorBlindCard extends StatelessWidget {
                       ),
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 4),
                 Text(
                   "${blindColor.color.toHexStr()}  •  ${blindColor.affects}",
                   overflow: TextOverflow.ellipsis,

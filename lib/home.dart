@@ -7,7 +7,6 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import 'example/blocs/blocs.dart';
 import 'example/util/constants.dart';
-import 'example/vertical_picker/app_bar_actions.dart';
 
 class Home extends StatelessWidget {
   const Home();
@@ -22,18 +21,25 @@ class Home extends StatelessWidget {
       final background = currentState.rgbColorsWithBlindness[kBackground];
       final surface = currentState.rgbColorsWithBlindness[kSurface];
 
+      final onSurface = (currentState.hsluvColors[kSurface].lightness >
+              100 - kLumContrast * 100)
+          ? Colors.black
+          : Colors.white;
+
       final colorScheme = (background.computeLuminance() > kLumContrast)
           ? ColorScheme.light(
               primary: primary,
               secondary: primary,
               background: background,
               surface: surface,
+              onSurface: onSurface,
             )
           : ColorScheme.dark(
               primary: primary,
               secondary: primary,
               background: background,
               surface: surface,
+              onSurface: onSurface,
             );
 
       // this should be faster than rgbColors[kSurface].computeLuminance < kLumContrast
@@ -49,7 +55,6 @@ class Home extends StatelessWidget {
           colorScheme: colorScheme,
 //          textTheme: TextTheme(button: TextStyle(fontFamily: "B612Mono")),
         ).copyWith(
-          cardTheme: Theme.of(context).cardTheme,
           buttonTheme: Theme.of(context).buttonTheme.copyWith(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
@@ -109,38 +114,55 @@ class Home extends StatelessWidget {
     MDCLoadedState currentState,
     bool shouldDisplayElevation,
   ) {
+
     return Column(
       children: <Widget>[
+        SizedBox(height: 4),
         Row(
           children: <Widget>[
-            SizedBox(width: 28),
+            SizedBox(width: 16),
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Text(
-                  "Color Studio",
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.title.copyWith(
-                        color: colorScheme.onSurface,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 24,
-                      ),
+              child: RaisedButton.icon(
+                label: Text("Modify"),
+                textColor: colorScheme.onSurface,
+                icon: Icon(FeatherIcons.sliders, size: 16),
+                onPressed: () {
+                  Navigator.pushNamed(context, "/colordetails");
+                },
+                color: colorScheme.surface,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  side: BorderSide(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withOpacity(0.3),
+                  ),
                 ),
               ),
             ),
-            BorderedIconButton(
-              child: Icon(FeatherIcons.maximize, size: 16),
-              onPressed: () {
-                Navigator.pushNamed(context, "/colordetails");
-              },
+            SizedBox(width: 16),
+            Expanded(
+              child: RaisedButton.icon(
+                label: Text("Preview"),
+                icon: Icon(FeatherIcons.layout, size: 16),
+                textColor: colorScheme.onSurface,
+                color: colorScheme.surface,
+                onPressed: () {
+                  Navigator.pushNamed(context, "/componentspreview");
+                },
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  side: BorderSide(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withOpacity(0.3),
+                  ),
+                ),
+              ),
             ),
-            BorderedIconButton(
-              child: Icon(FeatherIcons.send, size: 16),
-              onPressed: () {
-                Navigator.pushNamed(context, "/componentspreview");
-              },
-            ),
-            SizedBox(width: 8),
+            SizedBox(width: 16),
           ],
         ),
         ColorSchemeScreen(

@@ -104,6 +104,15 @@ class _BoxedAppState extends State<BoxedApp> {
               MoveColor(currentState.rgbColors[currentState.selected], false),
             );
 
+            if (currentState.locked[currentState.selected] == true) {
+              BlocProvider.of<MdcSelectedBloc>(context).add(
+                MDCLoadEvent(
+                  currentColor: currentState.rgbColors[kPrimary],
+                  selected: kPrimary,
+                ),
+              );
+            }
+
             return SingleColorHome();
           },
           "/componentspreview": (context) {

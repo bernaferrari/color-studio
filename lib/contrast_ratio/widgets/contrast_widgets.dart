@@ -7,11 +7,13 @@ class ContrastCircleBar extends StatelessWidget {
     this.contrast = 0.5,
     this.title = "",
     this.subtitle = "",
+    this.animateOnInit = true,
   });
 
   final double contrast;
   final String title;
   final String subtitle;
+  final bool animateOnInit;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +23,7 @@ class ContrastCircleBar extends StatelessWidget {
       percent: getNormalised(contrast) / 100,
       contrastValue: contrast,
       color: getProgressColor(contrast),
+      animatedInit: animateOnInit,
     );
   }
 

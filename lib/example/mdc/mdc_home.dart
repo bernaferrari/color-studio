@@ -68,7 +68,7 @@ class MDCHome extends StatelessWidget {
               title: Text("Components Preview"),
               actions: <Widget>[
                 BorderedIconButton(
-                  child: Icon(FeatherIcons.maximize, size: 16),
+                  child: Icon(FeatherIcons.sliders, size: 16),
                   onPressed: () {
                     Navigator.pushNamed(context, "/colordetails");
                   },

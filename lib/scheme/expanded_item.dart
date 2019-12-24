@@ -190,7 +190,7 @@ class TopRow extends StatelessWidget {
             ),
             if (largeScreen)
               BorderedIconButton(
-                child: Icon(FeatherIcons.maximize, size: 16),
+                child: Icon(FeatherIcons.sliders, size: 16),
                 onPressed: () {
                   BlocProvider.of<MdcSelectedBloc>(context).add(
                     MDCLoadEvent(

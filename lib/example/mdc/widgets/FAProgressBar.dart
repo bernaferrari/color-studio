@@ -217,7 +217,6 @@ class _RectangularPercentageWidgetState
                 )
               ],
             ),
-
           ],
         ),
       ),

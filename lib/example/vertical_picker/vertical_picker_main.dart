@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -69,7 +70,10 @@ class _HSVerticalPickerState extends State<HSVerticalPicker> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("${currentSegment == 0 ? "HSLuv" : "HSV"} Picker"),
+        title: Text(
+          "${currentSegment == 0 ? "HSLuv" : "HSV"} Picker",
+          style: Theme.of(context).textTheme.title,
+        ),
         elevation: 0,
         centerTitle: widget.isSplitView,
         leading: widget.isSplitView ? SizedBox.shrink() : null,
@@ -114,7 +118,11 @@ class _HSVerticalPickerState extends State<HSVerticalPicker> {
             width: 500,
             child: Padding(
               padding: const EdgeInsets.only(
-                  left: 16.0, right: 16, top: 16, bottom: 12),
+                left: 16.0,
+                right: 16,
+                top: 16,
+                bottom: 12,
+              ),
               child: CupertinoSlidingSegmentedControl<int>(
                 backgroundColor:
                     Theme.of(context).colorScheme.onSurface.withOpacity(0.20),
@@ -280,10 +288,10 @@ class _HSGenericScreenState extends State<HSGenericScreen> {
         colorScheme: (rgbColor.computeLuminance() > kLumContrast)
             ? ColorScheme.light(surface: rgbColor)
             : ColorScheme.dark(surface: rgbColor),
-        textTheme: const TextTheme(
-          caption: TextStyle(fontFamily: "B612Mono"),
-          button: TextStyle(fontFamily: "B612Mono"),
-        ),
+        textTheme: Theme.of(context).textTheme.copyWith(
+              caption: GoogleFonts.b612Mono(),
+              button: GoogleFonts.b612Mono(),
+            ),
       ).copyWith(
         cardTheme: Theme.of(context).cardTheme.copyWith(
               margin: EdgeInsets.zero,
@@ -333,9 +341,7 @@ class _HSGenericScreenState extends State<HSGenericScreen> {
                 child: Text(
                   HSInterColor.fromColor(rgbColor, widget.kind).toString(),
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontFamily: "B612Mono",
-                  ),
+                  style: GoogleFonts.b612Mono(),
                 ),
               ),
             ],

@@ -20,7 +20,7 @@ class About extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
-        title: Text("About"),
+        title: Text("About", style: Theme.of(context).textTheme.title),
         backgroundColor: Theme.of(context).colorScheme.primary,
         elevation: 0,
         centerTitle: isSplitView,
@@ -63,12 +63,14 @@ class _ContactInfo extends StatelessWidget {
     return Column(
       children: <Widget>[
         const SizedBox(height: 16),
-        Text("Color Studio",
-            textAlign: TextAlign.center,
-            style: Theme.of(context)
-                .textTheme
-                .headline
-                .copyWith(fontWeight: FontWeight.w600)),
+        Text(
+          "Color Studio",
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.title.copyWith(
+                fontSize: 24,
+                fontWeight: FontWeight.w600,
+              ),
+        ),
         const SizedBox(height: 8),
         Text("Designed & developed by Bernardo Ferrari.",
             textAlign: TextAlign.center,
@@ -76,9 +78,11 @@ class _ContactInfo extends StatelessWidget {
         const SizedBox(height: 8),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Text("If you have ideas or suggestions, please get in touch!",
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.caption),
+          child: Text(
+            "If you have ideas or suggestions, please get in touch!",
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.body1,
+          ),
         ),
         const SizedBox(height: 8),
         Text("This app is open source.",
