@@ -77,7 +77,7 @@ class MDCHome extends StatelessWidget {
                   child: Icon(FeatherIcons.shuffle, size: 16),
                   onPressed: () {
                     BlocProvider.of<MdcSelectedBloc>(context).add(
-                      MDCUpdateAllEvent(colors: getShuffledMaterial()),
+                      MDCUpdateAllEvent(colors: getRandomMaterial()),
                     );
                   },
                 ),

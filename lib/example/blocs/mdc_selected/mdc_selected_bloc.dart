@@ -47,7 +47,6 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
 
   final initial = {
     kPrimary: const Color(0xffFFCC80),
-//    kSecondary: const Color(0xffAA1212),
     kBackground: const Color(0xff121212),
     kSurface: const Color(0xff131024),
   };

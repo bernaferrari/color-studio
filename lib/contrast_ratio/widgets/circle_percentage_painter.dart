@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 class SpendingCategoryChartPainter extends CustomPainter {
   final double percent;
   final Color color;
+  final Color circleColor;
 
-  SpendingCategoryChartPainter(this.percent, this.color);
+  SpendingCategoryChartPainter({this.percent, this.color, this.circleColor});
 
   @override
   void paint(canvas, size) {
@@ -19,8 +20,21 @@ class SpendingCategoryChartPainter extends CustomPainter {
     canvas.drawArc(Rect.fromLTWH(0, 0, size.width, size.height), 0, math.pi * 2,
         false, paint);
     paint.color = color;
-    canvas.drawArc(Rect.fromLTWH(0, 0, size.width, size.height), -math.pi / 2,
-        -2 * math.pi * percent, false, paint);
+    canvas.drawArc(
+      Rect.fromLTWH(0, 0, size.width, size.height),
+      -math.pi / 2,
+      -2 * math.pi * percent,
+      false,
+      paint,
+    );
+
+    if (circleColor != null) {
+      canvas.drawCircle(
+        Offset(size.width / 2, size.height / 2),
+        size.width / 2 - 3,
+        Paint()..color = circleColor,
+      );
+    }
   }
 
   @override

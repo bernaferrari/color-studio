@@ -13,19 +13,25 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
 class ContrastRatioScreen extends StatelessWidget {
-  const ContrastRatioScreen(this.contrastedColors, this.shouldDisplayElevation);
+  const ContrastRatioScreen(
+    this.rgbColorsWithBlindness,
+    this.shouldDisplayElevation,
+    this.locked,
+  );
 
-  final Map<String, Color> contrastedColors;
+  final Map<String, Color> rgbColorsWithBlindness;
+  final Map<String, bool> locked;
   final bool shouldDisplayElevation;
 
   @override
   Widget build(BuildContext context) {
-    final surfaceHSLuv = HSLuvColor.fromColor(contrastedColors[kBackground]);
+    final surfaceHSLuv =
+        HSLuvColor.fromColor(rgbColorsWithBlindness[kBackground]);
 
     final colorScheme = ColorScheme.dark(
-      primary: contrastedColors[kPrimary],
+      primary: rgbColorsWithBlindness[kPrimary],
       background: surfaceHSLuv.withLightness(10).toColor(),
-      surface: contrastedColors[kSurface],
+      surface: rgbColorsWithBlindness[kSurface],
     );
 
     return BlocBuilder<ContrastRatioBloc, ContrastRatioState>(
@@ -38,6 +44,9 @@ class ContrastRatioScreen extends StatelessWidget {
 
       final isiPad = MediaQuery.of(context).size.width > 600;
 
+      final areValuesLocked =
+          locked[kSurface] == true && locked[kBackground] == true;
+
       return Theme(
         data: ThemeData.from(
           colorScheme: colorScheme,
@@ -46,8 +55,9 @@ class ContrastRatioScreen extends StatelessWidget {
               fontWeight: FontWeight.w400,
               fontSize: 14,
             ),
-            title: GoogleFonts.firaMono(fontSize: isiPad ? 16 : 13),
-            subtitle: GoogleFonts.firaMono(fontSize: isiPad ? 14 : 11),
+            title: GoogleFonts.firaSans(fontWeight: FontWeight.w600),
+//            title: GoogleFonts.firaMono(fontSize: isiPad ? 16 : 13),
+//            subtitle: GoogleFonts.firaMono(fontSize: isiPad ? 14 : 11),
           ),
         ),
         child: Padding(
@@ -99,17 +109,25 @@ class ContrastRatioScreen extends StatelessWidget {
                       title: kPrimary,
                       subtitle: kBackground,
                       contrast: currentState.contrastValues[0],
+                      contrastingColor: rgbColorsWithBlindness[kPrimary],
+                      circleColor: rgbColorsWithBlindness[kBackground],
                     ),
-                    ContrastCircleBar(
-                      title: kPrimary,
-                      subtitle: kSurface,
-                      contrast: currentState.contrastValues[1],
-                    ),
-                    ContrastCircleBar(
-                      title: kBackground,
-                      subtitle: kSurface,
-                      contrast: currentState.contrastValues[2],
-                    ),
+                    if (!areValuesLocked) ...[
+                      ContrastCircleBar(
+                        title: kPrimary,
+                        subtitle: kSurface,
+                        contrast: currentState.contrastValues[1],
+                        contrastingColor: rgbColorsWithBlindness[kPrimary],
+                        circleColor: rgbColorsWithBlindness[kSurface],
+                      ),
+                      ContrastCircleBar(
+                        title: kSurface,
+                        subtitle: kBackground,
+                        contrast: currentState.contrastValues[2],
+//                        contrastingColor: rgbColorsWithBlindness[kSurface],
+//                        circleColor: rgbColorsWithBlindness[kBackground],
+                      ),
+                    ],
                   ],
                 ),
                 // surface qualifies as dark mode

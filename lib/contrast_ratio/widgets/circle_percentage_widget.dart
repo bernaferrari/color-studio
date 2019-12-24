@@ -11,6 +11,8 @@ class CirclePercentageWidget extends StatefulWidget {
     this.percent = 0.0,
     this.contrastValue = 0.0,
     this.color = Colors.white,
+    this.circleColor,
+    this.contrastingColor,
     this.animatedInit = true,
   });
 
@@ -19,6 +21,8 @@ class CirclePercentageWidget extends StatefulWidget {
   final double percent;
   final double contrastValue;
   final Color color;
+  final Color circleColor;
+  final Color contrastingColor;
   final bool animatedInit;
 
   @override
@@ -76,18 +80,30 @@ class _CirclePercentageWidgetState extends State<CirclePercentageWidget>
           child: CustomPaint(
             isComplex: false,
             painter: SpendingCategoryChartPainter(
-              _controller.value,
-              widget.color,
+              percent: _controller.value,
+              color: widget.color,
+              circleColor: widget.circleColor,
             ),
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
 //                  SizedBox(height: 8),
-                  ContrastText(widget.contrastValue),
+//                  Text(
+//                    "test",
+//                    style: Theme.of(context).textTheme.overline.copyWith(
+//                      color: widget.contrastingColor
+//                    ),
+//                  ),
+                  ContrastText(
+                    widget.contrastValue,
+                    color: widget.contrastingColor,
+                  ),
                   Text(
                     getContrastLetters(widget.contrastValue),
-                    style: Theme.of(context).textTheme.overline,
+                    style: Theme.of(context).textTheme.overline.copyWith(
+                          color: widget.contrastingColor,
+                        ),
                   ),
                 ],
               ),

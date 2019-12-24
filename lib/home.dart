@@ -114,7 +114,6 @@ class Home extends StatelessWidget {
     MDCLoadedState currentState,
     bool shouldDisplayElevation,
   ) {
-
     return Column(
       children: <Widget>[
         SizedBox(height: 4),
@@ -156,7 +155,7 @@ class Home extends StatelessWidget {
                   side: BorderSide(
                     color: Theme.of(context)
                         .colorScheme
-                        .onSurface
+                        .onBackground
                         .withOpacity(0.3),
                   ),
                 ),
@@ -173,6 +172,7 @@ class Home extends StatelessWidget {
         ContrastRatioScreen(
           currentState.rgbColorsWithBlindness,
           shouldDisplayElevation,
+          currentState.locked,
         ),
       ],
     );

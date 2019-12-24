@@ -41,7 +41,10 @@ class About extends StatelessWidget {
                 child: ColorCompare(),
               ),
               TranslucentCard(
-                child: ShuffleSection(),
+                child: ShuffleDarkSection(),
+              ),
+              TranslucentCard(
+                child: ShuffleLightSection(),
               ),
               TranslucentCard(
                 child: GDPR(),
@@ -191,15 +194,15 @@ class ColorCompare extends StatelessWidget {
   }
 }
 
-class ShuffleSection extends StatelessWidget {
-  const ShuffleSection();
+class ShuffleDarkSection extends StatelessWidget {
+  const ShuffleDarkSection();
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         BlocProvider.of<MdcSelectedBloc>(context).add(
-          MDCUpdateAllEvent(colors: getShuffledColors(3)),
+          MDCUpdateAllEvent(colors: getRandomMaterialDark()),
         );
       },
       child: Padding(
@@ -210,10 +213,48 @@ class ShuffleSection extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Icon(FeatherIcons.shuffle),
+                  Icon(FeatherIcons.moon),
                   const SizedBox(width: 16),
                   Text(
-                    "Shuffle colors",
+                    "Random Dark Theme",
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.title,
+                  ),
+                ],
+              ),
+            ),
+            Icon(FeatherIcons.chevronRight),
+            const SizedBox(width: 16),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ShuffleLightSection extends StatelessWidget {
+  const ShuffleLightSection();
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        BlocProvider.of<MdcSelectedBloc>(context).add(
+          MDCUpdateAllEvent(colors: getRandomMaterialLight()),
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(FeatherIcons.sun),
+                  const SizedBox(width: 16),
+                  Text(
+                    "Random Light Theme",
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.title,
                   ),

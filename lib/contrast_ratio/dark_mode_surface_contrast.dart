@@ -23,7 +23,7 @@ class DarkModeSurfaceContrast extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text("0pt", style: Theme.of(context).textTheme.overline),
-                ContrastText(elevationValues[0].contrast, withSizedBox: false),
+                ContrastText(elevationValues[0].contrast, withSizedBox: true),
                 Text(
                   getContrastLetters(elevationValues[0].contrast),
                   style: Theme.of(context).textTheme.overline,
@@ -48,7 +48,7 @@ class DarkModeSurfaceContrast extends StatelessWidget {
                 Text("24pt", style: Theme.of(context).textTheme.overline),
                 ContrastText(
                   elevationValues[elevationEntriesList.length - 1].contrast,
-                  withSizedBox: false,
+                  withSizedBox: true,
                 ),
                 Text(
                   getContrastLetters(

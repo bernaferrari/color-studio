@@ -177,7 +177,11 @@ class __BottomHomeState extends State<_BottomHome> {
             expand: isContrastExpanded,
             child: Padding(
               padding: const EdgeInsets.only(top: 8.0),
-              child: _ColorContrastRow(),
+              child: _ColorContrastRow(
+                areValuesLocked: widget.locked[kSurface] == true &&
+                    widget.locked[kBackground] == true,
+                rgbColors: widget.rgbColors,
+              ),
             ),
           ),
           ThemeBar(
@@ -225,6 +229,14 @@ class __BottomHomeState extends State<_BottomHome> {
 }
 
 class _ColorContrastRow extends StatelessWidget {
+  const _ColorContrastRow({
+    this.areValuesLocked,
+    this.rgbColors,
+  });
+
+  final bool areValuesLocked;
+  final Map<String, Color> rgbColors;
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ContrastRatioBloc, ContrastRatioState>(
@@ -243,19 +255,28 @@ class _ColorContrastRow extends StatelessWidget {
             subtitle: kBackground,
             contrast: currentState.contrastValues[0],
             animateOnInit: false,
+            circleColor: rgbColors[kPrimary],
+            contrastingColor: rgbColors[kBackground],
           ),
-          ContrastCircleBar(
-            title: kPrimary,
-            subtitle: kSurface,
-            contrast: currentState.contrastValues[1],
-            animateOnInit: false,
-          ),
-          ContrastCircleBar(
-            title: kBackground,
-            subtitle: kSurface,
-            contrast: currentState.contrastValues[2],
-            animateOnInit: false,
-          ),
+          // don't show the other circles when their values are useless.
+          if (!areValuesLocked) ...[
+            ContrastCircleBar(
+              title: kPrimary,
+              subtitle: kSurface,
+              contrast: currentState.contrastValues[1],
+              animateOnInit: false,
+              circleColor: rgbColors[kSurface],
+              contrastingColor: rgbColors[kPrimary],
+            ),
+            ContrastCircleBar(
+              title: kSurface,
+              subtitle: kBackground,
+              contrast: currentState.contrastValues[2],
+              animateOnInit: false,
+              circleColor: rgbColors[kBackground],
+              contrastingColor: rgbColors[kSurface],
+            ),
+          ],
         ],
       );
     });
@@ -404,7 +425,7 @@ class ThemeBar extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                             side: BorderSide(
-                              width: 2,
+                              width: (selected == keysList[i]) ? 2 : 1,
                               color: Theme.of(context)
                                   .colorScheme
                                   .onSurface
@@ -413,6 +434,9 @@ class ThemeBar extends StatelessWidget {
                           ),
                           textStyle: Theme.of(context).textTheme.body1.copyWith(
                                 color: contrastedColors[i],
+                                fontWeight: (selected == keysList[i])
+                                    ? FontWeight.w700
+                                    : FontWeight.w400,
                               ),
                           child: Row(
                             children: <Widget>[

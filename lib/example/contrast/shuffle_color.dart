@@ -47,21 +47,10 @@ List<Color> getShuffledColors([int n = 8]) {
   return [for (int i = 0; i < n; i++) colorsList[i].hexToColor()];
 }
 
-List<Color> getShuffledMaterial() {
+List<Color> getRandomMaterialDark() {
   var rng = Random();
 
   // ### Primary Color Study
-  // ## Light Theme
-  // # Material colors in HSV:
-  // H: 265 S: 100 V: 93
-  // H: 174 S: 99 V: 85
-  // Therefore, S > 90 and V > 80
-  //
-  // # Material colors in HSLuv:
-  // H: 272 S: 100 L: 36
-  // H: 177 S: 100 L: 79
-  // Therefore, S > 90 and 35 < L < 80
-  //
   // ## Dark Theme
   // # Material colors in HSV:
   // H: 267 S: 47 V: 99
@@ -75,46 +64,65 @@ List<Color> getShuffledMaterial() {
   // OWL - H: 360 S: 100 L: 67
   // Therefore, S > 90 and 60 < L < 80
 
+  return [
+    HSLuvColor.fromHSL(
+      rng.nextInt(360).toDouble(),
+      50 + rng.nextInt(50).toDouble(),
+      60 + rng.nextInt(20).toDouble(),
+    ).toColor(),
+    HSLuvColor.fromHSL(
+      rng.nextInt(360).toDouble(),
+      rng.nextInt(100).toDouble(),
+      rng.nextInt(30).toDouble(),
+    ).toColor(),
+    HSLuvColor.fromHSL(
+      rng.nextInt(360).toDouble(),
+      5 + rng.nextInt(80).toDouble(),
+      rng.nextInt(30).toDouble(),
+    ).toColor(),
+  ];
+}
+
+List<Color> getRandomMaterialLight() {
+  var rng = Random();
+
+  // ### Primary Color Study
+  // ## Light Theme
+  // # Material colors in HSV:
+  // H: 265 S: 100 V: 93
+  // H: 174 S: 99 V: 85
+  // Therefore, S > 90 and V > 80
+  //
+  // # Material colors in HSLuv:
+  // H: 272 S: 100 L: 36
+  // H: 177 S: 100 L: 79
+  // Therefore, S > 90 and 35 < L < 80
+
+  final primaryLightness = 25 + rng.nextInt(20);
+
+  return [
+    HSLuvColor.fromHSL(
+      rng.nextInt(360).toDouble(),
+      80 + rng.nextInt(10).toDouble(),
+      primaryLightness.toDouble(),
+    ).toColor(),
+    HSLuvColor.fromHSL(
+      rng.nextInt(360).toDouble(),
+      20 + rng.nextInt(80).toDouble(),
+      primaryLightness + 40 + rng.nextInt(60 - primaryLightness).toDouble(),
+    ).toColor(),
+    HSLuvColor.fromHSL(
+      rng.nextInt(360).toDouble(),
+      rng.nextInt(100).toDouble(),
+      primaryLightness + 40 + rng.nextInt(60 - primaryLightness).toDouble(),
+    ).toColor(),
+  ];
+}
+
+List<Color> getRandomMaterial() {
+  var rng = Random();
   final isDark = rng.nextInt(1) % 2 == 0;
-
-  return isDark
-      ? [
-          HSLuvColor.fromHSL(
-            rng.nextInt(360).toDouble(),
-            50 + rng.nextInt(50).toDouble(),
-            60 + rng.nextInt(20).toDouble(),
-          ).toColor(),
-          HSLuvColor.fromHSL(
-            rng.nextInt(360).toDouble(),
-            rng.nextInt(100).toDouble(),
-            rng.nextInt(30).toDouble(),
-          ).toColor(),
-          HSLuvColor.fromHSL(
-            rng.nextInt(360).toDouble(),
-            5 + rng.nextInt(80).toDouble(),
-            rng.nextInt(30).toDouble(),
-          ).toColor(),
-        ]
-      : [
-          HSLuvColor.fromHSL(
-            rng.nextInt(360).toDouble(),
-            80 + rng.nextInt(10).toDouble(),
-            35 + rng.nextInt(45).toDouble(),
-          ).toColor(),
-          HSLuvColor.fromHSL(
-            rng.nextInt(360).toDouble(),
-            60 + rng.nextInt(40).toDouble(),
-            60 + rng.nextInt(40).toDouble(),
-          ).toColor(),
-          HSLuvColor.fromHSL(
-            rng.nextInt(360).toDouble(),
-            rng.nextInt(100).toDouble(),
-            60 + rng.nextInt(40).toDouble(),
-          ).toColor(),
-        ];
-
-//  final colorsList = colorClaim.toList()..shuffle();
-//  return [for (int i = 0; i < n; i++) colorsList[i].hexToColor()];
+  return isDark ? getRandomMaterialDark() : getRandomMaterialLight();
 }
 
 // https://www.vanschneider.com/colors

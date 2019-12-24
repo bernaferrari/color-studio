@@ -79,7 +79,7 @@ class ColorSchemeScreen extends StatelessWidget {
                     ),
                     onPressed: () {
                       BlocProvider.of<MdcSelectedBloc>(context).add(
-                        MDCUpdateAllEvent(colors: getShuffledMaterial()),
+                        MDCUpdateAllEvent(colors: getRandomMaterial()),
                       );
                     },
                   ),

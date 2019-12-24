@@ -1,4 +1,5 @@
 import 'package:colorstudio/example/blocs/blocs.dart';
+import 'package:colorstudio/example/util/color_util.dart';
 import 'package:colorstudio/example/util/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,8 +36,13 @@ class SameAs extends StatelessWidget {
           Divider(height: 0, color: textColor),
           SizedBox(height: 16),
           Text(
-            sameAs(),
+            color.toHexStr(),
             style: TextStyle(color: textColor, fontWeight: FontWeight.w600),
+          ),
+          SizedBox(height: 8),
+          Text(
+            sameAs(),
+            style: TextStyle(color: textColor, fontWeight: FontWeight.w300),
           ),
           SizedBox(height: 8),
           OutlineButton.icon(

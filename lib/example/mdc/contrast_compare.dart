@@ -181,10 +181,11 @@ class RowContrastCompare extends StatelessWidget {
 }
 
 class ContrastText extends StatelessWidget {
-  const ContrastText(this.contrast, {this.withSizedBox = true});
+  const ContrastText(this.contrast, {this.color, this.withSizedBox = true});
 
   final double contrast;
   final bool withSizedBox;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -192,11 +193,11 @@ class ContrastText extends StatelessWidget {
       textAlign: TextAlign.center,
       text: TextSpan(
         text: contrast.toStringAsPrecision(3),
-        style: Theme.of(context).textTheme.title,
+        style: Theme.of(context).textTheme.title.copyWith(color: color),
         children: <TextSpan>[
           TextSpan(
             text: ':1',
-            style: Theme.of(context).textTheme.subtitle,
+            style: Theme.of(context).textTheme.subtitle.copyWith(color: color),
           ),
         ],
       ),

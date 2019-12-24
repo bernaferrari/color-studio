@@ -8,15 +8,22 @@ class ContrastCircleBar extends StatelessWidget {
     this.title = "",
     this.subtitle = "",
     this.animateOnInit = true,
+    this.circleColor,
+    this.contrastingColor,
   });
 
   final double contrast;
   final String title;
   final String subtitle;
   final bool animateOnInit;
+  final Color circleColor;
+  final Color contrastingColor;
 
   @override
   Widget build(BuildContext context) {
+    // if contrast gets too low, it becomes too hard to read, therefore, better become white.
+//    final contrasting = (contrast > 2) ? contrastingColor : Theme.of(context).colorScheme.onSurface;
+
     return CirclePercentageWidget(
       title: title,
       subtitle: subtitle,
@@ -24,6 +31,8 @@ class ContrastCircleBar extends StatelessWidget {
       contrastValue: contrast,
       color: getProgressColor(contrast),
       animatedInit: animateOnInit,
+      circleColor: circleColor,
+      contrastingColor: (contrast > 2) ? contrastingColor : null,
     );
   }
 
