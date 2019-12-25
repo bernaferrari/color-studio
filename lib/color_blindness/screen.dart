@@ -65,6 +65,7 @@ class ColorBlindnessScreen extends StatelessWidget {
                 title: "Color Blindness",
                 children: <Widget>[
                   IconButton(
+                    tooltip: "Previous",
                     icon: Icon(
                       Icons.chevron_left,
                       color: Theme.of(context).colorScheme.primary,
@@ -79,6 +80,7 @@ class ColorBlindnessScreen extends StatelessWidget {
                     },
                   ),
                   IconButton(
+                    tooltip: "Next",
                     icon: Icon(
                       Icons.chevron_right,
                       color: Theme.of(context).colorScheme.primary,

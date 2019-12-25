@@ -96,6 +96,7 @@ class _MultipleContrastScreenState extends State<MultipleContrastScreen> {
             title: const Text("Contrast Compare"),
             actions: <Widget>[
               IconButton(
+                tooltip: "Reorder",
                 icon: Icon(FeatherIcons.list),
                 onPressed: () => showReorderDialog(builderContext, list),
               )

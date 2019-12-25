@@ -3,7 +3,6 @@ import 'package:colorstudio/example/contrast/shuffle_color.dart';
 import 'package:colorstudio/example/mdc/showcase.dart';
 import 'package:colorstudio/example/screens/home.dart';
 import 'package:colorstudio/example/util/constants.dart';
-import 'package:colorstudio/example/vertical_picker/app_bar_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -68,20 +67,23 @@ class MDCHome extends StatelessWidget {
               title: Text("Components Preview"),
               actions: <Widget>[
                 IconButton(
+                  tooltip: "Edit colors",
                   icon: Icon(FeatherIcons.sliders),
                   onPressed: () {
                     Navigator.pushNamed(context, "/colordetails");
                   },
                 ),
-                IconButton(
-                  tooltip: "Random mole theme",
-                  icon: Icon(FeatherIcons.penTool),
-                  onPressed: () {
-                    BlocProvider.of<MdcSelectedBloc>(context).add(
-                      MDCUpdateAllEvent(colors: getRandomMoleTheme()),
-                    );
-                  },
-                ),
+                if (currentState.locked[kBackground] != true &&
+                    currentState.locked[kSurface] != true)
+                  IconButton(
+                    tooltip: "Random mole dark theme",
+                    icon: Icon(FeatherIcons.penTool),
+                    onPressed: () {
+                      BlocProvider.of<MdcSelectedBloc>(context).add(
+                        MDCUpdateAllEvent(colors: getRandomMoleTheme()),
+                      );
+                    },
+                  ),
                 IconButton(
                   tooltip: "Random dark theme",
                   icon: Icon(FeatherIcons.moon),

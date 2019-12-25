@@ -504,7 +504,7 @@ class _SliderWithSelectorComponentsState extends State<SliderWithSelectorCompone
                     textDirection: TextDirection.ltr,
                     child: IconButton(
                       icon: Icon(FeatherIcons.chevronDown),
-                      tooltip: "minimize",
+                      tooltip: "Minimize",
                       onPressed: () {
                         setState(() {
                           _isExpanded = false;

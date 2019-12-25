@@ -479,6 +479,7 @@ class ThemeBar extends StatelessWidget {
                 ),
               ),
               IconButton(
+                tooltip: isExpanded ? "compact" : "expand contrast",
                 icon: Icon(
                   isExpanded
                       ? FeatherIcons.chevronDown

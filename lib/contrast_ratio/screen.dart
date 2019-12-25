@@ -73,6 +73,7 @@ class ContrastRatioScreen extends StatelessWidget {
                   title: "Contrast Ratio",
                   children: <Widget>[
                     IconButton(
+                      tooltip: "Contrast compare",
                       icon: Icon(
                         FeatherIcons.menu,
                         color: Theme.of(context).colorScheme.primary,
@@ -85,6 +86,7 @@ class ContrastRatioScreen extends StatelessWidget {
                       },
                     ),
                     IconButton(
+                      tooltip: "Help",
                       icon: Icon(
                         Icons.help_outline,
                         color: Theme.of(context).colorScheme.primary,
