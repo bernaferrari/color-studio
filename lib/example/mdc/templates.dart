@@ -23,12 +23,14 @@ class ColorTemplates extends StatelessWidget {
           const SizedBox(width: 8),
         ],
       ),
+      backgroundColor: backgroundColor,
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 818),
-          child: Container(
-            color: backgroundColor,
-            child: ListView(
+          child: SingleChildScrollView(
+            // ListView scrolls really weird in iPad!
+            // For mysterious reasons, this is a better solution.
+            child: Column(
               key: const PageStorageKey("Templates"),
               children: <Widget>[
                 Divider(

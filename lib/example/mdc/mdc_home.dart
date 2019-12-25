@@ -46,7 +46,7 @@ class MDCHome extends StatelessWidget {
               primary: primaryColor,
               secondary: primaryColor,
               onPrimary: onPrimary,
-              onSecondary: onSurface,
+              onSurface: onSurface,
               surface: surfaceColor,
               background: backgroundColor,
             );

@@ -31,7 +31,7 @@ class ContrastCircleBar extends StatelessWidget {
       contrastValue: contrast,
       color: getProgressColor(contrast),
       animatedInit: animateOnInit,
-      circleColor: circleColor,
+      circleColor: (contrast > 2) ? circleColor : null,
       contrastingColor: (contrast > 2) ? contrastingColor : null,
     );
   }

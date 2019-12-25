@@ -75,44 +75,42 @@ class SingleColorHome extends StatelessWidget {
           body: DefaultTabController(
             length: 5,
             initialIndex: 0,
-            child: SafeArea(
-              child: Column(
-                children: <Widget>[
-                  Expanded(
-                    child: TabBarView(
-                      children: [
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  child: TabBarView(
+                    children: [
 //                        MultipleSliders(
 //                          color: color,
 //                          isSplitView: isSplitView,
 //                        ),
-                        HSVerticalPicker(
-                          color: selectedColor,
-                          hsLuvColor: hsluvColor,
-                          isSplitView: isSplitView,
-                        ),
-                        SingleColorBlindness(
-                          color: selectedColor,
-                          isSplitView: isSplitView,
-                        ),
-                        About(isSplitView: isSplitView),
-                        ColorLibrary(
-                          color: selectedColor,
-                          isSplitView: isSplitView,
-                        ),
-                        ColorTemplates(
-                          backgroundColor: selectedColor,
-                        ),
-                      ],
-                    ),
+                      HSVerticalPicker(
+                        color: selectedColor,
+                        hsLuvColor: hsluvColor,
+                        isSplitView: isSplitView,
+                      ),
+                      SingleColorBlindness(
+                        color: selectedColor,
+                        isSplitView: isSplitView,
+                      ),
+                      About(isSplitView: isSplitView),
+                      ColorLibrary(
+                        color: selectedColor,
+                        isSplitView: isSplitView,
+                      ),
+                      ColorTemplates(
+                        backgroundColor: selectedColor,
+                      ),
+                    ],
                   ),
-                  _BottomHome(
-                    selected: selected,
-                    selectedColor: selectedColor,
-                    locked: currentState.locked,
-                    rgbColors: currentState.rgbColors,
-                  ),
-                ],
-              ),
+                ),
+                _BottomHome(
+                  selected: selected,
+                  selectedColor: selectedColor,
+                  locked: currentState.locked,
+                  rgbColors: currentState.rgbColors,
+                ),
+              ],
             ),
           ),
         ),
@@ -249,37 +247,42 @@ class _ColorContrastRow extends StatelessWidget {
 
       final currentState = (state as ContrastRatioSuccess);
 
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          ContrastCircleBar(
-            title: kPrimary,
-            subtitle: kBackground,
-            contrast: currentState.contrastValues[0],
-            animateOnInit: false,
-            circleColor: rgbColors[kPrimary],
-            contrastingColor: rgbColors[kBackground],
+      return Center(
+        child: SizedBox(
+          width: 500,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ContrastCircleBar(
+                title: kPrimary,
+                subtitle: kBackground,
+                contrast: currentState.contrastValues[0],
+                animateOnInit: false,
+                circleColor: rgbColors[kPrimary],
+                contrastingColor: rgbColors[kBackground],
+              ),
+              // don't show the other circles when their values are useless.
+              if (!areValuesLocked) ...[
+                ContrastCircleBar(
+                  title: kPrimary,
+                  subtitle: kSurface,
+                  contrast: currentState.contrastValues[1],
+                  animateOnInit: false,
+                  circleColor: rgbColors[kSurface],
+                  contrastingColor: rgbColors[kPrimary],
+                ),
+                ContrastCircleBar(
+                  title: kSurface,
+                  subtitle: kBackground,
+                  contrast: currentState.contrastValues[2],
+                  animateOnInit: false,
+                  circleColor: rgbColors[kBackground],
+                  contrastingColor: rgbColors[kSurface],
+                ),
+              ],
+            ],
           ),
-          // don't show the other circles when their values are useless.
-          if (!areValuesLocked) ...[
-            ContrastCircleBar(
-              title: kPrimary,
-              subtitle: kSurface,
-              contrast: currentState.contrastValues[1],
-              animateOnInit: false,
-              circleColor: rgbColors[kSurface],
-              contrastingColor: rgbColors[kPrimary],
-            ),
-            ContrastCircleBar(
-              title: kSurface,
-              subtitle: kBackground,
-              contrast: currentState.contrastValues[2],
-              animateOnInit: false,
-              circleColor: rgbColors[kBackground],
-              contrastingColor: rgbColors[kSurface],
-            ),
-          ],
-        ],
+        ),
       );
     });
   }
@@ -394,91 +397,101 @@ class ThemeBar extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0, top: 4.0),
-      child: Row(
-        children: <Widget>[
-          // this is necessary to counter-balance the chevronUp icon at the other side.
-//          SizedBox(width: 48),
-          Expanded(
-            child: Center(
-              child: SizedBox(
-                height: 36,
-                width: 500,
-                child: ListView(
-                  physics: const BouncingScrollPhysics(),
-                  // in a previous iteration, shrinkWrap
-                  scrollDirection: Axis.horizontal,
-                  children: <Widget>[
-                    const SizedBox(width: 16),
-                    for (int i = 0; i < mappedList.length; i++) ...[
-                      SizedBox(
-                        height: 32,
-                        child: RawMaterialButton(
-                          onPressed: () {
-                            colorSelected(
-                              context,
-                              keysList[i],
-                              mappedList[i],
-                            );
-                          },
-                          onLongPress: () {
-                            showSlidersDialog(context, mappedList[i]);
-                          },
-                          fillColor: mappedList[i],
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            side: BorderSide(
-                              width: (selected == keysList[i]) ? 2 : 1,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onSurface
-                                  .withOpacity(0.7),
+      child: SizedBox(
+        width: 500,
+        child: LayoutBuilder(builder: (context, builder) {
+          print("builder is ${builder.maxWidth}");
+
+          return Row(
+            children: <Widget>[
+              // this is necessary to counter-balance the chevronUp icon at the other side.
+              if (builder.maxWidth > 400 || mappedList.length < 3)
+                SizedBox(width: 48),
+              Expanded(
+                child: Center(
+                  child: SizedBox(
+                    height: 36,
+                    child: ListView(
+                      shrinkWrap: true,
+                      // in a previous iteration, shrinkWrap
+                      scrollDirection: Axis.horizontal,
+                      children: <Widget>[
+                        const SizedBox(width: 16),
+                        for (int i = 0; i < mappedList.length; i++) ...[
+                          SizedBox(
+                            height: 32,
+                            child: RawMaterialButton(
+                              onPressed: () {
+                                colorSelected(
+                                  context,
+                                  keysList[i],
+                                  mappedList[i],
+                                );
+                              },
+                              onLongPress: () {
+                                showSlidersDialog(context, mappedList[i]);
+                              },
+                              fillColor: mappedList[i],
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                                side: BorderSide(
+                                  width: (selected == keysList[i]) ? 2 : 1,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSurface
+                                      .withOpacity(0.7),
+                                ),
+                              ),
+                              textStyle:
+                                  Theme.of(context).textTheme.body1.copyWith(
+                                        color: contrastedColors[i],
+                                        fontWeight: (selected == keysList[i])
+                                            ? FontWeight.w700
+                                            : FontWeight.w400,
+                                      ),
+                              child: Row(
+                                children: <Widget>[
+                                  SizedBox(width: 8),
+                                  if (selected == keysList[i])
+                                    Icon(
+                                      FeatherIcons.checkCircle,
+                                      size: 16,
+                                      color: contrastedColors[i],
+                                    )
+                                  else
+                                    Icon(
+                                      FeatherIcons.circle,
+                                      size: 16,
+                                      color: contrastedColors[i],
+                                    ),
+                                  SizedBox(width: 4),
+                                  Text(keysList[i]),
+                                  SizedBox(width: 8),
+                                ],
+                              ),
+                              elevation: 0.0,
+                              padding: EdgeInsets.zero,
                             ),
                           ),
-                          textStyle: Theme.of(context).textTheme.body1.copyWith(
-                                color: contrastedColors[i],
-                                fontWeight: (selected == keysList[i])
-                                    ? FontWeight.w700
-                                    : FontWeight.w400,
-                              ),
-                          child: Row(
-                            children: <Widget>[
-                              SizedBox(width: 8),
-                              if (selected == keysList[i])
-                                Icon(
-                                  FeatherIcons.checkCircle,
-                                  size: 16,
-                                  color: contrastedColors[i],
-                                )
-                              else
-                                Icon(
-                                  FeatherIcons.circle,
-                                  size: 16,
-                                  color: contrastedColors[i],
-                                ),
-                              SizedBox(width: 4),
-                              Text(keysList[i]),
-                              SizedBox(width: 8),
-                            ],
-                          ),
-                          elevation: 0.0,
-                          padding: EdgeInsets.zero,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                    ],
-                    const SizedBox(width: 8),
-                  ],
+                          const SizedBox(width: 8),
+                        ],
+                        const SizedBox(width: 8),
+                      ],
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-          IconButton(
-            icon: Icon(
-              isExpanded ? FeatherIcons.chevronDown : FeatherIcons.chevronUp,
-            ),
-            onPressed: onExpanded,
-          ),
-        ],
+              IconButton(
+                icon: Icon(
+                  isExpanded
+                      ? FeatherIcons.chevronDown
+                      : FeatherIcons.chevronUp,
+                ),
+                onPressed: onExpanded,
+              ),
+            ],
+          );
+        }),
       ),
     );
   }
