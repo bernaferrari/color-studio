@@ -794,27 +794,3 @@ class _Buttons extends StatelessWidget {
     );
   }
 }
-
-class SelectorDialog extends StatelessWidget {
-  const SelectorDialog(this.color, this.otherColor, this.list);
-
-  final Color color;
-  final Color otherColor;
-  final List<ContrastedColor> list;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          HSLuvSelector2(
-            index: 1,
-            moreColors: false,
-            colorsMap: list,
-          ),
-        ],
-      ),
-    );
-  }
-}

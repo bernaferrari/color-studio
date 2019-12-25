@@ -1,10 +1,10 @@
 import 'dart:math' as math;
 import 'dart:ui';
 
+import 'package:colorstudio/example/util/when.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hsluv/hsluvcolor.dart';
-import 'package:colorstudio/example/util/when.dart';
 
 /// HSInterColor means Hue Saturation Interchangeable Color.
 /// It is made to wrap both HSV and HSLuv with the same interface.
@@ -44,6 +44,18 @@ class HSInterColor {
       return HSInterColor.fromHSInter(
           hsv.hue, hsv.saturation, hsv.value, kind, maxV);
     }
+  }
+
+  factory HSInterColor.fromHSLuv(HSLuvColor hsLuvColor) {
+    final double maxV = 100.0;
+
+    return HSInterColor.fromHSInter(
+      hsLuvColor.hue,
+      hsLuvColor.saturation,
+      hsLuvColor.lightness,
+      "HSLuv",
+      maxV,
+    );
   }
 
   final String kind;

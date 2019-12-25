@@ -33,6 +33,7 @@ class SingleColorHome extends StatelessWidget {
       final currentState = state as MDCLoadedState;
 
       Color selectedColor = currentState.rgbColors[currentState.selected];
+      HSLuvColor hsluvColor = currentState.hsluvColors[currentState.selected];
       String selected = currentState.selected;
 
       final colorScheme = (selectedColor.computeLuminance() > kLumContrast)
@@ -86,6 +87,7 @@ class SingleColorHome extends StatelessWidget {
 //                        ),
                         HSVerticalPicker(
                           color: selectedColor,
+                          hsLuvColor: hsluvColor,
                           isSplitView: isSplitView,
                         ),
                         SingleColorBlindness(

@@ -12,6 +12,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hsluv/hsluvcolor.dart';
 
 import '../color_with_inter.dart';
 import '../screens/about.dart';
@@ -29,9 +30,14 @@ const valueStr = "Value";
 const lightStr = "Lightness";
 
 class HSVerticalPicker extends StatefulWidget {
-  const HSVerticalPicker({this.color, this.isSplitView = false});
+  const HSVerticalPicker({
+    this.color,
+    this.hsLuvColor,
+    this.isSplitView = false,
+  });
 
   final Color color;
+  final HSLuvColor hsLuvColor;
   final bool isSplitView;
 
   @override
@@ -143,7 +149,7 @@ class _HSVerticalPickerState extends State<HSVerticalPicker> {
               box: Hive.box<dynamic>("settings"),
               builder: (BuildContext context, Box box) => currentSegment == 0
                   ? HSLuvSelector(
-                      color: widget.color,
+                      color: widget.hsLuvColor,
                       moreColors: box.get("moreItems", defaultValue: false),
                     )
                   : HSVSelector(
@@ -171,11 +177,11 @@ class HSGenericScreen extends StatefulWidget {
     this.toneSize,
   });
 
-  final Color color;
+  final HSInterColor color;
   final String kind;
-  final List<Color> Function() fetchHue;
-  final List<ColorWithInter> Function(Color) fetchSat;
-  final List<ColorWithInter> Function(Color) fetchLight;
+  final List<HSInterColor> Function() fetchHue;
+  final List<ColorWithInter> Function(HSInterColor) fetchSat;
+  final List<ColorWithInter> Function(HSInterColor) fetchLight;
 
   final int toneSize;
   final String hueTitle;
@@ -216,27 +222,26 @@ class _HSGenericScreenState extends State<HSGenericScreen> {
   List<ColorWithInter> parseHue() {
     // fetch the hue. If we call this inside the BlocBuilder,
     // we will lose the list position because it will refresh every time.
-    final List<Color> hue = widget.fetchHue();
+    final List<HSInterColor> hue = widget.fetchHue();
 
     // apply the diff to the hue.
-    return hue.map((Color c) {
-      final HSInterColor hsluv = HSInterColor.fromColor(c, widget.kind);
-      return ColorWithInter(hsluv.toColor(), hsluv);
+    return hue.map((HSInterColor hsc) {
+      return ColorWithInter(hsc.toColor(), hsc);
     }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
-    final Color rgbColor = widget.color;
+    final HSInterColor color = widget.color;
 
     // in the ideal the world they could be calculated in the Bloc &/or in parallel.
     final List<ColorWithInter> hue = parseHue();
     final int hueLen = hue.length;
 
-    final List<ColorWithInter> tones = widget.fetchSat(rgbColor);
-    final List<ColorWithInter> values = widget.fetchLight(rgbColor);
+    final List<ColorWithInter> tones = widget.fetchSat(color);
+    final List<ColorWithInter> values = widget.fetchLight(color);
 
-    final Color borderColor = (rgbColor.computeLuminance() > kLumContrast)
+    final Color borderColor = color.outputLightness() > 100 - kLumContrast * 100
         ? Colors.black.withOpacity(0.40)
         : Colors.white.withOpacity(0.40);
 
@@ -285,9 +290,9 @@ class _HSGenericScreenState extends State<HSGenericScreen> {
 
     return Theme(
       data: ThemeData.from(
-        colorScheme: (rgbColor.computeLuminance() > kLumContrast)
-            ? ColorScheme.light(surface: rgbColor)
-            : ColorScheme.dark(surface: rgbColor),
+        colorScheme: (color.lightness > kLumContrast)
+            ? ColorScheme.light()
+            : ColorScheme.dark(),
         textTheme: Theme.of(context).textTheme.copyWith(
               caption: GoogleFonts.b612Mono(),
               button: GoogleFonts.b612Mono(),
@@ -339,7 +344,7 @@ class _HSGenericScreenState extends State<HSGenericScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 12, bottom: 12),
                 child: Text(
-                  HSInterColor.fromColor(rgbColor, widget.kind).toString(),
+                  color.toString(),
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.b612Mono(),
                 ),

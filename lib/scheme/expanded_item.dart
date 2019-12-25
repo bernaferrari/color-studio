@@ -39,11 +39,11 @@ class SchemeExpandedItem extends StatelessWidget {
           valuesList.map((i) => luv.withHue((luv.hue + i * 2) % 360)).toList(),
           valuesList
               .map((i) =>
-                  luv.withSaturation(interval(luv.saturation + i, 5.0, 100.0)))
+                  luv.withSaturation(interval(luv.saturation + i, 0.0, 100.0)))
               .toList(),
           valuesList
               .map((i) =>
-                  luv.withLightness(interval(luv.lightness + i, 5.0, 95.0)))
+                  luv.withLightness(interval(luv.lightness + i, 0.0, 100.0)))
               .toList(),
         ];
 

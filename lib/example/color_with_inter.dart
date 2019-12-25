@@ -9,6 +9,11 @@ extension ListConversion<T> on List<Color> {
           .toList();
 }
 
+extension ListConversionInter<T> on List<HSInterColor> {
+  List<ColorWithInter> convertToColorWithInter() =>
+      map((HSInterColor c) => ColorWithInter(c.toColor(), c)).toList();
+}
+
 class ColorWithInter {
   ColorWithInter(this.color, this.inter)
       : lum = color.computeLuminance(),
