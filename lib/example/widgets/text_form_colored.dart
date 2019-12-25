@@ -1,9 +1,10 @@
+import 'package:colorstudio/example/blocs/blocs.dart';
+import 'package:colorstudio/example/util/constants.dart';
+import 'package:colorstudio/example/util/selected.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:colorstudio/example/blocs/blocs.dart';
-import 'package:colorstudio/example/util/constants.dart';
 
 class TextFormColored extends StatelessWidget {
   const TextFormColored({this.controller, this.radius, this.autofocus = true});
@@ -43,10 +44,23 @@ class TextFormColored extends StatelessWidget {
                 kLumContrast)
             ? Colors.black12
             : Colors.white24,
-        isDense: true,
         prefix: Padding(
           padding: const EdgeInsets.only(right: 8.0),
           child: Icon(FeatherIcons.hash, size: 16),
+        ),
+        suffixIcon: SizedBox(
+          width: 48,
+          height: 36,
+          child: IconButton(
+            onPressed: () {
+              copyToClipboard(context, controller.text);
+            },
+            tooltip: "Copy to clipboard",
+            icon: Icon(
+              FeatherIcons.copy,
+              color: Theme.of(context).colorScheme.onBackground,
+            ),
+          ),
         ),
       ),
       style: Theme.of(context).textTheme.title.copyWith(

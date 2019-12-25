@@ -51,13 +51,11 @@ class ContrastRatioScreen extends StatelessWidget {
         data: ThemeData.from(
           colorScheme: colorScheme,
           textTheme: TextTheme(
-            body1: GoogleFonts.lato(
+            body1: GoogleFonts.firaSans(
               fontWeight: FontWeight.w400,
               fontSize: 14,
             ),
             title: GoogleFonts.firaSans(fontWeight: FontWeight.w600),
-//            title: GoogleFonts.firaMono(fontSize: isiPad ? 16 : 13),
-//            subtitle: GoogleFonts.firaMono(fontSize: isiPad ? 14 : 11),
           ),
         ),
         child: Padding(
@@ -91,7 +89,15 @@ class ContrastRatioScreen extends StatelessWidget {
                         Icons.help_outline,
                         color: Theme.of(context).colorScheme.primary,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext ctx) {
+                              return _HelpDialog(
+                                background: colorScheme.background,
+                              );
+                            });
+                      },
                     ),
                   ],
                 ),
@@ -180,5 +186,98 @@ class ContrastRatioScreen extends StatelessWidget {
         ),
       );
     });
+  }
+}
+
+class _HelpDialog extends StatelessWidget {
+  const _HelpDialog({this.background});
+
+  final Color background;
+
+  @override
+  Widget build(BuildContext context) {
+    /// I am REALLY NOT PROUD of this class!
+    /// Really wish Flutter had a better Markdown support.
+    /// The existing package was really buggy, so this approach was necessary.
+    return AlertDialog(
+      title: const Text("Contrast Ratio"),
+      contentPadding: const EdgeInsets.only(top: 16),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      content: Card(
+        clipBehavior: Clip.antiAlias,
+        margin: EdgeInsets.zero,
+        color: background,
+        child: SizedBox(
+          width: 500,
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  // good resources:
+                  // https://www.w3.org/TR/WCAG21/#contrast-minimum
+                  // https://usecontrast.com/guide
+                  // https://material.io/design/color/dark-theme.html
+                  // https://blog.cloudflare.com/thinking-about-color/
+                  Text(
+                    "WACG recommends a contrast of:",
+                    style: Theme.of(context).textTheme.subtitle,
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    "3.0:1 minimum for texts larger than 18pt or icons (AA+).\n4.5:1 minimum for texts smaller than 18pt (AA).\n7.0:1 minimum when possible, if possible (AAA).",
+                  ),
+                  Text(
+                    "\nMost design specifications, including Material, follow this.",
+                    style: Theme.of(context).textTheme.caption,
+                  ),
+                  Text(
+                    "There is a formula that calculates the apparent contrast between two colors.",
+                    style: Theme.of(context).textTheme.caption,
+                  ),
+                  SizedBox(height: 24),
+                  Text(
+                    "Surface with elevation",
+                    style: Theme.of(context).textTheme.subtitle,
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    "In a dark theme, at higher levels of elevation, Material Design Components express depth by displaying a lighter surface color. " +
+                        "The higher a surface’s elevation (raising it closer to an implied light source), the lighter that surface becomes. " +
+                        "That lightness is expressed through the application of a semi-transparent overlay using the OnSurface color (default: white).",
+                  ),
+                  SizedBox(height: 24),
+                  Text(
+                    "HSLuv",
+                    style: Theme.of(context).textTheme.subtitle,
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    "This app makes heavy usage of HSLuv."
+                    " RGB is unintuitive, HSV and HSL are flawed. When you change the Hue or Saturation in them, the appearent lightness also changes. ",
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    "HSLuv extends CIELUV, which was based on human experiments, for a perceptual uniform color model." +
+                        " This means: when you change the Hue or Saturation in HSLuv, the appearent/perceptual lightness will not vary wildly. This makes a lot easier to design color systems, since you can adjust a color without changing the contrast.",
+                  ),
+                  Text(
+                    "\nYou are seeing HSLuv in action right now!",
+                    style: Theme.of(context).textTheme.caption,
+                  ),
+                  Text(
+                    "This background color is Color Scheme's Background color with Lightness = 20.",
+                    style: Theme.of(context).textTheme.caption,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

@@ -125,7 +125,23 @@ class ColorTemplates extends StatelessWidget {
                   colors: [
                     Color(0xff3A82F7),
                     Color(0xff000000),
-                    Color(0xff1B1C1E)
+                    Color(0xff1B1C1E),
+                  ],
+                ),
+                const _TemplateItem(
+                  title: "MoleRed",
+                  colors: [
+                    Color(0xffffffff),
+                    Color(0xff87202d),
+                    Color(0xff922333),
+                  ],
+                ),
+                const _TemplateItem(
+                  title: "MoleGrey",
+                  colors: [
+                    Color(0xff55baba),
+                    Color(0xff1C2529),
+                    Color(0xff243037),
                   ],
                 ),
                 const SizedBox(height: 16),

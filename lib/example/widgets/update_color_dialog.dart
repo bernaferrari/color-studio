@@ -52,14 +52,6 @@ class UpdateColorDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextEditingController controller = TextEditingController();
 
-    Future<void> getClipBoardData() async {
-      ClipboardData data = await Clipboard.getData(Clipboard.kTextPlain);
-      controller.text = data.text;
-      BlocProvider.of<SliderColorBloc>(context).add(
-        MoveColor(Color(int.parse("0xFF${data.text.padRight(6, "F")}")), false),
-      );
-    }
-
     return BlocBuilder<SliderColorBloc, SliderColorState>(
       builder: (context, state) {
         if (state is SliderColorLoading) {

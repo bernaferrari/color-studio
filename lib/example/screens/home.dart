@@ -338,7 +338,6 @@ List<ColorWithDiff> generateLuvVariations(HSLuvColor luv, String kind) {
       // upd.saturation - luv.saturation > -i - 5
       // 95 - 90 > 5 - 5 => 5 > 0 ok
       // 95 - 90 > 10 - 5 => 4 > 5 false
-      print("${upd.saturation - luv.saturation} || ${i + 5}");
       withDiff = ColorWithDiff(upd, i, upd.saturation - luv.saturation > i - 5);
     } else if (kind == lightStr) {
       final min = math.min(luv.lightness + i, 95.0);
@@ -400,8 +399,6 @@ class ThemeBar extends StatelessWidget {
       child: SizedBox(
         width: 500,
         child: LayoutBuilder(builder: (context, builder) {
-          print("builder is ${builder.maxWidth}");
-
           return Row(
             children: <Widget>[
               // this is necessary to counter-balance the chevronUp icon at the other side.
@@ -521,7 +518,6 @@ class ContrastItem extends StatelessWidget {
         : Colors.black87;
 
     Widget cornerText;
-    print("${colorWithDiff.color.lightness} || ${colorWithDiff.diff} AAA");
     if (colorWithDiff.diff == 0) {
       final String writtenValue = when<String>({
         () => category == hueStr: () => color.hue.round().toString(),

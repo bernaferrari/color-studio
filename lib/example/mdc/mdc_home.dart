@@ -67,17 +67,27 @@ class MDCHome extends StatelessWidget {
             appBar: AppBar(
               title: Text("Components Preview"),
               actions: <Widget>[
-                BorderedIconButton(
-                  child: Icon(FeatherIcons.sliders, size: 16),
+                IconButton(
+                  icon: Icon(FeatherIcons.sliders),
                   onPressed: () {
                     Navigator.pushNamed(context, "/colordetails");
                   },
                 ),
-                BorderedIconButton(
-                  child: Icon(FeatherIcons.shuffle, size: 16),
+                IconButton(
+                  tooltip: "Random mole theme",
+                  icon: Icon(FeatherIcons.penTool),
                   onPressed: () {
                     BlocProvider.of<MdcSelectedBloc>(context).add(
-                      MDCUpdateAllEvent(colors: getRandomMaterial()),
+                      MDCUpdateAllEvent(colors: getRandomMoleTheme()),
+                    );
+                  },
+                ),
+                IconButton(
+                  tooltip: "Random dark theme",
+                  icon: Icon(FeatherIcons.moon),
+                  onPressed: () {
+                    BlocProvider.of<MdcSelectedBloc>(context).add(
+                      MDCUpdateAllEvent(colors: getRandomMaterialDark()),
                     );
                   },
                 ),

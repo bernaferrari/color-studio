@@ -114,33 +114,37 @@ class Home extends StatelessWidget {
     MDCLoadedState currentState,
     bool shouldDisplayElevation,
   ) {
+    final isiPad = MediaQuery.of(context).size.width > 600;
+
     return Column(
       children: <Widget>[
         SizedBox(height: 4),
         Row(
           children: <Widget>[
-            SizedBox(width: 16),
-            Expanded(
-              child: RaisedButton.icon(
-                label: Text("Modify"),
-                textColor: colorScheme.onSurface,
-                icon: Icon(FeatherIcons.sliders, size: 16),
-                onPressed: () {
-                  Navigator.pushNamed(context, "/colordetails");
-                },
-                color: colorScheme.surface,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  side: BorderSide(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .onSurface
-                        .withOpacity(0.3),
+            if (isiPad) SizedBox(width: 24) else SizedBox(width: 16),
+            if (!isiPad) ...[
+              Expanded(
+                child: RaisedButton.icon(
+                  label: Text("Modify"),
+                  textColor: colorScheme.onSurface,
+                  icon: Icon(FeatherIcons.sliders, size: 16),
+                  onPressed: () {
+                    Navigator.pushNamed(context, "/colordetails");
+                  },
+                  color: colorScheme.surface,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    side: BorderSide(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withOpacity(0.3),
+                    ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(width: 16),
+              SizedBox(width: 16),
+            ],
             Expanded(
               child: RaisedButton.icon(
                 label: Text("Preview"),
@@ -161,7 +165,7 @@ class Home extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(width: 16),
+            if (isiPad) SizedBox(width: 8) else SizedBox(width: 16),
           ],
         ),
         ColorSchemeScreen(

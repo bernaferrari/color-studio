@@ -44,9 +44,6 @@ class About extends StatelessWidget {
                 child: ShuffleDarkSection(),
               ),
               TranslucentCard(
-                child: ShuffleLightSection(),
-              ),
-              TranslucentCard(
                 child: GDPR(),
               ),
               Padding(padding: EdgeInsets.all(4)),
@@ -202,7 +199,7 @@ class ShuffleDarkSection extends StatelessWidget {
     return InkWell(
       onTap: () {
         BlocProvider.of<MdcSelectedBloc>(context).add(
-          MDCUpdateAllEvent(colors: getRandomMaterialDark()),
+          MDCUpdateAllEvent(colors: getRandomMaterial()),
         );
       },
       child: Padding(
@@ -213,10 +210,10 @@ class ShuffleDarkSection extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Icon(FeatherIcons.moon),
+                  Icon(FeatherIcons.layers),
                   const SizedBox(width: 16),
                   Text(
-                    "Random Dark Theme",
+                    "Random Material Theme",
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.title,
                   ),
@@ -232,15 +229,15 @@ class ShuffleDarkSection extends StatelessWidget {
   }
 }
 
-class ShuffleLightSection extends StatelessWidget {
-  const ShuffleLightSection();
+class ShuffleMoleSection extends StatelessWidget {
+  const ShuffleMoleSection();
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         BlocProvider.of<MdcSelectedBloc>(context).add(
-          MDCUpdateAllEvent(colors: getRandomMaterialLight()),
+          MDCUpdateAllEvent(colors: getRandomMoleTheme()),
         );
       },
       child: Padding(
@@ -248,15 +245,19 @@ class ShuffleLightSection extends StatelessWidget {
         child: Row(
           children: <Widget>[
             Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              child: Column(
                 children: <Widget>[
-                  Icon(FeatherIcons.sun),
-                  const SizedBox(width: 16),
-                  Text(
-                    "Random Light Theme",
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.title,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(FeatherIcons.penTool),
+                      const SizedBox(width: 16),
+                      Text(
+                        "Random Mole Theme",
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.title,
+                      ),
+                    ],
                   ),
                 ],
               ),

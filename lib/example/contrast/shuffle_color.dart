@@ -67,18 +67,18 @@ List<Color> getRandomMaterialDark() {
   return [
     HSLuvColor.fromHSL(
       rng.nextInt(360).toDouble(),
-      50 + rng.nextInt(50).toDouble(),
-      60 + rng.nextInt(20).toDouble(),
+      50 + rng.nextInt(51).toDouble(),
+      60 + rng.nextInt(21).toDouble(),
     ).toColor(),
     HSLuvColor.fromHSL(
       rng.nextInt(360).toDouble(),
-      rng.nextInt(100).toDouble(),
-      rng.nextInt(30).toDouble(),
+      rng.nextInt(101).toDouble(),
+      rng.nextInt(36).toDouble(),
     ).toColor(),
     HSLuvColor.fromHSL(
       rng.nextInt(360).toDouble(),
-      5 + rng.nextInt(80).toDouble(),
-      rng.nextInt(30).toDouble(),
+      5 + rng.nextInt(81).toDouble(),
+      rng.nextInt(36).toDouble(),
     ).toColor(),
   ];
 }
@@ -98,30 +98,66 @@ List<Color> getRandomMaterialLight() {
   // H: 177 S: 100 L: 79
   // Therefore, S > 90 and 35 < L < 80
 
-  final primaryLightness = 25 + rng.nextInt(20);
+  final primaryLightness = 20 + rng.nextInt(20);
 
   return [
     HSLuvColor.fromHSL(
       rng.nextInt(360).toDouble(),
-      80 + rng.nextInt(10).toDouble(),
+      80 + rng.nextInt(11).toDouble(),
       primaryLightness.toDouble(),
     ).toColor(),
     HSLuvColor.fromHSL(
       rng.nextInt(360).toDouble(),
-      20 + rng.nextInt(80).toDouble(),
-      primaryLightness + 40 + rng.nextInt(60 - primaryLightness).toDouble(),
+      20 + rng.nextInt(81).toDouble(),
+      primaryLightness + 40 + rng.nextInt(61 - primaryLightness).toDouble(),
     ).toColor(),
     HSLuvColor.fromHSL(
       rng.nextInt(360).toDouble(),
-      rng.nextInt(100).toDouble(),
-      primaryLightness + 40 + rng.nextInt(60 - primaryLightness).toDouble(),
+      rng.nextInt(101).toDouble(),
+      primaryLightness + 40 + rng.nextInt(61 - primaryLightness).toDouble(),
+    ).toColor(),
+  ];
+}
+
+List<Color> getRandomMoleTheme() {
+  var rng = Random();
+
+  // ### Primary Color Study
+  // ## Light Theme
+  // # Material colors in HSV:
+  // H: 265 S: 100 V: 93
+  // H: 174 S: 99 V: 85
+  // Therefore, S > 90 and V > 80
+  //
+  // # Material colors in HSLuv:
+  // H: 272 S: 100 L: 36
+  // H: 177 S: 100 L: 79
+  // Therefore, S > 90 and 35 < L < 80
+
+  final primaryLightness = 25 + rng.nextInt(20);
+
+  final backgroundLightness = 5 + rng.nextInt(55);
+  final backgroundSat = (25 + rng.nextInt(75)).toDouble();
+  final backgroundHue = rng.nextInt(360).toDouble();
+
+  return [
+    HSLuvColor.fromHSL(rng.nextInt(360).toDouble(), 0, 100).toColor(),
+    HSLuvColor.fromHSL(
+      backgroundHue,
+      backgroundSat,
+      backgroundLightness.toDouble(),
+    ).toColor(),
+    HSLuvColor.fromHSL(
+      backgroundHue,
+      backgroundSat,
+      backgroundLightness + 5.0,
     ).toColor(),
   ];
 }
 
 List<Color> getRandomMaterial() {
   var rng = Random();
-  final isDark = rng.nextInt(1) % 2 == 0;
+  final isDark = rng.nextInt(2) % 2 == 0;
   return isDark ? getRandomMaterialDark() : getRandomMaterialLight();
 }
 

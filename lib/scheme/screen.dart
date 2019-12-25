@@ -6,6 +6,7 @@ import 'package:colorstudio/widgets/section_card.dart';
 import 'package:colorstudio/widgets/title_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
@@ -73,13 +74,26 @@ class ColorSchemeScreen extends StatelessWidget {
                 title: "Color Scheme",
                 children: <Widget>[
                   IconButton(
+                    tooltip: "Random mole dark theme",
                     icon: Icon(
-                      Icons.shuffle,
+                      FeatherIcons.penTool,
                       color: Theme.of(context).colorScheme.primary,
                     ),
                     onPressed: () {
                       BlocProvider.of<MdcSelectedBloc>(context).add(
-                        MDCUpdateAllEvent(colors: getRandomMaterial()),
+                        MDCUpdateAllEvent(colors: getRandomMoleTheme()),
+                      );
+                    },
+                  ),
+                  IconButton(
+                    tooltip: "Random Material dark theme",
+                    icon: Icon(
+                      FeatherIcons.moon,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    onPressed: () {
+                      BlocProvider.of<MdcSelectedBloc>(context).add(
+                        MDCUpdateAllEvent(colors: getRandomMaterialDark()),
                       );
                     },
                   ),
