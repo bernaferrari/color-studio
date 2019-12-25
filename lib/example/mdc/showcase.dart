@@ -47,62 +47,67 @@ class _ShowcaseState extends State<Showcase> {
     final backgroundColor = widget.backgroundColor;
     final surfaceColor = widget.surfaceColor;
 
-    final isiPad = MediaQuery.of(context).size.shortestSide > 600;
+    final isiPad = MediaQuery.of(context).size.width > 600;
 
     return Column(
       children: <Widget>[
         Expanded(
-          child: ListView(
-            key: const PageStorageKey("PreviewList"),
-            children: <Widget>[
-              SizedBox(height: 8),
-              _PrevSpotify(primary: primaryColor, background: backgroundColor),
-              _PrevFacebook(
-                primary: primaryColor,
-                background: backgroundColor,
-                elevation: currentElevation,
-              ),
-              _PrevTrip(
-                primary: primaryColor,
-                surface: surfaceColor,
-                elevation: currentElevation,
-              ),
-              if (isiPad)
-                Row(
-                  children: <Widget>[
-                    Expanded(child: _PrevClock(primary: primaryColor)),
-                    Expanded(
-                      child: _PrevStore(
-                        primary: primaryColor,
-                        surface: surfaceColor,
-                      ),
-                    ),
-                  ],
-                )
-              else ...[
-                _PrevClock(primary: primaryColor),
-                _PrevStore(
+          // SingleChildScrollView + Column has a better performance than a ListView
+          // Flutter works in mysterious ways.
+          child: SingleChildScrollView(
+            child: Column(
+              key: const PageStorageKey("PreviewList"),
+              children: <Widget>[
+                SizedBox(height: 8),
+                _PrevSpotify(
+                    primary: primaryColor, background: backgroundColor),
+                _PrevFacebook(
+                  primary: primaryColor,
+                  background: backgroundColor,
+                  elevation: currentElevation,
+                ),
+                _PrevTrip(
                   primary: primaryColor,
                   surface: surfaceColor,
+                  elevation: currentElevation,
                 ),
-              ],
+                if (isiPad)
+                  Row(
+                    children: <Widget>[
+                      Expanded(child: _PrevClock(primary: primaryColor)),
+                      Expanded(
+                        child: _PrevStore(
+                          primary: primaryColor,
+                          surface: surfaceColor,
+                        ),
+                      ),
+                    ],
+                  )
+                else ...[
+                  _PrevClock(primary: primaryColor),
+                  _PrevStore(
+                    primary: primaryColor,
+                    surface: surfaceColor,
+                  ),
+                ],
 //        _PrevCupertino(primary: primaryColor, backgroundColor: backgroundColor),
-              _PrevPhotos(primary: primaryColor, surface: surfaceColor),
-              _PrevPodcast(
-                primary: primaryColor,
-                surface: surfaceColor,
-                elevation: currentElevation,
-              ),
-              _PrevSDKMonitor(
-                primary: primaryColor,
-                elevation: currentElevation,
-              ),
-              _PrevPodcasts(
-                primary: primaryColor,
-                elevation: currentElevation,
-              ),
-              const SizedBox(height: 16),
-            ],
+                _PrevPhotos(primary: primaryColor, surface: surfaceColor),
+                _PrevPodcast(
+                  primary: primaryColor,
+                  surface: surfaceColor,
+                  elevation: currentElevation,
+                ),
+                _PrevSDKMonitor(
+                  primary: primaryColor,
+                  elevation: currentElevation,
+                ),
+                _PrevPodcasts(
+                  primary: primaryColor,
+                  elevation: currentElevation,
+                ),
+                const SizedBox(height: 16),
+              ],
+            ),
           ),
         ),
         BlocBuilder<MdcSelectedBloc, MdcSelectedState>(
@@ -1404,19 +1409,22 @@ class _PrevPhotos extends StatelessWidget {
         SizedBox(height: 8),
         Container(
           height: 72,
-          child: ListView(
-            key: const PageStorageKey("photosOverlay"),
-            scrollDirection: Axis.horizontal,
-            children: <Widget>[
-              const SizedBox(width: 16),
-              for (int i = 0; i < elevationEntries.length; i++)
-                _PhotosElevationOverlay(
-                  primary: primary,
-                  surface: surface,
-                  elevation: elevationEntriesList[i].toDouble(),
-                ),
-              const SizedBox(width: 16),
-            ],
+          child: Center(
+            child: ListView(
+              key: const PageStorageKey("photosOverlay"),
+              scrollDirection: Axis.horizontal,
+              shrinkWrap: true,
+              children: <Widget>[
+                const SizedBox(width: 16),
+                for (int i = 0; i < elevationEntries.length; i++)
+                  _PhotosElevationOverlay(
+                    primary: primary,
+                    surface: surface,
+                    elevation: elevationEntriesList[i].toDouble(),
+                  ),
+                const SizedBox(width: 16),
+              ],
+            ),
           ),
         ),
         SizedBox(height: 24),

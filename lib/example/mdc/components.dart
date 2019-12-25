@@ -22,9 +22,9 @@ class Components extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primaryContrastingColor = contrastingColor(primaryColor);
-    final surfaceContrastingColor = contrastingColor(surfaceColor);
-    final double itemWidth = MediaQuery.of(context).size.width / 2;
-    final bgFromPrimary = blendColorWithBackground(primaryColor);
+//    final surfaceContrastingColor = contrastingColor(surfaceColor);
+//    final double itemWidth = MediaQuery.of(context).size.width / 2;
+//    final bgFromPrimary = blendColorWithBackground(primaryColor);
 
     return Container(
       color: surfaceColor,
@@ -266,73 +266,6 @@ class Components extends StatelessWidget {
     }
     // this ideally shouldn't ever happen
     return Colors.black;
-  }
-}
-
-class CheckedButton extends StatelessWidget {
-  const CheckedButton(
-      {@required this.color,
-      @required this.isSelected,
-      @required this.title,
-      this.onPressed});
-
-  final Color color;
-  final bool isSelected;
-  final String title;
-  final Function onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    final contrastedColor = isSelected
-        ? contrastingColor(color)
-        : Theme.of(context).textTheme.body2.color;
-
-    final Widget area = Row(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Icon(
-            isSelected ? FeatherIcons.check : FeatherIcons.circle,
-            size: 16,
-            color: isSelected ? contrastedColor : color,
-          ),
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              title,
-              style: TextStyle(color: contrastedColor),
-            ),
-//            SizedBox(
-//              width: 56,
-//              child: Text(
-//                "${color.toHexStr()}",
-//                style: Theme.of(context).textTheme.caption.copyWith(
-//                      color: contrastedColor.withOpacity(0.7),
-//                    ),
-//              ),
-//            ),
-          ],
-        ),
-        SizedBox(width: 16),
-      ],
-    );
-
-    return isSelected
-        ? RaisedButton(
-            color: color,
-            onPressed: onPressed,
-            child: area,
-            padding: EdgeInsets.zero,
-          )
-        : OutlineButton(
-            color: color,
-            onPressed: onPressed,
-            child: area,
-            padding: EdgeInsets.zero,
-          );
   }
 }
 

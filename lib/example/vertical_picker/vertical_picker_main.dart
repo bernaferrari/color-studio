@@ -233,6 +233,7 @@ class _HSGenericScreenState extends State<HSGenericScreen> {
   @override
   Widget build(BuildContext context) {
     final HSInterColor color = widget.color;
+    final Color rgbColor = widget.color.toColor();
 
     // in the ideal the world they could be calculated in the Bloc &/or in parallel.
     final List<ColorWithInter> hue = parseHue();
@@ -241,7 +242,10 @@ class _HSGenericScreenState extends State<HSGenericScreen> {
     final List<ColorWithInter> tones = widget.fetchSat(color);
     final List<ColorWithInter> values = widget.fetchLight(color);
 
-    final Color borderColor = color.outputLightness() > 100 - kLumContrast * 100
+    final isColorBrighterThanContrast =
+        color.outputLightness() > 100 - kLumContrast * 100;
+
+    final Color borderColor = isColorBrighterThanContrast
         ? Colors.black.withOpacity(0.40)
         : Colors.white.withOpacity(0.40);
 
@@ -290,9 +294,9 @@ class _HSGenericScreenState extends State<HSGenericScreen> {
 
     return Theme(
       data: ThemeData.from(
-        colorScheme: (color.lightness > kLumContrast)
-            ? ColorScheme.light()
-            : ColorScheme.dark(),
+        colorScheme: isColorBrighterThanContrast
+            ? ColorScheme.light(surface: rgbColor)
+            : ColorScheme.dark(surface: rgbColor),
         textTheme: Theme.of(context).textTheme.copyWith(
               caption: GoogleFonts.b612Mono(),
               button: GoogleFonts.b612Mono(),

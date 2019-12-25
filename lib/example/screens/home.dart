@@ -445,7 +445,7 @@ class ThemeBar extends StatelessWidget {
                               SizedBox(width: 8),
                               if (selected == keysList[i])
                                 Icon(
-                                  FeatherIcons.check,
+                                  FeatherIcons.checkCircle,
                                   size: 16,
                                   color: contrastedColors[i],
                                 )

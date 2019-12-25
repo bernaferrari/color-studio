@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:colorstudio/example/util/constants.dart';
 import 'package:colorstudio/example/vertical_picker/picker_item.dart';
+import 'package:flutter/material.dart';
 import 'package:infinite_listview/infinite_listview.dart';
 
 import '../color_with_inter.dart';
