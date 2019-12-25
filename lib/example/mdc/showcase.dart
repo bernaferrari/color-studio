@@ -33,7 +33,7 @@ class _ShowcaseState extends State<Showcase> {
   void initState() {
     sliderValue = PageStorage.of(context)
             .readState(context, identifier: ValueKey("CardElevation")) ??
-        7 / (elevationEntriesList.length - 1);
+        4 / (elevationEntriesList.length - 1);
     super.initState();
   }
 
@@ -59,8 +59,14 @@ class _ShowcaseState extends State<Showcase> {
               key: const PageStorageKey("PreviewList"),
               children: <Widget>[
                 SizedBox(height: 8),
+                _PrevThankful(
+                  primary: primaryColor,
+                  background: backgroundColor,
+                ),
                 _PrevSpotify(
-                    primary: primaryColor, background: backgroundColor),
+                  primary: primaryColor,
+                  background: backgroundColor,
+                ),
                 _PrevFacebook(
                   primary: primaryColor,
                   background: backgroundColor,
@@ -576,6 +582,46 @@ class _PrevClock extends StatelessWidget {
   }
 }
 
+class _PrevThankful extends StatelessWidget {
+  const _PrevThankful({this.primary, this.background});
+
+  final Color primary;
+  final Color background;
+
+  @override
+  Widget build(BuildContext context) {
+    final isiPad = MediaQuery.of(context).size.shortestSide > 600;
+
+    return Column(
+      children: <Widget>[
+        SizedBox(height: 24),
+        SizedBox(width: 16),
+        Column(
+          children: <Widget>[
+            Text(
+              "What are you thankful for?",
+              style: GoogleFonts.firaSans(
+                fontSize: 24,
+                fontWeight: FontWeight.w600,
+                textStyle: TextStyle(color: primary),
+              ),
+            ),
+            // there is a deeper level into this app
+            Text(
+              "What are you doing with the skills you have?",
+              style: GoogleFonts.hind(
+                fontSize: 16,
+                textStyle: TextStyle(color: primary),
+              ),
+            ),
+            SizedBox(height: 8),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
 class _PrevSpotify extends StatelessWidget {
   const _PrevSpotify({this.primary, this.background});
 
@@ -1035,103 +1081,140 @@ class _PrevPodcasts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final margin = 12.0;
-
     return Column(
       children: <Widget>[
-        Card(
-          elevation: elevation.toDouble(),
-          margin: EdgeInsets.symmetric(horizontal: 16),
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Container(
-                      width: 64,
-                      height: 64,
-                      decoration: BoxDecoration(
-                        color: primary,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    SizedBox(width: margin),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            "Slavery, Wine, Mutiny, a cow and a train - S03 E02",
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                            style: GoogleFonts.muli(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                              textStyle: TextStyle(
-                                color: Theme.of(context).colorScheme.onSurface,
-                              ),
-                            ),
-                          ),
-                          Text(
-                            "Extremes",
-                            style: GoogleFonts.muli(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w300,
-                              textStyle: TextStyle(
-                                color: Theme.of(context).colorScheme.onSurface,
-                              ),
-                            ), // original is Extremities
-                          ),
-                        ],
-                      ),
-                    ),
-                    IconButton(
-                      icon: Icon(
-                        FeatherIcons.moreVertical,
-                        color: Theme.of(context).colorScheme.onSurface,
-                      ),
-                      onPressed: () {},
-                    ),
-                  ],
-                ),
-                SizedBox(height: 8),
-                Text(
-                  "278 years of Alcatraz's history. From Silicon Valley's luxury condominium to a prison no one can escape.",
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: GoogleFonts.muli(
-                    textStyle: TextStyle(
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
-                  ),
-                ),
-                SizedBox(height: margin),
-                Row(
-                  children: <Widget>[
-                    Icon(
-                      Icons.play_circle_filled,
-                      size: 36,
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
-                    SizedBox(width: 8),
-                    Text(
-                      "Yesterday • 34 MINS",
-                      maxLines: 1,
-                      style: GoogleFonts.muli(
-                        textStyle: TextStyle(
-                          color: Theme.of(context).colorScheme.onSurface,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
+        _PodcastCard(
+          elevation: elevation,
+          primaryColor: primary,
+          textColor: Theme.of(context).colorScheme.onSurface,
+          title: "Slavery, police, a bear and chocolate festival full of secrets - S03 E02",
+          description:
+              "278 years of Alcatraz's history. From Silicon Valley's luxury condominium to a prison no one can escape.",
+          subdescription: "Yesterday • 34 MINS",
+        ),
+        SizedBox(height: 24),
+        _PodcastCard(
+          elevation: elevation,
+          primaryColor: Theme.of(context).colorScheme.onSurface,
+          textColor: primary,
+          title: "Hyenas, planes, reindeers, robots and an old friend - S05 E17",
+          description:
+              "Things have changed. Nothing is what you expect. And nothing will ever be the same again. Be careful with the maze.",
+          subdescription: "Today • 22 MINS",
         ),
         SizedBox(height: 48),
       ],
+    );
+  }
+}
+
+class _PodcastCard extends StatelessWidget {
+  const _PodcastCard({
+    this.elevation,
+    this.primaryColor,
+    this.textColor,
+    this.title,
+    this.description,
+    this.subdescription,
+  });
+
+  final int elevation;
+  final Color primaryColor;
+  final Color textColor;
+  final String title;
+  final String description;
+  final String subdescription;
+
+  final margin = 12.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: elevation.toDouble(),
+      margin: EdgeInsets.symmetric(horizontal: 16),
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Container(
+                  width: 64,
+                  height: 64,
+                  decoration: BoxDecoration(
+                    color: primaryColor,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                SizedBox(width: margin),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        title,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        style: GoogleFonts.muli(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          textStyle: TextStyle(color: textColor),
+                        ),
+                      ),
+                      Text(
+                        "Extremes",
+                        style: GoogleFonts.muli(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w300,
+                          textStyle: TextStyle(color: textColor),
+                        ), // original is Extremities
+                      ),
+                    ],
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(
+                    FeatherIcons.moreVertical,
+                    color: textColor,
+                  ),
+                  onPressed: () {},
+                ),
+              ],
+            ),
+            SizedBox(height: 8),
+            Text(
+              description,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: GoogleFonts.muli(
+                textStyle: TextStyle(
+                  color: textColor,
+                ),
+              ),
+            ),
+            SizedBox(height: margin),
+            Row(
+              children: <Widget>[
+                Icon(
+                  Icons.play_circle_filled,
+                  size: 36,
+                  color: textColor,
+                ),
+                SizedBox(width: 8),
+                Text(
+                  subdescription,
+                  maxLines: 1,
+                  style: GoogleFonts.muli(
+                    textStyle: TextStyle(
+                      color: textColor,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

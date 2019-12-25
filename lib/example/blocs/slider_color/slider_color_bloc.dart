@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:colorstudio/example/blocs/blocs.dart';
-import 'package:colorstudio/example/blocs/mdc_selected/mdc_selected_bloc.dart';
 import 'package:colorstudio/example/blocs/slider_color/slider_color_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +16,7 @@ class SliderColorBloc extends Bloc<SliderColorEvent, SliderColorState> {
 
   @override
   Stream<SliderColorState> transformEvents(events, next) {
-    return (events as Observable<SliderColorEvent>).switchMap(next);
+    return events.switchMap(next);
   }
 
   @override

@@ -39,7 +39,7 @@ class ContrastRatioBloc extends Bloc<ContrastRatioEvent, ContrastRatioState> {
 
   @override
   Stream<ContrastRatioState> transformEvents(events, next) {
-    return (events as Observable<ContrastRatioEvent>).switchMap(next);
+    return events.switchMap(next);
   }
 
   @override

@@ -42,7 +42,7 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
 
   @override
   Stream<MdcSelectedState> transformEvents(events, next) {
-    return (events as Observable<MdcSelectedEvent>).switchMap(next);
+    return events.switchMap(next);
   }
 
   final initial = {

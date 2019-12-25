@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class About extends StatelessWidget {
   const About({this.isSplitView = false});
@@ -102,11 +103,12 @@ class _ContactInfo extends StatelessWidget {
               },
             ),
             IconButton(
-                icon: Icon(FeatherIcons.twitter),
-                tooltip: "Twitter",
-                onPressed: () async {
-                  _launchURL("https://twitter.com/bernaferrari");
-                }),
+              icon: Icon(FeatherIcons.twitter),
+              tooltip: "Twitter",
+              onPressed: () async {
+                _launchURL("https://twitter.com/bernaferrari");
+              },
+            ),
             IconButton(
               icon: Icon(FeatherIcons.tag),
               tooltip: "Reddit",
@@ -131,15 +133,15 @@ class _ContactInfo extends StatelessWidget {
               onPressed: () async {
                 const url =
                     'mailto:bernaferrari2+studio@gmail.com?subject=Color%20Studio%20feedback';
-//                if (await canLaunch(url)) {
-//                  await launch(url);
-//                } else {
-//                  Scaffold.of(context).hideCurrentSnackBar();
-//                  const snackBar = SnackBar(
-//                    content: Text('Error! No email app was found.'),
-//                  );
-//                  Scaffold.of(context).showSnackBar(snackBar);
-//                }
+                if (await canLaunch(url)) {
+                  await launch(url);
+                } else {
+                  Scaffold.of(context).hideCurrentSnackBar();
+                  const snackBar = SnackBar(
+                    content: Text('Error! No email app was found.'),
+                  );
+                  Scaffold.of(context).showSnackBar(snackBar);
+                }
               },
             ),
             const SizedBox(width: 32),
@@ -151,7 +153,7 @@ class _ContactInfo extends StatelessWidget {
   }
 
   Future<void> _launchURL(String url) async {
-//    await launch(url);
+    await launch(url);
   }
 }
 

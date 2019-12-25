@@ -11,10 +11,8 @@ import 'package:hsluv/hsluvcolor.dart';
 /// It could also be easily extended to HSL and others.
 @immutable
 class HSInterColor {
-  /// Creates a color.
-  ///
-  /// All the arguments must not be null and be in their respective ranges. See
-  /// the fields for each parameter for a description of their ranges.
+
+  /// Creates a [HSInterColor].
   const HSInterColor.fromHSInter(
       this.hue, this.saturation, this.lightness, this.kind, this.maxValue)
       : assert(hue != null),
