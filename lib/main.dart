@@ -13,8 +13,6 @@ import 'package:path_provider/path_provider.dart';
 import 'example/blocs/blocs.dart';
 import 'example/blocs/color_blind/color_blind_bloc.dart';
 import 'example/blocs/mdc_selected/mdc_selected_bloc.dart';
-import 'example/blocs/slider_color/slider_color_bloc.dart';
-import 'example/blocs/slider_color/slider_color_event.dart';
 import 'example/contrast/shuffle_color.dart';
 import 'example/screens/home.dart';
 import 'home.dart';
@@ -48,10 +46,7 @@ class _BoxedAppState extends State<BoxedApp> {
   void initState() {
     super.initState();
     colorBlindBloc = ColorBlindBloc();
-    _mdcSelectedBloc = MdcSelectedBloc(colorBlindBloc)
-      ..add(
-        MDCUpdateAllEvent(colors: getRandomMaterialDark()),
-      );
+    _mdcSelectedBloc = MdcSelectedBloc(getRandomMaterialDark(), colorBlindBloc);
   }
 
   @override
@@ -96,10 +91,6 @@ class _BoxedAppState extends State<BoxedApp> {
           "/colordetails": (context) {
             final currentState = (BlocProvider.of<MdcSelectedBloc>(context)
                 .state as MDCLoadedState);
-
-            BlocProvider.of<SliderColorBloc>(context).add(
-              MoveColor(currentState.rgbColors[currentState.selected], false),
-            );
 
             if (currentState.locked[currentState.selected] == true) {
               BlocProvider.of<MdcSelectedBloc>(context).add(

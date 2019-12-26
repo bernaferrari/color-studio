@@ -13,7 +13,7 @@ import './mdc_selected.dart';
 import '../blocs.dart';
 
 class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
-  MdcSelectedBloc(this._blindnessBloc) {
+  MdcSelectedBloc(this.initialList, this._blindnessBloc) {
     _blindnessSubscription = _blindnessBloc.listen((stateValue) async {
       add(
         MDCBlindnessEvent(
@@ -26,39 +26,41 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
   final ColorBlindBloc _blindnessBloc;
   StreamSubscription _blindnessSubscription;
 
-  StreamSubscription _slidersSubscription;
-
   @override
   Stream<MdcSelectedState> transformEvents(events, next) {
     return events.switchMap(next);
   }
 
-  final initial = {
-    kPrimary: const Color(0xffFFCC80),
-    kBackground: const Color(0xff121212),
-    kSurface: const Color(0xff131024),
-  };
-
-  final initialLocked = {
-    kBackground: true,
-  };
+  final List<Color> initialList;
 
   @override
   Future<void> close() {
     _blindnessSubscription.cancel();
-    _slidersSubscription.cancel();
     return super.close();
   }
 
   @override
-  MdcSelectedState get initialState => MDCLoadedState(
-        initial,
-        convertToHSLuv(initial),
-        initial,
-        initialLocked,
-        kPrimary,
-        0,
-      );
+  MdcSelectedState get initialState {
+
+    final initial = {
+      kPrimary: initialList[0],
+      kBackground: blendColorWithBackground(initialList[0]),
+      kSurface: initialList[1],
+    };
+
+    final initialLocked = {
+      kBackground: true,
+    };
+
+    return MDCLoadedState(
+      initial,
+      convertToHSLuv(initial),
+      initial,
+      initialLocked,
+      kPrimary,
+      0,
+    );
+  }
 
   @override
   Stream<MdcSelectedState> mapEventToState(
