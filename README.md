@@ -1,4 +1,5 @@
 <p align="center"><img src="assets/both.png" alt="Color Studio" height="200px"></p>
+
 # Color Studio
 
 It is hard to choose colors. Most color pickers give you 16 million colors and ask you to pick one. So many options, in fact, that your creativity may get blocked. There is no intuitive way to know which colors will fit your needs. This gets even harder when you deal with multiple colors. Even harder when you want these colors to follow a design specification and form a coherent theme. This project aims to help solve these problems.
@@ -120,7 +121,7 @@ Listening directly helps in code sharing between app. For example, in developmen
 At the other hand listening directly really hurts code sharing between multiple apps. Each app I have got different Blocs. At the end, I opted for listening at the root Widgets, and would only listen at the farthest widgets if multiple widgets had to be changed for no benefit at all.
 
 ### iOS
-I am currently still thinking if it is worth adding this project to the App Store. Apple charges $100 a year and I'm not sure if there is enough demand to justify its presence there. If you are an iPhone/iPad user, feel free to open an issue, [email me](mailto:bernaferrari2@gmail.com) or [contribute with money](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=bernaferrari2%40gmail.com).
+The app works perfectly in iPhone and iPad. I am, however, still reluctant if App Store is worth. Apple charges $100 a year and I'm not sure if there is enough demand to justify its presence there. If you are an iPhone/iPad user, feel free to open an issue, [email me](mailto:bernaferrari2@gmail.com) or [contribute with money](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=bernaferrari2%40gmail.com).
 
 ## Screenshots
 | Main | Main Screen | Color Blindness | About |
