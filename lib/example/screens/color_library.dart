@@ -7,6 +7,8 @@ import 'package:colorstudio/example/util/selected.dart';
 import 'package:colorstudio/example/widgets/update_color_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../util/color_util.dart';
 
@@ -36,10 +38,17 @@ class _ColorLibraryState extends State<ColorLibrary> {
     return Scaffold(
       backgroundColor: widget.color,
       appBar: AppBar(
-        title: Text("Color Library", style: Theme.of(context).textTheme.title),
+        title: Text("Color Claim", style: Theme.of(context).textTheme.title),
         backgroundColor: widget.color,
         elevation: 0,
         centerTitle: widget.isSplitView,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(FeatherIcons.externalLink),
+            onPressed: () async =>
+                await launch("https://www.vanschneider.com/colors"),
+          )
+        ],
         leading: widget.isSplitView ? SizedBox.shrink() : null,
       ),
       body: Center(
