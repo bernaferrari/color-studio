@@ -64,9 +64,7 @@ class _BoxedAppState extends State<BoxedApp> {
   @override
   Widget build(BuildContext context) {
     final ThemeData base = ThemeData.from(
-      colorScheme: const ColorScheme.dark(
-//        surface: Color(0xffffd54f),
-          ),
+      colorScheme: const ColorScheme.dark(),
     );
 
     return MultiBlocProvider(
