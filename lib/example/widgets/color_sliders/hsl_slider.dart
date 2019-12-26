@@ -62,7 +62,7 @@ class _HSLSliderState extends State<HSLSlider> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         SingleSlider("Hue", valueH / 360, "${valueH.round()}", colorH,
-            (double value) {
+            scale: 360, onChanged: (double value) {
           setState(() {
             valueH = value * 360;
             updateColorLists();
@@ -70,7 +70,7 @@ class _HSLSliderState extends State<HSLSlider> {
           });
         }),
         SingleSlider("Saturation", valueS, "${(valueS * 100).round()}", colorS,
-            (double value) {
+            scale: 100, onChanged: (double value) {
           setState(() {
             valueS = value;
             updateColorLists();
@@ -78,7 +78,7 @@ class _HSLSliderState extends State<HSLSlider> {
           });
         }),
         SingleSlider("Lightness", valueL, "${(valueL * 100).round()}", colorL,
-            (double value) {
+            scale: 100, onChanged: (double value) {
           setState(() {
             valueL = value;
             updateColorLists();

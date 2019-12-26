@@ -41,8 +41,8 @@ class ContrastText extends StatelessWidget {
 
     if (withSizedBox) {
       return SizedBox(
-        width: 56,
-        child: widget,
+        width: 48,
+        child: FittedBox(child: widget),
       );
     } else {
       return widget;

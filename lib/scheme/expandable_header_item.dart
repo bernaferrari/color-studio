@@ -108,9 +108,10 @@ class SchemeHeaderItem extends StatelessWidget {
                         .withOpacity(0.20),
                   ),
                   // even the tiniest detail must be honored.
+                  // only show round radius on the last element when not expanded.
                   borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(
-                      (title == kSurface) ? 8.0 : 0.0,
+                      (title == kSurface && expanded == false) ? 8.0 : 0.0,
                     ),
                   ),
                 ),

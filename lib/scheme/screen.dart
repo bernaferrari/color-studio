@@ -74,27 +74,10 @@ class ColorSchemeScreen extends StatelessWidget {
               TitleBar(
                 title: "Color Scheme",
                 children: <Widget>[
-                  // only show the mole button when nothing is locked up.
-                  // it adds white to the primary color, if there is only primary
-                  // color available, it will always get white. If there is primary + surface,
-                  // material random is already sufficient.
-                  if (locked[kBackground] != true && locked[kSurface] != true)
-                    IconButton(
-                      tooltip: "Random mole dark theme",
-                      icon: Icon(
-                        FeatherIcons.penTool,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                      onPressed: () {
-                        BlocProvider.of<MdcSelectedBloc>(context).add(
-                          MDCUpdateAllEvent(colors: getRandomMoleTheme()),
-                        );
-                      },
-                    ),
                   IconButton(
                     tooltip: "Random Material dark theme",
                     icon: Icon(
-                      FeatherIcons.moon,
+                      FeatherIcons.shuffle,
                       color: Theme.of(context).colorScheme.primary,
                     ),
                     onPressed: () {

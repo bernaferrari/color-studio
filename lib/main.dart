@@ -89,24 +89,14 @@ class _BoxedAppState extends State<BoxedApp> {
             );
           },
           "/colordetails": (context) {
-            final currentState = (BlocProvider.of<MdcSelectedBloc>(context)
-                .state as MDCLoadedState);
-
-            if (currentState.locked[currentState.selected] == true) {
-              BlocProvider.of<MdcSelectedBloc>(context).add(
-                MDCLoadEvent(
-                  currentColor: currentState.rgbColors[kPrimary],
-                  selected: kPrimary,
-                ),
-              );
-            }
-
+            updateStateIfNecessary();
             return SingleColorHome();
           },
           "/componentspreview": (context) {
+            // necessary if it opens in split-view
+            updateStateIfNecessary();
             return MDCHome();
           },
-          "/theme": (context) => MDCHome()
         },
         theme: base.copyWith(
           typography: Typography().copyWith(
@@ -133,5 +123,18 @@ class _BoxedAppState extends State<BoxedApp> {
         ),
       ),
     );
+  }
+
+  void updateStateIfNecessary() {
+    final currentState = (_mdcSelectedBloc.state as MDCLoadedState);
+
+    if (currentState.locked[currentState.selected] == true) {
+      _mdcSelectedBloc.add(
+        MDCLoadEvent(
+          currentColor: currentState.rgbColors[kPrimary],
+          selected: kPrimary,
+        ),
+      );
+    }
   }
 }

@@ -73,20 +73,9 @@ class MDCHome extends StatelessWidget {
                     Navigator.pushNamed(context, "/colordetails");
                   },
                 ),
-                if (currentState.locked[kBackground] != true &&
-                    currentState.locked[kSurface] != true)
-                  IconButton(
-                    tooltip: "Random mole dark theme",
-                    icon: Icon(FeatherIcons.penTool),
-                    onPressed: () {
-                      BlocProvider.of<MdcSelectedBloc>(context).add(
-                        MDCUpdateAllEvent(colors: getRandomMoleTheme()),
-                      );
-                    },
-                  ),
                 IconButton(
                   tooltip: "Random dark theme",
-                  icon: Icon(FeatherIcons.moon),
+                  icon: Icon(FeatherIcons.shuffle),
                   onPressed: () {
                     BlocProvider.of<MdcSelectedBloc>(context).add(
                       MDCUpdateAllEvent(colors: getRandomMaterialDark()),

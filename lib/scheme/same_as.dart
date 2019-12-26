@@ -75,9 +75,9 @@ class SameAs extends StatelessWidget {
 
   String sameAs() {
     if (selected == kSurface) {
-      return "SAME AS ${kBackground.toUpperCase()}";
+      return "${kBackground.toUpperCase()} + 5% LIGHTNESS";
     } else if (selected == kBackground) {
-      return "8% PRIMARY + #121212";
+      return "8% ${kPrimary.toUpperCase()} + #121212";
     } else if (selected == kSecondary) {
       return "SAME AS ${kPrimary.toUpperCase()}";
     }

@@ -33,7 +33,7 @@ class _ShowcaseState extends State<Showcase> {
   void initState() {
     sliderValue = PageStorage.of(context)
             .readState(context, identifier: ValueKey("CardElevation")) ??
-        0 / (elevationEntriesList.length - 1);
+        1 / (elevationEntriesList.length - 1);
     super.initState();
   }
 

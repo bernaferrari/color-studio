@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:bloc/bloc.dart';
-import 'package:colorstudio/example/blocs/slider_color/slider_color_state.dart';
 import 'package:colorstudio/example/mdc/util/color_blind_from_index.dart';
 import 'package:colorstudio/example/util/color_util.dart';
 import 'package:colorstudio/example/util/constants.dart';
@@ -41,7 +40,6 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
 
   @override
   MdcSelectedState get initialState {
-
     final initial = {
       kPrimary: initialList[0],
       kBackground: blendColorWithBackground(initialList[0]),
@@ -218,7 +216,8 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
     if (category == kBackground) {
       return blendColorWithBackground(mappedList[kPrimary]);
     } else if (category == kSurface) {
-      return mappedList[kBackground];
+      final luv = HSLuvColor.fromColor(mappedList[kBackground]);
+      return luv.withLightness(luv.lightness + 5).toColor();
     } else if (category == kSecondary) {
       return mappedList[kPrimary];
     }

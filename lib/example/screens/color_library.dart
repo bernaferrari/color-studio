@@ -38,7 +38,7 @@ class _ColorLibraryState extends State<ColorLibrary> {
     return Scaffold(
       backgroundColor: widget.color,
       appBar: AppBar(
-        title: Text("Color Claim", style: Theme.of(context).textTheme.title),
+        title: Text("Color Library", style: Theme.of(context).textTheme.title),
         backgroundColor: widget.color,
         elevation: 0,
         centerTitle: widget.isSplitView,

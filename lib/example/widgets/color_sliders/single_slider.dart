@@ -1,9 +1,10 @@
-import 'dart:math';
+import 'dart:math' as math;
 
+import 'package:colorstudio/example/widgets/color_sliders/slider_that_works.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:colorstudio/example/widgets/color_sliders/slider_that_works.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 extension on int {
   String convertToHexString() => toRadixString(16).padLeft(2, '0');
@@ -11,17 +12,24 @@ extension on int {
 
 class SingleSlider extends StatelessWidget {
   const SingleSlider(
-      this.title, this.value, this.strValue, this.colorList, this.onChanged);
+    this.title,
+    this.value,
+    this.strValue,
+    this.colorList, {
+    this.scale,
+    this.onChanged,
+  });
 
   final String title;
   final double value;
   final String strValue;
+  final int scale;
   final List<Color> colorList;
   final ValueChanged<double> onChanged;
 
   @override
   Widget build(BuildContext context) {
-    return SliderTheme(
+    final sliderTheme = SliderTheme(
       data: SliderThemeData(
         trackHeight: 40,
         thumbColor: Colors.white.withOpacity(0.7),
@@ -32,6 +40,32 @@ class SingleSlider extends StatelessWidget {
         value: value,
         onChanged: onChanged,
       ),
+    );
+
+    return Row(
+      children: <Widget>[
+        SizedBox(
+          width: 36,
+          height: 36,
+          child: IconButton(
+            icon: Icon(FeatherIcons.minus, size: 20),
+            onPressed: () {
+              onChanged(math.max(value - 1 / scale, 0));
+            },
+          ),
+        ),
+        Expanded(child: sliderTheme),
+        SizedBox(
+          width: 36,
+          height: 36,
+          child: IconButton(
+            icon: Icon(FeatherIcons.plus, size: 20),
+            onPressed: () {
+              onChanged(math.min(value + 1 / scale, 1));
+            },
+          ),
+        ),
+      ],
     );
   }
 }
@@ -103,16 +137,16 @@ class _GradientRoundedRectSliderTrackShape extends SliderTrackShape
         trackRect.height,
         trackRect.height);
     if (!leftTrackArcRect.isEmpty)
-      context.canvas
-          .drawArc(leftTrackArcRect, pi / 2, pi, false, leftTrackPaint);
+      context.canvas.drawArc(
+          leftTrackArcRect, math.pi / 2, math.pi, false, leftTrackPaint);
     final Rect rightTrackArcRect = Rect.fromLTWH(
         trackRect.right - trackRect.height / 2 - 0.3,
         trackRect.top,
         trackRect.height,
         trackRect.height);
     if (!rightTrackArcRect.isEmpty)
-      context.canvas
-          .drawArc(rightTrackArcRect, -pi / 2, pi, false, rightTrackPaint);
+      context.canvas.drawArc(
+          rightTrackArcRect, -math.pi / 2, math.pi, false, rightTrackPaint);
 
     final Rect fullTrackArc = Rect.fromLTRB(
         trackRect.left, trackRect.top, trackRect.right, trackRect.bottom);

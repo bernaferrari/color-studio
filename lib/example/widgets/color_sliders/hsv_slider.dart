@@ -60,7 +60,7 @@ class _HSVSliderState extends State<HSVSlider> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         SingleSlider("Hue", valueH / 360, "${valueH.round()}", colorH,
-            (double value) {
+            scale: 360, onChanged: (double value) {
           setState(() {
             valueH = value * 360;
             updateColorLists();
@@ -68,7 +68,7 @@ class _HSVSliderState extends State<HSVSlider> {
           });
         }),
         SingleSlider("Saturation", valueS, "${(valueS * 100).round()}", colorS,
-            (double value) {
+            scale: 100, onChanged: (double value) {
           setState(() {
             valueS = value;
             updateColorLists();
@@ -76,7 +76,7 @@ class _HSVSliderState extends State<HSVSlider> {
           });
         }),
         SingleSlider("Value", valueB, "${(valueB * 100).round()}", colorB,
-            (double value) {
+            scale: 100, onChanged: (double value) {
           setState(() {
             valueB = value;
             updateColorLists();

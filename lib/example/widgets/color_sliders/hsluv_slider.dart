@@ -68,7 +68,7 @@ class _HSLuvSliderState extends State<HSLuvSlider> {
         // The math.min will avoid 360 / 359 situations where value will be >= 1.0.
         SingleSlider(
             "Hue", math.min(valueH / 359, 1.0), "${valueH.round()}", colorH,
-            (double value) {
+            scale: 360, onChanged: (double value) {
           setState(() {
             valueH = value * 359;
             updateColorLists();
@@ -76,7 +76,7 @@ class _HSLuvSliderState extends State<HSLuvSlider> {
           });
         }),
         SingleSlider("Saturation", valueS / 100, "${valueS.round()}", colorS,
-            (double value) {
+            scale: 100, onChanged: (double value) {
           setState(() {
             valueS = value * 100;
             updateColorLists();
@@ -84,7 +84,7 @@ class _HSLuvSliderState extends State<HSLuvSlider> {
           });
         }),
         SingleSlider("Lightness", valueL / 100, "${valueL.round()}", colorL,
-            (double value) {
+            scale: 100, onChanged: (double value) {
           setState(() {
             valueL = value * 100;
             updateColorLists();
