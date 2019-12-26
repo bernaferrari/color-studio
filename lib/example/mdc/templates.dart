@@ -44,7 +44,7 @@ class ColorTemplates extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 const _TemplateItem(
-                  title: "Twitter",
+                  title: "Birdy",
                   colors: [Color(0xff1da1f3), Color(0xff16202a)],
                 ),
                 const _TemplateItem(
@@ -72,26 +72,21 @@ class ColorTemplates extends StatelessWidget {
                 ),
                 // Facebook's Threads app
                 const _TemplateItem(
-                  title: "Play Store",
+                  title: "P Store",
                   colors: [Color(0xff00a273), Color(0xff202125)],
                 ),
                 // Google Play Store
                 const _TemplateItem(
-                  title: "Play Games",
+                  title: "P Games",
                   colors: [Color(0xff5bda7f), Color(0xff202125)],
                 ),
                 // Google Play Store
                 const _TemplateItem(
-                  title: "Play Movies",
+                  title: "P Movies",
                   colors: [Color(0xffcc2948), Color(0xff202125)],
                 ),
-                // Google Play Store
                 const _TemplateItem(
-                    title: "PocketCasts",
-                    colors: [Color(0xff33b8f3), Color(0xff161719)]),
-                // PocketCasts
-                const _TemplateItem(
-                  title: "PocketCasts",
+                  title: "Podcast",
                   colors: [Color(0xffeb4745), Color(0xff1a1b1d)],
                 ),
                 // I was listening to Wendover podcast and liked the colors in PocketCasts
@@ -101,11 +96,11 @@ class ColorTemplates extends StatelessWidget {
                 ),
                 // I was listening to Andrea Bocelli's Champagne and liked the color from Spotify cover on Android notification
                 const _TemplateItem(
-                  title: "Nu",
+                  title: "Naked",
                   colors: [Color(0xffBA4DE4), Color(0xff191919)],
                 ),
                 const _TemplateItem(
-                  title: "Bixby",
+                  title: "SamAssist",
                   colors: [Color(0xff3c8eb3), Color(0xff090b20)],
                 ),
                 const _TemplateItem(
@@ -142,6 +137,14 @@ class ColorTemplates extends StatelessWidget {
                     Color(0xff55baba),
                     Color(0xff1C2529),
                     Color(0xff243037),
+                  ],
+                ),
+                const _TemplateItem(
+                  title: "Black Bird",
+                  colors: [
+                    Color(0xff1da1f3),
+                    Color(0xff000000),
+                    Color(0xff16181C)
                   ],
                 ),
                 const SizedBox(height: 16),
@@ -244,19 +247,21 @@ class _TemplateItem extends StatelessWidget {
           ),
           const SizedBox(width: 16),
           for (var color in colors) ...[
-            FilterChip(
-              label: SizedBox(
-                  width: 60,
-                  child: Text(
-                    color.toHexStr(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .body2
-                        .copyWith(color: contrastingColor(color)),
-                    textAlign: TextAlign.center,
-                  )),
-              backgroundColor: color,
-              onSelected: (selected) {
+            MaterialButton(
+              elevation: 0,
+              child: SizedBox(
+                width: 60,
+                child: Text(
+                  color.toHexStr(),
+                  style: Theme.of(context)
+                      .textTheme
+                      .body2
+                      .copyWith(color: contrastingColor(color)),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              color: color,
+              onPressed: () {
                 colorSelected(context, color);
               },
             ),

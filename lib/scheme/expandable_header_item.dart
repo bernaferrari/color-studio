@@ -62,11 +62,6 @@ class SchemeHeaderItem extends StatelessWidget {
                     ],
                   ),
                 ),
-
-//          if (locked) ...[
-//            Icon(FeatherIcons.lock, size: 16),
-//            SizedBox(width: 8),
-//          ],
                 ...[
                   Icon(expanded
                       ? FeatherIcons.chevronUp

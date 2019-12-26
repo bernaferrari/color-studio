@@ -14,7 +14,7 @@ description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.6.0 <3.0.0"
+  sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -43,7 +43,7 @@ flutter_icons:
   # unfortunately, this only works without bugs for iOS.
   # you need to open Android Studio and generate asset if you want a decent Android icon.
   image_path_android: "assets/full icon.png"
-  image_path_ios: "assets/full icon.png"
+  image_path_ios: "assets/both.png"
   android: false
   ios: true
   adaptive_icon_background: "assets/sample_bg.png" # Android 8+

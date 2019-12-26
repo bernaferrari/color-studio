@@ -3,6 +3,7 @@ import 'package:colorstudio/scheme/expandable_header_item.dart';
 import 'package:colorstudio/scheme/expanded_item.dart';
 import 'package:colorstudio/scheme/same_as.dart';
 import 'package:colorstudio/scheme/widgets/expanded_section.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hsluv/hsluvcolor.dart';
@@ -67,7 +68,8 @@ class _SchemeExpandableItemState extends State<SchemeExpandableItem> {
             isLocked: widget.locked[keysList[i]],
             lightness: widget.hsluvColors[keysList[i]].lightness,
           ),
-          if (i != widget.contrastedColors.length - 1)
+          // These dividers get ugly in web mode.
+          if (!kIsWeb && i != widget.contrastedColors.length - 1)
             Divider(
               height: 0,
               indent: (index == i) ? 0 : 56,

@@ -33,7 +33,7 @@ class _ShowcaseState extends State<Showcase> {
   void initState() {
     sliderValue = PageStorage.of(context)
             .readState(context, identifier: ValueKey("CardElevation")) ??
-        4 / (elevationEntriesList.length - 1);
+        0 / (elevationEntriesList.length - 1);
     super.initState();
   }
 
@@ -608,7 +608,7 @@ class _PrevThankful extends StatelessWidget {
             ),
             // there is a deeper level into this app
             Text(
-              "What are you doing with the skills you have?",
+              "How can we make the world a better place?",
               style: GoogleFonts.hind(
                 fontSize: 16,
                 textStyle: TextStyle(color: primary),
@@ -630,7 +630,7 @@ class _PrevSpotify extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isiPad = MediaQuery.of(context).size.shortestSide > 600;
+    final isiPad = MediaQuery.of(context).size.width > 600;
 
     return Column(
       children: <Widget>[
@@ -683,7 +683,7 @@ class _PrevSpotify extends StatelessWidget {
               color: primary,
               child: Center(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -696,7 +696,6 @@ class _PrevSpotify extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
                     SizedBox(
                       width: 128,
                       child: FittedBox(
@@ -704,8 +703,10 @@ class _PrevSpotify extends StatelessWidget {
                           "2019",
                           style: GoogleFonts.hind(
                             fontWeight: FontWeight.w600,
-                            textStyle:
-                                TextStyle(height: 0.6, color: background),
+                            textStyle: TextStyle(
+                              height: 0.6,
+                              color: background,
+                            ),
                           ),
                         ),
                       ),
@@ -1087,7 +1088,8 @@ class _PrevPodcasts extends StatelessWidget {
           elevation: elevation,
           primaryColor: primary,
           textColor: Theme.of(context).colorScheme.onSurface,
-          title: "Slavery, police, a bear and chocolate festival full of secrets - S03 E02",
+          title:
+              "Slavery, police, a bear and chocolate festival full of secrets - S03 E02",
           description:
               "278 years of Alcatraz's history. From Silicon Valley's luxury condominium to a prison no one can escape.",
           subdescription: "Yesterday • 34 MINS",
@@ -1097,7 +1099,8 @@ class _PrevPodcasts extends StatelessWidget {
           elevation: elevation,
           primaryColor: Theme.of(context).colorScheme.onSurface,
           textColor: primary,
-          title: "Hyenas, planes, reindeers, robots and an old friend - S05 E17",
+          title:
+              "Hyenas, planes, reindeers, robots and an old friend - S05 E17",
           description:
               "Things have changed. Nothing is what you expect. And nothing will ever be the same again. Be careful with the maze.",
           subdescription: "Today • 22 MINS",

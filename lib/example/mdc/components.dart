@@ -443,7 +443,7 @@ class _ComponentsSampleState extends State<ComponentsSample> {
             Expanded(
               child: RaisedButton.icon(
                 label: Text("Moon"),
-                icon: Icon(FeatherIcons.moon, size: 16),
+                icon: Icon(FeatherIcons.shuffle, size: 16),
                 color: widget.primaryColor,
                 textColor: contrastingColor(widget.primaryColor),
                 onPressed: () {},

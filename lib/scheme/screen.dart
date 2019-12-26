@@ -4,6 +4,7 @@ import 'package:colorstudio/example/util/constants.dart';
 import 'package:colorstudio/scheme/expandable_item.dart';
 import 'package:colorstudio/widgets/section_card.dart';
 import 'package:colorstudio/widgets/title_bar.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -104,19 +105,14 @@ class ColorSchemeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              Divider(
-                height: 0,
-                indent: 1,
-                endIndent: 1,
-                color: colorScheme.onSurface.withOpacity(0.30),
-              ),
+              if (!kIsWeb)
+                Divider(
+                  height: 0,
+                  indent: 1,
+                  endIndent: 1,
+                  color: colorScheme.onSurface.withOpacity(0.30),
+                ),
               SchemeExpandableItem(rgbColorsWithBlindness, hsluvColors, locked),
-              Divider(
-                height: 0,
-                indent: 1,
-                endIndent: 1,
-                color: colorScheme.onSurface.withOpacity(0.30),
-              ),
             ],
           ),
         ),

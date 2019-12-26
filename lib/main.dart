@@ -3,6 +3,7 @@ import 'package:colorstudio/example/contrast/contrast_screen.dart';
 import 'package:colorstudio/example/mdc/mdc_home.dart';
 import 'package:colorstudio/example/util/constants.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,6 +15,7 @@ import 'example/blocs/color_blind/color_blind_bloc.dart';
 import 'example/blocs/mdc_selected/mdc_selected_bloc.dart';
 import 'example/blocs/slider_color/slider_color_bloc.dart';
 import 'example/blocs/slider_color/slider_color_event.dart';
+import 'example/contrast/shuffle_color.dart';
 import 'example/screens/home.dart';
 import 'home.dart';
 
@@ -25,7 +27,7 @@ Future<void> main() async {
 }
 
 Future openBox() async {
-  if (!false) {
+  if (!kIsWeb) {
     final dir = await getApplicationDocumentsDirectory();
     Hive.init(dir.path);
   }
@@ -39,22 +41,22 @@ class BoxedApp extends StatefulWidget {
 }
 
 class _BoxedAppState extends State<BoxedApp> {
-  SliderColorBloc _sliderBloc;
   ColorBlindBloc colorBlindBloc;
   MdcSelectedBloc _mdcSelectedBloc;
 
   @override
   void initState() {
     super.initState();
-    _sliderBloc = SliderColorBloc();
     colorBlindBloc = ColorBlindBloc();
-    _mdcSelectedBloc = MdcSelectedBloc(_sliderBloc, colorBlindBloc);
+    _mdcSelectedBloc = MdcSelectedBloc(colorBlindBloc)
+      ..add(
+        MDCUpdateAllEvent(colors: getRandomMaterialDark()),
+      );
   }
 
   @override
   void dispose() {
     super.dispose();
-    _sliderBloc.close();
     colorBlindBloc.close();
     _mdcSelectedBloc.close();
   }
@@ -69,9 +71,6 @@ class _BoxedAppState extends State<BoxedApp> {
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider<SliderColorBloc>(
-          create: (context) => _sliderBloc,
-        ),
         BlocProvider<MdcSelectedBloc>(
           create: (context) => _mdcSelectedBloc,
         ),

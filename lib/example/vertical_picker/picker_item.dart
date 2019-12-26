@@ -50,8 +50,9 @@ class ColorCompareWidgetDetails extends StatelessWidget {
       padding: EdgeInsets.zero,
       child: SizedBox(
         height: 56,
-        child: FlatButton(
+        child: MaterialButton(
           color: color.color,
+          elevation: 0,
           shape: const RoundedRectangleBorder(),
           onPressed: onPressed ??
               () {

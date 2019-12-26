@@ -2,13 +2,12 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:colorstudio/example/blocs/blocs.dart';
+import 'package:colorstudio/example/blocs/slider_color/slider_color_event.dart';
 import 'package:colorstudio/example/blocs/slider_color/slider_color_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hsluv/hsluvcolor.dart';
 import 'package:rxdart/rxdart.dart';
-
-import 'slider_color_event.dart';
 
 class SliderColorBloc extends Bloc<SliderColorEvent, SliderColorState> {
   @override

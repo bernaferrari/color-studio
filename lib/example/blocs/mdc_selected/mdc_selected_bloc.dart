@@ -13,18 +13,7 @@ import './mdc_selected.dart';
 import '../blocs.dart';
 
 class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
-  MdcSelectedBloc(this._sliderColorsBloc, this._blindnessBloc) {
-    _slidersSubscription = _sliderColorsBloc.listen((stateValue) async {
-      if (stateValue is SliderColorLoaded) {
-        add(
-          MDCLoadEvent(
-            currentColor: stateValue.rgbColor,
-            selected: (state as MDCLoadedState).selected,
-          ),
-        );
-      }
-    });
-
+  MdcSelectedBloc(this._blindnessBloc) {
     _blindnessSubscription = _blindnessBloc.listen((stateValue) async {
       add(
         MDCBlindnessEvent(
@@ -37,7 +26,6 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
   final ColorBlindBloc _blindnessBloc;
   StreamSubscription _blindnessSubscription;
 
-  final SliderColorBloc _sliderColorsBloc;
   StreamSubscription _slidersSubscription;
 
   @override
