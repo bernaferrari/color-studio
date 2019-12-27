@@ -63,47 +63,45 @@ class Home extends StatelessWidget {
               ),
         ),
         child: Scaffold(
-          body: SafeArea(
-            child: isiPad
-                ? Center(
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: SingleChildScrollView(
-                            child: schemeContrast(
-                              context,
-                              colorScheme,
-                              currentState,
-                              shouldDisplayElevation,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: SingleChildScrollView(
-                            child: ColorBlindnessScreen(
-                              currentState.rgbColors,
-                              currentState.locked,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                : ListView(
+          body: isiPad
+              ? Center(
+                  child: Row(
                     children: <Widget>[
-                      schemeContrast(
-                        context,
-                        colorScheme,
-                        currentState,
-                        shouldDisplayElevation,
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: schemeContrast(
+                            context,
+                            colorScheme,
+                            currentState,
+                            shouldDisplayElevation,
+                          ),
+                        ),
                       ),
-                      ColorBlindnessScreen(
-                        currentState.rgbColors,
-                        currentState.locked,
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: ColorBlindnessScreen(
+                            currentState.rgbColors,
+                            currentState.locked,
+                          ),
+                        ),
                       ),
                     ],
                   ),
-          ),
+                )
+              : ListView(
+                  children: <Widget>[
+                    schemeContrast(
+                      context,
+                      colorScheme,
+                      currentState,
+                      shouldDisplayElevation,
+                    ),
+                    ColorBlindnessScreen(
+                      currentState.rgbColors,
+                      currentState.locked,
+                    ),
+                  ],
+                ),
         ),
       );
     });

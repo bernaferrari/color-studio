@@ -171,58 +171,64 @@ class __BottomHomeState extends State<_BottomHome> {
           ),
         ),
       ),
-      child: Column(
-        children: <Widget>[
-          ExpandedSection(
-            expand: isContrastExpanded,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: _ColorContrastRow(
-                areValuesLocked: widget.locked[kSurface] == true &&
-                    widget.locked[kBackground] == true,
-                rgbColors: widget.rgbColors,
-              ),
-            ),
-          ),
-          ThemeBar(
-            selected: widget.selected,
-            rgbColors: widget.rgbColors,
-            locked: widget.locked,
-            isExpanded: isContrastExpanded,
-            onExpanded: () {
-              setState(() {
-                isContrastExpanded = !isContrastExpanded;
-              });
-            },
-          ),
-          TabBar(
-            labelColor: contrastedColor,
-            indicatorColor: contrastedColor,
-            isScrollable: true,
-            indicator: BoxDecoration(
-              color: colorScheme.onSurface.withOpacity(0.10),
-              border: Border(
-                top: BorderSide(
-                  color: colorScheme.onSurface,
-                  width: 2.0,
+      child: SafeArea(
+        bottom: true,
+        top: false,
+        left: false,
+        right: false,
+        child: Column(
+          children: <Widget>[
+            ExpandedSection(
+              expand: isContrastExpanded,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: _ColorContrastRow(
+                  areValuesLocked: widget.locked[kSurface] == true &&
+                      widget.locked[kBackground] == true,
+                  rgbColors: widget.rgbColors,
                 ),
               ),
             ),
-            tabs: [
+            ThemeBar(
+              selected: widget.selected,
+              rgbColors: widget.rgbColors,
+              locked: widget.locked,
+              isExpanded: isContrastExpanded,
+              onExpanded: () {
+                setState(() {
+                  isContrastExpanded = !isContrastExpanded;
+                });
+              },
+            ),
+            TabBar(
+              labelColor: contrastedColor,
+              indicatorColor: contrastedColor,
+              isScrollable: true,
+              indicator: BoxDecoration(
+                color: colorScheme.onSurface.withOpacity(0.10),
+                border: Border(
+                  top: BorderSide(
+                    color: colorScheme.onSurface,
+                    width: 2.0,
+                  ),
+                ),
+              ),
+              tabs: [
 //                            Tab(
 //                              icon: Transform.rotate(
 //                                angle: 0.5 * math.pi,
 //                                child: const Icon(FeatherIcons.sliders),
 //                              ),
 //                            ),
-              const Tab(icon: Icon(FeatherIcons.barChart2)),
-              Tab(icon: Icon(Icons.invert_colors)),
-              Tab(icon: Icon(FeatherIcons.info)),
-              Tab(icon: Icon(FeatherIcons.bookOpen)),
-              Tab(icon: Icon(FeatherIcons.briefcase)),
-            ],
-          ),
-        ],
+                const Tab(icon: Icon(FeatherIcons.barChart2)),
+                Tab(icon: Icon(Icons.invert_colors)),
+                Tab(icon: Icon(FeatherIcons.info)),
+                Tab(icon: Icon(FeatherIcons.bookOpen)),
+                Tab(icon: Icon(FeatherIcons.briefcase)),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

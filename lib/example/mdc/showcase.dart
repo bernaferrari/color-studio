@@ -236,30 +236,36 @@ class _ShowcaseState extends State<Showcase> {
             ),
           );
         }),
-        Row(
-          children: <Widget>[
-            const SizedBox(width: 16),
-            Text(
-              "Elevation",
-              style: GoogleFonts.openSans(
-                textStyle: Theme.of(context).textTheme.caption,
+        SafeArea(
+          bottom: true,
+          top: false,
+          right: false,
+          left: false,
+          child: Row(
+            children: <Widget>[
+              const SizedBox(width: 16),
+              Text(
+                "Elevation",
+                style: GoogleFonts.openSans(
+                  textStyle: Theme.of(context).textTheme.caption,
+                ),
               ),
-            ),
-            Expanded(
-              child: Slider2(
-                value: sliderValue,
-                divisions: divisions,
-                label: "${currentElevation.round()}",
-                onChanged: (changed) {
-                  setState(() {
-                    sliderValue = changed;
-                    PageStorage.of(context).writeState(context, sliderValue,
-                        identifier: const ValueKey("CardElevation"));
-                  });
-                },
+              Expanded(
+                child: Slider2(
+                  value: sliderValue,
+                  divisions: divisions,
+                  label: "${currentElevation.round()}",
+                  onChanged: (changed) {
+                    setState(() {
+                      sliderValue = changed;
+                      PageStorage.of(context).writeState(context, sliderValue,
+                          identifier: const ValueKey("CardElevation"));
+                    });
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );

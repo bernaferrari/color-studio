@@ -60,53 +60,51 @@ class MDCHome extends StatelessWidget {
                 colorScheme: scheme,
               ),
         ),
-        child: SafeArea(
-          child: Scaffold(
-            backgroundColor: backgroundColor,
-            appBar: AppBar(
-              title: Text("Components Preview"),
-              actions: <Widget>[
-                IconButton(
-                  tooltip: "Edit colors",
-                  icon: Icon(FeatherIcons.sliders),
-                  onPressed: () {
-                    Navigator.pushNamed(context, "/colordetails");
-                  },
-                ),
-                IconButton(
-                  tooltip: "Random dark theme",
-                  icon: Icon(FeatherIcons.shuffle),
-                  onPressed: () {
-                    BlocProvider.of<MdcSelectedBloc>(context).add(
-                      MDCUpdateAllEvent(colors: getRandomMaterialDark()),
-                    );
-                  },
-                ),
-              ],
-            ),
-            body: isiPad
-                ? Center(
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Showcase(
-                            primaryColor: primaryColor,
-                            surfaceColor: surfaceColor,
-                            backgroundColor: backgroundColor,
-                          ),
-                        ),
-                        Expanded(
-                          child: SingleColorHome(isSplitView: true),
-                        ),
-                      ],
-                    ),
-                  )
-                : Showcase(
-                    primaryColor: primaryColor,
-                    surfaceColor: surfaceColor,
-                    backgroundColor: backgroundColor,
-                  ),
+        child: Scaffold(
+          backgroundColor: backgroundColor,
+          appBar: AppBar(
+            title: Text("Components Preview"),
+            actions: <Widget>[
+              IconButton(
+                tooltip: "Edit colors",
+                icon: Icon(FeatherIcons.sliders),
+                onPressed: () {
+                  Navigator.pushNamed(context, "/colordetails");
+                },
+              ),
+              IconButton(
+                tooltip: "Random dark theme",
+                icon: Icon(FeatherIcons.shuffle),
+                onPressed: () {
+                  BlocProvider.of<MdcSelectedBloc>(context).add(
+                    MDCUpdateAllEvent(colors: getRandomMaterialDark()),
+                  );
+                },
+              ),
+            ],
           ),
+          body: isiPad
+              ? Center(
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Showcase(
+                          primaryColor: primaryColor,
+                          surfaceColor: surfaceColor,
+                          backgroundColor: backgroundColor,
+                        ),
+                      ),
+                      Expanded(
+                        child: SingleColorHome(isSplitView: true),
+                      ),
+                    ],
+                  ),
+                )
+              : Showcase(
+                  primaryColor: primaryColor,
+                  surfaceColor: surfaceColor,
+                  backgroundColor: backgroundColor,
+                ),
         ),
       );
     });
