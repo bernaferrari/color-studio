@@ -75,7 +75,6 @@ class _BoxedAppState extends State<BoxedApp> {
         )
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
         routes: {
           "/": (context) {
             return Home();
