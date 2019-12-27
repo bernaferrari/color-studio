@@ -169,18 +169,19 @@ class _ShowcaseState extends State<Showcase> {
                         style: GoogleFonts.b612Mono(),
                       ),
                       SizedBox(width: 8),
-                      Container(
-                          clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
-                            color: backgroundColor,
+                      Material(
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
-                            border: Border.all(
+                            side: BorderSide(
                               color: Theme.of(context)
                                   .colorScheme
                                   .onBackground
                                   .withOpacity(0.20),
                             ),
                           ),
+                          color: backgroundColor,
+                          clipBehavior: Clip.antiAlias,
                           child: Row(
                             children: <Widget>[
                               SizedBox(
