@@ -16,7 +16,7 @@ It is hard to choose colors. Most color pickers give you 16 million colors and a
 ### History
 First and foremost, but not exclusively, this app follows Material Design, with a special emphasis in dark mode. While dark mode is trending nowadays, the idea came when writing [Change Detection](https://github.com/bernaferrari/ChangeDetection).
 Back then it was hard to make a coherent dark theme. In [May 2019](https://github.com/material-components/material-components-android/releases/tag/1.1.0-alpha06), Material Design Components for Android started receiving dark mode support.
-Material Dark Theme, however, [has a twist](https://material.io/design/color/dark-theme.html#properties): it applies a white overlay as a surface gets higher (more elevated). This is mandatory and instantly broke half my app. I started using more and more `elevation = 0`, but then it made the light theme worse. 
+Material Dark Theme, however, [has a twist](https://material.io/design/color/dark-theme.html#properties): it applies a white overlay as a surface gets higher (more elevated). Back then, as far as I remember, this was mandatory (now it is optional) and instantly broke half my app. I started using more and more `elevation = 0`, but then it made the light theme worse. 
 Choosing colors, which was already hard, became trial and error. I relied a lot on [Color Hexa](https://www.colorhexa.com/), but as my projects got more complex, it got insufficient and became a pain. Suddenly, I was already developing my own tool.  
 
 ### Overview
