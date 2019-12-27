@@ -73,12 +73,12 @@ List<Color> getRandomMaterialDark() {
     HSLuvColor.fromHSL(
       rng.nextInt(360).toDouble(),
       rng.nextInt(101).toDouble(),
-      rng.nextInt(36).toDouble(),
+      rng.nextInt(30).toDouble(),
     ).toColor(),
     HSLuvColor.fromHSL(
       rng.nextInt(360).toDouble(),
       5 + rng.nextInt(81).toDouble(),
-      rng.nextInt(36).toDouble(),
+      rng.nextInt(30).toDouble(),
     ).toColor(),
   ];
 }
