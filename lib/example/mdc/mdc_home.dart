@@ -6,6 +6,7 @@ import 'package:colorstudio/example/util/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
 class MDCHome extends StatelessWidget {
@@ -138,7 +139,7 @@ class __SelectableMenuState extends State<_SelectableMenu> {
     return Column(
       children: <Widget>[
         ToggleButtons(
-          textStyle: const TextStyle(fontFamily: "B612Mono"),
+          textStyle: GoogleFonts.b612Mono(),
           children: <Widget>[
             const Text("MDC"),
             // material design components, in the absence of a decent icon.

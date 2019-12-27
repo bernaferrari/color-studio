@@ -13,8 +13,6 @@ import 'package:colorstudio/example/util/constants.dart';
 import 'package:colorstudio/example/util/hsluv_tiny.dart';
 import 'package:colorstudio/example/util/selected.dart';
 import 'package:colorstudio/example/widgets/loading_indicator.dart';
-import 'package:colorstudio/scheme/expandable_item.dart';
-import 'package:colorstudio/scheme/expandable_item.dart';
 import 'package:colorstudio/scheme/same_as.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -373,7 +371,8 @@ class HSLuvSelector2 extends StatelessWidget {
 
     final size = MediaQuery.of(context).size.width - 16 - 56;
 
-    final int toneSize = (size / 56).ceil(); //moreColors ? itemsOnScreen * 2 : itemsOnScreen;
+    final int toneSize =
+        (size / 56).ceil(); //moreColors ? itemsOnScreen * 2 : itemsOnScreen;
     final int hueSize = moreColors ? 90 : 45;
 
     return ContrastHorizontalPicker(
@@ -510,9 +509,9 @@ class ContrastHorizontalPicker extends StatelessWidget {
         colorScheme: (rgbColor.computeLuminance() > kLumContrast)
             ? ColorScheme.light(surface: rgbColor)
             : ColorScheme.dark(surface: rgbColor),
-        textTheme: const TextTheme(
-          caption: TextStyle(fontFamily: "B612Mono"),
-          button: TextStyle(fontFamily: "B612Mono"),
+        textTheme: TextTheme(
+          caption: GoogleFonts.b612Mono(),
+          button: GoogleFonts.b612Mono(),
         ),
       ).copyWith(
         buttonTheme: ButtonThemeData(shape: shape),
@@ -559,10 +558,11 @@ class ContrastHorizontalPicker extends StatelessWidget {
                               HSInterColor.fromColor(rgbColor, kind)
                                   .toPartialStr((index == 0) ? i : 2),
                               textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: "B612Mono",
+                              style: GoogleFonts.b612Mono(
                                 fontSize: 12,
-                                color: contrastingColor(rgbColor),
+                                textStyle: TextStyle(
+                                  color: contrastingColor(rgbColor),
+                                ),
                               ),
                             ),
                           ),

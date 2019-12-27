@@ -52,11 +52,3 @@ flutter_icons:
 
 flutter:
   uses-material-design: true
-
-  fonts:
-    - family: B612Mono
-      fonts:
-        - asset: fonts/B612Mono-Regular.ttf
-          weight: 400
-        - asset: fonts/B612Mono-Bold.ttf
-          weight: 700

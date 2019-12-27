@@ -8,6 +8,7 @@ import 'package:colorstudio/example/util/color_util.dart';
 import 'package:colorstudio/example/util/constants.dart';
 import 'package:colorstudio/example/util/selected.dart';
 import 'package:colorstudio/example/widgets/color_sliders/slider_that_works.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'util/elevation_overlay.dart';
 
@@ -49,7 +50,7 @@ class Components extends StatelessWidget {
               child: Text(
                 "surface/elevation",
                 textAlign: TextAlign.center,
-                style: TextStyle(fontFamily: "B612Mono"),
+                style: GoogleFonts.b612Mono(),
               ),
             ),
             NavigationBarSample(
@@ -522,7 +523,7 @@ class _SliderWithSelectorComponentsState extends State<SliderWithSelectorCompone
                     child: Column(
                       children: <Widget>[
                         ToggleButtons(
-                          textStyle: const TextStyle(fontFamily: "B612Mono"),
+                          textStyle: GoogleFonts.b612Mono(),
                           children: const <Widget>[
                             Text("RGB"),
                             Text("HSV"),

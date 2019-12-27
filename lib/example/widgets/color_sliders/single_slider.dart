@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 extension on int {
   String convertToHexString() => toRadixString(16).padLeft(2, '0');
@@ -219,8 +220,10 @@ class _RoundSliderThumbShape2 extends SliderComponentShape {
       Paint()..color = colorTween.evaluate(enableAnimation),
     );
 
-    final textStyle =
-        TextStyle(color: Colors.black, fontSize: 14, fontFamily: "B612Mono");
+    final textStyle = GoogleFonts.b612Mono(
+      fontSize: 14,
+      textStyle: TextStyle(color: Colors.black),
+    );
     final textSpan = TextSpan(
       text: strValue,
       style: textStyle,
