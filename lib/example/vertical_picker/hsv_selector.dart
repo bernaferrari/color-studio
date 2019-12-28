@@ -29,11 +29,12 @@ class HSVSelector extends StatelessWidget {
     return HSGenericScreen(
       color: inter,
       kind: kind,
-      fetchHue: () => hsinterLightness(inter, hueSize),
-      fetchSat: (HSInterColor c) =>
-          hsinterTones(c, toneSize, 0.05, 1.0).convertToColorWithInter(),
-      fetchLight: (HSInterColor c) =>
-          hsinterLightness(c, toneSize, 0.05, 1.0).convertToColorWithInter(),
+      fetchHue: () =>
+          hsinterAlternatives(inter, hueSize).convertToColorWithInter(),
+      fetchSat: () =>
+          hsinterTones(inter, toneSize, 0.0, 1.0).convertToColorWithInter(),
+      fetchLight: () =>
+          hsinterLightness(inter, toneSize, 0.0, 1.0).convertToColorWithInter(),
       hueTitle: hueStr,
       satTitle: satStr,
       lightTitle: valueStr,

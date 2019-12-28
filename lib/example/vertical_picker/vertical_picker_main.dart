@@ -179,9 +179,9 @@ class HSGenericScreen extends StatefulWidget {
 
   final HSInterColor color;
   final String kind;
-  final List<HSInterColor> Function() fetchHue;
-  final List<ColorWithInter> Function(HSInterColor) fetchSat;
-  final List<ColorWithInter> Function(HSInterColor) fetchLight;
+  final List<ColorWithInter> Function() fetchHue;
+  final List<ColorWithInter> Function() fetchSat;
+  final List<ColorWithInter> Function() fetchLight;
 
   final int toneSize;
   final String hueTitle;
@@ -219,31 +219,20 @@ class _HSGenericScreenState extends State<HSGenericScreen> {
     });
   }
 
-  List<ColorWithInter> parseHue() {
-    // fetch the hue. If we call this inside the BlocBuilder,
-    // we will lose the list position because it will refresh every time.
-    final List<HSInterColor> hue = widget.fetchHue();
-
-    // apply the diff to the hue.
-    return hue.map((HSInterColor hsc) {
-      return ColorWithInter(hsc.toColor(), hsc);
-    }).toList();
-  }
-
   @override
   Widget build(BuildContext context) {
     final HSInterColor color = widget.color;
     final Color rgbColor = widget.color.toColor();
 
     // in the ideal the world they could be calculated in the Bloc &/or in parallel.
-    final List<ColorWithInter> hue = parseHue();
+    final List<ColorWithInter> hue = widget.fetchHue();
     final int hueLen = hue.length;
 
-    final List<ColorWithInter> tones = widget.fetchSat(color);
-    final List<ColorWithInter> values = widget.fetchLight(color);
+    final List<ColorWithInter> tones = widget.fetchSat();
+    final List<ColorWithInter> values = widget.fetchLight();
 
     final isColorBrighterThanContrast =
-        color.outputLightness() > 100 - kLumContrast * 100;
+        color.outputLightness() >= 100 - kLumContrast * 100;
 
     final Color borderColor = isColorBrighterThanContrast
         ? Colors.black.withOpacity(0.40)

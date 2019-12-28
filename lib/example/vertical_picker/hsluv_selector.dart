@@ -30,11 +30,12 @@ class HSLuvSelector extends StatelessWidget {
     return HSGenericScreen(
       color: inter,
       kind: kind,
-      fetchHue: () => hsinterAlternatives(inter, hueSize),
-      fetchSat: (HSInterColor c) =>
-          hsinterTones(c, toneSize, 0, 100).convertToColorWithInter(),
-      fetchLight: (HSInterColor c) =>
-          hsinterLightness(c, toneSize, 0, 100).convertToColorWithInter(),
+      fetchHue: () =>
+          hsinterAlternatives(inter, hueSize).convertToColorWithInter(),
+      fetchSat: () =>
+          hsinterTones(inter, toneSize, 0, 100).convertToColorWithInter(),
+      fetchLight: () =>
+          hsinterLightness(inter, toneSize, 0, 100).convertToColorWithInter(),
       hueTitle: hueStr,
       satTitle: satStr,
       lightTitle: lightStr,
