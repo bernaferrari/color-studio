@@ -12,35 +12,22 @@ import '../home.dart';
 
 class ColorBlindnessScreen extends StatelessWidget {
   const ColorBlindnessScreen(
-    this.contrastedColors,
+    this.rgbColors,
     this.locked,
   );
 
-  final Map<String, Color> contrastedColors;
+  final Map<String, Color> rgbColors;
   final Map<String, bool> locked;
 
   @override
   Widget build(BuildContext context) {
-    final surfaceHSLuv = HSLuvColor.fromColor(contrastedColors[kBackground]);
-    final surfaceColor = surfaceHSLuv.toColor();
-
-    final colorScheme = (surfaceHSLuv.lightness > 100 - kLumContrast * 100)
-        ? ColorScheme.light(
-            primary: contrastedColors[kPrimary],
-            background: surfaceColor,
-            surface: contrastedColors[kSurface],
-          )
-        : ColorScheme.dark(
-            primary: contrastedColors[kPrimary],
-            background: surfaceColor,
-            surface: contrastedColors[kSurface],
-          );
 
     final isiPad = MediaQuery.of(context).size.width > 600;
+    final background = rgbColors[kSurface];
 
     return Theme(
       data: ThemeData.from(
-        colorScheme: colorScheme,
+        colorScheme: Theme.of(context).colorScheme,
         textTheme: TextTheme(
           title: GoogleFonts.openSans(
             fontSize: 16,
@@ -48,7 +35,7 @@ class ColorBlindnessScreen extends StatelessWidget {
           ),
           caption: GoogleFonts.openSans(),
         ),
-      ).copyWith(),
+      ),
       child: Padding(
         padding: EdgeInsets.only(
           top: 8.0,
@@ -57,6 +44,7 @@ class ColorBlindnessScreen extends StatelessWidget {
           right: isiPad ? 24.0 : 16.0,
         ),
         child: SectionCard(
+          color: background,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -100,10 +88,10 @@ class ColorBlindnessScreen extends StatelessWidget {
                 height: 0,
                 indent: 1,
                 endIndent: 1,
-                color: colorScheme.onSurface.withOpacity(0.30),
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.30),
               ),
               ColorBlindnessList(
-                contrastedList: contrastedColors,
+                contrastedList: rgbColors,
                 locked: locked,
               ),
             ],

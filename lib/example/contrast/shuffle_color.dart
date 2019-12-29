@@ -68,7 +68,7 @@ List<Color> getRandomMaterialDark() {
     HSLuvColor.fromHSL(
       rng.nextInt(360).toDouble(),
       50 + rng.nextInt(51).toDouble(),
-      60 + rng.nextInt(21).toDouble(),
+      60 + rng.nextInt(26).toDouble(),
     ).toColor(),
     HSLuvColor.fromHSL(
       rng.nextInt(360).toDouble(),
@@ -77,7 +77,7 @@ List<Color> getRandomMaterialDark() {
     ).toColor(),
     HSLuvColor.fromHSL(
       rng.nextInt(360).toDouble(),
-      5 + rng.nextInt(81).toDouble(),
+      rng.nextInt(101).toDouble(),
       rng.nextInt(30).toDouble(),
     ).toColor(),
   ];

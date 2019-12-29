@@ -71,7 +71,7 @@ class _SelectorItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color textColor = (hsLuvColor.lightness < 100 - kLumContrast * 100)
+    final Color textColor = (hsLuvColor.lightness < kLightnessThreshold)
         ? Colors.white.withOpacity(0.87)
         : Colors.black87;
 

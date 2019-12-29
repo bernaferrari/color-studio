@@ -3,16 +3,22 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 class SpendingCategoryChartPainter extends CustomPainter {
+  const SpendingCategoryChartPainter({
+    this.percent,
+    this.color,
+    this.circleColor,
+    this.backgroundColor,
+  });
+
   final double percent;
   final Color color;
   final Color circleColor;
-
-  SpendingCategoryChartPainter({this.percent, this.color, this.circleColor});
+  final Color backgroundColor;
 
   @override
   void paint(canvas, size) {
     final paint = Paint();
-    paint.color = Color(0xFF5B668C);
+    paint.color = backgroundColor;
     paint.style = PaintingStyle.stroke;
     paint.strokeWidth = 7;
     paint.strokeCap = StrokeCap.square;

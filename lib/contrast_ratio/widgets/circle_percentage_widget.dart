@@ -83,6 +83,7 @@ class _CirclePercentageWidgetState extends State<CirclePercentageWidget>
               percent: _controller.value,
               color: widget.color,
               circleColor: widget.circleColor,
+              backgroundColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.15)
             ),
             child: Center(
               child: Column(

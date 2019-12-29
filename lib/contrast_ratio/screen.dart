@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hsluv/hsluvcolor.dart';
 
 class ContrastRatioScreen extends StatelessWidget {
   const ContrastRatioScreen(
@@ -25,14 +24,7 @@ class ContrastRatioScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final surfaceHSLuv =
-        HSLuvColor.fromColor(rgbColorsWithBlindness[kBackground]);
-
-    final colorScheme = ColorScheme.dark(
-      primary: rgbColorsWithBlindness[kPrimary],
-      background: surfaceHSLuv.withLightness(10).toColor(),
-      surface: rgbColorsWithBlindness[kSurface],
-    );
+    final background = rgbColorsWithBlindness[kSurface];
 
     return BlocBuilder<ContrastRatioBloc, ContrastRatioState>(
         builder: (context, state) {
@@ -44,12 +36,11 @@ class ContrastRatioScreen extends StatelessWidget {
 
       final isiPad = MediaQuery.of(context).size.width > 600;
 
-      final areValuesLocked =
-          locked[kSurface] == true && locked[kBackground] == true;
+      final areValuesLocked = false;
 
       return Theme(
         data: ThemeData.from(
-          colorScheme: colorScheme,
+          colorScheme: Theme.of(context).colorScheme,
           textTheme: TextTheme(
             body1: GoogleFonts.firaSans(
               fontWeight: FontWeight.w400,
@@ -66,6 +57,7 @@ class ContrastRatioScreen extends StatelessWidget {
             right: isiPad ? 8.0 : 16.0,
           ),
           child: SectionCard(
+            color: background,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
@@ -96,7 +88,7 @@ class ContrastRatioScreen extends StatelessWidget {
                             context: context,
                             builder: (BuildContext ctx) {
                               return _HelpDialog(
-                                background: colorScheme.background,
+                                background: background,
                               );
                             });
                       },
@@ -107,7 +99,6 @@ class ContrastRatioScreen extends StatelessWidget {
                   height: 0,
                   indent: 1,
                   endIndent: 1,
-                  color: colorScheme.onSurface.withOpacity(0.30),
                 ),
                 SizedBox(height: 16),
                 Row(
@@ -138,12 +129,13 @@ class ContrastRatioScreen extends StatelessWidget {
                     ],
                   ],
                 ),
+                SizedBox(height: 4),
                 // surface qualifies as dark mode
                 Text(
                   "Primary / Surface with elevation",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: colorScheme.onSurface,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
                 if (shouldDisplayElevation) ...[
@@ -163,17 +155,12 @@ class ContrastRatioScreen extends StatelessWidget {
                           Text(
                             "In dark surfaces, Material Design Components express depth by displaying lighter surface colors. "
                             "The higher a surface’s elevation (raising it closer to an implied light source), the lighter that surface becomes.\n",
-                            style: Theme.of(context).textTheme.caption.copyWith(
-                                  color: Colors.white.withOpacity(0.70),
-                                ),
+                            style: Theme.of(context).textTheme.caption,
                             textAlign: TextAlign.center,
                           ),
                           Text(
                             "You are using a light surface color.",
-                            style: Theme.of(context)
-                                .textTheme
-                                .body2
-                                .copyWith(color: Colors.white),
+                            style: Theme.of(context).textTheme.body2,
                             textAlign: TextAlign.center,
                           )
                         ],
@@ -265,14 +252,6 @@ class _HelpDialog extends StatelessWidget {
                   Text(
                     "HSLuv extends CIELUV, which was based on human experiments, for a perceptual uniform color model." +
                         " This means: when you change the Hue or Saturation in HSLuv, the appearent/perceptual lightness will not vary wildly. This makes a lot easier to design color systems, since you can adjust a color without changing the contrast.",
-                  ),
-                  Text(
-                    "\nYou are seeing HSLuv in action right now!",
-                    style: Theme.of(context).textTheme.caption,
-                  ),
-                  Text(
-                    "This background color is Color Scheme's Background color with Lightness = 20.",
-                    style: Theme.of(context).textTheme.caption,
                   ),
                 ],
               ),

@@ -232,7 +232,7 @@ class _HSGenericScreenState extends State<HSGenericScreen> {
     final List<ColorWithInter> values = widget.fetchLight();
 
     final isColorBrighterThanContrast =
-        color.outputLightness() >= 100 - kLumContrast * 100;
+        color.outputLightness() >= kLightnessThreshold;
 
     final Color borderColor = isColorBrighterThanContrast
         ? Colors.black.withOpacity(0.40)

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:colorstudio/example/blocs/blocs.dart';
 import 'package:colorstudio/example/blocs/mdc_selected/mdc_selected_state.dart';
 import 'package:colorstudio/example/contrast/inter_color_with_contrast.dart';
@@ -25,11 +27,11 @@ class SchemeExpandedItem extends StatelessWidget {
         final color = (state as MDCLoadedState).rgbColors[selected];
         final luv = (state as MDCLoadedState).hsluvColors[selected];
 
-        final surface = luv.lightness > 100 - kLumContrast * 100
+        final surface = luv.lightness > kLightnessThreshold
             ? Colors.black.withOpacity(0.20)
             : Colors.white.withOpacity(0.20);
 
-        final scheme = luv.lightness > 100 - kLumContrast * 100
+        final scheme = luv.lightness > kLightnessThreshold
             ? ColorScheme.light(primary: color, surface: surface)
             : ColorScheme.dark(primary: color, surface: surface);
 
@@ -190,16 +192,21 @@ class TopRow extends StatelessWidget {
             ),
             if (largeScreen)
               BorderedIconButton(
-                child: Icon(FeatherIcons.sliders, size: 16),
+                child: Icon(FeatherIcons.shuffle, size: 16),
                 onPressed: () {
+                  var rng = Random();
+
                   BlocProvider.of<MdcSelectedBloc>(context).add(
                     MDCLoadEvent(
-                      currentColor: color,
+                      currentColor: Color.fromARGB(
+                        255,
+                        rng.nextInt(256),
+                        rng.nextInt(256),
+                        rng.nextInt(256),
+                      ),
                       selected: selected,
                     ),
                   );
-
-                  Navigator.pushNamed(context, "/colordetails");
                 },
               )
             else

@@ -22,12 +22,12 @@ class Home extends StatelessWidget {
       final background = currentState.rgbColorsWithBlindness[kBackground];
       final surface = currentState.rgbColorsWithBlindness[kSurface];
 
-      final onSurface = (currentState.hsluvColors[kSurface].lightness >
-              100 - kLumContrast * 100)
-          ? Colors.black
-          : Colors.white;
+      final isLightSurface =
+          currentState.hsluvColors[kSurface].lightness >= kLightnessThreshold;
 
-      final colorScheme = (background.computeLuminance() > kLumContrast)
+      final onSurface = isLightSurface ? Colors.black : Colors.white;
+
+      final colorScheme = isLightSurface
           ? ColorScheme.light(
               primary: primary,
               secondary: primary,
@@ -44,8 +44,7 @@ class Home extends StatelessWidget {
             );
 
       // this should be faster than rgbColors[kSurface].computeLuminance < kLumContrast
-      final bool shouldDisplayElevation =
-          currentState.hsluvColors[kSurface].lightness < kLumContrast * 100;
+      final bool shouldDisplayElevation = !isLightSurface;
 
       final isiPad = MediaQuery.of(context).size.width > 600;
 
@@ -56,12 +55,12 @@ class Home extends StatelessWidget {
           colorScheme: colorScheme,
 //          textTheme: TextTheme(button: TextStyle(fontFamily: "B612Mono")),
         ).copyWith(
-          buttonTheme: Theme.of(context).buttonTheme.copyWith(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
+            buttonTheme: ButtonThemeData(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
               ),
-        ),
+            ),
+            dividerColor: onSurface.withOpacity(0.30)),
         child: Scaffold(
           body: isiPad
               ? Center(
@@ -156,10 +155,7 @@ class Home extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                   side: BorderSide(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .onBackground
-                        .withOpacity(0.3),
+                    color: colorScheme.onSurface.withOpacity(0.30),
                   ),
                 ),
               ),

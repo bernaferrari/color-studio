@@ -1,6 +1,5 @@
 import 'package:colorstudio/example/blocs/blocs.dart';
 import 'package:colorstudio/example/contrast/shuffle_color.dart';
-import 'package:colorstudio/example/util/constants.dart';
 import 'package:colorstudio/scheme/expandable_item.dart';
 import 'package:colorstudio/widgets/section_card.dart';
 import 'package:colorstudio/widgets/title_bar.dart';
@@ -24,26 +23,11 @@ class ColorSchemeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme =
-        (rgbColorsWithBlindness[kSurface].computeLuminance() > kLumContrast)
-            ? ColorScheme.light(
-                primary: rgbColorsWithBlindness[kPrimary],
-                secondary: rgbColorsWithBlindness[kPrimary],
-                background: rgbColorsWithBlindness[kBackground],
-                surface: rgbColorsWithBlindness[kSurface],
-              )
-            : ColorScheme.dark(
-                primary: rgbColorsWithBlindness[kPrimary],
-                secondary: rgbColorsWithBlindness[kPrimary],
-                background: rgbColorsWithBlindness[kBackground],
-                surface: rgbColorsWithBlindness[kSurface],
-              );
-
     final isiPad = MediaQuery.of(context).size.width > 600;
 
     return Theme(
       data: ThemeData.from(
-        colorScheme: colorScheme,
+        colorScheme: Theme.of(context).colorScheme,
         textTheme: TextTheme(
           body1: GoogleFonts.lato(),
           button: GoogleFonts.openSans(),
@@ -93,7 +77,6 @@ class ColorSchemeScreen extends StatelessWidget {
                   height: 0,
                   indent: 1,
                   endIndent: 1,
-                  color: colorScheme.onSurface.withOpacity(0.30),
                 ),
               SchemeExpandableItem(rgbColorsWithBlindness, hsluvColors, locked),
             ],

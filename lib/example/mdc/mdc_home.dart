@@ -33,7 +33,7 @@ class MDCHome extends StatelessWidget {
 
       final isiPad = MediaQuery.of(context).size.shortestSide > 600;
 
-      final scheme = backgroundLuv.lightness > 100 - kLumContrast * 100
+      final scheme = backgroundLuv.lightness > kLightnessThreshold
           ? ColorScheme.light(
               primary: primaryColor,
               secondary: primaryColor,

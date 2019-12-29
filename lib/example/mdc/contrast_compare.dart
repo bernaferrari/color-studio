@@ -76,14 +76,12 @@ class ContrastProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bgColor = (Theme.of(context).brightness == Brightness.light)
-        ? Colors.grey[500]
-        : Colors.grey[800];
+    final bgColor = Theme.of(context).colorScheme.onSurface;
 
     final progressBar = RectangularPercentageWidget(
       percent: getNormalised(contrast) / 100,
       size: 10,
-      backgroundColor: bgColor.withOpacity(0.4),
+      backgroundColor: bgColor.withOpacity(0.15),
       borderWidth: 0,
       progressColor: getProgressColor(contrast),
       direction: direction,
