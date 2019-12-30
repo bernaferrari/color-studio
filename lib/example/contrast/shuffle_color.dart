@@ -62,13 +62,13 @@ List<Color> getRandomMaterialDark() {
   // H: 281 S: 97 L: 65
   // H: 176 S: 100 L: 79
   // OWL - H: 360 S: 100 L: 67
-  // Therefore, S > 90 and 60 < L < 80
+  // Therefore, S > 90 and 65 < L < 85
 
   return [
     HSLuvColor.fromHSL(
       rng.nextInt(360).toDouble(),
-      50 + rng.nextInt(51).toDouble(),
-      60 + rng.nextInt(26).toDouble(),
+      60 + rng.nextInt(41).toDouble(),
+      65 + rng.nextInt(21).toDouble(),
     ).toColor(),
     HSLuvColor.fromHSL(
       rng.nextInt(360).toDouble(),
@@ -98,23 +98,23 @@ List<Color> getRandomMaterialLight() {
   // H: 177 S: 100 L: 79
   // Therefore, S > 90 and 35 < L < 80
 
-  final primaryLightness = 20 + rng.nextInt(20);
+  final primaryLightness = 25 + rng.nextInt(20);
 
   return [
     HSLuvColor.fromHSL(
       rng.nextInt(360).toDouble(),
-      80 + rng.nextInt(11).toDouble(),
+      80 + rng.nextInt(16).toDouble(),
       primaryLightness.toDouble(),
     ).toColor(),
     HSLuvColor.fromHSL(
       rng.nextInt(360).toDouble(),
       20 + rng.nextInt(81).toDouble(),
-      primaryLightness + 40 + rng.nextInt(61 - primaryLightness).toDouble(),
+      primaryLightness + 45 + rng.nextInt(56 - primaryLightness).toDouble(),
     ).toColor(),
     HSLuvColor.fromHSL(
       rng.nextInt(360).toDouble(),
       rng.nextInt(101).toDouble(),
-      primaryLightness + 40 + rng.nextInt(61 - primaryLightness).toDouble(),
+      primaryLightness + 45 + rng.nextInt(56 - primaryLightness).toDouble(),
     ).toColor(),
   ];
 }
@@ -159,6 +159,30 @@ List<Color> getRandomMaterial() {
   var rng = Random();
   final isDark = rng.nextInt(2) % 2 == 0;
   return isDark ? getRandomMaterialDark() : getRandomMaterialLight();
+}
+
+List<Color> getRandomPreference(int prefs) {
+  if (prefs == 0) {
+    return getRandomMaterialDark();
+  } else if (prefs == 1) {
+    return getRandomMaterialLight();
+  } else if (prefs == 2) {
+    return getRandomMaterial();
+  } else if (prefs == 3) {
+    var rng = Random();
+
+    return [
+      for (int i = 0; i < 3; i++)
+        Color.fromARGB(
+          255,
+          rng.nextInt(256),
+          rng.nextInt(256),
+          rng.nextInt(256),
+        )
+    ];
+  }
+
+  return <Color>[];
 }
 
 // https://www.vanschneider.com/colors

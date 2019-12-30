@@ -100,6 +100,7 @@ class SingleColorHome extends StatelessWidget {
                       ),
                       ColorTemplates(
                         backgroundColor: selectedColor,
+                        isSplitView: isSplitView,
                       ),
                     ],
                   ),

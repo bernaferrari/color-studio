@@ -1,6 +1,6 @@
 
 const double kLumContrast = 0.34;
-const double kLightnessThreshold = 50;
+const double kLightnessThreshold = 56;
 const double kVeryTransparent = 0.20;
 
 const String kPrimary = "Primary";

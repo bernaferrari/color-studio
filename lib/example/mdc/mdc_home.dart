@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
 class MDCHome extends StatelessWidget {
@@ -33,7 +34,7 @@ class MDCHome extends StatelessWidget {
 
       final isiPad = MediaQuery.of(context).size.shortestSide > 600;
 
-      final scheme = backgroundLuv.lightness > kLightnessThreshold
+      final scheme = backgroundLuv.lightness >= kLightnessThreshold
           ? ColorScheme.light(
               primary: primaryColor,
               secondary: primaryColor,
@@ -74,14 +75,19 @@ class MDCHome extends StatelessWidget {
                 },
               ),
               IconButton(
-                tooltip: "Random dark theme",
-                icon: Icon(FeatherIcons.shuffle),
-                onPressed: () {
+                tooltip: "Randomise colors",
+                icon: Icon(
+                  FeatherIcons.shuffle,
+                ),
+                onPressed: () async {
+                  var box = await Hive.openBox('settings');
+                  int pref = box.get('shuffle', defaultValue: 0);
+
                   BlocProvider.of<MdcSelectedBloc>(context).add(
-                    MDCUpdateAllEvent(colors: getRandomMaterialDark()),
+                    MDCUpdateAllEvent(colors: getRandomPreference(pref)),
                   );
                 },
-              ),
+              )
             ],
           ),
           body: isiPad

@@ -46,8 +46,8 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
       kSurface: initialList[1],
     };
 
-    final initialLocked = {
-      kBackground: true,
+    final initialLocked = <String, bool>{
+//      kBackground: true,
     };
 
     return MDCLoadedState(

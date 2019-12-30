@@ -8,9 +8,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'components.dart';
 
 class ColorTemplates extends StatelessWidget {
-  const ColorTemplates({this.backgroundColor});
+  const ColorTemplates({this.backgroundColor, this.isSplitView});
 
   final Color backgroundColor;
+  final bool isSplitView;
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +19,8 @@ class ColorTemplates extends StatelessWidget {
       appBar: AppBar(
         title: Text("Templates", style: Theme.of(context).textTheme.title),
         elevation: 0,
+        centerTitle: isSplitView,
+        leading: isSplitView ? SizedBox.shrink() : null,
         actions: <Widget>[
           ColorSearchButton(color: backgroundColor),
           const SizedBox(width: 8),

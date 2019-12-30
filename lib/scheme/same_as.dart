@@ -22,7 +22,7 @@ class SameAs extends StatelessWidget {
   Widget build(BuildContext context) {
     Color textColor;
 
-    if (contrast > kLightnessThreshold) {
+    if (contrast >= kLightnessThreshold) {
       textColor = Colors.black;
     } else {
       textColor = Colors.white;

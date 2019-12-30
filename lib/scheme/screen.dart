@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
 class ColorSchemeScreen extends StatelessWidget {
@@ -59,14 +60,17 @@ class ColorSchemeScreen extends StatelessWidget {
                 title: "Color Scheme",
                 children: <Widget>[
                   IconButton(
-                    tooltip: "Random Material dark theme",
+                    tooltip: "Randomise colors",
                     icon: Icon(
                       FeatherIcons.shuffle,
                       color: Theme.of(context).colorScheme.primary,
                     ),
-                    onPressed: () {
+                    onPressed: () async {
+                      var box = await Hive.openBox('settings');
+                      int pref = box.get('shuffle', defaultValue: 0);
+
                       BlocProvider.of<MdcSelectedBloc>(context).add(
-                        MDCUpdateAllEvent(colors: getRandomMaterialDark()),
+                        MDCUpdateAllEvent(colors: getRandomPreference(pref)),
                       );
                     },
                   ),

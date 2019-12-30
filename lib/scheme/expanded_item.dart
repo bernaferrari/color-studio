@@ -27,11 +27,11 @@ class SchemeExpandedItem extends StatelessWidget {
         final color = (state as MDCLoadedState).rgbColors[selected];
         final luv = (state as MDCLoadedState).hsluvColors[selected];
 
-        final surface = luv.lightness > kLightnessThreshold
+        final surface = luv.lightness >= kLightnessThreshold
             ? Colors.black.withOpacity(0.20)
             : Colors.white.withOpacity(0.20);
 
-        final scheme = luv.lightness > kLightnessThreshold
+        final scheme = luv.lightness >= kLightnessThreshold
             ? ColorScheme.light(primary: color, surface: surface)
             : ColorScheme.dark(primary: color, surface: surface);
 

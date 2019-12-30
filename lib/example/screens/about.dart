@@ -19,10 +19,10 @@ class About extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         title: Text("About", style: Theme.of(context).textTheme.title),
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0,
         centerTitle: isSplitView,
         leading: isSplitView ? SizedBox.shrink() : null,
@@ -32,7 +32,6 @@ class About extends StatelessWidget {
           constraints: const BoxConstraints(maxWidth: 818),
           child: ListView(
             key: const PageStorageKey("about"),
-            shrinkWrap: true,
             children: <Widget>[
               Padding(padding: EdgeInsets.all(4)),
               TranslucentCard(
@@ -256,38 +255,84 @@ class ShuffleDarkSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        BlocProvider.of<MdcSelectedBloc>(context).add(
-          MDCUpdateAllEvent(colors: getRandomMaterial()),
-        );
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16.0),
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Icon(FeatherIcons.layers, size: 20),
-                  const SizedBox(width: 16),
-                  Text(
-                    "Random Material Theme",
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.title.copyWith(
-                      fontSize: 18
+    return WatchBoxBuilder(
+        box: Hive.box<dynamic>("settings"),
+        builder: (context, box) {
+          final int selected = box.get("shuffle", defaultValue: 0);
+          final primary = Theme.of(context).colorScheme.onSurface;
+
+          return Column(
+            children: <Widget>[
+              InkWell(
+                onTap: () {
+                  BlocProvider.of<MdcSelectedBloc>(context).add(
+                    MDCUpdateAllEvent(
+                      colors: getRandomPreference(selected),
                     ),
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(FeatherIcons.shuffle, size: 20),
+                            const SizedBox(width: 16),
+                            Text(
+                              "Random Theme Settings",
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .title
+                                  .copyWith(fontSize: 18),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Icon(FeatherIcons.chevronRight),
+                      const SizedBox(width: 16),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
-            Icon(FeatherIcons.chevronRight),
-            const SizedBox(width: 16),
-          ],
-        ),
-      ),
-    );
+              RadioListTile(
+                  title: Text("Material Dark"),
+                  value: 0,
+                  activeColor: primary,
+                  groupValue: selected,
+                  onChanged: (changed) {
+                    box.put('shuffle', 0);
+                  }),
+              RadioListTile(
+                  title: Text("Material Light"),
+                  value: 1,
+                  activeColor: primary,
+                  groupValue: selected,
+                  onChanged: (changed) {
+                    box.put('shuffle', 1);
+                  }),
+              RadioListTile(
+                  title: Text("Material Dark or Light"),
+                  value: 2,
+                  activeColor: primary,
+                  groupValue: selected,
+                  onChanged: (changed) {
+                    box.put('shuffle', 2);
+                  }),
+              RadioListTile(
+                  title: Text("Truly Random"),
+                  value: 3,
+                  activeColor: primary,
+                  groupValue: selected,
+                  onChanged: (changed) {
+                    box.put('shuffle', 3);
+                  }),
+            ],
+          );
+        });
   }
 }
 

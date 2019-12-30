@@ -22,7 +22,7 @@ Choosing colors, which was already hard, became trial and error. I relied a lot 
 ### Overview
 
 #### Color Scheme
-This app allows you to play with 3 colors: Primary, Background and Surface. Background and Surface allows you to toggle "auto" mode (by default, when you open the app, it is on for the Background, to help with discoverability). In auto mode, Background follows the [Material Design recommendation](https://material.io/design/color/dark-theme.html#properties): 8% of Primary color + #121212.
+This app allows you to play with 3 colors: Primary, Background and Surface. Background and Surface allows you to toggle "auto" mode. In auto mode, Background follows the [Material Design recommendation](https://material.io/design/color/dark-theme.html#properties): 8% of Primary color + #121212.
 Regarding Surface color, there is no official recommendation. Initially, the app made it the same as the Background color, but this didn't feel good. Inspired by [Moleskine Timepage](https://apps.apple.com/us/app/timepage/id989178902), Surface now gets the Background and adds 5% of lightness in [HSLuv](http://www.hsluv.org/) color space. If Background has 10% of lightness, Surface has 15%.
 
 Everything was written with extensibility in mind. The colors are not hard-coded, and it is straight-forward to add more or modify them in the future. In a previous app version, Secondary color was also present, but was removed to make the app simpler.
