@@ -33,13 +33,27 @@ class About extends StatelessWidget {
           child: ListView(
             key: const PageStorageKey("about"),
             shrinkWrap: true,
-            children: const <Widget>[
+            children: <Widget>[
               Padding(padding: EdgeInsets.all(4)),
               TranslucentCard(
                 child: _ContactInfo(),
               ),
-              TranslucentCard(
-                child: ColorCompare(),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: TranslucentCard(
+                      margin: EdgeInsets.only(left: 16, top: 8),
+                      child: ColorCompare(),
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  Expanded(
+                    child: TranslucentCard(
+                      margin: EdgeInsets.only(right: 16, top: 8),
+                      child: ColorExport(),
+                    ),
+                  ),
+                ],
               ),
               TranslucentCard(
                 child: ShuffleDarkSection(),
@@ -73,9 +87,11 @@ class _ContactInfo extends StatelessWidget {
               ),
         ),
         const SizedBox(height: 8),
-        Text("Designed & developed by Bernardo Ferrari.",
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.subtitle),
+        Text(
+          "Designed & developed by Bernardo Ferrari.",
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.subtitle,
+        ),
         const SizedBox(height: 8),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -174,12 +190,54 @@ class ColorCompare extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Icon(FeatherIcons.trendingUp),
+                  Icon(FeatherIcons.menu, size: 20),
                   const SizedBox(width: 16),
                   Text(
-                    "Compare Colors",
+                    "Compare",
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.title,
+                    style: Theme.of(context)
+                        .textTheme
+                        .title
+                        .copyWith(fontSize: 18),
+                  ),
+                ],
+              ),
+            ),
+            Icon(FeatherIcons.chevronRight),
+            const SizedBox(width: 16),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ColorExport extends StatelessWidget {
+  const ColorExport();
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        Navigator.pushNamed(context, "/export");
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(FeatherIcons.share, size: 20),
+                  const SizedBox(width: 16),
+                  Text(
+                    "Export",
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .title
+                        .copyWith(fontSize: 18),
                   ),
                 ],
               ),
@@ -212,12 +270,14 @@ class ShuffleDarkSection extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Icon(FeatherIcons.layers),
+                  Icon(FeatherIcons.layers, size: 20),
                   const SizedBox(width: 16),
                   Text(
                     "Random Material Theme",
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.title,
+                    style: Theme.of(context).textTheme.title.copyWith(
+                      fontSize: 18
+                    ),
                   ),
                 ],
               ),
@@ -350,10 +410,11 @@ class TranslucentCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
         side: BorderSide(
-            color: Theme.of(context)
-                .colorScheme
-                .onSurface
-                .withOpacity(2 * kVeryTransparent)),
+          color: Theme.of(context)
+              .colorScheme
+              .onSurface
+              .withOpacity(2 * kVeryTransparent),
+        ),
       ),
       clipBehavior: Clip.antiAlias,
       elevation: 0,

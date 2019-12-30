@@ -18,7 +18,6 @@ class Home extends StatelessWidget {
       final currentState = state as MDCLoadedState;
 
       final primary = currentState.rgbColorsWithBlindness[kPrimary];
-
       final background = currentState.rgbColorsWithBlindness[kBackground];
       final surface = currentState.rgbColorsWithBlindness[kSurface];
 

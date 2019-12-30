@@ -14,6 +14,7 @@ import 'example/blocs/blocs.dart';
 import 'example/blocs/color_blind/color_blind_bloc.dart';
 import 'example/blocs/mdc_selected/mdc_selected_bloc.dart';
 import 'example/contrast/shuffle_color.dart';
+import 'example/screens/export_colors.dart';
 import 'example/screens/home.dart';
 import 'home.dart';
 
@@ -96,6 +97,7 @@ class _BoxedAppState extends State<BoxedApp> {
             updateStateIfNecessary();
             return MDCHome();
           },
+          "/export" : (context) => ExportColors(),
         },
         theme: base.copyWith(
           typography: Typography().copyWith(

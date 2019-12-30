@@ -183,8 +183,7 @@ class __BottomHomeState extends State<_BottomHome> {
               child: Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: _ColorContrastRow(
-                  areValuesLocked: widget.locked[kSurface] == true &&
-                      widget.locked[kBackground] == true,
+                  areValuesLocked: false,
                   rgbColors: widget.rgbColors,
                 ),
               ),
