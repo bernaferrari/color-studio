@@ -1,153 +1,96 @@
 import 'package:colorstudio/example/blocs/multiple_contrast_color/multiple_contrast_color_state.dart';
 import 'package:colorstudio/example/mdc/components.dart';
-import 'package:colorstudio/example/util/color_util.dart';
-import 'package:colorstudio/example/util/constants.dart';
 import 'package:colorstudio/example/util/when.dart';
 import 'package:colorstudio/example/widgets/update_color_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-class InfoScreen extends StatefulWidget {
+class InfoScreen extends StatelessWidget {
   const InfoScreen(this.list);
 
   final List<ContrastedColor> list;
 
   @override
-  _InfoScreenState createState() => _InfoScreenState();
-}
-
-class _InfoScreenState extends State<InfoScreen> {
-  int currentSegment = 1;
-
-  void onValueChanged(int newValue) {
-    setState(() {
-      currentSegment = newValue;
-    });
-  }
-
-  final Map<int, Widget> children = const <int, Widget>{
-    0: Text('RGB'),
-    1: Text('HSLuv'),
-    2: Text('HSV'),
-  };
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: widget.list[0].rgbColor,
-      body: Column(
-        children: <Widget>[
-          Container(
-            width: 500,
-            padding: const EdgeInsets.only(
-                left: 16.0, right: 16, top: 16, bottom: 12),
-            child: CupertinoSlidingSegmentedControl<int>(
-              backgroundColor:
-                  Theme.of(context).colorScheme.onSurface.withOpacity(0.20),
-              thumbColor: compositeColors(
-                Theme.of(context).colorScheme.background,
-                Theme.of(context).colorScheme.primary,
-                kVeryTransparent,
-              ),
-              children: children,
-              onValueChanged: onValueChanged,
-              groupValue: currentSegment,
-            ),
-          ),
-          Expanded(child: buildInfo()),
-        ],
-      ),
+      backgroundColor: list[0].rgbColor,
+      body: buildInfo(),
     );
   }
 
   Widget buildInfo() {
-    final list = widget.list;
-
     return ListView.builder(
       key: const PageStorageKey("InfoKey"),
       itemCount: list.length,
       itemBuilder: (BuildContext context, int i) {
         if (i == 0) {
-          return header(list);
+          return header(list, 0, true);
         }
 
-        return SizedBox(
-          height: 112,
-          child: Material(
-            color: list[i].rgbColor,
-            child: InkWell(
+        return Material(
+          color: list[i].rgbColor,
+          child: InkWell(
               onTap: () {
                 showSlidersDialog(context, list[i].rgbColor);
               },
               onLongPress: () {
                 showSlidersDialog(context, list[i].rgbColor);
               },
-              child: when({
-                () => currentSegment == 0: () =>
-                    rgbInfo(list[0].rgbColor, list[i].rgbColor, false, 1.0),
-                () => currentSegment == 1: () =>
-                    hsluvInfo(list[0].rgbColor, list[i].rgbColor, false, 1.0),
-                () => currentSegment == 2: () =>
-                    hsvInfo(list[0].rgbColor, list[i].rgbColor, false, 1.0),
-              }),
-            ),
-          ),
+              child: header(list, i, false)
+//              child: when({
+//                () => currentSegment == 0: () =>
+//                    rgbInfo(list[0].rgbColor, list[i].rgbColor, false, 1.0),
+//                () => currentSegment == 1: () =>
+//                    hsluvInfo(list[0].rgbColor, list[i].rgbColor, false, 1.0),
+//                () => currentSegment == 2: () =>
+//                    hsvInfo(list[0].rgbColor, list[i].rgbColor, false, 1.0),
+//              }),
+              ),
         );
       },
     );
   }
 
-  Widget header(List<ContrastedColor> list) {
+  Widget header(List<ContrastedColor> list, int index, bool skipDiff) {
     final firstColor = list[0].rgbColor;
+    final nthColor = list[index].rgbColor;
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16),
-      color: list[0].rgbColor,
+      color: list[index].rgbColor,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          headerText("RGB", 0, firstColor),
+          _HeaderTitle("RGB", 0, nthColor),
           const SizedBox(height: 8),
           rgbInfo(
             firstColor,
-            firstColor,
-            true,
-            currentSegment == 0 ? 1.0 : 0.5,
+            nthColor,
+            skipDiff,
+            1.0,
           ),
           const SizedBox(height: 16),
-          headerText("HSLuv", 1, firstColor),
+          _HeaderTitle("HSLuv", 1, nthColor),
           const SizedBox(height: 8),
           hsluvInfo(
             firstColor,
-            firstColor,
-            true,
-            currentSegment == 1 ? 1.0 : 0.5,
+            nthColor,
+            skipDiff,
+            1.0,
           ),
           const SizedBox(height: 16),
-          headerText("HSV", 2, firstColor),
+          _HeaderTitle("HSV", 2, nthColor),
           const SizedBox(height: 8),
           hsvInfo(
             firstColor,
-            firstColor,
-            true,
-            currentSegment == 2 ? 1.0 : 0.5,
+            nthColor,
+            skipDiff,
+            1.0,
           ),
         ],
       ),
-    );
-  }
-
-  Widget headerText(String title, int index, Color firstColor) {
-    final contrasted = contrastingColor(firstColor);
-
-    return Text(
-      title,
-      style: Theme.of(context).textTheme.body2.copyWith(
-            color: contrasted.withOpacity(currentSegment == index ? 1.0 : 0.5),
-          ),
-      textAlign: TextAlign.center,
     );
   }
 
@@ -155,7 +98,7 @@ class _InfoScreenState extends State<InfoScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        infoItem(
+        _InfoItem(
           "R",
           color1.red.toDouble(),
           color2.red.toDouble(),
@@ -163,7 +106,7 @@ class _InfoScreenState extends State<InfoScreen> {
           skipDiff,
           opacity,
         ),
-        infoItem(
+        _InfoItem(
           "G",
           color1.green.toDouble(),
           color2.green.toDouble(),
@@ -171,7 +114,7 @@ class _InfoScreenState extends State<InfoScreen> {
           skipDiff,
           opacity,
         ),
-        infoItem(
+        _InfoItem(
           "B",
           color1.blue.toDouble(),
           color2.blue.toDouble(),
@@ -190,10 +133,10 @@ class _InfoScreenState extends State<InfoScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        infoItem("H", hsluv1.hue, hsluv2.hue, color2, skipDiff, opacity),
-        infoItem("S", hsluv1.saturation * 100, hsluv2.saturation * 100, color2,
+        _InfoItem("H", hsluv1.hue, hsluv2.hue, color2, skipDiff, opacity),
+        _InfoItem("S", hsluv1.saturation * 100, hsluv2.saturation * 100, color2,
             skipDiff, opacity),
-        infoItem("L", hsluv1.lightness * 100, hsluv2.lightness * 100, color2,
+        _InfoItem("L", hsluv1.lightness * 100, hsluv2.lightness * 100, color2,
             skipDiff, opacity),
       ],
     );
@@ -206,23 +149,48 @@ class _InfoScreenState extends State<InfoScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        infoItem("H", hsv1.hue, hsv2.hue, color2, skipDiff, opacity),
-        infoItem("S", hsv1.saturation * 100, hsv2.saturation * 100, color2,
+        _InfoItem("H", hsv1.hue, hsv2.hue, color2, skipDiff, opacity),
+        _InfoItem("S", hsv1.saturation * 100, hsv2.saturation * 100, color2,
             skipDiff, opacity),
-        infoItem(
+        _InfoItem(
             "V", hsv1.value * 100, hsv2.value * 100, color2, skipDiff, opacity),
       ],
     );
   }
+}
 
-  Widget infoItem(
-    String letter,
-    double valueOrig,
-    double valueNew,
-    Color color1,
-    bool skipDiff, [
-    double opacity = 1.0,
-  ]) {
+class _HeaderTitle extends StatelessWidget {
+  const _HeaderTitle(this.title, this.index, this.firstColor);
+
+  final String title;
+  final int index;
+  final Color firstColor;
+
+  @override
+  Widget build(BuildContext context) {
+    final contrasted = contrastingColor(firstColor);
+
+    return Text(
+      title,
+      style: Theme.of(context).textTheme.body2.copyWith(color: contrasted),
+      textAlign: TextAlign.center,
+    );
+  }
+}
+
+class _InfoItem extends StatelessWidget {
+  const _InfoItem(this.letter, this.valueOrig, this.valueNew, this.color1,
+      [this.skipDiff = false, this.opacity = 1.0]);
+
+  final String letter;
+  final double valueOrig;
+  final double valueNew;
+  final Color color1;
+  final bool skipDiff;
+  final double opacity;
+
+  @override
+  Widget build(BuildContext context) {
     final Color color = when({
       () => valueNew > valueOrig: () => const Color(0xff1da556),
       () => valueNew == valueOrig: () => const Color(0xff909090),

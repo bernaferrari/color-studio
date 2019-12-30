@@ -93,11 +93,12 @@ class _MultipleContrastScreenState extends State<MultipleContrastScreen> {
           appBar: AppBar(
             title: const Text("Contrast Compare"),
             actions: <Widget>[
-              IconButton(
-                tooltip: "Reorder",
-                icon: Icon(FeatherIcons.list),
-                onPressed: () => showReorderDialog(builderContext, list),
-              )
+              if (currentSegment != 2)
+                IconButton(
+                  tooltip: "Reorder",
+                  icon: Icon(FeatherIcons.list),
+                  onPressed: () => showReorderDialog(builderContext, list),
+                )
             ],
             bottom: PreferredSize(
               preferredSize: const Size(500, 56),
@@ -117,8 +118,8 @@ class _MultipleContrastScreenState extends State<MultipleContrastScreen> {
                     kVeryTransparent,
                   ),
                   children: const <int, Widget>{
-                    0: Text('Contrast'),
-                    1: Text('Info'),
+                    0: Text("Adjust"),
+                    1: Text("Info"),
                   },
                   onValueChanged: onValueChanged,
                   groupValue: currentSegment,
