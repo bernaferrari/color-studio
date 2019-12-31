@@ -136,10 +136,10 @@ class TopRow extends StatelessWidget {
       builder: (context, builder) {
         // if screen is not large, hide the button for detailed color screen.
         // that screen is optimized for larger sizes.
-        final largeScreen = builder.maxWidth > 380;
+        final largeScreen = builder.maxWidth > 320;
 
         // if screen is tiny (like in split-view), hide the AA/AAA letters.
-        final smallScreen = builder.maxWidth < 320;
+        final smallScreen = builder.maxWidth < 380;
 
         final whiteLetter =
             smallScreen ? "" : " ${getContrastLetters(contrastWhite)}";

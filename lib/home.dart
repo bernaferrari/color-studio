@@ -123,19 +123,16 @@ class Home extends StatelessWidget {
               Expanded(
                 child: RaisedButton.icon(
                   label: Text("Modify"),
-                  textColor: colorScheme.onSurface,
                   icon: Icon(FeatherIcons.sliders, size: 16),
+                  textColor: colorScheme.onSurface,
+                  color: colorScheme.surface,
                   onPressed: () {
                     Navigator.pushNamed(context, "/colordetails");
                   },
-                  color: colorScheme.surface,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                     side: BorderSide(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .onSurface
-                          .withOpacity(0.3),
+                      color: colorScheme.onSurface.withOpacity(0.3),
                     ),
                   ),
                 ),

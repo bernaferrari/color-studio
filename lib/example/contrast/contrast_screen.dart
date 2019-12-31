@@ -77,7 +77,7 @@ class _MultipleContrastScreenState extends State<MultipleContrastScreen> {
           colorScheme: colorScheme,
           textTheme: TextTheme(
             caption: GoogleFonts.b612Mono(),
-            button: GoogleFonts.lato(),
+            button: GoogleFonts.b612Mono(),
           ),
         ).copyWith(
           buttonTheme: Theme.of(context).buttonTheme.copyWith(
