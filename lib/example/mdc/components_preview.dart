@@ -58,13 +58,21 @@ class ComponentsPreview extends StatelessWidget {
 
       return Theme(
         data: ThemeData.from(colorScheme: scheme).copyWith(
-          cardTheme: Theme.of(context).cardTheme,
+          cardTheme: CardTheme(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(defaultRadius),
+            ),
+          ),
           toggleableActiveColor: primaryColor,
           toggleButtonsTheme: ToggleButtonsThemeData(color: scheme.onSurface),
-          buttonTheme: Theme.of(context).buttonTheme.copyWith(
-                // this is needed for the outline color
-                colorScheme: scheme,
-              ),
+          buttonTheme: ButtonThemeData(
+            padding: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(defaultRadius / 2),
+            ),
+            // this is needed for the outline color
+            colorScheme: scheme,
+          ),
         ),
         child: Scaffold(
           backgroundColor: backgroundColor,

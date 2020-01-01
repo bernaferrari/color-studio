@@ -19,6 +19,8 @@ import 'example/screens/home.dart';
 import 'home.dart';
 
 Future<void> main() async {
+  // this is needed so Hive can be initialised synchronously.
+  // when the app runs, Hive should have a value already.
   WidgetsFlutterBinding.ensureInitialized();
   await openBox();
   BlocSupervisor.delegate = SimpleBlocDelegate();
@@ -59,10 +61,6 @@ class _BoxedAppState extends State<BoxedApp> {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData base = ThemeData.from(
-      colorScheme: const ColorScheme.dark(),
-    );
-
     return MultiBlocProvider(
       providers: [
         BlocProvider<MdcSelectedBloc>(
@@ -97,31 +95,8 @@ class _BoxedAppState extends State<BoxedApp> {
             updateStateIfNecessary();
             return ComponentsPreview();
           },
-          "/export" : (context) => ExportColors(),
+          "/export": (context) => ExportColors(),
         },
-        theme: base.copyWith(
-          typography: Typography().copyWith(
-            black: Typography.dense2018,
-            tall: Typography.tall2018,
-            englishLike: Typography.englishLike2018,
-          ),
-          dialogTheme: base.dialogTheme.copyWith(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(defaultRadius),
-            ),
-          ),
-          buttonTheme: base.buttonTheme.copyWith(
-            padding: EdgeInsets.zero,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(defaultRadius / 2),
-            ),
-          ),
-          cardTheme: base.cardTheme.copyWith(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(defaultRadius),
-            ),
-          ),
-        ),
       ),
     );
   }
