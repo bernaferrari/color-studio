@@ -46,10 +46,11 @@ class ColorSearchButton extends StatelessWidget {
 }
 
 class BorderedIconButton extends StatelessWidget {
-  const BorderedIconButton({this.child, this.onPressed});
+  const BorderedIconButton({this.child, this.borderColor, this.onPressed});
 
   final Function onPressed;
   final Widget child;
+  final Color borderColor;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +60,8 @@ class BorderedIconButton extends StatelessWidget {
         child: child,
         shape: CircleBorder(
           side: BorderSide(
-            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+            color: borderColor ??
+                Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
           ),
         ),
         elevation: 0.0,

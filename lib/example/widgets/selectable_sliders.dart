@@ -56,7 +56,7 @@ class _SliderWithSelectorState extends State<SliderWithSelector> {
         CupertinoSlidingSegmentedControl<int>(
           children: children,
           backgroundColor:
-              Theme.of(context).colorScheme.onSurface.withOpacity(0.20),
+              Theme.of(context).colorScheme.onBackground.withOpacity(0.20),
           thumbColor: widget.selectableColor,
           onValueChanged: onValueChanged,
           groupValue: currentSegment,

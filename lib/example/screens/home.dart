@@ -364,6 +364,7 @@ class ThemeBar extends StatelessWidget {
     this.locked,
     this.isExpanded,
     this.onExpanded,
+    this.leading,
   });
 
   final String selected;
@@ -371,6 +372,7 @@ class ThemeBar extends StatelessWidget {
   final Map<String, bool> locked;
   final bool isExpanded;
   final Function onExpanded;
+  final Widget leading;
 
   void colorSelected(
     BuildContext context,
@@ -408,8 +410,11 @@ class ThemeBar extends StatelessWidget {
           return Row(
             children: <Widget>[
               // this is necessary to counter-balance the chevronUp icon at the other side.
-              if (builder.maxWidth > 400 || mappedList.length < 3)
+              if (leading == null &&
+                  (builder.maxWidth > 400 || mappedList.length < 3))
                 SizedBox(width: 48),
+              if (leading != null)
+                leading,
               Expanded(
                 child: Center(
                   child: SizedBox(
@@ -438,7 +443,7 @@ class ThemeBar extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16),
                                 side: BorderSide(
-                                  width: (selected == keysList[i]) ? 2 : 1,
+                                  width: 1,
                                   color: Theme.of(context)
                                       .colorScheme
                                       .onSurface
@@ -484,15 +489,16 @@ class ThemeBar extends StatelessWidget {
                   ),
                 ),
               ),
-              IconButton(
-                tooltip: isExpanded ? "compact" : "expand contrast",
-                icon: Icon(
-                  isExpanded
-                      ? FeatherIcons.chevronDown
-                      : FeatherIcons.chevronUp,
+              if (isExpanded != null)
+                IconButton(
+                  tooltip: isExpanded ? "compact" : "expand contrast",
+                  icon: Icon(
+                    isExpanded
+                        ? FeatherIcons.chevronDown
+                        : FeatherIcons.chevronUp,
+                  ),
+                  onPressed: onExpanded,
                 ),
-                onPressed: onExpanded,
-              ),
             ],
           );
         }),

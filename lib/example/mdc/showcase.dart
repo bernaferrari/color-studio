@@ -1,17 +1,15 @@
 import 'dart:ui';
 
 import 'package:colorstudio/example/blocs/blocs.dart';
-import 'package:colorstudio/example/blocs/color_blind/color_blind_bloc.dart';
-import 'package:colorstudio/example/mdc/util/color_blind_from_index.dart';
-import 'package:colorstudio/example/screens/single_color_blindness.dart';
 import 'package:colorstudio/example/widgets/color_sliders/slider_that_works.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'color_blindness_bar.dart';
+import 'horizontal_sliders_bar.dart';
 import 'util/elevation_overlay.dart';
 import 'widgets/FAProgressBar.dart';
 
@@ -22,6 +20,7 @@ class Showcase extends StatefulWidget {
     this.surfaceColor,
     this.onBackgroundColor,
     this.onSurfaceColor,
+    this.currentState,
   });
 
   final Color primaryColor;
@@ -30,6 +29,7 @@ class Showcase extends StatefulWidget {
 
   final Color onBackgroundColor;
   final Color onSurfaceColor;
+  final MDCLoadedState currentState;
 
   @override
   _ShowcaseState createState() => _ShowcaseState();
@@ -37,6 +37,7 @@ class Showcase extends StatefulWidget {
 
 class _ShowcaseState extends State<Showcase> {
   double sliderValue;
+  bool slidersMode;
 
   @override
   void initState() {
@@ -132,126 +133,24 @@ class _ShowcaseState extends State<Showcase> {
             ),
           ),
         ),
-        BlocBuilder<MdcSelectedBloc, MdcSelectedState>(
-            builder: (BuildContext context, state) {
-          final currentState = state as MDCLoadedState;
-
-          final blindnessSelected = currentState.blindnessSelected;
-
-          final ColorWithBlind blindPrimary = getColorBlindFromIndex(
-            primaryColor,
-            blindnessSelected,
-          );
-
-          return Container(
-            height: 56,
-            child: Column(
-              children: <Widget>[
-                Expanded(
-                  child: Row(
-                    children: <Widget>[
-                      const SizedBox(width: 8),
-//                      IconButton(
-//                        icon: Icon(
-//                          FeatherIcons.chevronsUp,
-//                          size: 20,
-//                        ),
-//                        onPressed: () {
-//                        },
-//                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              blindPrimary?.name ?? "Color Blindness",
-                              style: GoogleFonts.openSans(
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            Text(
-                              blindPrimary?.affects ?? "None selected",
-                              style: GoogleFonts.openSans(
-                                textStyle: Theme.of(context).textTheme.caption,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Text(
-                        "$blindnessSelected/8",
-                        style: GoogleFonts.b612Mono(),
-                      ),
-                      SizedBox(width: 8),
-                      Material(
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            side: BorderSide(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onBackground
-                                  .withOpacity(0.20),
-                            ),
-                          ),
-                          color: backgroundColor,
-                          clipBehavior: Clip.antiAlias,
-                          child: Row(
-                            children: <Widget>[
-                              SizedBox(
-                                width: 48,
-                                height: 48,
-                                child: FlatButton(
-                                  padding: EdgeInsets.zero,
-                                  shape: RoundedRectangleBorder(),
-                                  child: Icon(FeatherIcons.chevronLeft),
-                                  onPressed: () {
-                                    int newState = blindnessSelected - 1;
-                                    if (newState < 0) {
-                                      newState = 8;
-                                    }
-                                    BlocProvider.of<ColorBlindBloc>(context)
-                                        .add(newState);
-                                  },
-                                ),
-                              ),
-                              Container(
-                                width: 1,
-                                height: 48,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .onBackground
-                                    .withOpacity(0.20),
-                              ),
-                              SizedBox(
-                                width: 48,
-                                height: 48,
-                                child: FlatButton(
-                                  padding: EdgeInsets.zero,
-                                  shape: RoundedRectangleBorder(),
-                                  child: Icon(FeatherIcons.chevronRight),
-                                  onPressed: () {
-                                    int newState = blindnessSelected + 1;
-                                    if (newState > 8) {
-                                      newState = 0;
-                                    }
-                                    BlocProvider.of<ColorBlindBloc>(context)
-                                        .add(newState);
-                                  },
-                                ),
-                              ),
-                            ],
-                          )),
-                      const SizedBox(width: 8),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          );
-        }),
+        AnimatedSwitcher(
+          duration: Duration(milliseconds: 400),
+          switchInCurve: Curves.easeInOut,
+          transitionBuilder: (Widget child, Animation<double> animation) {
+            return SizeTransition(child: child, sizeFactor: animation);
+          },
+          child: (slidersMode ?? false)
+              ? HorizontalSlidersBar(widget.currentState, onPressed: () {
+                  setState(() {
+                    slidersMode = false;
+                  });
+                })
+              : ColorBlindnessBar(onPressed: () {
+                  setState(() {
+                    slidersMode = true;
+                  });
+                }),
+        ),
         SafeArea(
           bottom: true,
           top: false,
@@ -613,8 +512,6 @@ class _PrevThankful extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isiPad = MediaQuery.of(context).size.shortestSide > 600;
-
     return Column(
       children: <Widget>[
         SizedBox(height: 24),
@@ -992,8 +889,6 @@ class _PrevSocial extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final onBg = Theme.of(context).colorScheme.onBackground;
-
     const icons1 = [
       FeatherIcons.send,
       FeatherIcons.bookmark,
@@ -1033,30 +928,6 @@ class _PrevSocial extends StatelessWidget {
                 ),
           ],
         ),
-//        Row(
-//          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//          children: <Widget>[
-//            OutlineButton(
-//              child: const Text("0% onBg"),
-//              highlightedBorderColor: onBg,
-//              onPressed: () {},
-//            ),
-//            MaterialButton(
-//              elevation: 0,
-//              // using color: onBg.withOpacity(0.25) gets weird on hover
-//              color: compositeColors(onBg, surface, 0.25),
-//              child: const Text("25% onBg"),
-//              onPressed: () {},
-//            ),
-//            MaterialButton(
-//              color: primary,
-//              elevation: 0,
-//              textColor: contrastingColor(primary),
-//              child: const Text("100% Prim"),
-//              onPressed: () {},
-//            ),
-//          ],
-//        ),
         if (!isiPad)
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1068,30 +939,6 @@ class _PrevSocial extends StatelessWidget {
                 ),
             ],
           ),
-//        Row(
-//          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//          children: <Widget>[
-//            OutlineButton(
-//              child: const Text("0% Prim"),
-//              textColor: primary,
-//              onPressed: () {},
-//            ),
-//            MaterialButton(
-//              color: compositeColors(primary, surface, 0.25),
-//              elevation: 0,
-//              child: const Text("25% Prim"),
-//              textColor: primary,
-//              onPressed: () {},
-//            ),
-//            MaterialButton(
-//              elevation: 0,
-//              color: primary,
-//              textColor: surface,
-//              child: const Text("100% Prim"),
-//              onPressed: () {},
-//            ),
-//          ],
-//        ),
       ],
     );
   }
@@ -1244,83 +1091,6 @@ class _PodcastCard extends StatelessWidget {
     );
   }
 }
-
-class _WhatsNewCard extends StatelessWidget {
-  const _WhatsNewCard(this.primary, this.version, this.elevation);
-
-  final Color primary;
-  final String version;
-  final int elevation;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      elevation: elevation.toDouble(),
-      shape: RoundedRectangleBorder(
-        side: BorderSide(
-          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.25),
-          width: 1.0,
-        ),
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(
-              "What's New in $version",
-              style: TextStyle(fontWeight: FontWeight.w500),
-            ),
-            Text(
-              "View",
-              style: TextStyle(fontWeight: FontWeight.w500, color: primary),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-//class _WhatsNewCard extends StatelessWidget {
-//  const _WhatsNewCard(this.primary, this.version, this.elevation);
-//
-//  final Color primary;
-//  final String version;
-//  final int elevation;
-//
-//  @override
-//  Widget build(BuildContext context) {
-//    return Card(
-//      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-//      elevation: elevation.toDouble(),
-//      shape: RoundedRectangleBorder(
-//        side: BorderSide(
-//            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.25),
-//            width: 1.0),
-//        borderRadius: BorderRadius.circular(8.0),
-//      ),
-//      child: Padding(
-//        padding: const EdgeInsets.all(16.0),
-//        child: Row(
-//          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//          children: <Widget>[
-//            Text(
-//              "What's New in $version",
-//              style: TextStyle(fontWeight: FontWeight.w500),
-//            ),
-//            Text(
-//              "View",
-//              style: TextStyle(fontWeight: FontWeight.w500, color: primary),
-//            ),
-//          ],
-//        ),
-//      ),
-//    );
-//  }
-//}
 
 class _PrevCupertino extends StatelessWidget {
   const _PrevCupertino({this.primary, this.backgroundColor});

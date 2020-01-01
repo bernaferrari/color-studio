@@ -10,7 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
-class MDCHome extends StatelessWidget {
+class ComponentsPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MdcSelectedBloc, MdcSelectedState>(
@@ -105,6 +105,7 @@ class MDCHome extends StatelessWidget {
                           surfaceColor: surfaceColor,
                           onBackgroundColor: onBackground,
                           onSurfaceColor: onSurface,
+                          currentState: currentState,
                         ),
                       ),
                       Expanded(
@@ -113,12 +114,19 @@ class MDCHome extends StatelessWidget {
                     ],
                   ),
                 )
-              : Showcase(
-                  primaryColor: primaryColor,
-                  backgroundColor: backgroundColor,
-                  surfaceColor: surfaceColor,
-                  onBackgroundColor: onBackground,
-                  onSurfaceColor: onSurface,
+              : BlocProvider(
+                  create: (context) => SliderColorBloc()
+                    ..add(
+                      MoveColor(primaryColor, true),
+                    ),
+                  child: Showcase(
+                    primaryColor: primaryColor,
+                    backgroundColor: backgroundColor,
+                    surfaceColor: surfaceColor,
+                    onBackgroundColor: onBackground,
+                    onSurfaceColor: onSurface,
+                    currentState: currentState,
+                  ),
                 ),
         ),
       );

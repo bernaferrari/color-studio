@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:colorstudio/example/contrast/contrast_screen.dart';
-import 'package:colorstudio/example/mdc/mdc_home.dart';
+import 'package:colorstudio/example/mdc/components_preview.dart';
 import 'package:colorstudio/example/util/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -95,7 +95,7 @@ class _BoxedAppState extends State<BoxedApp> {
           "/componentspreview": (context) {
             // necessary if it opens in split-view
             updateStateIfNecessary();
-            return MDCHome();
+            return ComponentsPreview();
           },
           "/export" : (context) => ExportColors(),
         },
