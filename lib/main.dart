@@ -97,6 +97,29 @@ class _BoxedAppState extends State<BoxedApp> {
           },
           "/export": (context) => ExportColors(),
         },
+        theme: ThemeData(
+          typography: Typography().copyWith(
+            black: Typography.dense2018,
+            tall: Typography.tall2018,
+            englishLike: Typography.englishLike2018,
+          ),
+          dialogTheme: DialogTheme(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(defaultRadius),
+            ),
+          ),
+          buttonTheme: ButtonThemeData(
+            padding: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(defaultRadius / 2),
+            ),
+          ),
+          cardTheme: CardTheme(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(defaultRadius),
+            ),
+          ),
+        ),
       ),
     );
   }
