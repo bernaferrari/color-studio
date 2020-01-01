@@ -50,25 +50,25 @@ class ExportColors extends StatelessWidget {
                 children: <Widget>[
                   SizedBox(height: 24),
                   Text("Flutter", style: titleStyle),
-                  _ExportRow(primary, surface, background, onPrimary, onSurface,
-                      onBackground, "Flutter"),
+                  _ExportRow(primary, background, surface, onPrimary,
+                      onBackground, onSurface, "Flutter"),
                   SizedBox(height: 16),
                   Text("Android (colors.xml)", style: titleStyle),
-                  _ExportRow(primary, surface, background, onPrimary, onSurface,
-                      onBackground, "Android (colors.xml)"),
+                  _ExportRow(primary, background, surface, onPrimary,
+                      onBackground, onSurface, "Android (colors.xml)"),
                   Text("Android (styles.xml)", style: titleStyle),
-                  _ExportRow(primary, surface, background, onPrimary, onSurface,
-                      onBackground, "Android (styles.xml)"),
+                  _ExportRow(primary, background, surface, onPrimary,
+                      onBackground, onSurface, "Android (styles.xml)"),
                   SizedBox(height: 16),
                   Text("iOS (Swift)", style: titleStyle),
-                  _ExportRow(primary, surface, background, onPrimary, onSurface,
-                      onBackground, "iOS (Swift)"),
+                  _ExportRow(primary, background, surface, onPrimary,
+                      onBackground, onSurface, "iOS (Swift)"),
                   Text("iOS (Objective C)", style: titleStyle),
-                  _ExportRow(primary, surface, background, onPrimary, onSurface,
-                      onBackground, "iOS (Objective C)"),
+                  _ExportRow(primary, background, surface, onPrimary,
+                      onBackground, onSurface, "iOS (Objective C)"),
                   Text("Hex List", style: titleStyle),
-                  _ExportRow(primary, surface, background, onPrimary, onSurface,
-                      onBackground, "List"),
+                  _ExportRow(primary, background, surface, onPrimary,
+                      onBackground, onSurface, "List"),
                   SizedBox(height: 8),
                 ],
               ),
@@ -83,17 +83,17 @@ class ExportColors extends StatelessWidget {
 class _ExportRow extends StatelessWidget {
   const _ExportRow(
     this.primary,
-    this.surface,
     this.background,
+    this.surface,
     this.onPrimary,
-    this.onSurface,
     this.onBackground,
+    this.onSurface,
     this.kind,
   );
 
   final Color primary;
-  final Color surface;
   final Color background;
+  final Color surface;
   final Color onPrimary;
   final Color onSurface;
   final Color onBackground;
@@ -108,22 +108,22 @@ class _ExportRow extends StatelessWidget {
       return '''
 <item name="colorPrimary">${primary.toHexStr()}</item>
 <item name="colorSecondary">${primary.toHexStr()}</item>
-<item name="colorSurface">${surface.toHexStr()}</item>
 <item name="colorBackground">${background.toHexStr()}</item>
+<item name="colorSurface">${surface.toHexStr()}</item>
 
 <item name="colorOnPrimary">${onPrimary.toHexStr()}</item>
-<item name="colorOnSurface">${onSurface.toHexStr()}</item>
-<item name="colorOnBackground">${onBackground.toHexStr()}</item>''';
+<item name="colorOnBackground">${onBackground.toHexStr()}</item>
+<item name="colorOnSurface">${onSurface.toHexStr()}</item>''';
     } else if (kind == "Android (colors.xml)") {
       return '''
 <color name="colorPrimary">${primary.toHexStr()}</color>
 <color name="colorSecondary">${primary.toHexStr()}</color>
-<color name="colorSurface">${surface.toHexStr()}</color>
 <color name="colorBackground">${background.toHexStr()}</color>
+<color name="colorSurface">${surface.toHexStr()}</color>
 
 <color name="colorOnPrimary">${onPrimary.toHexStr()}</color>
-<color name="colorOnSurface">${onSurface.toHexStr()}</color>
-<color name="colorOnBackground">${onBackground.toHexStr()}</color>''';
+<color name="colorOnBackground">${onBackground.toHexStr()}</color>
+<color name="colorOnSurface">${onSurface.toHexStr()}</color>''';
     } else if (kind == "Flutter") {
       final String light = onBackground == Colors.white ? "dark" : "light";
 
@@ -131,12 +131,12 @@ class _ExportRow extends StatelessWidget {
 ColorScheme.$light(
     primary: $primary,
     secondary: $primary,
-    surface: $surface,
     background: $background,
+    surface: $surface,
     
     onPrimary: $onPrimary,
-    onSurface: $onSurface,
     onBackground: $onBackground,
+    onSurface: $onSurface,
 )''';
     } else if (kind == "iOS (Swift)") {
       return '''
@@ -146,16 +146,16 @@ colorScheme.primaryColor = ${generateUIColor(primary)}
 
 colorScheme.secondaryColor = ${generateUIColor(primary)}
 
-colorScheme.surfaceColor = ${generateUIColor(surface)}
-
 colorScheme.backgroundColor = ${generateUIColor(background)}
+
+colorScheme.surfaceColor = ${generateUIColor(surface)}
 
 
 colorScheme.onPrimaryColor = ${generateUIColor(onPrimary)}
 
-colorScheme.onSurfaceColor = ${generateUIColor(onSurface)}
-
 colorScheme.onBackgroundColor = ${generateUIColor(onBackground)}
+
+colorScheme.onSurfaceColor = ${generateUIColor(onSurface)}
 ''';
     } else if (kind == "iOS (Objective C)") {
       return '''
@@ -170,12 +170,12 @@ MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithDe
 
 colorScheme.primaryColor = ColorFromRGB(0x${primary.toStr()});
 colorScheme.secondaryColor = colorScheme.primaryColor;
-colorScheme.surfaceColor = ColorFromRGB(0x${surface.toStr()});
 colorScheme.backgroundColor = ColorFromRGB(0x${background.toStr()});
+colorScheme.surfaceColor = ColorFromRGB(0x${surface.toStr()});
 
 colorScheme.onPrimaryColor = ColorFromRGB(0x${onPrimary.toStr()});
-colorScheme.onSurfaceColor = ColorFromRGB(0x${onSurface.toStr()});
 colorScheme.onBackgroundColor = ColorFromRGB(0x${onBackground.toStr()});
+colorScheme.onSurfaceColor = ColorFromRGB(0x${onSurface.toStr()});
 ''';
     } else if (kind == "List") {
       return "${primary.toHexStr()}, ${surface.toHexStr()}, ${background.toHexStr()}, ${onPrimary.toHexStr()}, ${onSurface.toHexStr()}, ${onBackground.toHexStr()}";
@@ -191,7 +191,8 @@ colorScheme.onBackgroundColor = ColorFromRGB(0x${onBackground.toStr()});
       margin: const EdgeInsets.all(16.0),
       clipBehavior: Clip.antiAlias,
       child: Padding(
-        padding: const EdgeInsets.only(top: 16, bottom: 8, left: 16.0, right: 16.0),
+        padding:
+            const EdgeInsets.only(top: 16, bottom: 8, left: 16.0, right: 16.0),
         child: Column(
           children: <Widget>[
             SizedBox(

@@ -40,6 +40,7 @@ class SingleColorBlindness extends StatelessWidget {
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 818),
           child: Card(
+            clipBehavior: Clip.antiAlias,
             color: Theme.of(context).colorScheme.background.withOpacity(0.20),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),

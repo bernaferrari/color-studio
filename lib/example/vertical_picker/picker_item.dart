@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:colorstudio/example/util/constants.dart';
 import 'package:colorstudio/example/util/selected.dart';
 import 'package:colorstudio/example/util/when.dart';
 import 'package:colorstudio/example/widgets/update_color_dialog.dart';
+import 'package:flutter/material.dart';
 
 import '../color_with_inter.dart';
 import '../hsinter.dart';

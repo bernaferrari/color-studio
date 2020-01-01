@@ -16,11 +16,20 @@ import 'util/elevation_overlay.dart';
 import 'widgets/FAProgressBar.dart';
 
 class Showcase extends StatefulWidget {
-  const Showcase({this.primaryColor, this.surfaceColor, this.backgroundColor});
+  const Showcase({
+    this.primaryColor,
+    this.backgroundColor,
+    this.surfaceColor,
+    this.onBackgroundColor,
+    this.onSurfaceColor,
+  });
 
   final Color primaryColor;
-  final Color surfaceColor;
   final Color backgroundColor;
+  final Color surfaceColor;
+
+  final Color onBackgroundColor;
+  final Color onSurfaceColor;
 
   @override
   _ShowcaseState createState() => _ShowcaseState();
@@ -97,7 +106,14 @@ class _ShowcaseState extends State<Showcase> {
                   ),
                 ],
 //        _PrevCupertino(primary: primaryColor, backgroundColor: backgroundColor),
-                _PrevPhotos(primary: primaryColor, surface: surfaceColor),
+                _PrevPhotos(
+                  primary: primaryColor,
+                  surface: surfaceColor,
+                  background: backgroundColor,
+                  onBackground: widget.onBackgroundColor,
+                  onSurface: widget.onSurfaceColor,
+                  elevation: currentElevation,
+                ),
                 _PrevPodcast(
                   primary: primaryColor,
                   surface: surfaceColor,
@@ -254,7 +270,7 @@ class _ShowcaseState extends State<Showcase> {
                 child: Slider2(
                   value: sliderValue,
                   divisions: divisions,
-                  label: "${currentElevation.round()}",
+                  label: "${currentElevation.round()} pt",
                   onChanged: (changed) {
                     setState(() {
                       sliderValue = changed;
@@ -1406,10 +1422,9 @@ class WrapWithFrostyBackground extends StatelessWidget {
 }
 
 class PrevPhotosTransparency extends StatefulWidget {
-  const PrevPhotosTransparency({this.primary, this.surface});
+  const PrevPhotosTransparency({this.primary});
 
   final Color primary;
-  final Color surface;
 
   @override
   _PrevPhotosTransparencyState createState() => _PrevPhotosTransparencyState();
@@ -1473,10 +1488,21 @@ class _PrevPhotosTransparencyState extends State<PrevPhotosTransparency> {
 }
 
 class _PrevPhotos extends StatelessWidget {
-  const _PrevPhotos({this.primary, this.surface});
+  const _PrevPhotos({
+    this.primary,
+    this.background,
+    this.surface,
+    this.onBackground,
+    this.onSurface,
+    this.elevation,
+  });
 
   final Color primary;
+  final Color background;
   final Color surface;
+  final Color onBackground;
+  final Color onSurface;
+  final int elevation;
 
   @override
   Widget build(BuildContext context) {
@@ -1490,8 +1516,22 @@ class _PrevPhotos extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-        PrevPhotosTransparency(primary: primary, surface: surface),
-        const SizedBox(height: 24),
+        PrevPhotosTransparency(primary: primary),
+        SizedBox(height: 16),
+        generateItem(primary, onBackground, "Primary"),
+        generateItem(onBackground, onBackground, "onBg"),
+        Card(
+          elevation: elevation.toDouble(),
+          clipBehavior: Clip.antiAlias,
+          margin: EdgeInsets.all(16),
+          child: Column(
+            children: <Widget>[
+              generateItem(primary, onSurface, "Primary"),
+              generateItem(onSurface, onSurface, "onSurface"),
+            ],
+          ),
+        ),
+        const SizedBox(height: 8),
         Text(
           "Material Elevation",
           style: GoogleFonts.heebo(
@@ -1501,7 +1541,7 @@ class _PrevPhotos extends StatelessWidget {
         ),
         SizedBox(height: 8),
         Container(
-          height: 72,
+          height: 96, // 72 + 24 because of the shadow in 24pt.
           child: Center(
             child: ListView(
               key: const PageStorageKey("photosOverlay"),
@@ -1520,7 +1560,6 @@ class _PrevPhotos extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 24),
         Text(
           "Icons",
           style: GoogleFonts.heebo(
@@ -1529,6 +1568,39 @@ class _PrevPhotos extends StatelessWidget {
           ),
         ),
         _PrevSocial(primary: primary, surface: surface),
+      ],
+    );
+  }
+
+  Widget generateItem(
+    Color color,
+    Color textColor,
+    String title,
+  ) {
+    return Row(
+      children: <Widget>[
+        for (double i = 0.10; i <= 0.20; i += 0.05)
+          Expanded(
+            child: SizedBox(
+              height: 56,
+              child: RawMaterialButton(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      "${(i * 100).toStringAsFixed(0)}% $title",
+                      style: TextStyle(color: textColor),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+                onPressed: () {},
+                elevation: 0,
+                highlightElevation: 0,
+                fillColor: color.withOpacity(i),
+              ),
+            ),
+          ),
       ],
     );
   }
@@ -1605,7 +1677,7 @@ class _PhotosElevationOverlay extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
         ),
         const SizedBox(height: 8),
-        Text("${elevation.round()} dp",
+        Text("${elevation.round()} pt",
             style: Theme.of(context).textTheme.caption)
       ],
     );

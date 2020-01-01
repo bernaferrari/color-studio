@@ -24,13 +24,15 @@ class MDCHome extends StatelessWidget {
       final Color backgroundColor = allItems[kBackground];
       final HSLuvColor backgroundLuv = currentState.hsluvColors[kBackground];
 
-      final Color onPrimary = primaryColor.computeLuminance() > kLumContrast
-          ? Colors.black
-          : Colors.white;
+      final Color onPrimary =
+          currentState.hsluvColors[kPrimary].lightness >= kLightnessThreshold
+              ? Colors.black
+              : Colors.white;
 
-      final Color onSurface = surfaceColor.computeLuminance() > kLumContrast
-          ? Colors.black
-          : Colors.white;
+      final Color onSurface =
+          currentState.hsluvColors[kSurface].lightness >= kLightnessThreshold
+              ? Colors.black
+              : Colors.white;
 
       final isiPad = MediaQuery.of(context).size.shortestSide > 600;
 
@@ -51,6 +53,8 @@ class MDCHome extends StatelessWidget {
               surface: surfaceColor,
               background: backgroundColor,
             );
+
+      final Color onBackground = scheme.onBackground;
 
       return Theme(
         data: ThemeData.from(colorScheme: scheme).copyWith(
@@ -97,8 +101,10 @@ class MDCHome extends StatelessWidget {
                       Expanded(
                         child: Showcase(
                           primaryColor: primaryColor,
-                          surfaceColor: surfaceColor,
                           backgroundColor: backgroundColor,
+                          surfaceColor: surfaceColor,
+                          onBackgroundColor: onBackground,
+                          onSurfaceColor: onSurface,
                         ),
                       ),
                       Expanded(
@@ -109,8 +115,10 @@ class MDCHome extends StatelessWidget {
                 )
               : Showcase(
                   primaryColor: primaryColor,
-                  surfaceColor: surfaceColor,
                   backgroundColor: backgroundColor,
+                  surfaceColor: surfaceColor,
+                  onBackgroundColor: onBackground,
+                  onSurfaceColor: onSurface,
                 ),
         ),
       );

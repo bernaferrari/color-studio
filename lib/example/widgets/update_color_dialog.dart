@@ -3,7 +3,6 @@ import 'package:colorstudio/example/blocs/mdc_selected/mdc_selected_bloc.dart';
 import 'package:colorstudio/example/blocs/mdc_selected/mdc_selected_event.dart';
 import 'package:colorstudio/example/util/color_util.dart';
 import 'package:colorstudio/example/util/constants.dart';
-import 'package:colorstudio/example/util/selected.dart';
 import 'package:colorstudio/example/widgets/color_sliders.dart';
 import 'package:colorstudio/example/widgets/loading_indicator.dart';
 import 'package:colorstudio/example/widgets/selectable_sliders.dart';
@@ -20,7 +19,7 @@ Future<void> showSlidersDialog(
   Color color, [
   String selected,
 ]) async {
-  final dynamic result = await showDialog<dynamic>(
+  final dynamic result = await showDialog(
       context: context,
       builder: (BuildContext ctx) {
         return BlocProvider(
@@ -31,7 +30,10 @@ Future<void> showSlidersDialog(
 
   if (result != null) {
     if (selected == null && result is Color) {
-      BlocProvider.of<SliderColorBloc>(context).add(MoveColor(result, true));
+      BlocProvider.of<MdcSelectedBloc>(context).add(
+        MDCLoadEvent(currentColor: result),
+      );
+//      BlocProvider.of<SliderColorBloc>(context).add(MoveColor(result, true));
     } else if (result is Color && selected != null) {
       BlocProvider.of<MdcSelectedBloc>(context).add(
         MDCUpdateColor(
