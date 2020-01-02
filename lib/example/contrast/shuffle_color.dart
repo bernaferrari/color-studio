@@ -48,7 +48,7 @@ List<Color> getShuffledColors([int n = 8]) {
 }
 
 List<Color> getRandomMaterialDark() {
-  var rng = Random();
+  final rng = Random();
 
   // ### Primary Color Study
   // ## Dark Theme
@@ -84,7 +84,7 @@ List<Color> getRandomMaterialDark() {
 }
 
 List<Color> getRandomMaterialLight() {
-  var rng = Random();
+  final rng = Random();
 
   // ### Primary Color Study
   // ## Light Theme
@@ -120,7 +120,7 @@ List<Color> getRandomMaterialLight() {
 }
 
 List<Color> getRandomMoleTheme() {
-  var rng = Random();
+  final rng = Random();
 
   // ### Primary Color Study
   // ## Light Theme
@@ -133,8 +133,6 @@ List<Color> getRandomMoleTheme() {
   // H: 272 S: 100 L: 36
   // H: 177 S: 100 L: 79
   // Therefore, S > 90 and 35 < L < 80
-
-  final primaryLightness = 25 + rng.nextInt(20);
 
   final backgroundLightness = 5 + rng.nextInt(55);
   final backgroundSat = (25 + rng.nextInt(75)).toDouble();
@@ -156,7 +154,7 @@ List<Color> getRandomMoleTheme() {
 }
 
 List<Color> getRandomMaterial() {
-  var rng = Random();
+  final rng = Random();
   final isDark = rng.nextInt(2) % 2 == 0;
   return isDark ? getRandomMaterialDark() : getRandomMaterialLight();
 }
@@ -169,7 +167,7 @@ List<Color> getRandomPreference(int prefs) {
   } else if (prefs == 2) {
     return getRandomMaterial();
   } else if (prefs == 3) {
-    var rng = Random();
+    final rng = Random();
 
     return [
       for (int i = 0; i < 3; i++)

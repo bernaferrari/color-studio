@@ -45,7 +45,7 @@ class HSInterColor {
   }
 
   factory HSInterColor.fromHSLuv(HSLuvColor hsLuvColor) {
-    final double maxV = 100.0;
+    const double maxV = 100.0;
 
     return HSInterColor.fromHSInter(
       hsLuvColor.hue,

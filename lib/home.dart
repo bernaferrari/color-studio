@@ -137,7 +137,7 @@ class Home extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
             ],
             Expanded(
               child: RaisedButton.icon(
@@ -156,7 +156,7 @@ class Home extends StatelessWidget {
                 ),
               ),
             ),
-            if (isiPad) SizedBox(width: 8) else SizedBox(width: 16),
+            if (isiPad) const SizedBox(width: 8) else const SizedBox(width: 16),
           ],
         ),
         ColorSchemeScreen(

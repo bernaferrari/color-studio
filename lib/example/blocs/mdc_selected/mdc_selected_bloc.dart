@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:bloc/bloc.dart';
+import 'package:colorstudio/example/blocs/blocs.dart';
 import 'package:colorstudio/example/mdc/util/color_blind_from_index.dart';
 import 'package:colorstudio/example/util/color_util.dart';
 import 'package:colorstudio/example/util/constants.dart';
@@ -9,7 +10,6 @@ import 'package:hsluv/hsluvcolor.dart';
 import 'package:rxdart/rxdart.dart';
 
 import './mdc_selected.dart';
-import '../blocs.dart';
 
 class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
   MdcSelectedBloc(this.initialList, this._blindnessBloc) {
@@ -78,7 +78,7 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
   }
 
   Stream<MdcSelectedState> _mapUpdateToLock(MDCUpdateLock load) async* {
-    final currentState = (state as MDCLoadedState);
+    final currentState = state as MDCLoadedState;
 
     final Map<String, Color> allRgb = Map.from(currentState.rgbColors);
 
@@ -110,7 +110,7 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
   }
 
   Stream<MdcSelectedState> _mapUpdateToState(MDCUpdateColor load) async* {
-    final currentState = (state as MDCLoadedState);
+    final currentState = state as MDCLoadedState;
 
     final blindness = currentState.blindnessSelected;
     final Map<String, HSLuvColor> allLuv = Map.from(currentState.hsluvColors);
@@ -142,7 +142,7 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
   }
 
   Stream<MdcSelectedState> _mapLoadedToState(MDCLoadEvent load) async* {
-    final currentState = (state as MDCLoadedState);
+    final currentState = state as MDCLoadedState;
     final selected = load.selected ?? currentState.selected;
 
     final Map<String, Color> allRgb = Map.from(currentState.rgbColors);
@@ -181,7 +181,7 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
   }
 
   Stream<MdcSelectedState> _mapUpdateAllToState(MDCUpdateAllEvent load) async* {
-    final currentState = (state as MDCLoadedState);
+    final currentState = state as MDCLoadedState;
 
     final Map<String, Color> allRgb = Map.from(currentState.rgbColors);
 
@@ -226,11 +226,11 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
   }
 
   Map<String, HSLuvColor> convertToHSLuv(Map<String, Color> updatableMap) {
-    final Map<String, HSLuvColor> luvMap = Map<String, HSLuvColor>();
+    final Map<String, HSLuvColor> luvMap = <String, HSLuvColor>{};
 
-    updatableMap.keys.forEach((key) {
+    for (String key in updatableMap.keys) {
       luvMap[key] = HSLuvColor.fromColor(updatableMap[key]);
-    });
+    }
 
     return luvMap;
   }
@@ -241,9 +241,9 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
     }
 
     final Map<String, Color> blindMap = Map.from(updatableMap);
-    blindMap.keys.forEach((f) {
-      blindMap[f] = getColorBlindFromIndex(blindMap[f], index).color;
-    });
+    for (String key in blindMap.keys) {
+      blindMap[key] = getColorBlindFromIndex(blindMap[key], index).color;
+    }
 
     return blindMap;
   }

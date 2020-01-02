@@ -125,7 +125,7 @@ class _BoxedAppState extends State<BoxedApp> {
   }
 
   void updateStateIfNecessary() {
-    final currentState = (_mdcSelectedBloc.state as MDCLoadedState);
+    final currentState = _mdcSelectedBloc.state as MDCLoadedState;
 
     if (currentState.locked[currentState.selected] == true) {
       _mdcSelectedBloc.add(

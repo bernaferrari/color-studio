@@ -58,7 +58,7 @@ class _RGBSliderState extends State<RGBSlider> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        SingleSlider("Red", valueRed / 255, "${valueRed}", colorRed,
+        SingleSlider("Red", valueRed / 255, "$valueRed", colorRed,
             scale: 255, onChanged: (double value) {
           setState(() {
             valueRed = (value * 255).round();

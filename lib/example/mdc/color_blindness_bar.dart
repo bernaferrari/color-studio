@@ -68,7 +68,7 @@ class ColorBlindnessBar extends StatelessWidget {
                 "$blindnessSelected/8",
                 style: GoogleFonts.b612Mono(),
               ),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               Material(
                   elevation: 0,
                   shape: RoundedRectangleBorder(
@@ -114,7 +114,7 @@ class ColorBlindnessBar extends StatelessWidget {
                         height: 48,
                         child: FlatButton(
                           padding: EdgeInsets.zero,
-                          shape: RoundedRectangleBorder(),
+                          shape: const RoundedRectangleBorder(),
                           child: Icon(FeatherIcons.chevronRight),
                           onPressed: () {
                             int newState = blindnessSelected + 1;

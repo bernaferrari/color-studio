@@ -6,9 +6,6 @@ import 'package:colorstudio/widgets/title_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hsluv/hsluvcolor.dart';
-
-import '../home.dart';
 
 class ColorBlindnessScreen extends StatelessWidget {
   const ColorBlindnessScreen(

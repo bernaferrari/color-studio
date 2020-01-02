@@ -225,7 +225,7 @@ class _MultipleContrastScreen extends StatelessWidget {
                           colorsList[0].rgbColor,
                           colorsList[index].contrast,
                         ),
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
                       ],
                     )
                   : Container(
@@ -241,7 +241,7 @@ class _MultipleContrastScreen extends StatelessWidget {
                             colorsList,
                           ),
                           _Minimized("HSLuv", index, interListOfLists[index]),
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
                           _ComparisonPart(
                             colorsList[0].rgbColor,
                             colorsList[index].contrast,

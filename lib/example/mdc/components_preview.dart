@@ -15,7 +15,7 @@ class ComponentsPreview extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<MdcSelectedBloc, MdcSelectedState>(
         builder: (context, state) {
-      final currentState = (state as MDCLoadedState);
+      final currentState = state as MDCLoadedState;
 
       final allItems = currentState.rgbColorsWithBlindness;
 
@@ -84,8 +84,8 @@ class ComponentsPreview extends StatelessWidget {
                   FeatherIcons.shuffle,
                 ),
                 onPressed: () async {
-                  var box = await Hive.openBox('settings');
-                  int pref = box.get('shuffle', defaultValue: 0);
+                  final box = await Hive.openBox('settings');
+                  final int pref = box.get('shuffle', defaultValue: 0);
 
                   BlocProvider.of<MdcSelectedBloc>(context).add(
                     MDCUpdateAllEvent(colors: getRandomPreference(pref)),

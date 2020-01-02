@@ -32,9 +32,9 @@ class SingleColorHome extends StatelessWidget {
         builder: (context, state) {
       final currentState = state as MDCLoadedState;
 
-      Color selectedColor = currentState.rgbColors[currentState.selected];
-      HSLuvColor hsluvColor = currentState.hsluvColors[currentState.selected];
-      String selected = currentState.selected;
+      final Color selectedColor = currentState.rgbColors[currentState.selected];
+      final HSLuvColor hsluvColor = currentState.hsluvColors[currentState.selected];
+      final String selected = currentState.selected;
 
       final colorScheme = (selectedColor.computeLuminance() > kLumContrast)
           ? ColorScheme.light(
@@ -50,8 +50,6 @@ class SingleColorHome extends StatelessWidget {
 
       return Theme(
         data: ThemeData.from(
-          // todo it would be nice if there were a ThemeData.join
-          // because you need to copyWith manually everything every time.
           colorScheme: colorScheme,
           textTheme: TextTheme(
             title: GoogleFonts.firaSans(fontWeight: FontWeight.w600),
@@ -251,7 +249,7 @@ class _ColorContrastRow extends StatelessWidget {
         return Center(child: LoadingIndicator());
       }
 
-      final currentState = (state as ContrastRatioSuccess);
+      final currentState = state as ContrastRatioSuccess;
 
       return Center(
         child: SizedBox(

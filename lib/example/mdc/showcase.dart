@@ -68,7 +68,7 @@ class _ShowcaseState extends State<Showcase> {
             child: Column(
               key: const PageStorageKey("PreviewList"),
               children: <Widget>[
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 _PrevThankful(
                   primary: primaryColor,
                   background: backgroundColor,
@@ -133,8 +133,13 @@ class _ShowcaseState extends State<Showcase> {
             ),
           ),
         ),
+        Container(
+          height: 1,
+          width: double.infinity,
+          color: widget.onSurfaceColor.withOpacity(0.40),
+        ),
         AnimatedSwitcher(
-          duration: Duration(milliseconds: 400),
+          duration: const Duration(milliseconds: 400),
           switchInCurve: Curves.easeInOut,
           transitionBuilder: (Widget child, Animation<double> animation) {
             return SizeTransition(child: child, sizeFactor: animation);
@@ -998,10 +1003,10 @@ class _PodcastCard extends StatelessWidget {
   final String description;
   final String subdescription;
 
-  final margin = 12.0;
-
   @override
   Widget build(BuildContext context) {
+    const margin = 12.0;
+
     return Card(
       elevation: elevation.toDouble(),
       margin: EdgeInsets.symmetric(horizontal: 16),

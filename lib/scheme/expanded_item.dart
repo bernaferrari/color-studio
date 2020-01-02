@@ -90,7 +90,6 @@ class SchemeExpandedItem extends StatelessWidget {
                   colors: listOfLists[2],
                 ),
                 SizedBox(height: 8),
-                _BottomRow(selected, color),
 //                if (isBlindnessOn) ...[
 //                  SizedBox(height: 4),
 //                  Text(
@@ -194,7 +193,7 @@ class TopRow extends StatelessWidget {
               BorderedIconButton(
                 child: Icon(FeatherIcons.shuffle, size: 16),
                 onPressed: () {
-                  var rng = Random();
+                  final rng = Random();
 
                   BlocProvider.of<MdcSelectedBloc>(context).add(
                     MDCLoadEvent(
@@ -225,60 +224,5 @@ class TopRow extends StatelessWidget {
       () => contrast < 7.0: () => "AA",
       () => contrast < 25: () => "AAA",
     });
-  }
-}
-
-class _BottomRow extends StatelessWidget {
-  const _BottomRow(this.selected, this.color);
-
-  final Color color;
-  final String selected;
-
-  @override
-  Widget build(BuildContext context) {
-    final onSurface = Theme.of(context).colorScheme.onSurface;
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-//        OutlineButton.icon(
-//          label: Text("Details"),
-//          borderSide: BorderSide(color: onSurface.withOpacity(0.70)),
-//          highlightedBorderColor: onSurface.withOpacity(0.70),
-//          icon: Icon(
-//            FeatherIcons.maximize,
-//            size: 16,
-//          ),
-//          onPressed: () {
-//            BlocProvider.of<MdcSelectedBloc>(context).add(
-//              MDCLoadEvent(
-//                currentColor: color,
-//                selected: selected,
-//              ),
-//            );
-//
-//            Navigator.pushNamed(context, "/colordetails");
-//          },
-//        ),
-//        if (selected != kPrimary)
-//          OutlineButton.icon(
-//            label: Text("Auto"),
-//            borderSide: BorderSide(color: onSurface.withOpacity(0.70)),
-//            highlightedBorderColor: onSurface.withOpacity(0.70),
-//            icon: Icon(
-//              FeatherIcons.lock,
-//              size: 16,
-//            ),
-//            onPressed: () {
-//              BlocProvider.of<MdcSelectedBloc>(context).add(
-//                MDCUpdateLock(
-//                  isLock: true,
-//                  selected: selected,
-//                ),
-//              );
-//            },
-//          ),
-      ],
-    );
   }
 }

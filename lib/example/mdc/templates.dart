@@ -248,7 +248,7 @@ class _TemplateItem extends StatelessWidget {
                     colors: [
                       colors[0],
                       colors[1],
-                      (colors.length == 2) ? colors[1] : colors[2]
+                      if (colors.length == 2) colors[1] else colors[2]
                     ],
                   ),
                 );

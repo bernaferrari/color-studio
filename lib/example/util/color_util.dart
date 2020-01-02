@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:math' as math;
+
+import 'package:flutter/material.dart';
 
 Color compositeColors(Color foreground, Color background, double overlay) {
   assert(overlay <= 1.0);

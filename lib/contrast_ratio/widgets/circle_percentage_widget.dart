@@ -37,7 +37,7 @@ class _CirclePercentageWidgetState extends State<CirclePercentageWidget>
   void initState() {
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 1200),
+      duration: const Duration(milliseconds: 1200),
     );
 
     _controller.addListener(() {
@@ -76,7 +76,7 @@ class _CirclePercentageWidgetState extends State<CirclePercentageWidget>
         Container(
           width: 70,
           height: 70,
-          margin: EdgeInsets.symmetric(vertical: 16),
+          margin: const EdgeInsets.symmetric(vertical: 16),
           child: CustomPaint(
             isComplex: false,
             painter: SpendingCategoryChartPainter(

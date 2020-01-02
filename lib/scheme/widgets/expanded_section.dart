@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class ExpandedSection extends StatefulWidget {
+  const ExpandedSection({this.expand = false, this.child});
+
   final Widget child;
   final bool expand;
-
-  ExpandedSection({this.expand = false, this.child});
 
   @override
   _ExpandedSectionState createState() => _ExpandedSectionState();
@@ -27,7 +27,7 @@ class _ExpandedSectionState extends State<ExpandedSection>
       vsync: this,
       duration: Duration(milliseconds: 250),
     );
-    Animation curve = CurvedAnimation(
+    final Animation curve = CurvedAnimation(
       parent: expandController,
       curve: Curves.easeInOut,
     );

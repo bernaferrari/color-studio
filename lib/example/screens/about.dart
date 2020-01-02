@@ -38,7 +38,7 @@ class About extends StatelessWidget {
                 child: _ContactInfo(),
               ),
               Row(
-                children: <Widget>[
+                children: const <Widget>[
                   Expanded(
                     child: TranslucentCard(
                       margin: EdgeInsets.only(left: 16, top: 8),

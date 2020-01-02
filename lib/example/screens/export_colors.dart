@@ -48,18 +48,18 @@ class ExportColors extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   Text("Flutter", style: titleStyle),
                   _ExportRow(primary, background, surface, onPrimary,
                       onBackground, onSurface, "Flutter"),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Text("Android (colors.xml)", style: titleStyle),
                   _ExportRow(primary, background, surface, onPrimary,
                       onBackground, onSurface, "Android (colors.xml)"),
                   Text("Android (styles.xml)", style: titleStyle),
                   _ExportRow(primary, background, surface, onPrimary,
                       onBackground, onSurface, "Android (styles.xml)"),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Text("iOS (Swift)", style: titleStyle),
                   _ExportRow(primary, background, surface, onPrimary,
                       onBackground, onSurface, "iOS (Swift)"),
@@ -69,7 +69,7 @@ class ExportColors extends StatelessWidget {
                   Text("Hex List", style: titleStyle),
                   _ExportRow(primary, background, surface, onPrimary,
                       onBackground, onSurface, "List"),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                 ],
               ),
             ),
@@ -180,6 +180,8 @@ colorScheme.onSurfaceColor = ColorFromRGB(0x${onSurface.toStr()});
     } else if (kind == "List") {
       return "${primary.toHexStr()}, ${surface.toHexStr()}, ${background.toHexStr()}, ${onPrimary.toHexStr()}, ${onSurface.toHexStr()}, ${onBackground.toHexStr()}";
     }
+
+    return "";
   }
 
   @override

@@ -1,4 +1,3 @@
-import 'package:colorstudio/example/hsinter.dart';
 import 'package:flutter/material.dart';
 import 'package:hsluv/hsluvcolor.dart';
 

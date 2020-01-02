@@ -29,14 +29,14 @@ class ContrastRatioScreen extends StatelessWidget {
     return BlocBuilder<ContrastRatioBloc, ContrastRatioState>(
         builder: (context, state) {
       if (state is InitialContrastRatioState) {
-        return Center(child: LoadingIndicator());
+        return const Center(child: LoadingIndicator());
       }
 
-      final currentState = (state as ContrastRatioSuccess);
+      final currentState = state as ContrastRatioSuccess;
 
       final isiPad = MediaQuery.of(context).size.width > 600;
 
-      final areValuesLocked = false;
+      const areValuesLocked = false;
 
       return Theme(
         data: ThemeData.from(
@@ -95,12 +95,12 @@ class ContrastRatioScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                Divider(
+                const Divider(
                   height: 0,
                   indent: 1,
                   endIndent: 1,
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -129,7 +129,7 @@ class ContrastRatioScreen extends StatelessWidget {
                     ],
                   ],
                 ),
-                SizedBox(height: 4),
+                const SizedBox(height: 4),
                 // surface qualifies as dark mode
                 Text(
                   "Primary / Surface with elevation",
@@ -139,7 +139,7 @@ class ContrastRatioScreen extends StatelessWidget {
                   ),
                 ),
                 if (shouldDisplayElevation) ...[
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   DarkModeSurfaceContrast(currentState.elevationValues),
                 ] else ...[
                   SizedBox(
@@ -168,7 +168,7 @@ class ContrastRatioScreen extends StatelessWidget {
                     ),
                   )
                 ],
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
               ],
             ),
           ),

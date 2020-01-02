@@ -44,7 +44,7 @@ class SpendingCategoryChartPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(SpendingCategoryChartPainter oldCategory) {
-    return percent != oldCategory.percent || color != oldCategory.color;
+  bool shouldRepaint(SpendingCategoryChartPainter oldDelegate) {
+    return percent != oldDelegate.percent || color != oldDelegate.color;
   }
 }

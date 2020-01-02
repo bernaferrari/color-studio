@@ -15,7 +15,7 @@ class ColorBlindnessList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mappedValues = Map<String, List<ColorWithBlind>>();
+    final mappedValues = <String, List<ColorWithBlind>>{};
 //    final Map<String, Color> mutableMap = Map.from(contrastedList);
 //    mutableMap.removeWhere((String key, Color _) => locked[key] == true);
     contrastedList.forEach((String key, Color value) {

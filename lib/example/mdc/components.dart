@@ -1,13 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:colorstudio/example/blocs/blocs.dart';
 import 'package:colorstudio/example/contrast/inter_color_with_contrast.dart';
 import 'package:colorstudio/example/contrast/shuffle_color.dart';
 import 'package:colorstudio/example/util/color_util.dart';
 import 'package:colorstudio/example/util/constants.dart';
 import 'package:colorstudio/example/util/selected.dart';
 import 'package:colorstudio/example/widgets/color_sliders/slider_that_works.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'util/elevation_overlay.dart';
@@ -468,10 +466,12 @@ class SliderWithSelectorComponents extends StatefulWidget {
   final bool initiallyExpanded;
 
   @override
-  _SliderWithSelectorComponentsState createState() => _SliderWithSelectorComponentsState();
+  _SliderWithSelectorComponentsState createState() =>
+      _SliderWithSelectorComponentsState();
 }
 
-class _SliderWithSelectorComponentsState extends State<SliderWithSelectorComponents> {
+class _SliderWithSelectorComponentsState
+    extends State<SliderWithSelectorComponents> {
   List<bool> isSelected = [true, false, false];
   bool _isExpanded;
 

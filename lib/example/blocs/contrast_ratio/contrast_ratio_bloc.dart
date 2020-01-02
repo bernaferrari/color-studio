@@ -10,7 +10,6 @@ import 'package:colorstudio/example/util/constants.dart';
 import 'package:rxdart/rxdart.dart';
 
 import './contrast_ratio.dart';
-import '../blocs.dart';
 
 class ContrastRatioBloc extends Bloc<ContrastRatioEvent, ContrastRatioState> {
   ContrastRatioBloc(this._mdcSelectedBloc) {
