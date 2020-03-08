@@ -63,7 +63,7 @@ class TextFormColored extends StatelessWidget {
           ),
         ),
       ),
-      style: Theme.of(context).textTheme.title.copyWith(
+      style: Theme.of(context).textTheme.headline6.copyWith(
             color: Theme.of(context).colorScheme.onBackground,
           ),
     );

@@ -78,7 +78,7 @@ class _HSVerticalPickerState extends State<HSVerticalPicker> {
       appBar: AppBar(
         title: Text(
           "${currentSegment == 0 ? "HSLuv" : "HSV"} Picker",
-          style: Theme.of(context).textTheme.title,
+          style: Theme.of(context).textTheme.headline6,
         ),
         elevation: 0,
         centerTitle: widget.isSplitView,

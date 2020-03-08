@@ -367,14 +367,14 @@ class _PrevStore extends StatelessWidget {
           "Rddt",
           style: Theme.of(context)
               .textTheme
-              .headline
+              .headline5
               .copyWith(fontWeight: FontWeight.w600),
         ),
         Text(
           "Alien Labs",
           style: Theme.of(context)
               .textTheme
-              .body2
+              .bodyText1
               .copyWith(color: primary, fontWeight: FontWeight.w600),
         ),
         Row(
@@ -473,7 +473,7 @@ class _PrevClock extends StatelessWidget {
                   text: ' 17',
                   style: Theme.of(context)
                       .textTheme
-                      .title
+                      .headline6
                       .copyWith(fontSize: 24, color: primary),
                 ),
               ],
@@ -1388,7 +1388,7 @@ class _ShowcaseTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(title, style: Theme.of(context).textTheme.title);
+    return Text(title, style: Theme.of(context).textTheme.headline6);
   }
 }
 

@@ -54,7 +54,7 @@ class _ReorderListState extends State<ReorderList> {
                                 elements[i].rgbColor.toHexStr(),
                                 style: Theme.of(context)
                                     .textTheme
-                                    .subtitle
+                                    .subtitle2
                                     .copyWith(
                                       color: contrastingColor(
                                         elements[i].rgbColor,

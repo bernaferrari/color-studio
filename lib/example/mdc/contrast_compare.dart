@@ -29,11 +29,11 @@ class ContrastText extends StatelessWidget {
       textAlign: TextAlign.center,
       text: TextSpan(
         text: contrast.toStringAsPrecision(3),
-        style: Theme.of(context).textTheme.title.copyWith(color: color),
+        style: Theme.of(context).textTheme.headline6.copyWith(color: color),
         children: <TextSpan>[
           TextSpan(
             text: ':1',
-            style: Theme.of(context).textTheme.subtitle.copyWith(color: color),
+            style: Theme.of(context).textTheme.subtitle2.copyWith(color: color),
           ),
         ],
       ),
@@ -135,7 +135,7 @@ class ColorCompareWidget extends StatelessWidget {
           child: Center(
             child: Text(
               secondData.name[0],
-              style: Theme.of(context).textTheme.headline.copyWith(
+              style: Theme.of(context).textTheme.headline5.copyWith(
                     fontWeight: FontWeight.w500,
                     color: secondData.color,
                   ),
@@ -161,7 +161,7 @@ class ColorCompareWidget extends StatelessWidget {
               ),
               Text(
                 firstData.name,
-                style: Theme.of(context).textTheme.title.copyWith(fontSize: 18),
+                style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 18),
                 overflow: TextOverflow.ellipsis,
               ),
             ],

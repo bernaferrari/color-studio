@@ -19,7 +19,7 @@ Future<void> showSlidersDialog(
   Color color, [
   String selected,
 ]) async {
-  final dynamic result = await showDialog(
+  final dynamic result = await showDialog<dynamic>(
       context: context,
       builder: (BuildContext ctx) {
         return BlocProvider(

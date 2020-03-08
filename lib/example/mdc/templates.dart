@@ -17,7 +17,7 @@ class ColorTemplates extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Templates", style: Theme.of(context).textTheme.title),
+        title: Text("Templates", style: Theme.of(context).textTheme.headline6),
         elevation: 0,
         centerTitle: isSplitView,
         leading: isSplitView ? SizedBox.shrink() : null,
@@ -42,7 +42,7 @@ class ColorTemplates extends StatelessWidget {
                 const SizedBox(height: 16),
                 Text(
                   "Dark Mode",
-                  style: Theme.of(context).textTheme.title,
+                  style: Theme.of(context).textTheme.headline6,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 8),
@@ -153,7 +153,7 @@ class ColorTemplates extends StatelessWidget {
                 const SizedBox(height: 16),
                 Text(
                   "Light Mode",
-                  style: Theme.of(context).textTheme.title,
+                  style: Theme.of(context).textTheme.headline6,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 8),
@@ -234,7 +234,7 @@ class _TemplateItem extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context)
                           .textTheme
-                          .subtitle
+                          .subtitle2
                           .copyWith(color: colors[0]),
                     ),
                   ),
@@ -265,7 +265,7 @@ class _TemplateItem extends StatelessWidget {
                   color.toHexStr(),
                   style: Theme.of(context)
                       .textTheme
-                      .body2
+                      .bodyText1
                       .copyWith(color: contrastingColor(color)),
                   textAlign: TextAlign.center,
                 ),

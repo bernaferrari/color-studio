@@ -16,7 +16,7 @@ class ContainerWithNumber extends StatelessWidget {
       child: Center(
         child: Text(
           letter,
-          style: Theme.of(context).textTheme.headline.copyWith(
+          style: Theme.of(context).textTheme.headline5.copyWith(
               fontWeight: FontWeight.w500,
               color: backgroundColor,
               fontSize: (letter.length < 3) ? 24 : 20

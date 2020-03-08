@@ -469,7 +469,6 @@ abstract class DragGestureRecognizer2 extends OneSequenceGestureRecognizer {
 ///  * [MultiDragGestureRecognizer], for a family of gesture recognizers that
 ///    track each touch point independently.
 class HorizontalDragGestureRecognizer2 extends DragGestureRecognizer2 {
-  final double touchSlop;
 
   /// Create a gesture recognizer for interactions in the horizontal axis.
   ///
@@ -480,6 +479,7 @@ class HorizontalDragGestureRecognizer2 extends DragGestureRecognizer2 {
     this.touchSlop = kTouchSlop,
   }) : super(debugOwner: debugOwner, kind: kind);
 
+  final double touchSlop;
   @override
   bool isFlingGesture(VelocityEstimate estimate) {
     final double minVelocity = minFlingVelocity ?? kMinFlingVelocity;
@@ -1030,7 +1030,7 @@ class _SliderState extends State<Slider2> with TickerProviderStateMixin {
       showValueIndicator:
           sliderTheme.showValueIndicator ?? _defaultShowValueIndicator,
       valueIndicatorTextStyle: sliderTheme.valueIndicatorTextStyle ??
-          theme.textTheme.body2.copyWith(
+          theme.textTheme.bodyText1.copyWith(
             color: theme.colorScheme.onPrimary,
           ),
     );

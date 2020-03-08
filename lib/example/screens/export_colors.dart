@@ -33,7 +33,7 @@ class ExportColors extends StatelessWidget {
 
       final titleStyle = GoogleFonts.firaSans(
         textStyle:
-            Theme.of(context).textTheme.title.copyWith(color: onBackground),
+            Theme.of(context).textTheme.headline6.copyWith(color: onBackground),
       );
 
       return Scaffold(

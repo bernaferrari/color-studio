@@ -71,8 +71,8 @@ class _CirclePercentageWidgetState extends State<CirclePercentageWidget>
   Widget build(context) {
     return Column(
       children: [
-        Text(widget.title, style: Theme.of(context).textTheme.body1),
-        Text(widget.subtitle, style: Theme.of(context).textTheme.body1),
+        Text(widget.title, style: Theme.of(context).textTheme.bodyText2),
+        Text(widget.subtitle, style: Theme.of(context).textTheme.bodyText2),
         Container(
           width: 70,
           height: 70,

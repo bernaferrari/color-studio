@@ -35,7 +35,7 @@ class Components extends StatelessWidget {
             Padding(padding: EdgeInsets.all(4)),
             Text(
               "Material Components",
-              style: Theme.of(context).textTheme.title,
+              style: Theme.of(context).textTheme.headline6,
               textAlign: TextAlign.center,
             ),
             ComponentsSample(
@@ -299,7 +299,7 @@ class ElevatedCardSample extends StatelessWidget {
           children: <Widget>[
             Text(
               "${entry.elevation.toInt()} pt",
-              style: Theme.of(context).textTheme.title.copyWith(color: primary),
+              style: Theme.of(context).textTheme.headline6.copyWith(color: primary),
             ),
             SizedBox(height: 4),
             Text(

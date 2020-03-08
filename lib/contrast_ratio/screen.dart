@@ -42,11 +42,11 @@ class ContrastRatioScreen extends StatelessWidget {
         data: ThemeData.from(
           colorScheme: Theme.of(context).colorScheme,
           textTheme: TextTheme(
-            body1: GoogleFonts.firaSans(
+            bodyText2: GoogleFonts.firaSans(
               fontWeight: FontWeight.w400,
               fontSize: 14,
             ),
-            title: GoogleFonts.firaSans(fontWeight: FontWeight.w600),
+            headline6: GoogleFonts.firaSans(fontWeight: FontWeight.w600),
           ),
         ),
         child: Padding(
@@ -84,7 +84,7 @@ class ContrastRatioScreen extends StatelessWidget {
                         color: Theme.of(context).colorScheme.primary,
                       ),
                       onPressed: () {
-                        showDialog(
+                        showDialog<dynamic>(
                             context: context,
                             builder: (BuildContext ctx) {
                               return _HelpDialog(
@@ -160,7 +160,7 @@ class ContrastRatioScreen extends StatelessWidget {
                           ),
                           Text(
                             "You are using a light surface color.",
-                            style: Theme.of(context).textTheme.body2,
+                            style: Theme.of(context).textTheme.bodyText1,
                             textAlign: TextAlign.center,
                           )
                         ],
@@ -213,7 +213,7 @@ class _HelpDialog extends StatelessWidget {
                   // https://blog.cloudflare.com/thinking-about-color/
                   Text(
                     "WACG recommends a contrast of:",
-                    style: Theme.of(context).textTheme.subtitle,
+                    style: Theme.of(context).textTheme.subtitle2,
                   ),
                   SizedBox(height: 8),
                   Text(
@@ -230,7 +230,7 @@ class _HelpDialog extends StatelessWidget {
                   SizedBox(height: 24),
                   Text(
                     "Surface with elevation",
-                    style: Theme.of(context).textTheme.subtitle,
+                    style: Theme.of(context).textTheme.subtitle2,
                   ),
                   SizedBox(height: 8),
                   Text(
@@ -241,7 +241,7 @@ class _HelpDialog extends StatelessWidget {
                   SizedBox(height: 24),
                   Text(
                     "HSLuv",
-                    style: Theme.of(context).textTheme.subtitle,
+                    style: Theme.of(context).textTheme.subtitle2,
                   ),
                   SizedBox(height: 8),
                   Text(

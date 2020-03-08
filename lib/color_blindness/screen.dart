@@ -26,7 +26,7 @@ class ColorBlindnessScreen extends StatelessWidget {
       data: ThemeData.from(
         colorScheme: Theme.of(context).colorScheme,
         textTheme: TextTheme(
-          title: GoogleFonts.openSans(
+          headline6: GoogleFonts.openSans(
             fontSize: 16,
             fontWeight: FontWeight.w700,
           ),

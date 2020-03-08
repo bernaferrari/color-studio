@@ -38,7 +38,7 @@ class _ColorLibraryState extends State<ColorLibrary> {
     return Scaffold(
       backgroundColor: widget.color,
       appBar: AppBar(
-        title: Text("Color Library", style: Theme.of(context).textTheme.title),
+        title: Text("Color Library", style: Theme.of(context).textTheme.headline6),
         backgroundColor: widget.color,
         elevation: 0,
         centerTitle: widget.isSplitView,
@@ -113,7 +113,7 @@ class _ColorLibraryState extends State<ColorLibrary> {
 //                                      "H:${colorsList[i].red}\nS:${colorsList[i].green}\nV${colorsList[i].blue}",
 //                                }),
                                 style:
-                                    Theme.of(context).textTheme.body2.copyWith(
+                                    Theme.of(context).textTheme.bodyText1.copyWith(
                                           color: contrastingColor(colorsList[i])
                                               .withOpacity(0.70),
                                         ),

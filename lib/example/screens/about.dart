@@ -21,7 +21,7 @@ class About extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
-        title: Text("About", style: Theme.of(context).textTheme.title),
+        title: Text("About", style: Theme.of(context).textTheme.headline6),
         backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0,
         centerTitle: isSplitView,
@@ -80,7 +80,7 @@ class _ContactInfo extends StatelessWidget {
         Text(
           "Color Studio",
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.title.copyWith(
+          style: Theme.of(context).textTheme.headline6.copyWith(
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
               ),
@@ -89,7 +89,7 @@ class _ContactInfo extends StatelessWidget {
         Text(
           "Designed & developed by Bernardo Ferrari.",
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.subtitle,
+          style: Theme.of(context).textTheme.subtitle2,
         ),
         const SizedBox(height: 8),
         Padding(
@@ -97,7 +97,7 @@ class _ContactInfo extends StatelessWidget {
           child: Text(
             "If you have ideas or suggestions, please get in touch!",
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.body1,
+            style: Theme.of(context).textTheme.bodyText2,
           ),
         ),
         const SizedBox(height: 8),
@@ -196,7 +196,7 @@ class ColorCompare extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: Theme.of(context)
                         .textTheme
-                        .title
+                        .headline6
                         .copyWith(fontSize: 18),
                   ),
                 ],
@@ -235,7 +235,7 @@ class ColorExport extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: Theme.of(context)
                         .textTheme
-                        .title
+                        .headline6
                         .copyWith(fontSize: 18),
                   ),
                 ],
@@ -286,7 +286,7 @@ class ShuffleDarkSection extends StatelessWidget {
                               textAlign: TextAlign.center,
                               style: Theme.of(context)
                                   .textTheme
-                                  .title
+                                  .headline6
                                   .copyWith(fontSize: 18),
                             ),
                           ],
@@ -303,7 +303,7 @@ class ShuffleDarkSection extends StatelessWidget {
                   value: 0,
                   activeColor: primary,
                   groupValue: selected,
-                  onChanged: (changed) {
+                  onChanged: (dynamic changed) {
                     box.put('shuffle', 0);
                   }),
               RadioListTile(
@@ -311,7 +311,7 @@ class ShuffleDarkSection extends StatelessWidget {
                   value: 1,
                   activeColor: primary,
                   groupValue: selected,
-                  onChanged: (changed) {
+                  onChanged: (dynamic changed) {
                     box.put('shuffle', 1);
                   }),
               RadioListTile(
@@ -319,7 +319,7 @@ class ShuffleDarkSection extends StatelessWidget {
                   value: 2,
                   activeColor: primary,
                   groupValue: selected,
-                  onChanged: (changed) {
+                  onChanged: (dynamic changed) {
                     box.put('shuffle', 2);
                   }),
               RadioListTile(
@@ -327,7 +327,7 @@ class ShuffleDarkSection extends StatelessWidget {
                   value: 3,
                   activeColor: primary,
                   groupValue: selected,
-                  onChanged: (changed) {
+                  onChanged: (dynamic changed) {
                     box.put('shuffle', 3);
                   }),
             ],
@@ -362,7 +362,7 @@ class ShuffleMoleSection extends StatelessWidget {
                       Text(
                         "Random Mole Theme",
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.title,
+                        style: Theme.of(context).textTheme.headline6,
                       ),
                     ],
                   ),
@@ -399,7 +399,7 @@ class MoreColors extends StatelessWidget {
           ),
           title: Text(
             "More Colors",
-            style: Theme.of(context).textTheme.title,
+            style: Theme.of(context).textTheme.headline6,
           ),
           onChanged: (value) {
             box.put('moreItems', value);
@@ -423,9 +423,11 @@ class GDPR extends StatelessWidget {
           children: <Widget>[
             Icon(FeatherIcons.shield),
             const SizedBox(width: 16),
-            Text("Privacy Policy",
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.title),
+            Text(
+              "Privacy Policy",
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.headline6,
+            ),
           ],
         ),
         const Padding(

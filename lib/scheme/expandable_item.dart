@@ -112,7 +112,7 @@ class _ExpandedAnimated extends StatelessWidget {
           colorScheme: scheme,
           textTheme: TextTheme(
             button: GoogleFonts.lato(),
-            body1: GoogleFonts.lato(
+            bodyText2: GoogleFonts.lato(
               fontWeight: FontWeight.w400,
               fontSize: 14,
             ),

@@ -52,11 +52,10 @@ class SingleColorHome extends StatelessWidget {
         data: ThemeData.from(
           colorScheme: colorScheme,
           textTheme: TextTheme(
-            title: GoogleFonts.firaSans(fontWeight: FontWeight.w600),
-            subtitle: GoogleFonts.firaSans(fontWeight: FontWeight.w500),
-            body1: GoogleFonts.firaSans(),
-            // body2 is used in templates screen
-            body2: GoogleFonts.b612Mono(fontSize: 12),
+            headline6: GoogleFonts.firaSans(fontWeight: FontWeight.w600),
+            subtitle2: GoogleFonts.firaSans(fontWeight: FontWeight.w500),
+            bodyText2: GoogleFonts.firaSans(),
+            bodyText1: GoogleFonts.b612Mono(fontSize: 12),
             caption: GoogleFonts.firaSans(),
             button: GoogleFonts.b612Mono(),
           ),
@@ -449,7 +448,7 @@ class ThemeBar extends StatelessWidget {
                                 ),
                               ),
                               textStyle:
-                                  Theme.of(context).textTheme.body1.copyWith(
+                                  Theme.of(context).textTheme.bodyText2.copyWith(
                                         color: contrastedColors[i],
                                         fontWeight: (selected == keysList[i])
                                             ? FontWeight.w700

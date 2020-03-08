@@ -30,9 +30,9 @@ class ColorSchemeScreen extends StatelessWidget {
       data: ThemeData.from(
         colorScheme: Theme.of(context).colorScheme,
         textTheme: TextTheme(
-          body1: GoogleFonts.lato(),
+          bodyText2: GoogleFonts.lato(),
           button: GoogleFonts.openSans(),
-          title: GoogleFonts.openSans(
+          headline6: GoogleFonts.openSans(
             fontSize: 16,
             fontWeight: FontWeight.w700,
           ),
@@ -66,7 +66,7 @@ class ColorSchemeScreen extends StatelessWidget {
                       color: Theme.of(context).colorScheme.primary,
                     ),
                     onPressed: () async {
-                      final box = await Hive.openBox('settings');
+                      final box = await Hive.openBox<dynamic>('settings');
                       final int pref = box.get('shuffle', defaultValue: 0);
 
                       BlocProvider.of<MdcSelectedBloc>(context).add(

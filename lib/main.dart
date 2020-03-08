@@ -98,7 +98,7 @@ class _BoxedAppState extends State<BoxedApp> {
           "/export": (context) => ExportColors(),
         },
         theme: ThemeData(
-          typography: Typography().copyWith(
+          typography: Typography.material2018().copyWith(
             black: Typography.dense2018,
             tall: Typography.tall2018,
             englishLike: Typography.englishLike2018,

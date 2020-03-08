@@ -172,7 +172,7 @@ class _HeaderTitle extends StatelessWidget {
 
     return Text(
       title,
-      style: Theme.of(context).textTheme.body2.copyWith(color: contrasted),
+      style: Theme.of(context).textTheme.bodyText1.copyWith(color: contrasted),
       textAlign: TextAlign.center,
     );
   }
@@ -223,7 +223,7 @@ class _InfoItem extends StatelessWidget {
             textAlign: TextAlign.center,
             style: Theme.of(context)
                 .textTheme
-                .title
+                .headline6
                 .copyWith(color: oppositeColor),
           ),
         ),
