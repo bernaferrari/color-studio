@@ -4,7 +4,7 @@
 
 It is hard to choose colors. Most color pickers give you 16 million colors and ask you to pick one. So many options, in fact, that your creativity may get blocked. There is no intuitive way to know which colors will fit your needs. This gets even harder when you deal with multiple colors. Even harder when you want these colors to follow a design specification and form a coherent theme. This project aims to help solve these problems.
 
-[<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="80">](https://play.google.com/store/apps/details?id=com.bernaferrari.colorstudio)
+[WEB VERSION HERE](https://bernaferrari.github.io/color-studio/) [<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="80">](https://play.google.com/store/apps/details?id=com.bernaferrari.colorstudio)
 
 | Main Screen | Components Screen |
 |:-:|:-:|
