@@ -7,7 +7,6 @@ import 'package:colorstudio/example/contrast/inter_color_with_contrast.dart';
 import 'package:colorstudio/example/mdc/util/elevation_overlay.dart';
 import 'package:colorstudio/example/util/color_util.dart';
 import 'package:colorstudio/example/util/constants.dart';
-import 'package:rxdart/rxdart.dart';
 
 import './contrast_ratio.dart';
 
@@ -36,10 +35,10 @@ class ContrastRatioBloc extends Bloc<ContrastRatioEvent, ContrastRatioState> {
   @override
   ContrastRatioState get initialState => InitialContrastRatioState();
 
-  @override
-  Stream<ContrastRatioState> transformEvents(events, next) {
-    return events.switchMap(next);
-  }
+//  @override
+//  Stream<ContrastRatioState> transformEvents(events, next) {
+//    return events.switchMap(next);
+//  }
 
   @override
   Stream<ContrastRatioState> mapEventToState(

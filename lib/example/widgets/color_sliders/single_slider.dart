@@ -187,16 +187,18 @@ class _RoundSliderThumbShape2 extends SliderComponentShape {
 
   @override
   void paint(
-    PaintingContext context,
-    Offset center, {
-    Animation<double> activationAnimation,
-    @required Animation<double> enableAnimation,
-    bool isDiscrete,
-    TextPainter labelPainter,
-    RenderBox parentBox,
-    @required SliderThemeData sliderTheme,
-    TextDirection textDirection,
-    double value,
+      PaintingContext context,
+      Offset center, {
+        Animation<double> activationAnimation,
+        @required Animation<double> enableAnimation,
+        bool isDiscrete,
+        TextPainter labelPainter,
+        RenderBox parentBox,
+        @required SliderThemeData sliderTheme,
+        TextDirection textDirection,
+        double value,
+        double textScaleFactor,
+        Size sizeWithOverflow,
   }) {
     assert(context != null);
     assert(center != null);

@@ -7,7 +7,7 @@ import 'package:colorstudio/example/mdc/util/color_blind_from_index.dart';
 import 'package:colorstudio/example/util/color_util.dart';
 import 'package:colorstudio/example/util/constants.dart';
 import 'package:hsluv/hsluvcolor.dart';
-import 'package:rxdart/rxdart.dart';
+//import 'package:rxdart/rxdart.dart';
 
 import './mdc_selected.dart';
 
@@ -25,10 +25,10 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
   final ColorBlindBloc _blindnessBloc;
   StreamSubscription _blindnessSubscription;
 
-  @override
-  Stream<MdcSelectedState> transformEvents(events, next) {
-    return events.switchMap(next);
-  }
+//  @override
+//  Stream<MdcSelectedState> transformEvents(events, next) {
+//    return events.switchMap(next);
+//  }
 
   final List<Color> initialList;
 
