@@ -22,35 +22,17 @@ dependencies:
   hsluv: ^1.0.5
   bloc: ^4.0.0
   flutter_bloc: ^4.0.1
-  equatable: ^1.2.0
+  equatable: ^1.2.3
   flutter_feather_icons: ^1.0.3
   infinite_listview: ^1.0.1+1
-  url_launcher: ^5.4.11
-  hive: ^1.4.1+1
-  hive_flutter: ^0.3.0+2
+  url_launcher: ^5.5.0
+  hive: ^1.4.2
+  hive_flutter: ^0.3.1
   path_provider: ^1.6.11
   google_fonts: ^1.1.0
 
-dependency_overrides:
-  hive:
-    git:
-      url: https://github.com/hivedb/hive
-      path: hive
-      ref: d7ee72537a3b7ce1284bcbf5ee5f86e617a4f6fc
-  hive_generator:
-    git:
-      url: https://github.com/hivedb/hive
-      path: hive_generator
-      ref: d7ee72537a3b7ce1284bcbf5ee5f86e617a4f6fc
-  hive_flutter:
-    git:
-      url: https://github.com/hivedb/hive
-      path: hive_flutter
-      ref: d7ee72537a3b7ce1284bcbf5ee5f86e617a4f6fc
-
 dev_dependencies:
-  hive_generator: ^0.7.0+2
-  build_runner: ^1.10.0
+  hive_generator: ^0.7.1
   flutter_launcher_icons: ^0.7.5
   flutter_test:
     sdk: flutter

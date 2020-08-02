@@ -1,14 +1,14 @@
-import 'package:colorstudio/example/contrast/inter_color_with_contrast.dart';
-import 'package:colorstudio/example/contrast/shuffle_color.dart';
-import 'package:colorstudio/example/util/color_util.dart';
-import 'package:colorstudio/example/util/constants.dart';
-import 'package:colorstudio/example/util/selected.dart';
-import 'package:colorstudio/example/widgets/color_sliders/slider_that_works.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'util/elevation_overlay.dart';
+import '../contrast/inter_color_with_contrast.dart';
+import '../contrast/shuffle_color.dart';
+import '../mdc/util/elevation_overlay.dart';
+import '../util/color_util.dart';
+import '../util/constants.dart';
+import '../util/selected.dart';
+import '../widgets/color_sliders/slider_that_works.dart';
 
 class Components extends StatelessWidget {
   const Components(
@@ -271,7 +271,7 @@ class Components extends StatelessWidget {
 class ElevatedCardSample extends StatelessWidget {
   const ElevatedCardSample(this.entry, this.primary, this.color);
 
-  final ElevationOverlay entry;
+  final ElevationOverlay2 entry;
   final Color color;
   final Color primary;
 
@@ -299,7 +299,10 @@ class ElevatedCardSample extends StatelessWidget {
           children: <Widget>[
             Text(
               "${entry.elevation.toInt()} pt",
-              style: Theme.of(context).textTheme.headline6.copyWith(color: primary),
+              style: Theme.of(context)
+                  .textTheme
+                  .headline6
+                  .copyWith(color: primary),
             ),
             SizedBox(height: 4),
             Text(
