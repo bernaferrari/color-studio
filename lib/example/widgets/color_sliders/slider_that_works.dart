@@ -215,7 +215,7 @@ abstract class DragGestureRecognizer2 extends OneSequenceGestureRecognizer {
   @override
   void addAllowedPointer(PointerEvent event) {
     startTrackingPointer(event.pointer, event.transform);
-    _velocityTrackers[event.pointer] = VelocityTracker();
+    _velocityTrackers[event.pointer] = VelocityTracker(event.kind);
     if (_state == _DragState.ready) {
       _state = _DragState.possible;
       _initialPosition =

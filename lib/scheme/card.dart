@@ -6,13 +6,12 @@ import 'package:colorstudio/widgets/title_bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
-class ColorSchemeScreen extends StatelessWidget {
-  const ColorSchemeScreen(
+class ColorSchemeCard extends StatelessWidget {
+  const ColorSchemeCard(
     this.rgbColorsWithBlindness,
     this.hsluvColors,
     this.locked,
@@ -62,7 +61,7 @@ class ColorSchemeScreen extends StatelessWidget {
                   IconButton(
                     tooltip: "Randomise colors",
                     icon: Icon(
-                      FeatherIcons.shuffle,
+                      Icons.shuffle_rounded,
                       color: Theme.of(context).colorScheme.primary,
                     ),
                     onPressed: () async {

@@ -25,7 +25,7 @@ class ColorBlindnessList extends StatelessWidget {
     final List<ColorWithBlind> primaryBlind = mappedValues[kPrimary];
     final surfaceBlind = mappedValues[kSurface];
 
-    return BlocBuilder<ColorBlindBloc, int>(
+    return BlocBuilder<ColorBlindnessCubit, int>(
         builder: (BuildContext context, int state) {
       return Column(
         children: <Widget>[
@@ -39,8 +39,8 @@ class ColorBlindnessList extends StatelessWidget {
                   if (item != kSurface) mappedValues[item][i],
               ],
               primaryColor: primaryBlind[i].color,
-              onChanged: (int event) {
-                BlocProvider.of<ColorBlindBloc>(context).add(event);
+              onChanged: (int selected) {
+                context.bloc<ColorBlindnessCubit>().set(selected);
               },
               title: primaryBlind[i].name,
               subtitle: primaryBlind[i].affects,

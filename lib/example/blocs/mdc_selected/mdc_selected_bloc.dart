@@ -7,13 +7,15 @@ import 'package:colorstudio/example/mdc/util/color_blind_from_index.dart';
 import 'package:colorstudio/example/util/color_util.dart';
 import 'package:colorstudio/example/util/constants.dart';
 import 'package:hsluv/hsluvcolor.dart';
+
 //import 'package:rxdart/rxdart.dart';
 
 import './mdc_selected.dart';
 
 class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
-  MdcSelectedBloc(this.initialList, this._blindnessBloc) {
-    _blindnessSubscription = _blindnessBloc.listen((stateValue) async {
+  MdcSelectedBloc(ColorBlindnessCubit _colorBlindnessCubit)
+      : super(MDCInitialState()) {
+    _blindnessSubscription = _colorBlindnessCubit.listen((stateValue) async {
       add(
         MDCBlindnessEvent(
           blindnessSelected: stateValue,
@@ -22,15 +24,12 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
     });
   }
 
-  final ColorBlindBloc _blindnessBloc;
   StreamSubscription _blindnessSubscription;
 
 //  @override
 //  Stream<MdcSelectedState> transformEvents(events, next) {
 //    return events.switchMap(next);
 //  }
-
-  final List<Color> initialList;
 
   @override
   Future<void> close() {
@@ -39,32 +38,12 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
   }
 
   @override
-  MdcSelectedState get initialState {
-    final initial = {
-      kPrimary: initialList[0],
-      kBackground: blendColorWithBackground(initialList[0]),
-      kSurface: initialList[1],
-    };
-
-    final initialLocked = <String, bool>{
-//      kBackground: true,
-    };
-
-    return MDCLoadedState(
-      initial,
-      convertToHSLuv(initial),
-      initial,
-      initialLocked,
-      kPrimary,
-      0,
-    );
-  }
-
-  @override
   Stream<MdcSelectedState> mapEventToState(
     MdcSelectedEvent event,
   ) async* {
-    if (event is MDCLoadEvent) {
+    if (event is MDCInitEvent) {
+      yield* _mapInitToState(event);
+    } else if (event is MDCLoadEvent) {
       yield* _mapLoadedToState(event);
     } else if (event is MDCUpdateAllEvent) {
       yield* _mapUpdateAllToState(event);
@@ -75,6 +54,27 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
     } else if (event is MDCUpdateLock) {
       yield* _mapUpdateToLock(event);
     }
+  }
+
+  Stream<MdcSelectedState> _mapInitToState(MDCInitEvent load) async* {
+    final initial = {
+      kPrimary: load.initialList[0],
+      kBackground: blendColorWithBackground(load.initialList[0]),
+      kSurface: load.initialList[1],
+    };
+
+    final initialLocked = <String, bool>{
+//      kBackground: true,
+    };
+
+    yield MDCLoadedState(
+      initial,
+      convertToHSLuv(initial),
+      initial,
+      initialLocked,
+      kPrimary,
+      0,
+    );
   }
 
   Stream<MdcSelectedState> _mapUpdateToLock(MDCUpdateLock load) async* {

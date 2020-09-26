@@ -21,11 +21,9 @@ class ColorBlindnessBar extends StatelessWidget {
         builder: (BuildContext context, state) {
       final currentState = state as MDCLoadedState;
 
-      final blindnessSelected = currentState.blindnessSelected;
-
       final ColorWithBlind blindPrimary = getColorBlindFromIndex(
         currentState.rgbColors[kPrimary],
-        blindnessSelected,
+        currentState.blindnessSelected,
       );
 
       return Center(
@@ -65,69 +63,60 @@ class ColorBlindnessBar extends StatelessWidget {
                 ),
               ),
               Text(
-                "$blindnessSelected/8",
+                "${currentState.blindnessSelected}/8",
                 style: GoogleFonts.b612Mono(),
               ),
               const SizedBox(width: 8),
               Material(
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                    side: BorderSide(
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  side: BorderSide(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onBackground
+                        .withOpacity(0.20),
+                  ),
+                ),
+                color: currentState.rgbColorsWithBlindness[kBackground],
+                clipBehavior: Clip.antiAlias,
+                child: Row(
+                  children: <Widget>[
+                    SizedBox(
+                      width: 48,
+                      height: 48,
+                      child: FlatButton(
+                        padding: EdgeInsets.zero,
+                        shape: RoundedRectangleBorder(),
+                        child: Icon(FeatherIcons.chevronLeft),
+                        onPressed: () {
+                          context.bloc<ColorBlindnessCubit>().decrement();
+                        },
+                      ),
+                    ),
+                    Container(
+                      width: 1,
+                      height: 48,
                       color: Theme.of(context)
                           .colorScheme
                           .onBackground
                           .withOpacity(0.20),
                     ),
-                  ),
-                  color: currentState.rgbColorsWithBlindness[kBackground],
-                  clipBehavior: Clip.antiAlias,
-                  child: Row(
-                    children: <Widget>[
-                      SizedBox(
-                        width: 48,
-                        height: 48,
-                        child: FlatButton(
-                          padding: EdgeInsets.zero,
-                          shape: RoundedRectangleBorder(),
-                          child: Icon(FeatherIcons.chevronLeft),
-                          onPressed: () {
-                            int newState = blindnessSelected - 1;
-                            if (newState < 0) {
-                              newState = 8;
-                            }
-                            BlocProvider.of<ColorBlindBloc>(context)
-                                .add(newState);
-                          },
-                        ),
+                    SizedBox(
+                      width: 48,
+                      height: 48,
+                      child: FlatButton(
+                        padding: EdgeInsets.zero,
+                        shape: const RoundedRectangleBorder(),
+                        child: Icon(FeatherIcons.chevronRight),
+                        onPressed: () {
+                          context.bloc<ColorBlindnessCubit>().increment();
+                        },
                       ),
-                      Container(
-                        width: 1,
-                        height: 48,
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onBackground
-                            .withOpacity(0.20),
-                      ),
-                      SizedBox(
-                        width: 48,
-                        height: 48,
-                        child: FlatButton(
-                          padding: EdgeInsets.zero,
-                          shape: const RoundedRectangleBorder(),
-                          child: Icon(FeatherIcons.chevronRight),
-                          onPressed: () {
-                            int newState = blindnessSelected + 1;
-                            if (newState > 8) {
-                              newState = 0;
-                            }
-                            BlocProvider.of<ColorBlindBloc>(context)
-                                .add(newState);
-                          },
-                        ),
-                      ),
-                    ],
-                  )),
+                    ),
+                  ],
+                ),
+              ),
               const SizedBox(width: 8),
             ],
           ),

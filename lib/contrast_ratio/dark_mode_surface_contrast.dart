@@ -1,4 +1,5 @@
 import 'package:colorstudio/example/blocs/blocs.dart';
+import 'package:colorstudio/example/blocs/contrast_ratio/contrast_ratio_cubit.dart';
 import 'package:colorstudio/example/contrast/contrast_util.dart';
 import 'package:colorstudio/example/mdc/contrast_compare.dart';
 import 'package:colorstudio/example/mdc/util/elevation_overlay.dart';

@@ -1,7 +1,7 @@
 import 'package:colorstudio/contrast_ratio/dark_mode_surface_contrast.dart';
 import 'package:colorstudio/contrast_ratio/widgets/contrast_widgets.dart';
 import 'package:colorstudio/example/blocs/blocs.dart';
-import 'package:colorstudio/example/blocs/contrast_ratio/contrast_ratio_state.dart';
+import 'package:colorstudio/example/blocs/contrast_ratio/contrast_ratio_cubit.dart';
 import 'package:colorstudio/example/util/constants.dart';
 import 'package:colorstudio/example/widgets/loading_indicator.dart';
 import 'package:colorstudio/widgets/section_card.dart';
@@ -11,8 +11,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ContrastRatioScreen extends StatelessWidget {
-  const ContrastRatioScreen(
+class ContrastRatioCard extends StatelessWidget {
+  const ContrastRatioCard(
     this.rgbColorsWithBlindness,
     this.shouldDisplayElevation,
     this.locked,
@@ -24,15 +24,17 @@ class ContrastRatioScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final background = rgbColorsWithBlindness[kSurface];
+    final state =
+        BlocProvider.of<MdcSelectedBloc>(context).state as MDCLoadedState;
+    context.bloc<ContrastRatioCubit>().set(state.rgbColorsWithBlindness);
 
-    return BlocBuilder<ContrastRatioBloc, ContrastRatioState>(
+    return BlocBuilder<ContrastRatioCubit, ContrastRatioState>(
         builder: (context, state) {
-      if (state is InitialContrastRatioState) {
+      if (state.contrastValues.isEmpty) {
         return const Center(child: LoadingIndicator());
       }
 
-      final currentState = state as ContrastRatioSuccess;
+      final background = rgbColorsWithBlindness[kSurface];
 
       final isiPad = MediaQuery.of(context).size.width > 600;
 
@@ -107,7 +109,7 @@ class ContrastRatioScreen extends StatelessWidget {
                     ContrastCircleBar(
                       title: kPrimary,
                       subtitle: kBackground,
-                      contrast: currentState.contrastValues[0],
+                      contrast: state.contrastValues[0],
                       contrastingColor: rgbColorsWithBlindness[kPrimary],
                       circleColor: rgbColorsWithBlindness[kBackground],
                     ),
@@ -115,14 +117,14 @@ class ContrastRatioScreen extends StatelessWidget {
                       ContrastCircleBar(
                         title: kPrimary,
                         subtitle: kSurface,
-                        contrast: currentState.contrastValues[1],
+                        contrast: state.contrastValues[1],
                         contrastingColor: rgbColorsWithBlindness[kPrimary],
                         circleColor: rgbColorsWithBlindness[kSurface],
                       ),
                       ContrastCircleBar(
                         title: kSurface,
                         subtitle: kBackground,
-                        contrast: currentState.contrastValues[2],
+                        contrast: state.contrastValues[2],
                         contrastingColor: rgbColorsWithBlindness[kSurface],
                         circleColor: rgbColorsWithBlindness[kBackground],
                       ),
@@ -140,7 +142,7 @@ class ContrastRatioScreen extends StatelessWidget {
                 ),
                 if (shouldDisplayElevation) ...[
                   const SizedBox(height: 8),
-                  DarkModeSurfaceContrast(currentState.elevationValues),
+                  DarkModeSurfaceContrast(state.elevationValues),
                 ] else ...[
                   SizedBox(
                     height: 128,

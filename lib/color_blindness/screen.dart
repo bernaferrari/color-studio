@@ -1,5 +1,5 @@
 import 'package:colorstudio/color_blindness/list.dart';
-import 'package:colorstudio/example/blocs/color_blind/color_blind_bloc.dart';
+import 'package:colorstudio/example/blocs/color_blind/color_blindness_cubit.dart';
 import 'package:colorstudio/example/util/constants.dart';
 import 'package:colorstudio/widgets/section_card.dart';
 import 'package:colorstudio/widgets/title_bar.dart';
@@ -56,12 +56,7 @@ class ColorBlindnessScreen extends StatelessWidget {
                       color: Theme.of(context).colorScheme.primary,
                     ),
                     onPressed: () {
-                      int newState =
-                          (BlocProvider.of<ColorBlindBloc>(context)).state - 1;
-                      if (newState < 0) {
-                        newState = 8;
-                      }
-                      BlocProvider.of<ColorBlindBloc>(context).add(newState);
+                      context.bloc<ColorBlindnessCubit>().decrement();
                     },
                   ),
                   IconButton(
@@ -71,12 +66,7 @@ class ColorBlindnessScreen extends StatelessWidget {
                       color: Theme.of(context).colorScheme.primary,
                     ),
                     onPressed: () {
-                      int newState =
-                          (BlocProvider.of<ColorBlindBloc>(context)).state + 1;
-                      if (newState > 8) {
-                        newState = 0;
-                      }
-                      BlocProvider.of<ColorBlindBloc>(context).add(newState);
+                      context.bloc<ColorBlindnessCubit>().increment();
                     },
                   ),
                 ],

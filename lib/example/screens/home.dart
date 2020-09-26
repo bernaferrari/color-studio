@@ -242,13 +242,11 @@ class _ColorContrastRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ContrastRatioBloc, ContrastRatioState>(
+    return BlocBuilder<ContrastRatioCubit, ContrastRatioState>(
         builder: (context, state) {
-      if (state is InitialContrastRatioState) {
+      if (state.contrastValues.isEmpty) {
         return Center(child: LoadingIndicator());
       }
-
-      final currentState = state as ContrastRatioSuccess;
 
       return Center(
         child: SizedBox(
@@ -259,7 +257,7 @@ class _ColorContrastRow extends StatelessWidget {
               ContrastCircleBar(
                 title: kPrimary,
                 subtitle: kBackground,
-                contrast: currentState.contrastValues[0],
+                contrast: state.contrastValues[0],
                 animateOnInit: false,
                 circleColor: rgbColors[kPrimary],
                 contrastingColor: rgbColors[kBackground],
@@ -269,7 +267,7 @@ class _ColorContrastRow extends StatelessWidget {
                 ContrastCircleBar(
                   title: kPrimary,
                   subtitle: kSurface,
-                  contrast: currentState.contrastValues[1],
+                  contrast: state.contrastValues[1],
                   animateOnInit: false,
                   circleColor: rgbColors[kSurface],
                   contrastingColor: rgbColors[kPrimary],
@@ -277,7 +275,7 @@ class _ColorContrastRow extends StatelessWidget {
                 ContrastCircleBar(
                   title: kSurface,
                   subtitle: kBackground,
-                  contrast: currentState.contrastValues[2],
+                  contrast: state.contrastValues[2],
                   animateOnInit: false,
                   circleColor: rgbColors[kBackground],
                   contrastingColor: rgbColors[kSurface],

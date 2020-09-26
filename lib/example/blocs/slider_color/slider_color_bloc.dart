@@ -7,15 +7,17 @@ import 'package:colorstudio/example/blocs/slider_color/slider_color_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hsluv/hsluvcolor.dart';
+import 'package:rxdart/rxdart.dart';
 
 class SliderColorBloc extends Bloc<SliderColorEvent, SliderColorState> {
-  @override
-  SliderColorState get initialState => SliderColorLoading();
+  SliderColorBloc() : super(SliderColorLoading());
 
-//  @override
-//  Stream<SliderColorState> transformEvents(events, next) {
-//    return events.switchMap(next);
-//  }
+  @override
+  Stream<Transition<SliderColorEvent, SliderColorState>> transformEvents(
+      Stream<SliderColorEvent> events,
+      TransitionFunction<SliderColorEvent, SliderColorState> transitionFn) {
+    return events.switchMap(transitionFn);
+  }
 
   @override
   Stream<SliderColorState> mapEventToState(

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-class SchemeHeaderItem extends StatelessWidget {
-  const SchemeHeaderItem({
+class SchemeCompactedItem extends StatelessWidget {
+  const SchemeCompactedItem({
     this.rgbColor,
     this.title,
     this.onPressed,
@@ -24,51 +24,55 @@ class SchemeHeaderItem extends StatelessWidget {
     return Row(
       children: <Widget>[
         Expanded(
-          child: MaterialButton(
-            elevation: 0,
+          child: TextButton(
             onPressed: onPressed,
-            padding:
-                const EdgeInsets.symmetric(horizontal: 0.0, vertical: 12.0),
-            shape: RoundedRectangleBorder(),
-            child: Row(
-              children: <Widget>[
-                SizedBox(width: 16),
-                Container(
-                  width: 24,
-                  height: 24,
-                  decoration: BoxDecoration(
-                    color: rgbColor,
-                    border: Border.all(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .onSurface
-                          .withOpacity(0.3),
-                    ),
-                    borderRadius: const BorderRadius.all(Radius.circular(12)),
-                  ),
-                ),
-                SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Text(
-                        title,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                    ],
-                  ),
-                ),
-                ...[
-                  Icon(expanded
-                      ? FeatherIcons.chevronUp
-                      : FeatherIcons.chevronDown),
+            style: TextButton.styleFrom(
+              shape: RoundedRectangleBorder(),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12.0),
+              child: Row(
+                children: <Widget>[
                   SizedBox(width: 16),
+                  Container(
+                    width: 24,
+                    height: 24,
+                    decoration: BoxDecoration(
+                      color: rgbColor,
+                      border: Border.all(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withOpacity(0.3),
+                      ),
+                      borderRadius: const BorderRadius.all(Radius.circular(12)),
+                    ),
+                  ),
+                  SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Text(
+                          title,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                      ],
+                    ),
+                  ),
+                  ...[
+                    Icon(
+                      expanded
+                          ? Icons.keyboard_arrow_up_rounded
+                          : Icons.keyboard_arrow_down_rounded,
+                    ),
+                    SizedBox(width: 16),
+                  ],
                 ],
-              ],
+              ),
             ),
           ),
         ),
@@ -78,12 +82,12 @@ class SchemeHeaderItem extends StatelessWidget {
             height: 46,
             color: Theme.of(context).colorScheme.onSurface.withOpacity(0.20),
           ),
-//          SizedBox(width: 8),
+          // SizedBox(width: 8),
           SizedBox(
             width: 112,
-            height: 47,
-            child: FlatButton(
-              padding: EdgeInsets.symmetric(horizontal: 8),
+            height: 48,
+            child: TextButton(
+              style: TextButton.styleFrom(shape: RoundedRectangleBorder()),
               onPressed: () {
                 BlocProvider.of<MdcSelectedBloc>(context).add(
                   MDCUpdateLock(
@@ -92,8 +96,9 @@ class SchemeHeaderItem extends StatelessWidget {
                   ),
                 );
               },
-              shape: RoundedRectangleBorder(),
               child: Container(
+                padding: EdgeInsets.all(8),
+                margin: EdgeInsets.symmetric(horizontal: 8),
                 decoration: BoxDecoration(
                   color: !locked
                       ? null
@@ -115,7 +120,6 @@ class SchemeHeaderItem extends StatelessWidget {
                     ),
                   ),
                 ),
-                padding: EdgeInsets.all(8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,

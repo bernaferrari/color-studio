@@ -1,5 +1,5 @@
 import 'package:colorstudio/example/util/constants.dart';
-import 'package:colorstudio/scheme/expandable_header_item.dart';
+import 'package:colorstudio/scheme/compacted_item.dart';
 import 'package:colorstudio/scheme/expanded_item.dart';
 import 'package:colorstudio/scheme/same_as.dart';
 import 'package:colorstudio/scheme/widgets/expanded_section.dart';
@@ -51,7 +51,7 @@ class _SchemeExpandableItemState extends State<SchemeExpandableItem> {
     return Column(
       children: <Widget>[
         for (int i = 0; i < widget.contrastedColors.length; i++) ...[
-          SchemeHeaderItem(
+          SchemeCompactedItem(
             rgbColor: mappedList[i],
             title: keysList[i],
             expanded: index == i,

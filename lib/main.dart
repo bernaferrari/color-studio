@@ -11,7 +11,7 @@ import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'example/blocs/blocs.dart';
-import 'example/blocs/color_blind/color_blind_bloc.dart';
+import 'example/blocs/color_blind/color_blindness_cubit.dart';
 import 'example/blocs/mdc_selected/mdc_selected_bloc.dart';
 import 'example/contrast/shuffle_color.dart';
 import 'example/screens/export_colors.dart';
@@ -23,7 +23,7 @@ Future<void> main() async {
   // when the app runs, Hive should have a value already.
   WidgetsFlutterBinding.ensureInitialized();
   await openBox();
-  BlocSupervisor.delegate = SimpleBlocDelegate();
+  Bloc.observer = SimpleBlocObserver();
   runApp(BoxedApp());
 }
 
@@ -42,14 +42,15 @@ class BoxedApp extends StatefulWidget {
 }
 
 class _BoxedAppState extends State<BoxedApp> {
-  ColorBlindBloc colorBlindBloc;
+  ColorBlindnessCubit colorBlindBloc;
   MdcSelectedBloc _mdcSelectedBloc;
 
   @override
   void initState() {
     super.initState();
-    colorBlindBloc = ColorBlindBloc();
-    _mdcSelectedBloc = MdcSelectedBloc(getRandomMaterialDark(), colorBlindBloc);
+    colorBlindBloc = ColorBlindnessCubit();
+    _mdcSelectedBloc = MdcSelectedBloc(colorBlindBloc)
+      ..add(MDCInitEvent(getRandomMaterialDark()));
   }
 
   @override
@@ -66,10 +67,10 @@ class _BoxedAppState extends State<BoxedApp> {
         BlocProvider<MdcSelectedBloc>(
           create: (context) => _mdcSelectedBloc,
         ),
-        BlocProvider<ContrastRatioBloc>(
-          create: (context) => ContrastRatioBloc(_mdcSelectedBloc),
+        BlocProvider<ContrastRatioCubit>(
+          create: (context) => ContrastRatioCubit(_mdcSelectedBloc),
         ),
-        BlocProvider<ColorBlindBloc>(
+        BlocProvider<ColorBlindnessCubit>(
           create: (context) => colorBlindBloc,
         )
       ],

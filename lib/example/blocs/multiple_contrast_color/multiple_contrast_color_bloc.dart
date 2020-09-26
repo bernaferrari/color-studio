@@ -9,7 +9,7 @@ import 'multiple_contrast_color_state.dart';
 
 class MultipleContrastColorBloc
     extends Bloc<MultipleContrastColorEvent, MultipleContrastColorState> {
-  MultipleContrastColorBloc(this._mdcSelectedBloc) {
+  MultipleContrastColorBloc(this._mdcSelectedBloc) : super(MultipleContrastColorLoading()) {
     _mdcSubscription = _mdcSelectedBloc.listen((stateValue) async {
       if (stateValue is MDCLoadedState) {
         add(
@@ -30,9 +30,6 @@ class MultipleContrastColorBloc
     _mdcSubscription.cancel();
     return super.close();
   }
-
-  @override
-  MultipleContrastColorState get initialState => MultipleContrastColorLoading();
 
   @override
   Stream<MultipleContrastColorState> mapEventToState(

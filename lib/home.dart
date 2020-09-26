@@ -1,6 +1,6 @@
 import 'package:colorstudio/color_blindness/screen.dart';
-import 'package:colorstudio/contrast_ratio/screen.dart';
-import 'package:colorstudio/scheme/screen.dart';
+import 'package:colorstudio/contrast_ratio/card.dart';
+import 'package:colorstudio/scheme/card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -15,6 +15,10 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<MdcSelectedBloc, MdcSelectedState>(
         builder: (context, state) {
+      if (!(state is MDCLoadedState)) {
+        return SizedBox.shrink();
+      }
+
       final currentState = state as MDCLoadedState;
 
       final primary = currentState.rgbColorsWithBlindness[kPrimary];
@@ -54,12 +58,13 @@ class Home extends StatelessWidget {
           colorScheme: colorScheme,
 //          textTheme: TextTheme(button: TextStyle(fontFamily: "B612Mono")),
         ).copyWith(
-            buttonTheme: ButtonThemeData(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
+          buttonTheme: ButtonThemeData(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
             ),
-            dividerColor: onSurface.withOpacity(0.30)),
+          ),
+          dividerColor: onSurface.withOpacity(0.30),
+        ),
         child: Scaffold(
           body: isiPad
               ? Center(
@@ -159,12 +164,12 @@ class Home extends StatelessWidget {
             if (isiPad) const SizedBox(width: 8) else const SizedBox(width: 16),
           ],
         ),
-        ColorSchemeScreen(
+        ColorSchemeCard(
           currentState.rgbColorsWithBlindness,
           currentState.hsluvColors,
           currentState.locked,
         ),
-        ContrastRatioScreen(
+        ContrastRatioCard(
           currentState.rgbColorsWithBlindness,
           shouldDisplayElevation,
           currentState.locked,

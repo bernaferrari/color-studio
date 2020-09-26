@@ -20,6 +20,18 @@ class MDCBlindnessEvent extends MdcSelectedEvent {
   List<Object> get props => [blindnessSelected];
 }
 
+class MDCInitEvent extends MdcSelectedEvent {
+  const MDCInitEvent(this.initialList);
+
+  final List<Color> initialList;
+
+  @override
+  String toString() => "MDC Init Event";
+
+  @override
+  List<Object> get props => [];
+}
+
 class MDCLoadEvent extends MdcSelectedEvent {
   const MDCLoadEvent({
     @required this.currentColor,

@@ -7,6 +7,13 @@ abstract class MdcSelectedState extends Equatable {
   const MdcSelectedState();
 }
 
+class MDCInitialState extends MdcSelectedState {
+  const MDCInitialState();
+
+  @override
+  List<Object> get props => [];
+}
+
 class MDCLoadedState extends MdcSelectedState {
   const MDCLoadedState(
     this.rgbColors,
@@ -28,6 +35,12 @@ class MDCLoadedState extends MdcSelectedState {
   String toString() => 'MDCLoadedState state with selected: $selected';
 
   @override
-  List<Object> get props =>
-      [rgbColors, hsluvColors, locked, rgbColorsWithBlindness, selected, blindnessSelected];
+  List<Object> get props => [
+        rgbColors,
+        hsluvColors,
+        locked,
+        rgbColorsWithBlindness,
+        selected,
+        blindnessSelected
+      ];
 }

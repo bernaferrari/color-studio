@@ -14,26 +14,27 @@ description: A new Flutter project.
 version: 1.0.0+6
 
 environment:
-  sdk: ">=2.8.0 <3.0.0"
+  sdk: ">=2.9.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   hsluv: ^1.0.5
-  bloc: ^4.0.0
-  flutter_bloc: ^4.0.1
-  equatable: ^1.2.3
+  bloc: ^6.0.3
+  rxdart: ^0.24.1
+  flutter_bloc: ^6.0.5
+  equatable: ^1.2.5
   flutter_feather_icons: ^1.0.3
   infinite_listview: ^1.0.1+1
   url_launcher: ^5.5.0
-  hive: ^1.4.2
+  hive: ^1.4.4
   hive_flutter: ^0.3.1
-  path_provider: ^1.6.11
+  path_provider: ^1.6.18
   google_fonts: ^1.1.0
 
 dev_dependencies:
-  hive_generator: ^0.7.1
-  flutter_launcher_icons: ^0.7.5
+  hive_generator: ^0.7.2+1
+  flutter_launcher_icons: ^0.8.0
   flutter_test:
     sdk: flutter
 
