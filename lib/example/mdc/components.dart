@@ -346,15 +346,15 @@ class _NavigationBarSampleState extends State<NavigationBarSample> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(FeatherIcons.home),
-            title: Text('Home'),
+            label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: Icon(FeatherIcons.archive),
-            title: Text('Archive'),
+            label: 'Archive',
           ),
           BottomNavigationBarItem(
             icon: Icon(FeatherIcons.settings),
-            title: Text('Settings'),
+            label: 'Settings',
           ),
         ],
         onTap: (updatedIndex) {
@@ -555,7 +555,9 @@ class _SliderWithSelectorComponentsState
                           padding: const EdgeInsets.only(right: 8),
                           child: isSelected[0]
                               ? widget.rgb
-                              : isSelected[1] ? widget.hsl : widget.hsv,
+                              : isSelected[1]
+                                  ? widget.hsl
+                                  : widget.hsv,
                         ),
                       ],
                     ),
