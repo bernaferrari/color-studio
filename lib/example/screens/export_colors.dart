@@ -14,20 +14,28 @@ class ExportColors extends StatelessWidget {
         builder: (BuildContext builderContext, MdcSelectedState state) {
       final currentState = state as MDCLoadedState;
 
-      final primary = currentState.rgbColorsWithBlindness[kPrimary];
-      final background = currentState.rgbColorsWithBlindness[kBackground];
-      final surface = currentState.rgbColorsWithBlindness[kSurface];
+      final primary =
+          currentState.rgbColorsWithBlindness[ColorType.Primary];
+      final background =
+          currentState.rgbColorsWithBlindness[ColorType.Background];
+      final surface =
+          currentState.rgbColorsWithBlindness[ColorType.Surface];
 
       final onPrimary =
-          currentState.hsluvColors[kPrimary].lightness >= kLightnessThreshold
+          currentState.hsluvColors[ColorType.Primary].lightness >=
+                  kLightnessThreshold
               ? Colors.black
               : Colors.white;
+
       final onSurface =
-          currentState.hsluvColors[kSurface].lightness >= kLightnessThreshold
+          currentState.hsluvColors[ColorType.Surface].lightness >=
+                  kLightnessThreshold
               ? Colors.black
               : Colors.white;
+
       final onBackground =
-          currentState.hsluvColors[kBackground].lightness >= kLightnessThreshold
+          currentState.hsluvColors[ColorType.Background].lightness >=
+                  kLightnessThreshold
               ? Colors.black
               : Colors.white;
 

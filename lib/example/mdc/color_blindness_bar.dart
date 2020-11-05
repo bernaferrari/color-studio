@@ -22,7 +22,7 @@ class ColorBlindnessBar extends StatelessWidget {
       final currentState = state as MDCLoadedState;
 
       final ColorWithBlind blindPrimary = getColorBlindFromIndex(
-        currentState.rgbColors[kPrimary],
+        currentState.rgbColors[ColorType.Primary],
         currentState.blindnessSelected,
       );
 
@@ -33,7 +33,7 @@ class ColorBlindnessBar extends StatelessWidget {
           child: Row(
             children: <Widget>[
               const SizedBox(width: 8),
-              BorderedIconButton(
+              OutlinedIconButton(
                 child: Transform.rotate(
                   angle: 0.5 * math.pi,
                   child: const Icon(FeatherIcons.sliders, size: 16),

@@ -16,7 +16,7 @@ class HSLuvSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const String kind = hsluvStr;
+    const HSInterType kind = HSInterType.HSLuv;
 
     // maximum number of items
     final int itemsOnScreen =

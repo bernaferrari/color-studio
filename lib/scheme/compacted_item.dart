@@ -1,5 +1,6 @@
 import 'package:colorstudio/example/blocs/blocs.dart';
 import 'package:colorstudio/example/util/constants.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -14,7 +15,7 @@ class SchemeCompactedItem extends StatelessWidget {
   });
 
   final Color rgbColor;
-  final String title;
+  final ColorType title;
   final bool locked;
   final bool expanded;
   final Function onPressed;
@@ -56,9 +57,9 @@ class SchemeCompactedItem extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         Text(
-                          title,
+                          describeEnum(title),
                           overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.headline6,
+                          style: Theme.of(context).textTheme.subtitle1,
                         ),
                       ],
                     ),
@@ -76,7 +77,7 @@ class SchemeCompactedItem extends StatelessWidget {
             ),
           ),
         ),
-        if (title != kPrimary) ...[
+        if (title != ColorType.Primary) ...[
           Container(
             width: 1,
             height: 46,

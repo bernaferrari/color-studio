@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 extension ListConversion<T> on List<Color> {
-  List<ColorWithInter> convertToInter(String kind) =>
+  List<ColorWithInter> convertToInter(HSInterType kind) =>
       map((Color c) => ColorWithInter(c, HSInterColor.fromColor(c, kind)))
           .toList();
 }

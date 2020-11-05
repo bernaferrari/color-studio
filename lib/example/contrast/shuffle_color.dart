@@ -1,8 +1,10 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:colorstudio/example/contrast/inter_color_with_contrast.dart';
+import 'package:colorstudio/example/util/constants.dart';
 import 'package:hsluv/hsluvcolor.dart';
+
+import '../util/calculate_contrast.dart';
 
 class _ColorContrast {
   const _ColorContrast(this.color, this.contrast);
@@ -47,79 +49,78 @@ List<Color> getShuffledColors([int n = 8]) {
   return [for (int i = 0; i < n; i++) colorsList[i].hexToColor()];
 }
 
-List<Color> getRandomMaterialDark() {
+// Also check RandomColorScheme: https://github.com/bernaferrari/RandomColorScheme
+Map<ColorType, Color> getRandomMaterialDark() {
   final rng = Random();
 
-  // ### Primary Color Study
-  // ## Dark Theme
-  // # Material colors in HSV:
-  // H: 267 S: 47 V: 99
-  // H: 174 S: 99 V: 85
-  // OWL - H: 345 S: 54 V: 100
-  // Therefore, 50 < S < 100 and V > 80
-  //
-  // # Material colors in HSLuv:
-  // H: 281 S: 97 L: 65
-  // H: 176 S: 100 L: 79
-  // OWL - H: 360 S: 100 L: 67
-  // Therefore, S > 90 and 65 < L < 85
+  // avoid too similar values between background and surface.
+  final backgroundLightness = rng.nextInt(26);
+  var surfaceLightness = rng.nextInt(31);
+  if ((surfaceLightness - backgroundLightness).abs() < 5) {
+    surfaceLightness = backgroundLightness + 5;
+  }
 
-  return [
-    HSLuvColor.fromHSL(
-      rng.nextInt(360).toDouble(),
-      60 + rng.nextInt(41).toDouble(),
-      65 + rng.nextInt(21).toDouble(),
-    ).toColor(),
-    HSLuvColor.fromHSL(
-      rng.nextInt(360).toDouble(),
-      rng.nextInt(101).toDouble(),
-      rng.nextInt(30).toDouble(),
-    ).toColor(),
-    HSLuvColor.fromHSL(
-      rng.nextInt(360).toDouble(),
-      rng.nextInt(101).toDouble(),
-      rng.nextInt(30).toDouble(),
-    ).toColor(),
-  ];
-}
+  final primaryHue = rng.nextInt(360);
+  final primarySaturation = 60 + rng.nextInt(41).toDouble();
+  final primaryLightness = 65 + rng.nextInt(21).toDouble();
 
-List<Color> getRandomMaterialLight() {
-  final rng = Random();
-
-  // ### Primary Color Study
-  // ## Light Theme
-  // # Material colors in HSV:
-  // H: 265 S: 100 V: 93
-  // H: 174 S: 99 V: 85
-  // Therefore, S > 90 and V > 80
-  //
-  // # Material colors in HSLuv:
-  // H: 272 S: 100 L: 36
-  // H: 177 S: 100 L: 79
-  // Therefore, S > 90 and 35 < L < 80
-
-  final primaryLightness = 25 + rng.nextInt(20);
-
-  return [
-    HSLuvColor.fromHSL(
-      rng.nextInt(360).toDouble(),
-      80 + rng.nextInt(16).toDouble(),
+  return {
+    ColorType.Primary: HSLuvColor.fromHSL(
+      primaryHue.toDouble(),
+      primarySaturation,
       primaryLightness.toDouble(),
     ).toColor(),
-    HSLuvColor.fromHSL(
-      rng.nextInt(360).toDouble(),
-      20 + rng.nextInt(81).toDouble(),
-      primaryLightness + 45 + rng.nextInt(56 - primaryLightness).toDouble(),
+    ColorType.Secondary: HSLuvColor.fromHSL(
+      ((primaryHue + 90 + rng.nextInt(90)) % 360).toDouble(),
+      primarySaturation,
+      primaryLightness,
     ).toColor(),
-    HSLuvColor.fromHSL(
+    ColorType.Surface: HSLuvColor.fromHSL(
       rng.nextInt(360).toDouble(),
       rng.nextInt(101).toDouble(),
-      primaryLightness + 45 + rng.nextInt(56 - primaryLightness).toDouble(),
+      surfaceLightness.toDouble(),
     ).toColor(),
-  ];
+    ColorType.Background: HSLuvColor.fromHSL(
+      rng.nextInt(360).toDouble(),
+      rng.nextInt(101).toDouble(),
+      backgroundLightness.toDouble(),
+    ).toColor(),
+  };
 }
 
-List<Color> getRandomMoleTheme() {
+// Also check RandomColorScheme: https://github.com/bernaferrari/RandomColorScheme
+Map<ColorType, Color> getRandomMaterialLight() {
+  final rng = Random();
+
+  final primaryHue = rng.nextInt(360);
+  final primarySaturation = 80.0 + rng.nextInt(16);
+  final primaryLightness = 25 + rng.nextInt(21);
+
+  return {
+    ColorType.Primary: HSLuvColor.fromHSL(
+      primaryHue.toDouble(),
+      primarySaturation,
+      primaryLightness.toDouble(),
+    ).toColor(),
+    ColorType.Secondary: HSLuvColor.fromHSL(
+      ((primaryHue + 90 + rng.nextInt(90)) % 360).toDouble(),
+      primarySaturation,
+      primaryLightness.toDouble(),
+    ).toColor(),
+    ColorType.Surface: HSLuvColor.fromHSL(
+      rng.nextInt(360).toDouble(),
+      20.0 + rng.nextInt(81),
+      primaryLightness + 45.0 + rng.nextInt(56 - primaryLightness),
+    ).toColor(),
+    ColorType.Background: HSLuvColor.fromHSL(
+      rng.nextInt(360).toDouble(),
+      rng.nextInt(71).toDouble(),
+      primaryLightness + 45.0 + rng.nextInt(56 - primaryLightness),
+    ).toColor(),
+  };
+}
+
+Map<ColorType, Color> getRandomMoleTheme() {
   final rng = Random();
 
   // ### Primary Color Study
@@ -138,28 +139,29 @@ List<Color> getRandomMoleTheme() {
   final backgroundSat = (25 + rng.nextInt(75)).toDouble();
   final backgroundHue = rng.nextInt(360).toDouble();
 
-  return [
-    HSLuvColor.fromHSL(rng.nextInt(360).toDouble(), 0, 100).toColor(),
-    HSLuvColor.fromHSL(
+  return {
+    ColorType.Primary:
+        HSLuvColor.fromHSL(rng.nextInt(360).toDouble(), 0, 100).toColor(),
+    ColorType.Background: HSLuvColor.fromHSL(
       backgroundHue,
       backgroundSat,
       backgroundLightness.toDouble(),
     ).toColor(),
-    HSLuvColor.fromHSL(
+    ColorType.Surface: HSLuvColor.fromHSL(
       backgroundHue,
       backgroundSat,
       backgroundLightness + 5.0,
     ).toColor(),
-  ];
+  };
 }
 
-List<Color> getRandomMaterial() {
+Map<ColorType, Color> getRandomMaterial() {
   final rng = Random();
   final isDark = rng.nextInt(2) % 2 == 0;
   return isDark ? getRandomMaterialDark() : getRandomMaterialLight();
 }
 
-List<Color> getRandomPreference(int prefs) {
+Map<ColorType, Color> getRandomPreference(int prefs) {
   if (prefs == 0) {
     return getRandomMaterialDark();
   } else if (prefs == 1) {
@@ -169,18 +171,18 @@ List<Color> getRandomPreference(int prefs) {
   } else if (prefs == 3) {
     final rng = Random();
 
-    return [
-      for (int i = 0; i < 3; i++)
-        Color.fromARGB(
-          255,
-          rng.nextInt(256),
-          rng.nextInt(256),
-          rng.nextInt(256),
-        )
-    ];
+    // return [
+    //   for (int i = 0; i < 3; i++)
+    //     Color.fromARGB(
+    //       255,
+    //       rng.nextInt(256),
+    //       rng.nextInt(256),
+    //       rng.nextInt(256),
+    //     )
+    // ];
   }
 
-  return <Color>[];
+  // return <Color>[];
 }
 
 // https://www.vanschneider.com/colors

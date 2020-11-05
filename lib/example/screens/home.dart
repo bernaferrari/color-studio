@@ -11,6 +11,7 @@ import 'package:colorstudio/example/vertical_picker/vertical_picker_main.dart';
 import 'package:colorstudio/example/widgets/loading_indicator.dart';
 import 'package:colorstudio/example/widgets/update_color_dialog.dart';
 import 'package:colorstudio/scheme/widgets/expanded_section.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -33,8 +34,9 @@ class SingleColorHome extends StatelessWidget {
       final currentState = state as MDCLoadedState;
 
       final Color selectedColor = currentState.rgbColors[currentState.selected];
-      final HSLuvColor hsluvColor = currentState.hsluvColors[currentState.selected];
-      final String selected = currentState.selected;
+      final HSLuvColor hsluvColor =
+          currentState.hsluvColors[currentState.selected];
+      final selected = currentState.selected;
 
       final colorScheme = (selectedColor.computeLuminance() > kLumContrast)
           ? ColorScheme.light(
@@ -139,10 +141,10 @@ class _BottomHome extends StatefulWidget {
     this.locked,
   });
 
-  final String selected;
+  final ColorType selected;
   final Color selectedColor;
-  final Map<String, Color> rgbColors;
-  final Map<String, bool> locked;
+  final Map<ColorType, Color> rgbColors;
+  final Map<ColorType, bool> locked;
 
   @override
   __BottomHomeState createState() => __BottomHomeState();
@@ -238,7 +240,7 @@ class _ColorContrastRow extends StatelessWidget {
   });
 
   final bool areValuesLocked;
-  final Map<String, Color> rgbColors;
+  final Map<ColorType, Color> rgbColors;
 
   @override
   Widget build(BuildContext context) {
@@ -259,8 +261,8 @@ class _ColorContrastRow extends StatelessWidget {
                 subtitle: kBackground,
                 contrast: state.contrastValues[0],
                 animateOnInit: false,
-                circleColor: rgbColors[kPrimary],
-                contrastingColor: rgbColors[kBackground],
+                circleColor: rgbColors[ColorType.Primary],
+                contrastingColor: rgbColors[ColorType.Background],
               ),
               // don't show the other circles when their values are useless.
               if (!areValuesLocked) ...[
@@ -269,16 +271,16 @@ class _ColorContrastRow extends StatelessWidget {
                   subtitle: kSurface,
                   contrast: state.contrastValues[1],
                   animateOnInit: false,
-                  circleColor: rgbColors[kSurface],
-                  contrastingColor: rgbColors[kPrimary],
+                  circleColor: rgbColors[ColorType.Surface],
+                  contrastingColor: rgbColors[ColorType.Primary],
                 ),
                 ContrastCircleBar(
                   title: kSurface,
                   subtitle: kBackground,
                   contrast: state.contrastValues[2],
                   animateOnInit: false,
-                  circleColor: rgbColors[kBackground],
-                  contrastingColor: rgbColors[kSurface],
+                  circleColor: rgbColors[ColorType.Background],
+                  contrastingColor: rgbColors[ColorType.Surface],
                 ),
               ],
             ],
@@ -362,16 +364,16 @@ class ThemeBar extends StatelessWidget {
     this.leading,
   });
 
-  final String selected;
-  final Map<String, Color> rgbColors;
-  final Map<String, bool> locked;
+  final ColorType selected;
+  final Map<ColorType, Color> rgbColors;
+  final Map<ColorType, bool> locked;
   final bool isExpanded;
   final Function onExpanded;
   final Widget leading;
 
   void colorSelected(
     BuildContext context,
-    String selected,
+    ColorType selected,
     Color color,
   ) {
     BlocProvider.of<MdcSelectedBloc>(context).add(
@@ -384,17 +386,17 @@ class ThemeBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, Color> colorsList = Map.from(rgbColors);
+    final Map<ColorType, Color> colorsList = Map.from(rgbColors);
 
     // remove from the bar items that were locked in the previous screen.
-    colorsList.removeWhere((String a, Color b) => locked[a] == true);
+    colorsList.removeWhere((var a, var b) => locked[a] == true);
 
     final mappedList = colorsList.values.toList();
     final keysList = colorsList.keys.toList();
 
     final contrastedColors = [
       for (int i = 0; i < mappedList.length; i++)
-        contrastingColor(mappedList[i])
+        contrastingRGBColor(mappedList[i])
     ];
 
     return Padding(
@@ -408,8 +410,7 @@ class ThemeBar extends StatelessWidget {
               if (leading == null &&
                   (builder.maxWidth > 400 || mappedList.length < 3))
                 SizedBox(width: 48),
-              if (leading != null)
-                leading,
+              if (leading != null) leading,
               Expanded(
                 child: Center(
                   child: SizedBox(
@@ -445,13 +446,15 @@ class ThemeBar extends StatelessWidget {
                                       .withOpacity(0.7),
                                 ),
                               ),
-                              textStyle:
-                                  Theme.of(context).textTheme.bodyText2.copyWith(
-                                        color: contrastedColors[i],
-                                        fontWeight: (selected == keysList[i])
-                                            ? FontWeight.w700
-                                            : FontWeight.w400,
-                                      ),
+                              textStyle: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2
+                                  .copyWith(
+                                    color: contrastedColors[i],
+                                    fontWeight: (selected == keysList[i])
+                                        ? FontWeight.w700
+                                        : FontWeight.w400,
+                                  ),
                               child: Row(
                                 children: <Widget>[
                                   SizedBox(width: 8),
@@ -468,7 +471,7 @@ class ThemeBar extends StatelessWidget {
                                       color: contrastedColors[i],
                                     ),
                                   SizedBox(width: 4),
-                                  Text(keysList[i]),
+                                  Text(describeEnum(keysList[i])),
                                   SizedBox(width: 8),
                                 ],
                               ),
@@ -521,7 +524,7 @@ class ContrastItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = colorWithDiff.color;
 
-    final Color textColor = (color.lightness < kLumContrast)
+    final Color textColor = (color.lightness < kLightnessThreshold)
         ? Colors.white.withOpacity(0.87)
         : Colors.black87;
 
@@ -576,8 +579,8 @@ class RoundSelectableColor extends StatelessWidget {
       final selected = (state as MDCLoadedState).selected;
       final allItems = (state as MDCLoadedState).rgbColorsWithBlindness;
 
-      final Color primaryColor = allItems[kPrimary];
-      final Color surfaceColor = allItems[kSurface];
+      final Color primaryColor = allItems[ColorType.Primary];
+      final Color surfaceColor = allItems[ColorType.Surface];
 
       final Color correctColor = when({
         () => kind == kPrimary: () => primaryColor,

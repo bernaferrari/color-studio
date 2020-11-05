@@ -10,13 +10,15 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
 class HorizontalSlidersBar extends StatelessWidget {
-  const HorizontalSlidersBar(this.currentState, {this.onPressed});
+  const HorizontalSlidersBar({this.onPressed});
 
-  final MDCLoadedState currentState;
   final Function onPressed;
 
   @override
   Widget build(BuildContext context) {
+    final MDCLoadedState currentState =
+        context.bloc<MdcSelectedBloc>().state as MDCLoadedState;
+
     final color = currentState.rgbColors[currentState.selected];
 
     final rgb = RGBSlider(
@@ -68,7 +70,7 @@ class HorizontalSlidersBar extends StatelessWidget {
           isExpanded: null,
           leading: Padding(
             padding: const EdgeInsets.only(left: 8.0),
-            child: BorderedIconButton(
+            child: OutlinedIconButton(
               child: Icon(FeatherIcons.x, size: 16),
               onPressed: onPressed,
               borderColor: Theme.of(context).colorScheme.onBackground,

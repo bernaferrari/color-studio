@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class TitleBar extends StatelessWidget {
   const TitleBar({this.title, this.children});
@@ -15,10 +14,7 @@ class TitleBar extends StatelessWidget {
         Expanded(
           child: Text(
             title,
-            style: GoogleFonts.openSans(
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-            ),
+            style: Theme.of(context).textTheme.headline6,
           ),
         ),
         ...children,

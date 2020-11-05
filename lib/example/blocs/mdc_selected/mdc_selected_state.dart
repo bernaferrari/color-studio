@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:colorstudio/example/util/constants.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
@@ -24,11 +25,11 @@ class MDCLoadedState extends MdcSelectedState {
     this.blindnessSelected,
   );
 
-  final Map<String, Color> rgbColors;
-  final Map<String, HSLuvColor> hsluvColors;
-  final Map<String, Color> rgbColorsWithBlindness;
-  final Map<String, bool> locked;
-  final String selected;
+  final Map<ColorType, Color> rgbColors;
+  final Map<ColorType, HSLuvColor> hsluvColors;
+  final Map<ColorType, Color> rgbColorsWithBlindness;
+  final Map<ColorType, bool> locked;
+  final ColorType selected;
   final int blindnessSelected;
 
   @override

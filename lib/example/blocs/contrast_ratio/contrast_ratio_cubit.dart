@@ -4,8 +4,8 @@ import 'dart:ui';
 import 'package:bloc/bloc.dart';
 import 'package:colorstudio/example/blocs/mdc_selected/mdc_selected.dart';
 import 'package:colorstudio/example/blocs/mdc_selected/mdc_selected_bloc.dart';
-import 'package:colorstudio/example/contrast/inter_color_with_contrast.dart';
 import 'package:colorstudio/example/mdc/util/elevation_overlay.dart';
+import 'package:colorstudio/example/util/calculate_contrast.dart';
 import 'package:colorstudio/example/util/color_util.dart';
 import 'package:colorstudio/example/util/constants.dart';
 import 'package:equatable/equatable.dart';
@@ -28,25 +28,34 @@ class ContrastRatioCubit extends Cubit<ContrastRatioState> {
     return super.close();
   }
 
-  void set(Map<String, Color> rgbColorsWithBlindness) {
+  void set(Map<ColorType, Color> rgbColorsWithBlindness) {
     final rgb = rgbColorsWithBlindness;
 
     emit(
       ContrastRatioState(
         contrastValues: [
-          calculateContrast(rgb[kPrimary], rgb[kBackground]),
-          calculateContrast(rgb[kPrimary], rgb[kSurface]),
-          calculateContrast(rgb[kBackground], rgb[kSurface]),
+          calculateContrast(
+            rgb[ColorType.Primary],
+            rgb[ColorType.Background],
+          ),
+          calculateContrast(
+            rgb[ColorType.Primary],
+            rgb[ColorType.Surface],
+          ),
+          calculateContrast(
+            rgb[ColorType.Background],
+            rgb[ColorType.Surface],
+          ),
         ],
         elevationValues: [
           for (int i = 0; i < elevationEntriesList.length; i++)
             ColorContrast(
               compositeColors(
                 const Color(0xffffffff),
-                rgb[kSurface],
+                rgb[ColorType.Surface],
                 elevationEntries[i].overlay,
               ),
-              rgb[kPrimary],
+              rgb[ColorType.Primary],
             ),
         ],
       ),

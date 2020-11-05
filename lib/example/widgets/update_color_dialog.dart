@@ -17,7 +17,7 @@ import '../blocs/slider_color/slider_color.dart';
 Future<void> showSlidersDialog(
   BuildContext context,
   Color color, [
-  String selected,
+  ColorType selected,
 ]) async {
   final dynamic result = await showDialog<dynamic>(
       context: context,

@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:colorstudio/example/util/constants.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hsluv/hsluvcolor.dart';
@@ -21,12 +22,12 @@ class MDCBlindnessEvent extends MdcSelectedEvent {
 }
 
 class MDCInitEvent extends MdcSelectedEvent {
-  const MDCInitEvent(this.initialList);
+  const MDCInitEvent(this.initialColors);
 
-  final List<Color> initialList;
+  final Map<ColorType, Color> initialColors;
 
   @override
-  String toString() => "MDC Init Event";
+  String toString() => "MDCInitEvent";
 
   @override
   List<Object> get props => [];
@@ -39,7 +40,7 @@ class MDCLoadEvent extends MdcSelectedEvent {
   });
 
   final Color currentColor;
-  final String selected;
+  final ColorType selected;
 
   @override
   String toString() => "MDCLoadEvent... $currentColor | $selected";
@@ -55,7 +56,7 @@ class MDCUpdateLock extends MdcSelectedEvent {
   });
 
   final bool isLock;
-  final String selected;
+  final ColorType selected;
 
   @override
   String toString() => "MDCUpdateLock... lock: $isLock on: $selected";
@@ -73,7 +74,7 @@ class MDCUpdateColor extends MdcSelectedEvent {
 
   final Color color;
   final HSLuvColor hsLuvColor;
-  final String selected;
+  final ColorType selected;
 
   @override
   String toString() => "MDCLoadEvent... $color | $selected | $hsLuvColor";
@@ -88,7 +89,7 @@ class MDCUpdateAllEvent extends MdcSelectedEvent {
     this.ignoreLock = false,
   });
 
-  final List<Color> colors;
+  final Map<ColorType, Color> colors;
   final bool ignoreLock;
 
   @override

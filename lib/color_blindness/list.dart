@@ -10,33 +10,32 @@ import 'item.dart';
 class ColorBlindnessList extends StatelessWidget {
   const ColorBlindnessList({this.contrastedList, this.locked});
 
-  final Map<String, Color> contrastedList;
-  final Map<String, bool> locked;
+  final Map<ColorType, Color> contrastedList;
+  final Map<ColorType, bool> locked;
 
   @override
   Widget build(BuildContext context) {
-    final mappedValues = <String, List<ColorWithBlind>>{};
-//    final Map<String, Color> mutableMap = Map.from(contrastedList);
-//    mutableMap.removeWhere((String key, Color _) => locked[key] == true);
-    contrastedList.forEach((String key, Color value) {
+    final mappedValues = <ColorType, List<ColorWithBlind>>{};
+    contrastedList.forEach((ColorType key, Color value) {
       mappedValues[key] = retrieveColorBlindList(value);
     });
 
-    final List<ColorWithBlind> primaryBlind = mappedValues[kPrimary];
-    final surfaceBlind = mappedValues[kSurface];
+    final List<ColorWithBlind> primaryBlind =
+        mappedValues[ColorType.Primary];
+    final surfaceBlind = mappedValues[ColorType.Surface];
 
     return BlocBuilder<ColorBlindnessCubit, int>(
         builder: (BuildContext context, int state) {
       return Column(
         children: <Widget>[
-          for (int i = 0; i < primaryBlind.length; i++) ...[
+          for (int i = 0; i < primaryBlind.length; i++)
             ColorBlindnessItem(
               value: i,
               groupValue: state,
               backgroundColor: surfaceBlind[i].color,
               colorWithBlindList: [
-                for (String item in mappedValues.keys)
-                  if (item != kSurface) mappedValues[item][i],
+                for (var item in mappedValues.keys)
+                  if (item != ColorType.Surface) mappedValues[item][i],
               ],
               primaryColor: primaryBlind[i].color,
               onChanged: (int selected) {
@@ -45,12 +44,6 @@ class ColorBlindnessList extends StatelessWidget {
               title: primaryBlind[i].name,
               subtitle: primaryBlind[i].affects,
             ),
-            Divider(
-              height: 0,
-              indent: 64,
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.30),
-            ),
-          ],
         ],
       );
     });

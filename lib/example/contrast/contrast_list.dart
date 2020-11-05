@@ -1,12 +1,14 @@
+import 'package:colorstudio/example/contrast/rgb_hsluv_tuple.dart';
 import 'package:flutter/material.dart';
+import 'package:hsluv/hsluvcolor.dart';
 import 'package:infinite_listview/infinite_listview.dart';
 
+import '../hsinter.dart';
 import 'contrast_item.dart';
-import 'inter_color_with_contrast.dart';
 
 class ContrastList extends StatelessWidget {
   const ContrastList({
-    this.pageKey,
+    this.kind,
     this.title,
     this.sectionIndex,
     this.listSize,
@@ -17,25 +19,22 @@ class ContrastList extends StatelessWidget {
     this.isFirst = false,
   });
 
-  final Function(Color) onColorPressed;
+  final Function(HSLuvColor) onColorPressed;
   final Function(int) buildWidget;
 
-  final List<InterColorWithContrast> colorsList;
+  final List<RgbHSLuvTuple> colorsList;
   final String title;
-  final String pageKey;
+  final HSInterType kind;
   final int sectionIndex;
   final int listSize;
   final bool isInfinite;
   final bool isFirst;
 
   Widget colorCompare(int index) {
-    return ContrastItem(
-      kind: pageKey,
-      color: colorsList[index],
-      contrast: colorsList[index].contrast,
-      compactText: isFirst,
+    return ContrastItem2(
+      rgbHsluvTuple: colorsList[index],
       category: title,
-      onPressed: () => onColorPressed(colorsList[index].color),
+      onPressed: () => onColorPressed(colorsList[index].hsluvColor),
     );
   }
 
@@ -45,7 +44,7 @@ class ContrastList extends StatelessWidget {
       child: isInfinite
           ? InfiniteListView.builder(
               scrollDirection: Axis.horizontal,
-              key: PageStorageKey<String>("$pageKey $sectionIndex"),
+              key: PageStorageKey<String>("$kind $sectionIndex"),
               itemBuilder: (BuildContext context, int absoluteIndex) {
                 return colorCompare(absoluteIndex % listSize);
               },
@@ -58,7 +57,7 @@ class ContrastList extends StatelessWidget {
                 physics: const BouncingScrollPhysics(),
                 itemCount: listSize,
                 scrollDirection: Axis.horizontal,
-                key: PageStorageKey<String>("$pageKey $sectionIndex"),
+                key: PageStorageKey<String>("$kind $sectionIndex"),
                 itemBuilder: (BuildContext context, int index) {
                   return colorCompare(index);
                 },

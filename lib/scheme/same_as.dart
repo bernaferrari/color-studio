@@ -9,31 +9,24 @@ class SameAs extends StatelessWidget {
   const SameAs({
     @required this.selected,
     @required this.color,
-    @required this.contrast,
+    @required this.lightness,
     this.children,
   });
 
-  final String selected;
+  final ColorType selected;
   final Color color;
-  final double contrast;
+  final double lightness;
   final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
-    Color textColor;
+    final Color textColor =
+        (lightness < kLightnessThreshold) ? Colors.white : Colors.black;
 
-    if (contrast >= kLightnessThreshold) {
-      textColor = Colors.black;
-    } else {
-      textColor = Colors.white;
-    }
-
-    return Container(
-      color: color,
-      width: double.infinity,
+    return Center(
       child: Column(
         children: <Widget>[
-          Divider(height: 0, color: textColor),
+          // Divider(height: 0, color: textColor),
           SizedBox(height: 16),
           Text(
             color.toHexStr(),
@@ -74,12 +67,12 @@ class SameAs extends StatelessWidget {
   }
 
   String sameAs() {
-    if (selected == kSurface) {
+    if (selected == ColorType.Surface) {
       return "${kBackground.toUpperCase()} + 5% LIGHTNESS";
-    } else if (selected == kBackground) {
+    } else if (selected == ColorType.Background) {
       return "8% ${kPrimary.toUpperCase()} + #121212";
-    } else if (selected == kSecondary) {
-      return "SAME AS ${kPrimary.toUpperCase()}";
+    } else if (selected == ColorType.Secondary) {
+      return "${kPrimary.toUpperCase()} + 90 OF HUE";
     }
     return "Error";
   }

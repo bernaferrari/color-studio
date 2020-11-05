@@ -1,5 +1,5 @@
 name: colorstudio
-description: A new Flutter project.
+description: Discover new colors.
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -11,32 +11,33 @@ description: A new Flutter project.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+6
+version: 1.0.1
 
 environment:
   sdk: ">=2.9.0 <3.0.0"
 
 dependencies:
+  bloc: ^6.1.0
+  equatable: ^1.2.5
   flutter:
     sdk: flutter
-  hsluv: ^1.0.5
-  bloc: ^6.0.3
-  rxdart: ^0.24.1
-  flutter_bloc: ^6.0.5
-  equatable: ^1.2.5
+  flutter_bloc: ^6.0.6
   flutter_feather_icons: ^1.0.3
-  infinite_listview: ^1.0.1+1
-  url_launcher: ^5.5.0
-  hive: ^1.4.4
+  google_fonts: ^1.1.1
+  hive: ^1.4.4+1
   hive_flutter: ^0.3.1
-  path_provider: ^1.6.18
-  google_fonts: ^1.1.0
+  hsluv: ^1.0.5+1
+  infinite_listview: ^1.0.1+1
+  path_provider: ^1.6.22
+  rxdart: ^0.24.1
+  shared_preferences: ^0.5.12+2
+  url_launcher: ^5.5.0
 
 dev_dependencies:
-  hive_generator: ^0.7.2+1
-  flutter_launcher_icons: ^0.8.0
+  flutter_launcher_icons: ^0.8.1
   flutter_test:
     sdk: flutter
+  hive_generator: ^0.8.2
 
 flutter_icons:
   # unfortunately, this only works without bugs for iOS.
@@ -51,3 +52,6 @@ flutter_icons:
 
 flutter:
   uses-material-design: true
+
+assets:
+  - google_fonts/

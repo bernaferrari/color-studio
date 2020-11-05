@@ -1,4 +1,4 @@
-import 'package:colorstudio/example/contrast/inter_color_with_contrast.dart';
+import 'package:colorstudio/example/util/calculate_contrast.dart';
 import 'package:colorstudio/example/util/color_util.dart';
 import 'package:colorstudio/example/util/constants.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +33,7 @@ class ContrastText extends StatelessWidget {
         children: <TextSpan>[
           TextSpan(
             text: ':1',
-            style: Theme.of(context).textTheme.subtitle2.copyWith(color: color),
+            style: Theme.of(context).textTheme.subtitle1.copyWith(color: color),
           ),
         ],
       ),

@@ -4,23 +4,23 @@ import 'package:colorstudio/example/blocs/blocs.dart';
 import 'package:colorstudio/example/blocs/contrast_ratio/contrast_ratio_cubit.dart';
 import 'package:colorstudio/example/util/constants.dart';
 import 'package:colorstudio/example/widgets/loading_indicator.dart';
-import 'package:colorstudio/widgets/section_card.dart';
 import 'package:colorstudio/widgets/title_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ContrastRatioCard extends StatelessWidget {
   const ContrastRatioCard(
     this.rgbColorsWithBlindness,
     this.shouldDisplayElevation,
     this.locked,
+    this.toContrastScreen,
   );
 
-  final Map<String, Color> rgbColorsWithBlindness;
-  final Map<String, bool> locked;
+  final Map<ColorType, Color> rgbColorsWithBlindness;
+  final Map<ColorType, bool> locked;
   final bool shouldDisplayElevation;
+  final Function toContrastScreen;
 
   @override
   Widget build(BuildContext context) {
@@ -34,146 +34,140 @@ class ContrastRatioCard extends StatelessWidget {
         return const Center(child: LoadingIndicator());
       }
 
-      final background = rgbColorsWithBlindness[kSurface];
-
-      final isiPad = MediaQuery.of(context).size.width > 600;
-
       const areValuesLocked = false;
 
-      return Theme(
-        data: ThemeData.from(
-          colorScheme: Theme.of(context).colorScheme,
-          textTheme: TextTheme(
-            bodyText2: GoogleFonts.firaSans(
-              fontWeight: FontWeight.w400,
-              fontSize: 14,
-            ),
-            headline6: GoogleFonts.firaSans(fontWeight: FontWeight.w600),
-          ),
-        ),
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: 8.0,
-            bottom: 8.0,
-            left: (isiPad == true) ? 24.0 : 16.0,
-            right: isiPad ? 8.0 : 16.0,
-          ),
-          child: SectionCard(
-            color: background,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+      return Card(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            TitleBar(
+              title: "Contrast Ratio",
               children: <Widget>[
-                TitleBar(
-                  title: "Contrast Ratio",
-                  children: <Widget>[
-                    IconButton(
-                      tooltip: "Contrast compare",
-                      icon: Icon(
-                        FeatherIcons.menu,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                      onPressed: () {
-                        Navigator.pushNamed(
-                          context,
-                          "/multiplecontrastcompare",
-                        );
-                      },
-                    ),
-                    IconButton(
-                      tooltip: "Help",
-                      icon: Icon(
-                        Icons.help_outline,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                      onPressed: () {
-                        showDialog<dynamic>(
-                            context: context,
-                            builder: (BuildContext ctx) {
-                              return _HelpDialog(
-                                background: background,
-                              );
-                            });
-                      },
-                    ),
-                  ],
-                ),
-                const Divider(
-                  height: 0,
-                  indent: 1,
-                  endIndent: 1,
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ContrastCircleBar(
-                      title: kPrimary,
-                      subtitle: kBackground,
-                      contrast: state.contrastValues[0],
-                      contrastingColor: rgbColorsWithBlindness[kPrimary],
-                      circleColor: rgbColorsWithBlindness[kBackground],
-                    ),
-                    if (!areValuesLocked) ...[
-                      ContrastCircleBar(
-                        title: kPrimary,
-                        subtitle: kSurface,
-                        contrast: state.contrastValues[1],
-                        contrastingColor: rgbColorsWithBlindness[kPrimary],
-                        circleColor: rgbColorsWithBlindness[kSurface],
-                      ),
-                      ContrastCircleBar(
-                        title: kSurface,
-                        subtitle: kBackground,
-                        contrast: state.contrastValues[2],
-                        contrastingColor: rgbColorsWithBlindness[kSurface],
-                        circleColor: rgbColorsWithBlindness[kBackground],
-                      ),
-                    ],
-                  ],
-                ),
-                const SizedBox(height: 4),
-                // surface qualifies as dark mode
-                Text(
-                  "Primary / Surface with elevation",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.onSurface,
+                IconButton(
+                  tooltip: "Contrast compare",
+                  icon: Icon(
+                    FeatherIcons.menu,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
+                  onPressed: toContrastScreen,
                 ),
-                if (shouldDisplayElevation) ...[
-                  const SizedBox(height: 8),
-                  DarkModeSurfaceContrast(state.elevationValues),
-                ] else ...[
-                  SizedBox(
-                    height: 128,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 36.0,
-                        vertical: 8.0,
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            "In dark surfaces, Material Design Components express depth by displaying lighter surface colors. "
-                            "The higher a surface’s elevation (raising it closer to an implied light source), the lighter that surface becomes.\n",
-                            style: Theme.of(context).textTheme.caption,
-                            textAlign: TextAlign.center,
-                          ),
-                          Text(
-                            "You are using a light surface color.",
-                            style: Theme.of(context).textTheme.bodyText1,
-                            textAlign: TextAlign.center,
-                          )
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-                const SizedBox(height: 16),
+                // IconButton(
+                //   tooltip: "Help",
+                //   icon: Icon(
+                //     Icons.help_outline,
+                //     color: Theme.of(context).colorScheme.primary,
+                //   ),
+                //   onPressed: () {
+                //     showDialog<dynamic>(
+                //         context: context,
+                //         builder: (BuildContext ctx) {
+                //           return _HelpDialog(
+                //             background: background,
+                //           );
+                //         });
+                //   },
+                // ),
               ],
             ),
-          ),
+            // const Divider(
+            //   height: 0,
+            //   indent: 1,
+            //   endIndent: 1,
+            // ),
+            Container(
+              height: 1,
+              margin: EdgeInsets.all(1),
+              width: double.infinity,
+              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.20),
+            ),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ContrastCircleBar(
+                  title: kPrimary,
+                  subtitle: kBackground,
+                  contrast: state.contrastValues[0],
+                  contrastingColor:
+                      rgbColorsWithBlindness[ColorType.Primary],
+                  circleColor:
+                      rgbColorsWithBlindness[ColorType.Background],
+                ),
+                if (!areValuesLocked) ...[
+                  ContrastCircleBar(
+                    title: kPrimary,
+                    subtitle: kSurface,
+                    contrast: state.contrastValues[1],
+                    contrastingColor:
+                        rgbColorsWithBlindness[ColorType.Primary],
+                    circleColor: rgbColorsWithBlindness[ColorType.Surface],
+                  ),
+                  // ContrastCircleBar(
+                  //   title: kSurface,
+                  //   subtitle: kBackground,
+                  //   contrast: state.contrastValues[2],
+                  //   contrastingColor: rgbColorsWithBlindness[kSurface],
+                  //   circleColor: rgbColorsWithBlindness[kBackground],
+                  // ),
+                ],
+                // SizedBox(
+                //   width: 48,
+                //   height: 48,
+                //   child: OutlinedButton(
+                //     style: OutlinedButton.styleFrom(
+                //       shape: RoundedRectangleBorder(
+                //         borderRadius: BorderRadius.circular(32.0)
+                //       )
+                //     ),
+                //     child: Icon(Icons.chevron_right),
+                //     onPressed: () {},
+                //   ),
+                // ),
+              ],
+            ),
+            const SizedBox(height: 4),
+            // surface qualifies as dark mode
+            // Text(
+            //   "Primary / Surface with elevation",
+            //   textAlign: TextAlign.center,
+            //   style: TextStyle(
+            //     color: Theme.of(context).colorScheme.onSurface,
+            //   ),
+            // ),
+            if (shouldDisplayElevation == null)
+              SizedBox()
+            else if (shouldDisplayElevation) ...[
+              const SizedBox(height: 8),
+              DarkModeSurfaceContrast(state.elevationValues),
+            ] else ...[
+              SizedBox(
+                height: 128,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 36.0,
+                    vertical: 8.0,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        "In dark surfaces, Material Design Components express depth by displaying lighter surface colors. "
+                        "The higher a surface’s elevation (raising it closer to an implied light source), the lighter that surface becomes.\n",
+                        style: Theme.of(context).textTheme.caption,
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        "You are using a light surface color.",
+                        style: Theme.of(context).textTheme.bodyText1,
+                        textAlign: TextAlign.center,
+                      )
+                    ],
+                  ),
+                ),
+              )
+            ],
+            const SizedBox(height: 16),
+          ],
         ),
       );
     });

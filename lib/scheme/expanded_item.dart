@@ -1,8 +1,7 @@
 import 'dart:math';
 
 import 'package:colorstudio/example/blocs/blocs.dart';
-import 'package:colorstudio/example/blocs/mdc_selected/mdc_selected_state.dart';
-import 'package:colorstudio/example/contrast/inter_color_with_contrast.dart';
+import 'package:colorstudio/example/util/calculate_contrast.dart';
 import 'package:colorstudio/example/util/color_util.dart';
 import 'package:colorstudio/example/util/constants.dart';
 import 'package:colorstudio/example/util/when.dart';
@@ -10,86 +9,72 @@ import 'package:colorstudio/example/vertical_picker/app_bar_actions.dart';
 import 'package:colorstudio/scheme/flat_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:hsluv/hsluvcolor.dart';
 
 class SchemeExpandedItem extends StatelessWidget {
   const SchemeExpandedItem({
     Key key,
     this.selected,
+    this.rgbColor,
+    this.hsLuvColor,
+    this.rgbColorWithBlindness,
   }) : super(key: key);
 
-  final String selected;
+  final ColorType selected;
+  final Color rgbColor;
+  final Color rgbColorWithBlindness;
+  final HSLuvColor hsLuvColor;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MdcSelectedBloc, MdcSelectedState>(
-      builder: (context, state) {
-        final color = (state as MDCLoadedState).rgbColors[selected];
-        final luv = (state as MDCLoadedState).hsluvColors[selected];
+    // final surface = luv.lightness >= kLightnessThreshold
+    //     ? Colors.black.withOpacity(0.20)
+    //     : Colors.white.withOpacity(0.20);
 
-        final surface = luv.lightness >= kLightnessThreshold
-            ? Colors.black.withOpacity(0.20)
-            : Colors.white.withOpacity(0.20);
+    // final scheme = luv.lightness >= kLightnessThreshold
+    //     ? ColorScheme.light(primary: color, surface: surface)
+    //     : ColorScheme.dark(primary: color, surface: surface);
 
-        final scheme = luv.lightness >= kLightnessThreshold
-            ? ColorScheme.light(primary: color, surface: surface)
-            : ColorScheme.dark(primary: color, surface: surface);
+    const valuesList = [-5, -1, 0, 1, 5];
 
-        const valuesList = [-5, -1, 0, 1, 5];
+    final listOfLists = [
+      valuesList
+          .map((i) => hsLuvColor.withHue((hsLuvColor.hue + i * 2) % 360))
+          .toList(),
+      valuesList
+          .map((i) => hsLuvColor
+              .withSaturation(interval(hsLuvColor.saturation + i, 0.0, 100.0)))
+          .toList(),
+      valuesList
+          .map((i) => hsLuvColor
+              .withLightness(interval(hsLuvColor.lightness + i, 0.0, 100.0)))
+          .toList(),
+    ];
 
-        final listOfLists = [
-          valuesList.map((i) => luv.withHue((luv.hue + i * 2) % 360)).toList(),
-          valuesList
-              .map((i) =>
-                  luv.withSaturation(interval(luv.saturation + i, 0.0, 100.0)))
-              .toList(),
-          valuesList
-              .map((i) =>
-                  luv.withLightness(interval(luv.lightness + i, 0.0, 100.0)))
-              .toList(),
-        ];
-
-        return Theme(
-          data: ThemeData.from(colorScheme: scheme)
-              .copyWith(
-                highlightColor: surface,
-                textSelectionColor: surface,
-                textSelectionHandleColor: surface,
-              )
-              .copyWith(
-                buttonTheme: ButtonThemeData(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                    side: BorderSide(
-                      color: scheme.onSurface.withOpacity(0.70),
-                    ),
-                  ),
-                ),
-              ),
-          child: Container(
-            color: (state as MDCLoadedState).rgbColorsWithBlindness[selected],
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                SizedBox(height: 8),
-                TopRow(color, selected),
-                FlatColorPicker(
-                  kind: "Hue",
-                  selected: selected,
-                  colors: listOfLists[0],
-                ),
-                FlatColorPicker(
-                  kind: "Saturation",
-                  selected: selected,
-                  colors: listOfLists[1],
-                ),
-                FlatColorPicker(
-                  kind: "Lightness",
-                  selected: selected,
-                  colors: listOfLists[2],
-                ),
-                SizedBox(height: 8),
+    return Container(
+      color: rgbColorWithBlindness,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          SizedBox(height: 8),
+          TopRow(rgbColor, selected),
+          FlatColorPicker(
+            kind: "Hue",
+            selected: selected,
+            colors: listOfLists[0],
+          ),
+          FlatColorPicker(
+            kind: "Saturation",
+            selected: selected,
+            colors: listOfLists[1],
+          ),
+          FlatColorPicker(
+            kind: "Lightness",
+            selected: selected,
+            colors: listOfLists[2],
+          ),
+          SizedBox(height: 8),
 //                if (isBlindnessOn) ...[
 //                  SizedBox(height: 4),
 //                  Text(
@@ -99,13 +84,10 @@ class SchemeExpandedItem extends StatelessWidget {
 //                        ),
 //                  ),
 //                ],
-                SizedBox(height: 8),
+          SizedBox(height: 8),
 //                  NearestColor(color: color),
-              ],
-            ),
-          ),
-        );
-      },
+        ],
+      ),
     );
   }
 
@@ -124,7 +106,7 @@ class TopRow extends StatelessWidget {
   const TopRow(this.color, this.selected);
 
   final Color color;
-  final String selected;
+  final ColorType selected;
 
   @override
   Widget build(BuildContext context) {
@@ -189,9 +171,10 @@ class TopRow extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
               ),
             ),
-            if (largeScreen)
-              BorderedIconButton(
-                child: Icon(FeatherIcons.shuffle, size: 16),
+            if (largeScreen) ...[
+              SizedBox(width: 8),
+              OutlinedIconButton(
+                child: Icon(Icons.shuffle_rounded, size: 16),
                 onPressed: () {
                   final rng = Random();
 
@@ -207,10 +190,10 @@ class TopRow extends StatelessWidget {
                     ),
                   );
                 },
-              )
-            else
+              ),
+            ] else
               SizedBox(width: 8),
-            SizedBox(width: 16),
+            SizedBox(width: 24),
           ],
         );
       },

@@ -21,7 +21,7 @@ class ColorCompareWidgetDetails extends StatelessWidget {
   final Function onPressed;
   final bool compactText;
   final String category;
-  final String kind;
+  final HSInterType kind;
 
   @override
   Widget build(BuildContext context) {
@@ -88,8 +88,8 @@ class ColorCompareWidgetDetails extends StatelessWidget {
     final shortestSide = MediaQuery.of(context).size.width;
 
     final String letterLorV = when({
-      () => kind == hsluvStr: () => "L",
-      () => kind == hsvStr: () => "V",
+      () => kind == HSInterType.HSLuv: () => "L",
+      () => kind == HSInterType.HSV: () => "V",
     });
 
     return RichText(

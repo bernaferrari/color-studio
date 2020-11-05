@@ -10,7 +10,7 @@ class FlatColorPicker extends StatelessWidget {
   const FlatColorPicker({this.kind, this.selected, this.colors});
 
   final String kind;
-  final String selected;
+  final ColorType selected;
   final List<HSLuvColor> colors;
 
   @override

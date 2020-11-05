@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hsluv/hsluvcolor.dart';
 
-import '../contrast/inter_color_with_contrast.dart';
+import '../util/calculate_contrast.dart';
 import '../contrast/shuffle_color.dart';
 import '../mdc/util/elevation_overlay.dart';
 import '../util/color_util.dart';
@@ -20,7 +21,7 @@ class Components extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final primaryContrastingColor = contrastingColor(primaryColor);
+    final primaryContrastingColor = contrastingRGBColor(primaryColor);
 //    final surfaceContrastingColor = contrastingColor(surfaceColor);
 //    final double itemWidth = MediaQuery.of(context).size.width / 2;
 //    final bgFromPrimary = blendColorWithBackground(primaryColor);
@@ -447,7 +448,7 @@ class _ComponentsSampleState extends State<ComponentsSample> {
                 label: Text("Moon"),
                 icon: Icon(FeatherIcons.shuffle, size: 16),
                 color: widget.primaryColor,
-                textColor: contrastingColor(widget.primaryColor),
+                textColor: contrastingRGBColor(widget.primaryColor),
                 onPressed: () {},
               ),
             ),
@@ -614,8 +615,12 @@ class _ExpandedSection3State extends State<ExpandedSection3>
   }
 }
 
-Color contrastingColor(Color color) {
+Color contrastingRGBColor(Color color) {
   return (color.computeLuminance() > kLumContrast)
       ? Colors.black
       : Colors.white;
+}
+
+Color contrastingHSLuvColor(HSLuvColor hsLuvColor) {
+  return (hsLuvColor.lightness > kLightnessThreshold) ? Colors.black : Colors.white;
 }

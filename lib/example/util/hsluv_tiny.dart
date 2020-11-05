@@ -48,3 +48,34 @@ List<Color> hsluvLightness(Color color,
       hsluv.withLightness(n * step + start).toColor()
   ];
 }
+
+List<HSLuvColor> hsluvTones2(HSLuvColor hsluv,
+    [int size, double start = 5.0, double stop = 100.0]) {
+  final step = (stop - start) / (size - 1);
+
+  return [
+    // this is the only way I found to make it work, from e.g. 95 to 5, inclusive.
+    for (int n = size - 1; n >= 0; n -= 1)
+      hsluv.withSaturation(n * step + start)
+  ];
+}
+
+List<HSLuvColor> hsluvLightness2(HSLuvColor hsluv,
+    [int size, double start = 5.0, double stop = 95.0]) {
+  final step = (stop - start) / (size - 1);
+
+  return [
+    // (n = size; n > 0) won't work because n * step will be wrong. Unless you
+    // you use (n-1) * step, but then it is an extra calculation per operation.
+    for (int n = size - 1; n >= 0; n -= 1) hsluv.withLightness(n * step + start)
+  ];
+}
+
+List<HSLuvColor> hsluvAlternatives2(HSLuvColor hsluv, [int n = 6]) {
+  final int div = (360 / n).round();
+  // in the original, code it is: luv.hue + (div * n) % 360
+  // this was modified to ignore luv.hue value because the
+  // list that is observing would miss the current position every time
+  // the color changes.
+  return [for (int i = 0; i < n; i++) hsluv.withHue((div * i) % 360.0)];
+}

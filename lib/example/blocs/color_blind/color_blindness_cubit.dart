@@ -8,7 +8,7 @@ class ColorBlindnessCubit extends Cubit<int> {
     if (newState < 0) {
       newState = 8;
     }
-    emit(state - 1);
+    emit(newState);
   }
 
   void decrement() {
@@ -16,7 +16,7 @@ class ColorBlindnessCubit extends Cubit<int> {
     if (newState < 0) {
       newState = 8;
     }
-    emit(state - 1);
+    emit(newState);
   }
 
   void set(int value) {

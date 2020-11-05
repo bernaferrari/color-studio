@@ -1,7 +1,5 @@
 import 'dart:ui';
 
-import 'package:colorstudio/example/blocs/blocs.dart';
-import 'package:colorstudio/example/widgets/color_sliders/slider_that_works.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,22 +12,7 @@ import 'util/elevation_overlay.dart';
 import 'widgets/FAProgressBar.dart';
 
 class Showcase extends StatefulWidget {
-  const Showcase({
-    this.primaryColor,
-    this.backgroundColor,
-    this.surfaceColor,
-    this.onBackgroundColor,
-    this.onSurfaceColor,
-    this.currentState,
-  });
-
-  final Color primaryColor;
-  final Color backgroundColor;
-  final Color surfaceColor;
-
-  final Color onBackgroundColor;
-  final Color onSurfaceColor;
-  final MDCLoadedState currentState;
+  const Showcase();
 
   @override
   _ShowcaseState createState() => _ShowcaseState();
@@ -53,9 +36,9 @@ class _ShowcaseState extends State<Showcase> {
     final currentElevation =
         elevationEntriesList[(sliderValue * divisions).round()];
 
-    final primaryColor = widget.primaryColor;
-    final backgroundColor = widget.backgroundColor;
-    final surfaceColor = widget.surfaceColor;
+    final primaryColor = Theme.of(context).colorScheme.primary;
+    final backgroundColor = Theme.of(context).colorScheme.background;
+    final surfaceColor = Theme.of(context).colorScheme.surface;
 
     final isiPad = MediaQuery.of(context).size.width > 600;
 
@@ -111,8 +94,6 @@ class _ShowcaseState extends State<Showcase> {
                   primary: primaryColor,
                   surface: surfaceColor,
                   background: backgroundColor,
-                  onBackground: widget.onBackgroundColor,
-                  onSurface: widget.onSurfaceColor,
                   elevation: currentElevation,
                 ),
                 _PrevPodcast(
@@ -120,14 +101,17 @@ class _ShowcaseState extends State<Showcase> {
                   surface: surfaceColor,
                   elevation: currentElevation,
                 ),
+                const SizedBox(height: 24),
                 _PrevSDKMonitor(
                   primary: primaryColor,
                   elevation: currentElevation,
                 ),
+                SizedBox(height: 24),
                 _PrevPodcasts(
                   primary: primaryColor,
                   elevation: currentElevation,
                 ),
+                SizedBox(height: 48),
                 const SizedBox(height: 16),
               ],
             ),
@@ -136,7 +120,7 @@ class _ShowcaseState extends State<Showcase> {
         Container(
           height: 1,
           width: double.infinity,
-          color: widget.onSurfaceColor.withOpacity(0.40),
+          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.40),
         ),
         AnimatedSwitcher(
           duration: const Duration(milliseconds: 400),
@@ -145,7 +129,7 @@ class _ShowcaseState extends State<Showcase> {
             return SizeTransition(child: child, sizeFactor: animation);
           },
           child: (slidersMode ?? false)
-              ? HorizontalSlidersBar(widget.currentState, onPressed: () {
+              ? HorizontalSlidersBar(onPressed: () {
                   setState(() {
                     slidersMode = false;
                   });
@@ -165,13 +149,44 @@ class _ShowcaseState extends State<Showcase> {
             children: <Widget>[
               const SizedBox(width: 16),
               Text(
+                "Roundness",
+                style: GoogleFonts.openSans(
+                  textStyle: Theme.of(context).textTheme.caption,
+                ),
+              ),
+              Expanded(
+                child: Slider(
+                  value: sliderValue,
+                  divisions: divisions,
+                  label: "${currentElevation.round()} pt",
+                  onChanged: (changed) {
+                    setState(() {
+                      sliderValue = changed;
+                      PageStorage.of(context).writeState(context, sliderValue,
+                          identifier: const ValueKey("ShapeRadius"));
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+        SafeArea(
+          bottom: true,
+          top: false,
+          right: false,
+          left: false,
+          child: Row(
+            children: <Widget>[
+              const SizedBox(width: 16),
+              Text(
                 "Elevation",
                 style: GoogleFonts.openSans(
                   textStyle: Theme.of(context).textTheme.caption,
                 ),
               ),
               Expanded(
-                child: Slider2(
+                child: Slider(
                   value: sliderValue,
                   divisions: divisions,
                   label: "${currentElevation.round()} pt",
@@ -211,7 +226,8 @@ class SafariBar extends StatelessWidget {
               height: 56,
               child: Card(
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
                 margin: const EdgeInsets.symmetric(vertical: 8),
                 color: bgColor.computeLuminance() < 0.12
                     ? const Color(0x0Bffffff)
@@ -306,9 +322,12 @@ class _PrevPodcast extends StatelessWidget {
         ),
         SizedBox(height: 16),
         Card(
-          shape: ContinuousRectangleBorder(),
-          margin: EdgeInsets.all(0),
+          shape: ContinuousRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          margin: EdgeInsets.all(8),
           elevation: elevation.toDouble(),
+          clipBehavior: Clip.antiAlias,
           child: Column(
             children: <Widget>[
               AppBar(
@@ -338,7 +357,8 @@ class _PrevPodcast extends StatelessWidget {
                   title: Text(texts[i], style: style),
                   leading: Icon(icons[i], color: primary),
                 ),
-                const Divider(height: 1, color: Colors.white38),
+                if (i != texts.length - 1)
+                  const Divider(height: 1, color: Colors.white38),
               ],
             ],
           ),
@@ -456,7 +476,16 @@ class _PrevClock extends StatelessWidget {
 //          padding: const EdgeInsets.only(top: 24, bottom: 16.0),
 //          child: _ShowcaseTitle("Clock"),
 //        ),
-        RawMaterialButton(
+        OutlinedButton(
+          style: OutlinedButton.styleFrom(
+            shape: CircleBorder(),
+            side: BorderSide(
+              width: 2,
+              color: Theme.of(context).colorScheme.onBackground,
+            ),
+            elevation: 0,
+            padding: const EdgeInsets.all(48.0),
+          ),
           onPressed: () {},
           child: RichText(
             text: TextSpan(
@@ -479,18 +508,12 @@ class _PrevClock extends StatelessWidget {
               ],
             ),
           ),
-          shape: CircleBorder(
-            side: BorderSide(
-                width: 2, color: Theme.of(context).colorScheme.onBackground),
-          ),
-          elevation: 0,
-          padding: const EdgeInsets.all(48.0),
         ),
         const SizedBox(height: 24),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            FlatButton(
+            TextButton(
               child: const Text("Reset"),
               onPressed: () {},
             ),
@@ -498,7 +521,7 @@ class _PrevClock extends StatelessWidget {
               onPressed: () {},
               child: Icon(Icons.pause_circle_outline),
             ),
-            FlatButton(
+            TextButton(
               child: const Text("Share"),
               onPressed: () {},
             ),
@@ -560,11 +583,12 @@ class _PrevSpotify extends StatelessWidget {
     return Column(
       children: <Widget>[
         SizedBox(height: 24),
-        Flex(
-          direction: isiPad ? Axis.horizontal : Axis.vertical,
-          mainAxisAlignment: MainAxisAlignment.center,
+        Wrap(
+          alignment: WrapAlignment.center,
+          runSpacing: 16,
+          spacing: 16,
+          // mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SizedBox(width: 16),
             Column(
               children: <Widget>[
                 Text(
@@ -583,17 +607,24 @@ class _PrevSpotify extends StatelessWidget {
                   style: GoogleFonts.hind(fontSize: 16),
                 ),
                 SizedBox(height: 8),
-                FlatButton(
-                  color: primary,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16)),
-                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-                  child: Text(
-                    "TAKE A LOOK",
-                    style: GoogleFonts.hind(
-                      fontWeight: FontWeight.w600,
-                      textStyle: TextStyle(
-                        color: Theme.of(context).colorScheme.onPrimary,
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: primary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                  ),
+                  child: Container(
+                    color: Colors.red,
+                    child: Text(
+                      "TAKE A LOOK",
+                      style: GoogleFonts.hind(
+                        fontWeight: FontWeight.w600,
+                        textStyle: TextStyle(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          textBaseline: TextBaseline.ideographic,
+                        ),
                       ),
                     ),
                   ),
@@ -601,7 +632,6 @@ class _PrevSpotify extends StatelessWidget {
                 )
               ],
             ),
-            SizedBox(width: 16, height: 16),
             Container(
               width: 144,
               height: 144,
@@ -625,13 +655,12 @@ class _PrevSpotify extends StatelessWidget {
                       width: 128,
                       child: FittedBox(
                         child: Text(
-                          "2019",
-                          style: GoogleFonts.hind(
+                          "2020",
+                          style: TextStyle(
                             fontWeight: FontWeight.w600,
-                            textStyle: TextStyle(
-                              height: 0.6,
-                              color: background,
-                            ),
+                            // textStyle: TextStyle(
+                            color: background,
+                            // ),
                           ),
                         ),
                       ),
@@ -640,7 +669,6 @@ class _PrevSpotify extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(width: 16),
           ],
         ),
         SizedBox(height: 24),
@@ -796,6 +824,7 @@ class _PrevTrip extends StatelessWidget {
           style: GoogleFonts.oxygen(
             fontSize: 26,
             fontWeight: FontWeight.w800,
+            color: Theme.of(context).colorScheme.onBackground,
           ),
         ),
         SizedBox(height: 24),
@@ -832,6 +861,7 @@ class _PrevTrip extends StatelessWidget {
                       style: GoogleFonts.oxygen(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
+                        color: Theme.of(context).colorScheme.onBackground,
                       ),
                     ),
                   ],
@@ -969,7 +999,7 @@ class _PrevPodcasts extends StatelessWidget {
               "278 years of Alcatraz's history. From Silicon Valley's luxury condominium to a prison no one can escape.",
           subdescription: "Yesterday • 34 MINS",
         ),
-        SizedBox(height: 24),
+        SizedBox(height: 16),
         _PodcastCard(
           elevation: elevation,
           primaryColor: Theme.of(context).colorScheme.onSurface,
@@ -980,7 +1010,6 @@ class _PrevPodcasts extends StatelessWidget {
               "Things have changed. Nothing is what you expect. And nothing will ever be the same again. Be careful with the maze.",
           subdescription: "Today • 22 MINS",
         ),
-        SizedBox(height: 48),
       ],
     );
   }
@@ -1227,7 +1256,7 @@ class _PrevPhotosTransparencyState extends State<PrevPhotosTransparency> {
             const SizedBox(width: 16),
             Text("interval", style: Theme.of(context).textTheme.caption),
             Expanded(
-              child: Slider2(
+              child: Slider(
                 value: sliderValue,
                 divisions: 6,
                 label: "${(currentNumber * 100).round()}%",
@@ -1267,20 +1296,19 @@ class _PrevPhotos extends StatelessWidget {
     this.primary,
     this.background,
     this.surface,
-    this.onBackground,
-    this.onSurface,
     this.elevation,
   });
 
   final Color primary;
   final Color background;
   final Color surface;
-  final Color onBackground;
-  final Color onSurface;
   final int elevation;
 
   @override
   Widget build(BuildContext context) {
+    final onBackground = Theme.of(context).colorScheme.onBackground;
+    final onSurface = Theme.of(context).colorScheme.onSurface;
+
     return Column(
       children: <Widget>[
         const SizedBox(height: 24),
@@ -1293,8 +1321,18 @@ class _PrevPhotos extends StatelessWidget {
         ),
         PrevPhotosTransparency(primary: primary),
         SizedBox(height: 16),
-        generateItem(primary, onBackground, "Primary"),
-        generateItem(onBackground, onBackground, "onBg"),
+        Card(
+          elevation: 0,
+          clipBehavior: Clip.antiAlias,
+          margin: EdgeInsets.all(16),
+          color: background,
+          child: Column(
+            children: [
+              generateItem(primary, onBackground, "Primary"),
+              generateItem(onBackground, onBackground, "onBg"),
+            ],
+          ),
+        ),
         Card(
           elevation: elevation.toDouble(),
           clipBehavior: Clip.antiAlias,
@@ -1358,7 +1396,12 @@ class _PrevPhotos extends StatelessWidget {
           Expanded(
             child: SizedBox(
               height: 56,
-              child: RawMaterialButton(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  primary: color.withOpacity(i),
+                  shape: RoundedRectangleBorder(),
+                ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -1370,9 +1413,6 @@ class _PrevPhotos extends StatelessWidget {
                   ],
                 ),
                 onPressed: () {},
-                elevation: 0,
-                highlightElevation: 0,
-                fillColor: color.withOpacity(i),
               ),
             ),
           ),
@@ -1402,7 +1442,6 @@ class _PrevSDKMonitor extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        const SizedBox(height: 24),
         // SDK Monitor app
         _SdkListTile(
           title: "Light mode",
@@ -1421,7 +1460,6 @@ class _PrevSDKMonitor extends StatelessWidget {
           iconData: FeatherIcons.info,
           elevation: elevation,
         ),
-        SizedBox(height: 24),
       ],
     );
   }

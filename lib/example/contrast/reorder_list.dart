@@ -1,19 +1,19 @@
-import 'package:flutter/material.dart';
-import 'package:colorstudio/example/blocs/multiple_contrast_color/multiple_contrast_color_state.dart';
+import 'package:colorstudio/example/blocs/multiple_contrast_compare/multiple_contrast_compare_cubit.dart';
 import 'package:colorstudio/example/mdc/components.dart';
 import 'package:colorstudio/example/util/color_util.dart';
+import 'package:flutter/material.dart';
 
 class ReorderList extends StatefulWidget {
   const ReorderList(this.list);
 
-  final List<ContrastedColor> list;
+  final List<ColorCompareContrast> list;
 
   @override
   _ReorderListState createState() => _ReorderListState();
 }
 
 class _ReorderListState extends State<ReorderList> {
-  List<ContrastedColor> elements;
+  List<ColorCompareContrast> elements;
 
   @override
   void initState() {
@@ -36,7 +36,7 @@ class _ReorderListState extends State<ReorderList> {
                     if (newIndex > oldIndex) {
                       newIndex -= 1;
                     }
-                    final ContrastedColor item = elements.removeAt(oldIndex);
+                    final ColorCompareContrast item = elements.removeAt(oldIndex);
                     elements.insert(newIndex, item);
                   });
                 },
@@ -56,7 +56,7 @@ class _ReorderListState extends State<ReorderList> {
                                     .textTheme
                                     .subtitle2
                                     .copyWith(
-                                      color: contrastingColor(
+                                      color: contrastingRGBColor(
                                         elements[i].rgbColor,
                                       ),
                                     ),
@@ -65,7 +65,7 @@ class _ReorderListState extends State<ReorderList> {
                           ),
                           Icon(
                             Icons.reorder,
-                            color: contrastingColor(elements[i].rgbColor),
+                            color: contrastingRGBColor(elements[i].rgbColor),
                           ),
                           const SizedBox(width: 8),
                         ],

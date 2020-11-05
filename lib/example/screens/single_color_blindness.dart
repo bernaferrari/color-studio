@@ -147,7 +147,7 @@ class _ColorBlindCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final contrastedColor = contrastingColor(blindColor.color);
+    final contrastedColor = contrastingRGBColor(blindColor.color);
 
     return MaterialButton(
       padding: const EdgeInsets.symmetric(horizontal: 16),

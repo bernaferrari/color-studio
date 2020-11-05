@@ -86,7 +86,7 @@ class _HSVerticalPickerState extends State<HSVerticalPicker> {
         backgroundColor: widget.color,
         actions: <Widget>[
           ColorSearchButton(color: widget.color),
-          BorderedIconButton(
+          OutlinedIconButton(
             child: Icon(FeatherIcons.moreHorizontal, size: 16),
             onPressed: () {
               showDialog<dynamic>(
@@ -178,7 +178,7 @@ class HSGenericScreen extends StatefulWidget {
   });
 
   final HSInterColor color;
-  final String kind;
+  final HSInterType kind;
   final List<ColorWithInter> Function() fetchHue;
   final List<ColorWithInter> Function() fetchSat;
   final List<ColorWithInter> Function() fetchLight;
@@ -239,7 +239,7 @@ class _HSGenericScreenState extends State<HSGenericScreen> {
         : Colors.white.withOpacity(0.40);
 
     final Widget hueWidget = ExpandableColorBar(
-        pageKey: widget.kind,
+        kind: widget.kind,
         title: widget.hueTitle,
         expanded: expanded,
         sectionIndex: 0,
@@ -253,7 +253,7 @@ class _HSGenericScreenState extends State<HSGenericScreen> {
         });
 
     final satWidget = ExpandableColorBar(
-        pageKey: widget.kind,
+        kind: widget.kind,
         title: widget.satTitle,
         expanded: expanded,
         sectionIndex: 1,
@@ -266,7 +266,7 @@ class _HSGenericScreenState extends State<HSGenericScreen> {
         });
 
     final valueWidget = ExpandableColorBar(
-      pageKey: widget.kind,
+      kind: widget.kind,
       title: widget.lightTitle,
       expanded: expanded,
       sectionIndex: 2,

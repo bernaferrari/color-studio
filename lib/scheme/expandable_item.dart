@@ -10,11 +10,16 @@ import 'package:hsluv/hsluvcolor.dart';
 
 class SchemeExpandableItem extends StatefulWidget {
   const SchemeExpandableItem(
-      this.contrastedColors, this.hsluvColors, this.locked);
+    this.rgbColors,
+    this.colorWithBlindness,
+    this.hsluvColors,
+    this.locked,
+  );
 
-  final Map<String, Color> contrastedColors;
-  final Map<String, HSLuvColor> hsluvColors;
-  final Map<String, bool> locked;
+  final Map<ColorType, Color> rgbColors;
+  final Map<ColorType, Color> colorWithBlindness;
+  final Map<ColorType, HSLuvColor> hsluvColors;
+  final Map<ColorType, bool> locked;
 
   @override
   _SchemeExpandableItemState createState() => _SchemeExpandableItemState();
@@ -45,14 +50,14 @@ class _SchemeExpandableItemState extends State<SchemeExpandableItem> {
 
   @override
   Widget build(BuildContext context) {
-    final mappedList = widget.contrastedColors.values.toList();
-    final keysList = widget.contrastedColors.keys.toList();
+    final rgbColorsList = widget.rgbColors.values.toList();
+    final keysList = widget.rgbColors.keys.toList();
 
     return Column(
       children: <Widget>[
-        for (int i = 0; i < widget.contrastedColors.length; i++) ...[
+        for (int i = 0; i < widget.rgbColors.length; i++) ...[
           SchemeCompactedItem(
-            rgbColor: mappedList[i],
+            rgbColor: rgbColorsList[i],
             title: keysList[i],
             expanded: index == i,
             locked: widget.locked[keysList[i]] ?? false,
@@ -61,15 +66,15 @@ class _SchemeExpandableItemState extends State<SchemeExpandableItem> {
             },
           ),
           _ExpandedAnimated(
-            i: i,
             expanded: index == i,
-            color: mappedList[i],
-            selected: keysList[i],
+            rgbColor: rgbColorsList[i],
+            hsluvColor: widget.hsluvColors[keysList[i]],
+            rgbColorWithBlindness: widget.colorWithBlindness[keysList[i]],
             isLocked: widget.locked[keysList[i]],
-            lightness: widget.hsluvColors[keysList[i]].lightness,
+            selected: keysList[i],
           ),
           // These dividers get ugly in web mode.
-          if (!kIsWeb && i != widget.contrastedColors.length - 1)
+          if (!kIsWeb && i != widget.rgbColors.length - 1)
             Divider(
               height: 0,
               indent: (index == i) ? 0 : 56,
@@ -84,26 +89,26 @@ class _SchemeExpandableItemState extends State<SchemeExpandableItem> {
 
 class _ExpandedAnimated extends StatelessWidget {
   const _ExpandedAnimated({
-    this.i,
     this.expanded,
-    this.color,
+    this.rgbColor,
+    this.hsluvColor,
+    this.rgbColorWithBlindness,
     this.selected,
     this.isLocked,
-    this.lightness,
   });
 
-  final int i;
   final bool expanded;
-  final Color color;
-  final String selected;
+  final Color rgbColor;
+  final HSLuvColor hsluvColor;
+  final Color rgbColorWithBlindness;
+  final ColorType selected;
   final bool isLocked;
-  final double lightness;
 
   @override
   Widget build(BuildContext context) {
-    final scheme = color.computeLuminance() > kLumContrast
-        ? ColorScheme.light(primary: color)
-        : ColorScheme.dark(primary: color);
+    final scheme = hsluvColor.lightness < kLightnessThreshold
+        ? ColorScheme.dark(primary: rgbColor)
+        : ColorScheme.light(primary: rgbColor);
 
     return ExpandedSection(
       expand: expanded,
@@ -127,15 +132,26 @@ class _ExpandedAnimated extends StatelessWidget {
             ),
           ),
         ),
-        child: AnimatedSwitcher(
-          duration: Duration(milliseconds: 500),
-          switchInCurve: Curves.easeInOut,
-          transitionBuilder: (Widget child, Animation<double> animation) {
-            return SizeTransition(child: child, sizeFactor: animation);
-          },
-          child: (isLocked ?? false)
-              ? SameAs(selected: selected, color: color, contrast: lightness)
-              : SchemeExpandedItem(selected: selected),
+        child: Container(
+          color: rgbColor,
+          child: AnimatedSwitcher(
+            duration: Duration(milliseconds: 500),
+            switchInCurve: Curves.easeInOut,
+            transitionBuilder: (Widget child, Animation<double> animation) {
+              return SizeTransition(child: child, sizeFactor: animation);
+            },
+            child: (isLocked ?? false)
+                ? SameAs(
+                    selected: selected,
+                    color: rgbColor,
+                    lightness: hsluvColor.lightness,
+                  )
+                : SchemeExpandedItem(
+                    rgbColor: rgbColor,
+                    hsLuvColor: hsluvColor,
+                    rgbColorWithBlindness: rgbColor,
+                    selected: selected),
+          ),
         ),
       ),
     );

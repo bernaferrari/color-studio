@@ -114,7 +114,7 @@ class _ColorLibraryState extends State<ColorLibrary> {
 //                                }),
                                 style:
                                     Theme.of(context).textTheme.bodyText1.copyWith(
-                                          color: contrastingColor(colorsList[i])
+                                          color: contrastingRGBColor(colorsList[i])
                                               .withOpacity(0.70),
                                         ),
                               ),

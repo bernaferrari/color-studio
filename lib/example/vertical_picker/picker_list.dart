@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:infinite_listview/infinite_listview.dart';
 
 import '../color_with_inter.dart';
+import '../hsinter.dart';
 
 class ExpandableColorBar extends StatelessWidget {
   const ExpandableColorBar({
-    this.pageKey,
+    this.kind,
     this.title,
     this.expanded,
     this.sectionIndex,
@@ -22,7 +23,7 @@ class ExpandableColorBar extends StatelessWidget {
   final Function(Color) onColorPressed;
   final List<ColorWithInter> colorsList;
   final String title;
-  final String pageKey;
+  final HSInterType kind;
   final int expanded;
   final int sectionIndex;
   final int listSize;
@@ -30,7 +31,7 @@ class ExpandableColorBar extends StatelessWidget {
 
   Widget colorCompare(int index) {
     return ColorCompareWidgetDetails(
-      kind: pageKey,
+      kind: kind,
       color: colorsList[index],
       compactText: expanded == sectionIndex,
       category: title,
@@ -51,7 +52,7 @@ class ExpandableColorBar extends StatelessWidget {
         child: Card(
           child: isInfinite
               ? InfiniteListView.builder(
-                  key: PageStorageKey<String>("$pageKey $sectionIndex"),
+                  key: PageStorageKey<String>("$kind $sectionIndex"),
                   itemBuilder: (BuildContext context, int absoluteIndex) {
                     return colorCompare(absoluteIndex % listSize);
                   },
@@ -63,7 +64,7 @@ class ExpandableColorBar extends StatelessWidget {
                   child: ListView.builder(
                     physics: const BouncingScrollPhysics(),
                     itemCount: listSize,
-                    key: PageStorageKey<String>("$pageKey $sectionIndex"),
+                    key: PageStorageKey<String>("$kind $sectionIndex"),
                     itemBuilder: (BuildContext context, int index) {
                       return colorCompare(index);
                     },

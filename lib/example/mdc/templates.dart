@@ -1,5 +1,6 @@
 import 'package:colorstudio/example/blocs/blocs.dart';
 import 'package:colorstudio/example/util/color_util.dart';
+import 'package:colorstudio/example/util/constants.dart';
 import 'package:colorstudio/example/util/selected.dart';
 import 'package:colorstudio/example/vertical_picker/app_bar_actions.dart';
 import 'package:flutter/material.dart';
@@ -245,11 +246,11 @@ class _TemplateItem extends StatelessWidget {
               onPressed: () {
                 BlocProvider.of<MdcSelectedBloc>(context).add(
                   MDCUpdateAllEvent(
-                    colors: [
-                      colors[0],
-                      colors[1],
-                      if (colors.length == 2) colors[1] else colors[2]
-                    ],
+                    colors: {
+                      ColorType.Primary: colors[0],
+                      ColorType.Background: colors[1],
+                      ColorType.Surface: (colors.length == 2) ? colors[1] : colors[2]
+                    },
                   ),
                 );
               },
@@ -266,7 +267,7 @@ class _TemplateItem extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .bodyText1
-                      .copyWith(color: contrastingColor(color)),
+                      .copyWith(color: contrastingRGBColor(color)),
                   textAlign: TextAlign.center,
                 ),
               ),
