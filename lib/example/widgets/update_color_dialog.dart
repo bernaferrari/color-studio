@@ -1,6 +1,7 @@
 // user defined function
-import 'package:colorstudio/example/blocs/mdc_selected/mdc_selected_bloc.dart';
-import 'package:colorstudio/example/blocs/mdc_selected/mdc_selected_event.dart';
+import 'package:colorstudio/blocs/blocs.dart';
+import 'package:colorstudio/blocs/mdc_selected/mdc_selected_bloc.dart';
+import 'package:colorstudio/blocs/mdc_selected/mdc_selected_event.dart';
 import 'package:colorstudio/example/util/color_util.dart';
 import 'package:colorstudio/example/util/constants.dart';
 import 'package:colorstudio/example/widgets/color_sliders.dart';
@@ -11,8 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-
-import '../blocs/slider_color/slider_color.dart';
 
 Future<void> showSlidersDialog(
   BuildContext context,

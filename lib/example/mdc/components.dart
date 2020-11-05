@@ -1,11 +1,11 @@
+import 'package:colorstudio/example/util/shuffle_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
-import '../util/calculate_contrast.dart';
-import '../contrast/shuffle_color.dart';
 import '../mdc/util/elevation_overlay.dart';
+import '../util/calculate_contrast.dart';
 import '../util/color_util.dart';
 import '../util/constants.dart';
 import '../util/selected.dart';
@@ -622,5 +622,7 @@ Color contrastingRGBColor(Color color) {
 }
 
 Color contrastingHSLuvColor(HSLuvColor hsLuvColor) {
-  return (hsLuvColor.lightness > kLightnessThreshold) ? Colors.black : Colors.white;
+  return (hsLuvColor.lightness > kLightnessThreshold)
+      ? Colors.black
+      : Colors.white;
 }

@@ -1,6 +1,6 @@
-import 'package:colorstudio/example/blocs/blocs.dart';
-import 'package:colorstudio/example/contrast/shuffle_color.dart';
+import 'package:colorstudio/blocs/blocs.dart';
 import 'package:colorstudio/example/util/constants.dart';
+import 'package:colorstudio/example/util/shuffle_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';

@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:colorstudio/contrast_ratio/widgets/contrast_widgets.dart';
+import 'package:colorstudio/blocs/blocs.dart';
 import 'package:colorstudio/example/mdc/components.dart';
 import 'package:colorstudio/example/mdc/templates.dart';
 import 'package:colorstudio/example/screens/about.dart';
@@ -10,7 +10,8 @@ import 'package:colorstudio/example/util/when.dart';
 import 'package:colorstudio/example/vertical_picker/vertical_picker_main.dart';
 import 'package:colorstudio/example/widgets/loading_indicator.dart';
 import 'package:colorstudio/example/widgets/update_color_dialog.dart';
-import 'package:colorstudio/scheme/widgets/expanded_section.dart';
+import 'package:colorstudio/screen_home/contrast_ratio/widgets/contrast_widgets.dart';
+import 'package:colorstudio/screen_home/scheme/widgets/expanded_section.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,7 +19,6 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
-import '../blocs/blocs.dart';
 import '../util/constants.dart';
 import 'color_library.dart';
 

@@ -1,9 +1,9 @@
 import 'dart:math' as math;
 
-import 'package:colorstudio/example/contrast/shuffle_color.dart';
 import 'package:colorstudio/example/mdc/components.dart';
 import 'package:colorstudio/example/util/constants.dart';
 import 'package:colorstudio/example/util/selected.dart';
+import 'package:colorstudio/example/util/shuffle_color.dart';
 import 'package:colorstudio/example/widgets/update_color_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

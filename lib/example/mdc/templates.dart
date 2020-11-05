@@ -1,4 +1,4 @@
-import 'package:colorstudio/example/blocs/blocs.dart';
+import 'package:colorstudio/blocs/blocs.dart';
 import 'package:colorstudio/example/util/color_util.dart';
 import 'package:colorstudio/example/util/constants.dart';
 import 'package:colorstudio/example/util/selected.dart';

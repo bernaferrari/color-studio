@@ -1,4 +1,4 @@
-import 'package:colorstudio/example/blocs/blocs.dart';
+import 'package:colorstudio/blocs/blocs.dart';
 import 'package:colorstudio/example/screens/home.dart';
 import 'package:colorstudio/example/util/constants.dart';
 import 'package:colorstudio/example/vertical_picker/app_bar_actions.dart';

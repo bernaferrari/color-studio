@@ -9,10 +9,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'example/blocs/blocs.dart';
-import 'example/blocs/color_blind/color_blindness_cubit.dart';
-import 'example/blocs/mdc_selected/mdc_selected_bloc.dart';
-import 'example/contrast/shuffle_color.dart';
+import 'blocs/blocs.dart';
+import 'example/util/shuffle_color.dart';
 import 'navigator.dart';
 
 Future<void> main() async {

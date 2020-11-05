@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:colorstudio/example/blocs/blocs.dart';
+import 'package:colorstudio/blocs/blocs.dart';
 import 'package:colorstudio/example/mdc/util/color_blind_from_index.dart';
 import 'package:colorstudio/example/screens/single_color_blindness.dart';
 import 'package:colorstudio/example/util/constants.dart';
