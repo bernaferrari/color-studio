@@ -1,5 +1,6 @@
 import 'dart:html';
 
+import 'package:colorstudio/colors_compare/colors_compare_screen.dart';
 import 'package:colorstudio/screen_home/color_blindness/card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,7 +9,6 @@ import 'blocs/blocs.dart';
 import 'example/mdc/components_preview.dart';
 import 'screen_home/contrast_ratio/card.dart';
 import 'screen_home/scheme/card.dart';
-import 'screen_multi_color_compare/contrast_screen.dart';
 
 class ColorStudioApp extends StatefulWidget {
   @override
@@ -109,7 +109,7 @@ class ColorRouterDelegate extends RouterDelegate<ColorRoutePath>
                             create: (context) => MultipleContrastCompareCubit(
                               BlocProvider.of<MdcSelectedBloc>(context),
                             ),
-                            child: const ContrastCompareScreen(),
+                            child: const ColorsCompareScreen(),
                           ),
                         ),
                     ],

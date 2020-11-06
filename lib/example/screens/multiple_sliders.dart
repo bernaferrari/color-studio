@@ -17,25 +17,25 @@ class MultipleSliders extends StatelessWidget {
     return BlocBuilder<SliderColorBloc, SliderColorState>(
         builder: (context, state) {
       if (state is SliderColorLoading) {
-        return const Scaffold(body: Center(child: LoadingIndicator()));
+        return const Scaffold(body: LoadingIndicator());
       }
 
       final Widget rgb = RGBSlider(
           color: (state as SliderColorLoaded).rgbColor,
           onChanged: (r, g, b) {
-            BlocProvider.of<SliderColorBloc>(context).add(MoveRGB(r, g, b));
+            context.bloc<SliderColorBloc>().add(MoveRGB(r, g, b));
           });
 
       final Widget hsl = HSLuvSlider(
           color: (state as SliderColorLoaded).hsluvColor,
           onChanged: (h, s, l) {
-            BlocProvider.of<SliderColorBloc>(context).add(MoveHSLuv(h, s, l));
+            context.bloc<SliderColorBloc>().add(MoveHSLuv(h, s, l));
           });
 
       final Widget hsv = HSVSlider(
           color: (state as SliderColorLoaded).hsvColor,
           onChanged: (h, s, v) {
-            BlocProvider.of<SliderColorBloc>(context).add(MoveHSV(h, s, v));
+            context.bloc<SliderColorBloc>().add(MoveHSV(h, s, v));
           });
 
       return Scaffold(

@@ -247,7 +247,7 @@ class _ColorContrastRow extends StatelessWidget {
     return BlocBuilder<ContrastRatioCubit, ContrastRatioState>(
         builder: (context, state) {
       if (state.contrastValues.isEmpty) {
-        return Center(child: LoadingIndicator());
+        return const LoadingIndicator();
       }
 
       return Center(

@@ -32,7 +32,7 @@ class ContrastRatioCard extends StatelessWidget {
     return BlocBuilder<ContrastRatioCubit, ContrastRatioState>(
         builder: (context, state) {
       if (state.contrastValues.isEmpty) {
-        return const Center(child: LoadingIndicator());
+        return const LoadingIndicator();
       }
 
       const areValuesLocked = false;
