@@ -1,16 +1,16 @@
 import 'dart:math';
 
-import 'package:colorstudio/blocs/blocs.dart';
-import 'package:colorstudio/example/util/calculate_contrast.dart';
-import 'package:colorstudio/example/util/color_util.dart';
-import 'package:colorstudio/example/util/constants.dart';
-import 'package:colorstudio/example/util/when.dart';
-import 'package:colorstudio/example/vertical_picker/app_bar_actions.dart';
-import 'package:colorstudio/util/widget_space.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
+import '../../blocs/blocs.dart';
+import '../../example/util/calculate_contrast.dart';
+import '../../example/util/color_util.dart';
+import '../../example/util/constants.dart';
+import '../../example/util/when.dart';
+import '../../example/vertical_picker/app_bar_actions.dart';
+import '../../util/widget_space.dart';
 import 'flat_color_picker.dart';
 
 class SchemeExpandedItem extends StatelessWidget {

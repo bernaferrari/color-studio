@@ -1,13 +1,14 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:colorstudio/blocs/blocs.dart';
-import 'package:colorstudio/blocs/slider_color/slider_color_event.dart';
-import 'package:colorstudio/blocs/slider_color/slider_color_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hsluv/hsluvcolor.dart';
 import 'package:rxdart/rxdart.dart';
+
+import '../blocs.dart';
+import 'slider_color_event.dart';
+import 'slider_color_state.dart';
 
 class SliderColorBloc extends Bloc<SliderColorEvent, SliderColorState> {
   SliderColorBloc() : super(SliderColorLoading());

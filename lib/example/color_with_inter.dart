@@ -1,17 +1,17 @@
-import 'package:colorstudio/example/hsinter.dart';
-import 'package:colorstudio/example/util/color_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'hsinter.dart';
+import 'util/color_util.dart';
+
 extension ListConversion<T> on List<Color> {
   List<ColorWithInter> convertToInter(HSInterType kind) =>
-      map((Color c) => ColorWithInter(c, HSInterColor.fromColor(c, kind)))
-          .toList();
+      map((c) => ColorWithInter(c, HSInterColor.fromColor(c, kind))).toList();
 }
 
 extension ListConversionInter<T> on List<HSInterColor> {
   List<ColorWithInter> convertToColorWithInter() =>
-      map((HSInterColor c) => ColorWithInter(c.toColor(), c)).toList();
+      map((c) => ColorWithInter(c.toColor(), c)).toList();
 }
 
 class ColorWithInter {

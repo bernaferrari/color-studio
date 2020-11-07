@@ -1,9 +1,9 @@
-import 'package:colorstudio/blocs/color_blind/color_blindness_cubit.dart';
-import 'package:colorstudio/example/util/constants.dart';
-import 'package:colorstudio/screen_home/title_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../blocs/color_blind/color_blindness_cubit.dart';
+import '../../example/util/constants.dart';
+import '../title_bar.dart';
 import 'list.dart';
 
 class ColorBlindnessCard extends StatelessWidget {
@@ -32,7 +32,7 @@ class ColorBlindnessCard extends StatelessWidget {
                   color: Theme.of(context).colorScheme.primary,
                 ),
                 onPressed: () {
-                  context.bloc<ColorBlindnessCubit>().decrement();
+                  context.read<ColorBlindnessCubit>().decrement();
                 },
               ),
               IconButton(
@@ -42,7 +42,7 @@ class ColorBlindnessCard extends StatelessWidget {
                   color: Theme.of(context).colorScheme.primary,
                 ),
                 onPressed: () {
-                  context.bloc<ColorBlindnessCubit>().increment();
+                  context.read<ColorBlindnessCubit>().increment();
                 },
               ),
             ],

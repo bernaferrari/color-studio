@@ -1,10 +1,10 @@
-import 'package:colorstudio/blocs/blocs.dart';
-import 'package:colorstudio/blocs/multiple_contrast_compare/rgb_hsluv_tuple.dart';
-import 'package:colorstudio/example/util/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../blocs/blocs.dart';
+import '../blocs/multiple_contrast_compare/rgb_hsluv_tuple.dart';
 import '../contrast_util.dart';
+import '../example/util/constants.dart';
 
 class SingleRowContrastColorPicker extends StatelessWidget {
   const SingleRowContrastColorPicker({
@@ -34,7 +34,7 @@ class SingleRowContrastColorPicker extends StatelessWidget {
                   rgbHsluvTuple: colorsRange[i],
                   contrast: colorsRange[i].contrast,
                   onPressed: () {
-                    context.bloc<MdcSelectedBloc>().add(
+                    context.read<MdcSelectedBloc>().add(
                           MDCLoadEvent(
                             currentColor: colorsRange[i].rgbColor,
                             selected: currentKey,
@@ -59,14 +59,13 @@ class _ContrastItemCompacted extends StatelessWidget {
 
   final RgbHSLuvTupleWithContrast rgbHsluvTuple;
   final double contrast;
-  final Function onPressed;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
-    final Color textColor =
-        (rgbHsluvTuple.hsluvColor.lightness < kLightnessThreshold)
-            ? Colors.white.withOpacity(0.87)
-            : Colors.black87;
+    final textColor = (rgbHsluvTuple.hsluvColor.lightness < kLightnessThreshold)
+        ? Colors.white.withOpacity(0.87)
+        : Colors.black87;
 
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
@@ -81,10 +80,8 @@ class _ContrastItemCompacted extends StatelessWidget {
         children: <Widget>[
           Text(
             rgbHsluvTuple.hsluvColor.lightness.round().toString(),
-            style: Theme.of(context)
-                .textTheme
-                .caption
-                .copyWith(color: textColor),
+            style:
+                Theme.of(context).textTheme.caption.copyWith(color: textColor),
           ),
           Text(
             contrast.toStringAsPrecision(3),

@@ -1,10 +1,11 @@
-import 'package:colorstudio/blocs/blocs.dart';
-import 'package:colorstudio/contrast_util.dart';
-import 'package:colorstudio/example/util/constants.dart';
-import 'package:colorstudio/example/util/when.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hsluv/hsluvcolor.dart';
+
+import '../../blocs/blocs.dart';
+import '../../contrast_util.dart';
+import '../../example/util/constants.dart';
+import '../../example/util/when.dart';
 
 class FlatColorPicker extends StatelessWidget {
   const FlatColorPicker({this.kind, this.selected, this.colors});
@@ -64,7 +65,7 @@ class _SelectorItem extends StatelessWidget {
   final Color color;
   final String category;
   final HSLuvColor hsLuvColor;
-  final Function onPressed;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {

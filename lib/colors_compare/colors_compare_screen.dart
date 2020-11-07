@@ -1,14 +1,3 @@
-import 'package:colorstudio/blocs/blocs.dart';
-import 'package:colorstudio/blocs/multiple_contrast_compare/rgb_hsluv_tuple.dart';
-import 'package:colorstudio/example/mdc/components.dart';
-import 'package:colorstudio/example/util/color_util.dart';
-import 'package:colorstudio/example/util/constants.dart';
-import 'package:colorstudio/example/util/selected.dart';
-import 'package:colorstudio/example/util/shuffle_color.dart';
-import 'package:colorstudio/util/widget_space.dart';
-import 'package:colorstudio/example/widgets/loading_indicator.dart';
-import 'package:colorstudio/example/widgets/update_color_dialog.dart';
-import 'package:colorstudio/screen_home/scheme/same_as.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +7,18 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
+import '../blocs/blocs.dart';
+import '../blocs/multiple_contrast_compare/rgb_hsluv_tuple.dart';
 import '../contrast_util.dart';
+import '../example/mdc/components.dart';
+import '../example/util/color_util.dart';
+import '../example/util/constants.dart';
+import '../example/util/selected.dart';
+import '../example/util/shuffle_color.dart';
+import '../example/widgets/loading_indicator.dart';
+import '../example/widgets/update_color_dialog.dart';
+import '../screen_home/scheme/same_as.dart';
+import '../util/widget_space.dart';
 import 'multi_row_color_picker.dart';
 import 'single_row_contrast_color_picker.dart';
 
@@ -28,8 +28,7 @@ class ColorsCompareScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MultipleContrastCompareCubit, MultipleColorCompareState>(
-        builder:
-            (BuildContext builderContext, MultipleColorCompareState state) {
+        builder: (_, state) {
       if (state.colorsCompared.isEmpty) {
         return const Scaffold(body: LoadingIndicator());
       }
@@ -76,7 +75,7 @@ class ColorsCompareScreen extends StatelessWidget {
             key: const PageStorageKey("ContrastCompareKey"),
             itemCount: state.colorsCompared.length,
             padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-            itemBuilder: (BuildContext context, int _index) {
+            itemBuilder: (_, _index) {
               final currentKey = state.colorsCompared.keys.toList()[_index];
 
               return Padding(
@@ -94,8 +93,7 @@ class ColorsCompareScreen extends StatelessWidget {
                     switchInCurve: currentKey == state.selectedKey
                         ? Curves.fastOutSlowIn
                         : Curves.fastLinearToSlowEaseIn,
-                    transitionBuilder:
-                        (Widget child, Animation<double> animation) {
+                    transitionBuilder: (child, animation) {
                       return SizeTransition(
                         child: FadeTransition(child: child, opacity: animation),
                         sizeFactor: animation,
@@ -167,23 +165,23 @@ class _ComparisonPart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final checkIcon = Icon(
+    final Icon checkIcon = Icon(
       FeatherIcons.checkCircle,
       color: otherColor,
     );
 
-    final removeIcon = Icon(
+    final Icon removeIcon = Icon(
       FeatherIcons.xSquare,
       color: otherColor,
     );
 
-    final style = TextStyle(
+    final TextStyle style = TextStyle(
       fontSize: 10,
       fontWeight: FontWeight.w500,
       color: otherColor,
     );
 
-    final parameters = [
+    final List<Map<String, Object>> parameters = [
       {
         "title": "Optimal",
         "letters": "AAA",
@@ -260,7 +258,7 @@ class CompactPicker extends StatelessWidget {
     return AnimatedSwitcher(
       duration: Duration(milliseconds: 500),
       switchInCurve: Curves.easeInOut,
-      transitionBuilder: (Widget child, Animation<double> animation) {
+      transitionBuilder: (child, animation) {
         return SizeTransition(child: child, sizeFactor: animation);
       },
       child: (locked[colorsCompared[currentKey].name] == true)
@@ -560,7 +558,7 @@ class _TopSectionButtons extends StatelessWidget {
                   print("button is vs $currentKey");
 
                   context
-                      .bloc<MultipleContrastCompareCubit>()
+                      .read<MultipleContrastCompareCubit>()
                       .updateSelectedKey(currentKey);
                 },
               ),

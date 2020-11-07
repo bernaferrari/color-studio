@@ -1,11 +1,11 @@
-import 'package:colorstudio/blocs/blocs.dart';
-import 'package:colorstudio/example/util/color_util.dart';
-import 'package:colorstudio/example/util/constants.dart';
-import 'package:colorstudio/example/util/selected.dart';
-import 'package:colorstudio/example/vertical_picker/app_bar_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../blocs/blocs.dart';
+import '../util/color_util.dart';
+import '../util/constants.dart';
+import '../util/selected.dart';
+import '../vertical_picker/app_bar_actions.dart';
 import 'components.dart';
 
 class ColorTemplates extends StatelessWidget {
@@ -249,7 +249,8 @@ class _TemplateItem extends StatelessWidget {
                     colors: {
                       ColorType.Primary: colors[0],
                       ColorType.Background: colors[1],
-                      ColorType.Surface: (colors.length == 2) ? colors[1] : colors[2]
+                      ColorType.Surface:
+                          (colors.length == 2) ? colors[1] : colors[2]
                     },
                   ),
                 );

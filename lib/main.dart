@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:colorstudio/example/util/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +9,7 @@ import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'blocs/blocs.dart';
+import 'example/util/constants.dart';
 import 'example/util/shuffle_color.dart';
 import 'navigator.dart';
 

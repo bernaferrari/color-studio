@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class FAProgressBar extends StatelessWidget {
-  const FAProgressBar({
+class HorizontalProgressBar extends StatelessWidget {
+  const HorizontalProgressBar({
     Key key,
     this.currentValue = 0,
     this.maxValue = 100,
@@ -143,7 +143,7 @@ class _RectangularPercentageWidgetState
   }
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     final double position = _controller.value;
 
     final Widget progressWidget = Container(

@@ -1,10 +1,10 @@
-import 'package:colorstudio/blocs/blocs.dart';
-import 'package:colorstudio/example/vertical_picker/app_bar_actions.dart';
-import 'package:colorstudio/example/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../blocs/blocs.dart';
+import '../vertical_picker/app_bar_actions.dart';
 import '../widgets/color_sliders.dart';
+import '../widgets/loading_indicator.dart';
 
 class MultipleSliders extends StatelessWidget {
   const MultipleSliders({this.color, this.isSplitView = false});
@@ -23,19 +23,19 @@ class MultipleSliders extends StatelessWidget {
       final Widget rgb = RGBSlider(
           color: (state as SliderColorLoaded).rgbColor,
           onChanged: (r, g, b) {
-            context.bloc<SliderColorBloc>().add(MoveRGB(r, g, b));
+            context.read<SliderColorBloc>().add(MoveRGB(r, g, b));
           });
 
       final Widget hsl = HSLuvSlider(
           color: (state as SliderColorLoaded).hsluvColor,
           onChanged: (h, s, l) {
-            context.bloc<SliderColorBloc>().add(MoveHSLuv(h, s, l));
+            context.read<SliderColorBloc>().add(MoveHSLuv(h, s, l));
           });
 
       final Widget hsv = HSVSlider(
           color: (state as SliderColorLoaded).hsvColor,
           onChanged: (h, s, v) {
-            context.bloc<SliderColorBloc>().add(MoveHSV(h, s, v));
+            context.read<SliderColorBloc>().add(MoveHSV(h, s, v));
           });
 
       return Scaffold(

@@ -1,10 +1,10 @@
-import 'package:colorstudio/blocs/blocs.dart';
-import 'package:colorstudio/example/screens/single_color_blindness.dart';
-import 'package:colorstudio/example/util/color_blindness.dart';
-import 'package:colorstudio/example/util/constants.dart';
+import 'package:color_blindness/color_blindness.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../blocs/blocs.dart';
+import '../../example/screens/single_color_blindness.dart';
+import '../../example/util/constants.dart';
 import 'item.dart';
 
 class ColorBlindnessList extends StatelessWidget {
@@ -16,15 +16,14 @@ class ColorBlindnessList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mappedValues = <ColorType, List<ColorWithBlind>>{};
-    contrastedList.forEach((ColorType key, Color value) {
+    contrastedList.forEach((key, value) {
       mappedValues[key] = retrieveColorBlindList(value);
     });
 
     final List<ColorWithBlind> primaryBlind = mappedValues[ColorType.Primary];
     final surfaceBlind = mappedValues[ColorType.Surface];
 
-    return BlocBuilder<ColorBlindnessCubit, int>(
-        builder: (BuildContext context, int state) {
+    return BlocBuilder<ColorBlindnessCubit, int>(builder: (_, state) {
       return Column(
         children: <Widget>[
           for (int i = 0; i < primaryBlind.length; i++)
@@ -37,8 +36,8 @@ class ColorBlindnessList extends StatelessWidget {
                   if (item != ColorType.Surface) mappedValues[item][i],
               ],
               primaryColor: primaryBlind[i].color,
-              onChanged: (int selected) {
-                context.bloc<ColorBlindnessCubit>().set(selected);
+              onChanged: (selectedIndex) {
+                context.read<ColorBlindnessCubit>().set(selectedIndex);
               },
               title: primaryBlind[i].name,
               subtitle: primaryBlind[i].affects,

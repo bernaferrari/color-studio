@@ -27,16 +27,16 @@ class ContrastCircleBar extends StatelessWidget {
     return CirclePercentageWidget(
       title: title,
       subtitle: subtitle,
-      percent: getNormalised(contrast) / 100,
+      percent: _getNormalised(contrast) / 100,
       contrastValue: contrast,
-      color: getProgressColor(contrast),
+      color: _getProgressColor(contrast),
       animatedInit: animateOnInit,
       circleColor: (contrast > 2) ? circleColor : null,
       contrastingColor: (contrast > 2) ? contrastingColor : null,
     );
   }
 
-  Color getProgressColor(double contrast) {
+  Color _getProgressColor(double contrast) {
     if (contrast < 3.0) {
       return Colors.redAccent[200];
     } else if (contrast < 4.5) {
@@ -48,7 +48,7 @@ class ContrastCircleBar extends StatelessWidget {
     }
   }
 
-  double getNormalised(double contrast) {
+  double _getNormalised(double contrast) {
     double normalized;
 
     if (contrast < 7) {

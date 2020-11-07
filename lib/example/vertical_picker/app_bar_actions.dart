@@ -1,9 +1,10 @@
-import 'package:colorstudio/example/util/color_util.dart';
-import 'package:colorstudio/example/util/constants.dart';
-import 'package:colorstudio/example/util/selected.dart';
-import 'package:colorstudio/example/widgets/update_color_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+
+import '../util/color_util.dart';
+import '../util/constants.dart';
+import '../util/selected.dart';
+import '../widgets/update_color_dialog.dart';
 
 class ColorSearchButton extends StatelessWidget {
   const ColorSearchButton({
@@ -45,7 +46,7 @@ class ColorSearchButton extends StatelessWidget {
 class OutlinedIconButton extends StatelessWidget {
   const OutlinedIconButton({this.child, this.borderColor, this.onPressed});
 
-  final Function onPressed;
+  final VoidCallback onPressed;
   final Widget child;
   final Color borderColor;
 

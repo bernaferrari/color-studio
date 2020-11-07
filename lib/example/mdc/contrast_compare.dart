@@ -1,9 +1,8 @@
-import 'package:colorstudio/example/util/calculate_contrast.dart';
-import 'package:colorstudio/example/util/color_util.dart';
-import 'package:colorstudio/example/util/constants.dart';
 import 'package:flutter/material.dart';
 
-import 'widgets/FAProgressBar.dart';
+import '../util/color_util.dart';
+import '../util/constants.dart';
+import 'widgets/horizontal_progress_bar.dart';
 
 class ContrastText extends StatelessWidget {
   const ContrastText(this.contrast, {this.color, this.withSizedBox = true});
@@ -150,7 +149,10 @@ class ColorCompareWidget extends StatelessWidget {
               ),
               Text(
                 firstData.name,
-                style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 18),
+                style: Theme.of(context)
+                    .textTheme
+                    .headline6
+                    .copyWith(fontSize: 18),
                 overflow: TextOverflow.ellipsis,
               ),
             ],

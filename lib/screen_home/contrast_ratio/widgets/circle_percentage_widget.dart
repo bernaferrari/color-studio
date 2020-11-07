@@ -1,7 +1,7 @@
-import 'package:colorstudio/example/mdc/contrast_compare.dart';
 import 'package:flutter/material.dart';
 
 import '../../../contrast_util.dart';
+import '../../../example/mdc/contrast_compare.dart';
 import 'circle_percentage_painter.dart';
 
 class CirclePercentageWidget extends StatefulWidget {
@@ -68,10 +68,7 @@ class _CirclePercentageWidgetState extends State<CirclePercentageWidget>
   }
 
   @override
-  Widget build(context) {
-
-
-
+  Widget build(BuildContext context) {
     return Column(
       children: [
         Text(

@@ -1,10 +1,5 @@
 import 'dart:math' as math;
 
-import 'package:colorstudio/example/hsinter.dart';
-import 'package:colorstudio/example/util/color_util.dart';
-import 'package:colorstudio/example/util/constants.dart';
-import 'package:colorstudio/example/util/selected.dart';
-import 'package:colorstudio/example/vertical_picker/picker_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -15,11 +10,15 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
 import '../color_with_inter.dart';
+import '../hsinter.dart';
 import '../screens/about.dart';
+import '../util/color_util.dart';
 import '../util/constants.dart';
+import '../util/selected.dart';
 import 'app_bar_actions.dart';
 import 'hsluv_selector.dart';
 import 'hsv_selector.dart';
+import 'picker_list.dart';
 
 const hsvStr = "HSV";
 const hsluvStr = "HSLuv";
@@ -247,7 +246,7 @@ class _HSGenericScreenState extends State<HSGenericScreen> {
         isInfinite: true,
         colorsList: hue,
         onTitlePressed: () => modifyAndSaveExpanded(0),
-        onColorPressed: (Color c) {
+        onColorPressed: (c) {
           modifyAndSaveExpanded(0);
           colorSelected(context, c);
         });
@@ -260,7 +259,7 @@ class _HSGenericScreenState extends State<HSGenericScreen> {
         listSize: widget.toneSize,
         colorsList: tones,
         onTitlePressed: () => modifyAndSaveExpanded(1),
-        onColorPressed: (Color c) {
+        onColorPressed: (c) {
           modifyAndSaveExpanded(1);
           colorSelected(context, c);
         });
@@ -273,7 +272,7 @@ class _HSGenericScreenState extends State<HSGenericScreen> {
       listSize: widget.toneSize,
       colorsList: values,
       onTitlePressed: () => modifyAndSaveExpanded(2),
-      onColorPressed: (Color c) {
+      onColorPressed: (c) {
         modifyAndSaveExpanded(2);
         colorSelected(context, c);
       },
@@ -316,7 +315,7 @@ class _HSGenericScreenState extends State<HSGenericScreen> {
                         flex: (i == expanded) ? 1 : 0,
                         child: LayoutBuilder(
                           // thanks Remi Rousselet for the idea!
-                          builder: (BuildContext ctx, BoxConstraints builder) {
+                          builder: (_, builder) {
                             return AnimatedContainer(
                               width: (i == expanded) ? builder.maxWidth : 64,
                               duration: const Duration(milliseconds: 250),

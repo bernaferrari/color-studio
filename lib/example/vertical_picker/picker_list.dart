@@ -1,10 +1,10 @@
-import 'package:colorstudio/example/util/constants.dart';
-import 'package:colorstudio/example/vertical_picker/picker_item.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_listview/infinite_listview.dart';
 
 import '../color_with_inter.dart';
 import '../hsinter.dart';
+import '../util/constants.dart';
+import 'picker_item.dart';
 
 class ExpandableColorBar extends StatelessWidget {
   const ExpandableColorBar({
@@ -53,7 +53,7 @@ class ExpandableColorBar extends StatelessWidget {
           child: isInfinite
               ? InfiniteListView.builder(
                   key: PageStorageKey<String>("$kind $sectionIndex"),
-                  itemBuilder: (BuildContext context, int absoluteIndex) {
+                  itemBuilder: (_, absoluteIndex) {
                     return colorCompare(absoluteIndex % listSize);
                   },
                 )
@@ -65,7 +65,7 @@ class ExpandableColorBar extends StatelessWidget {
                     physics: const BouncingScrollPhysics(),
                     itemCount: listSize,
                     key: PageStorageKey<String>("$kind $sectionIndex"),
-                    itemBuilder: (BuildContext context, int index) {
+                    itemBuilder: (_, index) {
                       return colorCompare(index);
                     },
                   ),
@@ -86,7 +86,7 @@ class _ExpandableTitle extends StatelessWidget {
     this.onTitlePressed,
   });
 
-  final Function onTitlePressed;
+  final VoidCallback onTitlePressed;
   final String title;
   final int expanded;
   final int index;

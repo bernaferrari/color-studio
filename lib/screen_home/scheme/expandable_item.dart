@@ -1,9 +1,9 @@
-import 'package:colorstudio/example/util/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
+import '../../example/util/constants.dart';
 import 'compacted_item.dart';
 import 'expanded_item.dart';
 import 'same_as.dart';
@@ -32,7 +32,7 @@ class _SchemeExpandableItemState extends State<SchemeExpandableItem> {
   @override
   void initState() {
     index = PageStorage.of(context).readState(context,
-            identifier: const ValueKey("SchemeExpandableItem")) ??
+            identifier: const ValueKey<String>("SchemeExpandableItem")) ??
         -1;
 
     super.initState();
@@ -44,7 +44,7 @@ class _SchemeExpandableItemState extends State<SchemeExpandableItem> {
       PageStorage.of(context).writeState(
         context,
         index,
-        identifier: const ValueKey("SchemeExpandableItem"),
+        identifier: const ValueKey<String>("SchemeExpandableItem"),
       );
     });
   }
@@ -138,7 +138,7 @@ class _ExpandedAnimated extends StatelessWidget {
           child: AnimatedSwitcher(
             duration: Duration(milliseconds: 500),
             switchInCurve: Curves.easeInOut,
-            transitionBuilder: (Widget child, Animation<double> animation) {
+            transitionBuilder: (child, animation) {
               return SizeTransition(child: child, sizeFactor: animation);
             },
             child: (isLocked ?? false)

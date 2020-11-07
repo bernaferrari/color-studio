@@ -1,7 +1,8 @@
 import 'dart:math' as math;
 
-import 'package:colorstudio/example/screens/single_color_blindness.dart';
 import 'package:flutter/material.dart';
+
+import '../../example/screens/single_color_blindness.dart';
 
 class ColorBlindnessItem extends StatelessWidget {
   const ColorBlindnessItem({
@@ -23,7 +24,7 @@ class ColorBlindnessItem extends StatelessWidget {
   final Color backgroundColor;
   final Color primaryColor;
   final List<ColorWithBlind> colorWithBlindList;
-  final Function(int) onChanged;
+  final ValueChanged<int> onChanged;
 
   @override
   Widget build(BuildContext context) {

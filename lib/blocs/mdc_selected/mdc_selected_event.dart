@@ -1,9 +1,10 @@
 import 'dart:ui';
 
-import 'package:colorstudio/example/util/constants.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hsluv/hsluvcolor.dart';
+
+import '../../example/util/constants.dart';
 
 abstract class MdcSelectedEvent extends Equatable {
   const MdcSelectedEvent();

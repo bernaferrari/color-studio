@@ -59,7 +59,7 @@ class _RGBSliderState extends State<RGBSlider> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         SingleSlider("Red", valueRed / 255, "$valueRed", colorRed,
-            scale: 255, onChanged: (double value) {
+            scale: 255, onChanged: (value) {
           setState(() {
             valueRed = (value * 255).round();
             updateColorLists();
@@ -67,7 +67,7 @@ class _RGBSliderState extends State<RGBSlider> {
           });
         }),
         SingleSlider("Green", valueGreen / 255, "$valueGreen", colorGreen,
-            scale: 255, onChanged: (double value) {
+            scale: 255, onChanged: (value) {
           setState(() {
             valueGreen = (value * 255).round();
             updateColorLists();
@@ -75,7 +75,7 @@ class _RGBSliderState extends State<RGBSlider> {
           });
         }),
         SingleSlider("Blue", valueBlue / 255, "$valueBlue", colorBlue,
-            scale: 255, onChanged: (double value) {
+            scale: 255, onChanged: (value) {
           setState(() {
             valueBlue = (value * 255).round();
             updateColorLists();

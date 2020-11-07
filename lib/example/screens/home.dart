@@ -1,17 +1,5 @@
 import 'dart:math' as math;
 
-import 'package:colorstudio/blocs/blocs.dart';
-import 'package:colorstudio/example/mdc/components.dart';
-import 'package:colorstudio/example/mdc/templates.dart';
-import 'package:colorstudio/example/screens/about.dart';
-import 'package:colorstudio/example/screens/single_color_blindness.dart';
-import 'package:colorstudio/example/util/selected.dart';
-import 'package:colorstudio/example/util/when.dart';
-import 'package:colorstudio/example/vertical_picker/vertical_picker_main.dart';
-import 'package:colorstudio/example/widgets/loading_indicator.dart';
-import 'package:colorstudio/example/widgets/update_color_dialog.dart';
-import 'package:colorstudio/screen_home/contrast_ratio/widgets/contrast_widgets.dart';
-import 'package:colorstudio/screen_home/scheme/widgets/expanded_section.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,8 +7,20 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
+import '../../blocs/blocs.dart';
+import '../../screen_home/contrast_ratio/widgets/contrast_widgets.dart';
+import '../../screen_home/scheme/widgets/expanded_section.dart';
+import '../mdc/components.dart';
+import '../mdc/templates.dart';
 import '../util/constants.dart';
+import '../util/selected.dart';
+import '../util/when.dart';
+import '../vertical_picker/vertical_picker_main.dart';
+import '../widgets/loading_indicator.dart';
+import '../widgets/update_color_dialog.dart';
+import 'about.dart';
 import 'color_library.dart';
+import 'single_color_blindness.dart';
 
 class SingleColorHome extends StatelessWidget {
   const SingleColorHome({this.isSplitView = false});
@@ -302,7 +302,7 @@ class ColorWithDiff {
 List<ColorWithDiff> generateLuvVariations(HSLuvColor luv, String kind) {
   final luvList = <ColorWithDiff>[];
 
-  for (int i = -10; i < 0; i += 5) {
+  for (var i = -10; i < 0; i += 5) {
     // if lightness becomes 0 or 100 the hue value might be lost
     // because app is always converting HSLuv to RGB and vice-versa.
 

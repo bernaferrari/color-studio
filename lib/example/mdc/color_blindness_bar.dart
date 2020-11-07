@@ -1,14 +1,15 @@
 import 'dart:math' as math;
 
-import 'package:colorstudio/blocs/blocs.dart';
-import 'package:colorstudio/example/mdc/util/color_blind_from_index.dart';
-import 'package:colorstudio/example/screens/single_color_blindness.dart';
-import 'package:colorstudio/example/util/constants.dart';
-import 'package:colorstudio/example/vertical_picker/app_bar_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../blocs/blocs.dart';
+import '../screens/single_color_blindness.dart';
+import '../util/constants.dart';
+import '../vertical_picker/app_bar_actions.dart';
+import 'util/color_blind_from_index.dart';
 
 class ColorBlindnessBar extends StatelessWidget {
   const ColorBlindnessBar({this.onPressed});
@@ -17,8 +18,7 @@ class ColorBlindnessBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MdcSelectedBloc, MdcSelectedState>(
-        builder: (BuildContext context, state) {
+    return BlocBuilder<MdcSelectedBloc, MdcSelectedState>(builder: (_, state) {
       final currentState = state as MDCLoadedState;
 
       final ColorWithBlind blindPrimary = getColorBlindFromIndex(
@@ -90,7 +90,7 @@ class ColorBlindnessBar extends StatelessWidget {
                         shape: RoundedRectangleBorder(),
                         child: Icon(FeatherIcons.chevronLeft),
                         onPressed: () {
-                          context.bloc<ColorBlindnessCubit>().decrement();
+                          context.read<ColorBlindnessCubit>().decrement();
                         },
                       ),
                     ),
@@ -110,7 +110,7 @@ class ColorBlindnessBar extends StatelessWidget {
                         shape: const RoundedRectangleBorder(),
                         child: Icon(FeatherIcons.chevronRight),
                         onPressed: () {
-                          context.bloc<ColorBlindnessCubit>().increment();
+                          context.read<ColorBlindnessCubit>().increment();
                         },
                       ),
                     ),

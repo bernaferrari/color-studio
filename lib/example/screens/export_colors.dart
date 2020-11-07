@@ -1,37 +1,33 @@
-import 'package:colorstudio/blocs/blocs.dart';
-import 'package:colorstudio/example/util/color_util.dart';
-import 'package:colorstudio/example/util/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../blocs/blocs.dart';
+import '../util/color_util.dart';
+import '../util/constants.dart';
+
 class ExportColors extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MdcSelectedBloc, MdcSelectedState>(
-        builder: (BuildContext builderContext, MdcSelectedState state) {
+    return BlocBuilder<MdcSelectedBloc, MdcSelectedState>(builder: (_, state) {
       final currentState = state as MDCLoadedState;
 
-      final primary =
-          currentState.rgbColorsWithBlindness[ColorType.Primary];
+      final primary = currentState.rgbColorsWithBlindness[ColorType.Primary];
       final background =
           currentState.rgbColorsWithBlindness[ColorType.Background];
-      final surface =
-          currentState.rgbColorsWithBlindness[ColorType.Surface];
+      final surface = currentState.rgbColorsWithBlindness[ColorType.Surface];
 
-      final onPrimary =
-          currentState.hsluvColors[ColorType.Primary].lightness >=
-                  kLightnessThreshold
-              ? Colors.black
-              : Colors.white;
+      final onPrimary = currentState.hsluvColors[ColorType.Primary].lightness >=
+              kLightnessThreshold
+          ? Colors.black
+          : Colors.white;
 
-      final onSurface =
-          currentState.hsluvColors[ColorType.Surface].lightness >=
-                  kLightnessThreshold
-              ? Colors.black
-              : Colors.white;
+      final onSurface = currentState.hsluvColors[ColorType.Surface].lightness >=
+              kLightnessThreshold
+          ? Colors.black
+          : Colors.white;
 
       final onBackground =
           currentState.hsluvColors[ColorType.Background].lightness >=
@@ -227,12 +223,12 @@ colorScheme.onSurfaceColor = ColorFromRGB(0x${onSurface.toStr()});
                     onPressed: () {
                       Clipboard.setData(ClipboardData(text: retrievedText));
 
-                      Scaffold.of(context).hideCurrentSnackBar();
+                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
                       final snackBar = SnackBar(
                         content: Text('$kind copied!'),
                         duration: const Duration(milliseconds: 1000),
                       );
-                      Scaffold.of(context).showSnackBar(snackBar);
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     },
                   ),
                 ),

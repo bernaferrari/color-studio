@@ -1,9 +1,10 @@
-import 'package:colorstudio/blocs/blocs.dart';
-import 'package:colorstudio/example/util/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+
+import '../../blocs/blocs.dart';
+import '../../example/util/constants.dart';
 
 class SchemeCompactedItem extends StatelessWidget {
   const SchemeCompactedItem({
@@ -18,7 +19,7 @@ class SchemeCompactedItem extends StatelessWidget {
   final ColorType title;
   final bool locked;
   final bool expanded;
-  final Function onPressed;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +118,9 @@ class SchemeCompactedItem extends StatelessWidget {
                   // only show round radius on the last element when not expanded.
                   borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(
-                      (title == ColorType.Surface && expanded == false) ? 8.0 : 0.0,
+                      (title == ColorType.Surface && expanded == false)
+                          ? 8.0
+                          : 0.0,
                     ),
                   ),
                 ),

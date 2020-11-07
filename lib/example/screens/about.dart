@@ -1,6 +1,3 @@
-import 'package:colorstudio/blocs/blocs.dart';
-import 'package:colorstudio/example/util/constants.dart';
-import 'package:colorstudio/example/util/shuffle_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -10,6 +7,10 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../blocs/blocs.dart';
+import '../util/constants.dart';
+import '../util/shuffle_color.dart';
 
 class About extends StatelessWidget {
   const About({this.isSplitView = false});
@@ -151,11 +152,11 @@ class _ContactInfo extends StatelessWidget {
                 if (await canLaunch(url)) {
                   await launch(url);
                 } else {
-                  Scaffold.of(context).hideCurrentSnackBar();
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
                   const snackBar = SnackBar(
                     content: Text('Error! No email app was found.'),
                   );
-                  Scaffold.of(context).showSnackBar(snackBar);
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 }
               },
             ),

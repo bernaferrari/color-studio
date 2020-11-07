@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:colorstudio/example/util/calculate_contrast.dart';
-import 'package:colorstudio/example/util/color_util.dart';
-import 'package:colorstudio/example/util/constants.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
+import '../../example/util/calculate_contrast.dart';
+import '../../example/util/color_util.dart';
+import '../../example/util/constants.dart';
 import '../blocs.dart';
 import 'rgb_hsluv_tuple.dart';
 
@@ -70,7 +70,7 @@ class MultipleContrastCompareCubit extends Cubit<MultipleColorCompareState> {
       }
 
       final colorsRange = <RgbHSLuvTupleWithContrast>[];
-      for (int i = -10; i < 15; i += 5) {
+      for (var i = -10; i < 15; i += 5) {
         final luv = hsluvColors[key];
 
         // if lightness becomes 0 or 100 the hue value might be lost

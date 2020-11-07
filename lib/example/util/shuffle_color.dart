@@ -1,10 +1,10 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:colorstudio/example/util/calculate_contrast.dart';
-import 'package:colorstudio/example/util/constants.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
+import 'calculate_contrast.dart';
+import 'constants.dart';
 
 class _ColorContrast {
   const _ColorContrast(this.color, this.contrast);

@@ -1,10 +1,10 @@
-import 'package:colorstudio/blocs/blocs.dart';
-import 'package:colorstudio/blocs/contrast_ratio/contrast_ratio_cubit.dart';
-import 'package:colorstudio/example/mdc/contrast_compare.dart';
-import 'package:colorstudio/example/mdc/util/elevation_overlay.dart';
 import 'package:flutter/material.dart';
 
+import '../../blocs/blocs.dart';
+import '../../blocs/contrast_ratio/contrast_ratio_cubit.dart';
 import '../../contrast_util.dart';
+import '../../example/mdc/contrast_compare.dart';
+import '../../example/mdc/util/elevation_overlay.dart';
 
 class DarkModeSurfaceContrast extends StatelessWidget {
   const DarkModeSurfaceContrast(this.elevationValues);
@@ -33,14 +33,10 @@ class DarkModeSurfaceContrast extends StatelessWidget {
               ],
             ),
             const SizedBox(width: 8),
-            Stack(
+            Row(
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    for (int i = 0; i < elevationEntriesList.length; i++)
-                      _VerticalBarWithText(elevationValues[i], i),
-                  ],
-                ),
+                for (int i = 0; i < elevationEntriesList.length; i++)
+                  _VerticalBarWithText(elevationValues[i], i),
               ],
             ),
             const SizedBox(width: 8),

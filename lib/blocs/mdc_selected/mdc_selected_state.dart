@@ -1,8 +1,9 @@
 import 'dart:ui';
 
-import 'package:colorstudio/example/util/constants.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hsluv/hsluvcolor.dart';
+
+import '../../example/util/constants.dart';
 
 abstract class MdcSelectedState extends Equatable {
   const MdcSelectedState();

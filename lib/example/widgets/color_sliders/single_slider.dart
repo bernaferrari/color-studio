@@ -1,6 +1,5 @@
 import 'dart:math' as math;
 
-import 'package:colorstudio/example/widgets/color_sliders/slider_that_works.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -37,7 +36,7 @@ class SingleSlider extends StatelessWidget {
         trackShape: _GradientRoundedRectSliderTrackShape(colorList),
         thumbShape: _RoundSliderThumbShape2(strValue: strValue),
       ),
-      child: Slider2(
+      child: Slider(
         value: value,
         onChanged: onChanged,
       ),
@@ -116,7 +115,7 @@ class _GradientRoundedRectSliderTrackShape extends SliderTrackShape
       colors: colors,
     );
 
-    final Rect trackRect = getPreferredRect(
+    final trackRect = getPreferredRect(
       parentBox: parentBox,
       offset: offset,
       sliderTheme: sliderTheme,
@@ -124,35 +123,37 @@ class _GradientRoundedRectSliderTrackShape extends SliderTrackShape
       isDiscrete: isDiscrete,
     );
 
-    final Paint activePaint = Paint()
-      ..shader = gradient.createShader(trackRect);
+    final activePaint = Paint()..shader = gradient.createShader(trackRect);
 
-    final Paint leftTrackPaint = activePaint;
-    final Paint rightTrackPaint = activePaint;
+    final leftTrackPaint = activePaint;
+    final rightTrackPaint = activePaint;
 
     // The arc rects create a semi-circle with radius equal to track height.
-    // The 0.3 is necessary for unknown reasons, else there is a small line that shows up.
-    final Rect leftTrackArcRect = Rect.fromLTWH(
+    // The 0.3 is necessary for unknown reasons, else a small line shows up.
+    final leftTrackArcRect = Rect.fromLTWH(
         trackRect.left - trackRect.height / 2 + 0.3,
         trackRect.top,
         trackRect.height,
         trackRect.height);
-    if (!leftTrackArcRect.isEmpty)
+    if (!leftTrackArcRect.isEmpty) {
       context.canvas.drawArc(
           leftTrackArcRect, math.pi / 2, math.pi, false, leftTrackPaint);
-    final Rect rightTrackArcRect = Rect.fromLTWH(
+    }
+    final rightTrackArcRect = Rect.fromLTWH(
         trackRect.right - trackRect.height / 2 - 0.3,
         trackRect.top,
         trackRect.height,
         trackRect.height);
-    if (!rightTrackArcRect.isEmpty)
+    if (!rightTrackArcRect.isEmpty) {
       context.canvas.drawArc(
           rightTrackArcRect, -math.pi / 2, math.pi, false, rightTrackPaint);
+    }
 
-    final Rect fullTrackArc = Rect.fromLTRB(
+    final fullTrackArc = Rect.fromLTRB(
         trackRect.left, trackRect.top, trackRect.right, trackRect.bottom);
-    if (!fullTrackArc.isEmpty)
+    if (!fullTrackArc.isEmpty) {
       context.canvas.drawRect(fullTrackArc, rightTrackPaint);
+    }
   }
 }
 
@@ -187,18 +188,18 @@ class _RoundSliderThumbShape2 extends SliderComponentShape {
 
   @override
   void paint(
-      PaintingContext context,
-      Offset center, {
-        Animation<double> activationAnimation,
-        @required Animation<double> enableAnimation,
-        bool isDiscrete,
-        TextPainter labelPainter,
-        RenderBox parentBox,
-        @required SliderThemeData sliderTheme,
-        TextDirection textDirection,
-        double value,
-        double textScaleFactor,
-        Size sizeWithOverflow,
+    PaintingContext context,
+    Offset center, {
+    Animation<double> activationAnimation,
+    @required Animation<double> enableAnimation,
+    bool isDiscrete,
+    TextPainter labelPainter,
+    RenderBox parentBox,
+    @required SliderThemeData sliderTheme,
+    TextDirection textDirection,
+    double value,
+    double textScaleFactor,
+    Size sizeWithOverflow,
   }) {
     assert(context != null);
     assert(center != null);
@@ -207,12 +208,12 @@ class _RoundSliderThumbShape2 extends SliderComponentShape {
     assert(sliderTheme.disabledThumbColor != null);
     assert(sliderTheme.thumbColor != null);
 
-    final Canvas canvas = context.canvas;
-    final Tween<double> radiusTween = Tween<double>(
+    final canvas = context.canvas;
+    final radiusTween = Tween<double>(
       begin: _disabledThumbRadius,
       end: enabledThumbRadius,
     );
-    final ColorTween colorTween = ColorTween(
+    final colorTween = ColorTween(
       begin: sliderTheme.disabledThumbColor,
       end: sliderTheme.thumbColor,
     );

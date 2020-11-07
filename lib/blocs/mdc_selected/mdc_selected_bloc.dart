@@ -2,14 +2,14 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:bloc/bloc.dart';
-import 'package:colorstudio/blocs/blocs.dart';
-import 'package:colorstudio/example/mdc/util/color_blind_from_index.dart';
-import 'package:colorstudio/example/util/color_util.dart';
-import 'package:colorstudio/example/util/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:hsluv/hsluvcolor.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../../example/mdc/util/color_blind_from_index.dart';
+import '../../example/util/color_util.dart';
+import '../../example/util/constants.dart';
+import '../blocs.dart';
 import 'mdc_selected.dart';
 
 class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
@@ -59,7 +59,7 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
   }
 
   Stream<MdcSelectedState> _mapInitToState(MDCInitEvent load) async* {
-    final Map<ColorType, Color> initial = {
+    final initial = {
       ColorType.Primary: load.initialColors[ColorType.Primary],
       ColorType.Secondary: load.initialColors[ColorType.Secondary],
       ColorType.Background:
@@ -82,9 +82,8 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
   Stream<MdcSelectedState> _mapUpdateToLock(MDCUpdateLock load) async* {
     final currentState = state as MDCLoadedState;
 
-    final Map<ColorType, Color> allRgb = Map.from(currentState.rgbColors);
-
-    final Map<ColorType, bool> lock = Map.from(currentState.locked);
+    final allRgb = Map<ColorType, Color>.from(currentState.rgbColors);
+    final lock = Map<ColorType, bool>.from(currentState.locked);
     lock[load.selected] = load.isLock;
 
     // Background needs to call [findColor] before Surface does, else
@@ -115,9 +114,8 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
     final currentState = state as MDCLoadedState;
 
     final blindness = currentState.blindnessSelected;
-    final Map<ColorType, HSLuvColor> allLuv =
-        Map.from(currentState.hsluvColors);
-    final Map<ColorType, Color> allRgb = Map.from(currentState.rgbColors);
+    final allLuv = Map<ColorType, HSLuvColor>.from(currentState.hsluvColors);
+    final allRgb = Map<ColorType, Color>.from(currentState.rgbColors);
 
     if (load.color != null) {
       allLuv[load.selected] = HSLuvColor.fromColor(load.color);
@@ -189,7 +187,7 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
 
     final Map<ColorType, Color> allRgb = Map.from(currentState.rgbColors);
 
-    allRgb.forEach((ColorType title, Color b) {
+    allRgb.forEach((title, _) {
       if (currentState.locked[title] != true || load.ignoreLock) {
         allRgb[title] = load.colors[title];
       }
@@ -214,8 +212,7 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
     );
   }
 
-  Color findColor(
-      Map<ColorType, Color> mappedList, ColorType category) {
+  Color findColor(Map<ColorType, Color> mappedList, ColorType category) {
     if (category == ColorType.Background) {
       return blendColorWithBackground(mappedList[ColorType.Primary]);
     } else if (category == ColorType.Surface) {

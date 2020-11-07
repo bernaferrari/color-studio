@@ -1,11 +1,11 @@
-import 'package:colorstudio/example/util/constants.dart';
-import 'package:colorstudio/example/util/selected.dart';
-import 'package:colorstudio/example/util/when.dart';
-import 'package:colorstudio/example/widgets/update_color_dialog.dart';
 import 'package:flutter/material.dart';
 
 import '../color_with_inter.dart';
 import '../hsinter.dart';
+import '../util/constants.dart';
+import '../util/selected.dart';
+import '../util/when.dart';
+import '../widgets/update_color_dialog.dart';
 import 'vertical_picker_main.dart';
 
 class ColorCompareWidgetDetails extends StatelessWidget {
@@ -18,7 +18,7 @@ class ColorCompareWidgetDetails extends StatelessWidget {
   });
 
   final ColorWithInter color;
-  final Function onPressed;
+  final VoidCallback onPressed;
   final bool compactText;
   final String category;
   final HSInterType kind;

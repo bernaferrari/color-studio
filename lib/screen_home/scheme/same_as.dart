@@ -1,9 +1,10 @@
-import 'package:colorstudio/blocs/blocs.dart';
-import 'package:colorstudio/example/util/color_util.dart';
-import 'package:colorstudio/example/util/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+
+import '../../blocs/blocs.dart';
+import '../../example/util/color_util.dart';
+import '../../example/util/constants.dart';
 
 class SameAs extends StatelessWidget {
   const SameAs({

@@ -9,7 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'color_blindness_bar.dart';
 import 'horizontal_sliders_bar.dart';
 import 'util/elevation_overlay.dart';
-import 'widgets/FAProgressBar.dart';
+import 'widgets/horizontal_progress_bar.dart';
 
 class Showcase extends StatefulWidget {
   const Showcase();
@@ -125,7 +125,7 @@ class _ShowcaseState extends State<Showcase> {
         AnimatedSwitcher(
           duration: const Duration(milliseconds: 400),
           switchInCurve: Curves.easeInOut,
-          transitionBuilder: (Widget child, Animation<double> animation) {
+          transitionBuilder: (child, animation) {
             return SizeTransition(child: child, sizeFactor: animation);
           },
           child: (slidersMode ?? false)
@@ -301,9 +301,9 @@ class _PrevPodcast extends StatelessWidget {
       ),
     );
 
-    const List<String> texts = ["Stats", "Forecast", "CPU"];
+    const List<String> texts = <String>["Stats", "Forecast", "CPU"];
 
-    const List<IconData> icons = [
+    const List<IconData> icons = <IconData>[
       FeatherIcons.batteryCharging,
       FeatherIcons.cloudDrizzle,
       FeatherIcons.cpu,
@@ -425,7 +425,7 @@ class _PrevStore extends StatelessWidget {
         Container(
           width: 256,
           margin: const EdgeInsets.symmetric(horizontal: 16),
-          child: FAProgressBar(
+          child: HorizontalProgressBar(
             currentValue: 50,
             size: 15,
             progressColor: primary,
@@ -1198,8 +1198,8 @@ class WrapWithFrostyBackground extends StatelessWidget {
     Widget result = child;
 
     if (updateSystemUiOverlay) {
-      final bool darkBackground = backgroundColor.computeLuminance() < 0.179;
-      final SystemUiOverlayStyle overlayStyle = darkBackground
+      final darkBackground = backgroundColor.computeLuminance() < 0.179;
+      final overlayStyle = darkBackground
           ? SystemUiOverlayStyle.light
           : SystemUiOverlayStyle.dark;
       result = AnnotatedRegion<SystemUiOverlayStyle>(
@@ -1208,7 +1208,7 @@ class WrapWithFrostyBackground extends StatelessWidget {
         child: result,
       );
     }
-    final DecoratedBox childWithBackground = DecoratedBox(
+    final childWithBackground = DecoratedBox(
       decoration: BoxDecoration(
         border: border,
         color: backgroundColor,

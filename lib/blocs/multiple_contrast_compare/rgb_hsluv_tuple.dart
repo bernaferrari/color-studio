@@ -1,8 +1,9 @@
 import 'dart:ui';
 
-import 'package:colorstudio/example/util/calculate_contrast.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hsluv/hsluvcolor.dart';
+
+import '../../example/util/calculate_contrast.dart';
 
 class RgbHSLuvTuple {
   RgbHSLuvTuple(this.rgbColor, this.hsluvColor);

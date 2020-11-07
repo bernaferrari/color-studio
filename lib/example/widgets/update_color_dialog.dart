@@ -1,17 +1,17 @@
-// user defined function
-import 'package:colorstudio/blocs/blocs.dart';
-import 'package:colorstudio/blocs/mdc_selected/mdc_selected_bloc.dart';
-import 'package:colorstudio/blocs/mdc_selected/mdc_selected_event.dart';
-import 'package:colorstudio/example/util/color_util.dart';
-import 'package:colorstudio/example/util/constants.dart';
-import 'package:colorstudio/example/widgets/color_sliders.dart';
-import 'package:colorstudio/example/widgets/loading_indicator.dart';
-import 'package:colorstudio/example/widgets/selectable_sliders.dart';
-import 'package:colorstudio/example/widgets/text_form_colored.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+
+import '../../blocs/blocs.dart';
+import '../../blocs/mdc_selected/mdc_selected_bloc.dart';
+import '../../blocs/mdc_selected/mdc_selected_event.dart';
+import '../util/color_util.dart';
+import '../util/constants.dart';
+import 'color_sliders.dart';
+import 'loading_indicator.dart';
+import 'selectable_sliders.dart';
+import 'text_form_colored.dart';
 
 Future<void> showSlidersDialog(
   BuildContext context,
@@ -20,7 +20,7 @@ Future<void> showSlidersDialog(
 ]) async {
   final dynamic result = await showDialog<dynamic>(
       context: context,
-      builder: (BuildContext ctx) {
+      builder: (_) {
         return BlocProvider(
           create: (context) => SliderColorBloc()..add(MoveColor(color, true)),
           child: UpdateColorDialog(color),

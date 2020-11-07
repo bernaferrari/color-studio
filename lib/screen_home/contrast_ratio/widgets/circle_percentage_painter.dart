@@ -16,7 +16,7 @@ class CirclePercentagePainter extends CustomPainter {
   final Color backgroundColor;
 
   @override
-  void paint(canvas, size) {
+  void paint(Canvas canvas, Size size) {
     final paint = Paint();
     paint.color = backgroundColor;
     paint.style = PaintingStyle.stroke;

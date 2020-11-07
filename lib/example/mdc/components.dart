@@ -1,4 +1,3 @@
-import 'package:colorstudio/example/util/shuffle_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,7 +8,7 @@ import '../util/calculate_contrast.dart';
 import '../util/color_util.dart';
 import '../util/constants.dart';
 import '../util/selected.dart';
-import '../widgets/color_sliders/slider_that_works.dart';
+import '../util/shuffle_color.dart';
 
 class Components extends StatelessWidget {
   const Components(
@@ -392,7 +391,7 @@ class _ComponentsSampleState extends State<ComponentsSample> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            Slider2(
+            Slider(
               value: _sliderValue,
               onChanged: (newRating) {
                 setState(() => _sliderValue = newRating);
@@ -533,7 +532,7 @@ class _SliderWithSelectorComponentsState
                             Text("HSV"),
                             Text("HSL"),
                           ],
-                          onPressed: (int index) {
+                          onPressed: (index) {
                             setState(() {
                               for (int buttonIndex = 0;
                                   buttonIndex < isSelected.length;

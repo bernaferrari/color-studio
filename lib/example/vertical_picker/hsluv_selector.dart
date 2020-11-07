@@ -1,9 +1,9 @@
-import 'package:colorstudio/example/color_with_inter.dart';
-import 'package:colorstudio/example/hsinter.dart';
-import 'package:colorstudio/example/util/hsinter_tiny.dart';
 import 'package:flutter/material.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
+import '../color_with_inter.dart';
+import '../hsinter.dart';
+import '../util/hsinter_tiny.dart';
 import 'vertical_picker_main.dart';
 
 class HSLuvSelector extends StatelessWidget {

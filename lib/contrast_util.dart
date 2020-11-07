@@ -1,4 +1,4 @@
-import 'package:colorstudio/example/util/when.dart';
+import 'example/util/when.dart';
 
 const hsvStr = "HSV";
 const hsluvStr = "HSLuv";

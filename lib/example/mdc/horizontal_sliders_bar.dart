@@ -1,13 +1,14 @@
-import 'package:colorstudio/blocs/blocs.dart';
-import 'package:colorstudio/example/screens/home.dart';
-import 'package:colorstudio/example/util/constants.dart';
-import 'package:colorstudio/example/vertical_picker/app_bar_actions.dart';
-import 'package:colorstudio/example/widgets/color_sliders.dart';
-import 'package:colorstudio/example/widgets/selectable_sliders.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:hsluv/hsluvcolor.dart';
+
+import '../../blocs/blocs.dart';
+import '../screens/home.dart';
+import '../util/constants.dart';
+import '../vertical_picker/app_bar_actions.dart';
+import '../widgets/color_sliders.dart';
+import '../widgets/selectable_sliders.dart';
 
 class HorizontalSlidersBar extends StatelessWidget {
   const HorizontalSlidersBar({this.onPressed});
@@ -16,8 +17,8 @@ class HorizontalSlidersBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final MDCLoadedState currentState =
-        context.bloc<MdcSelectedBloc>().state as MDCLoadedState;
+    final currentState =
+        context.read<MdcSelectedBloc>().state as MDCLoadedState;
 
     final color = currentState.rgbColors[currentState.selected];
 

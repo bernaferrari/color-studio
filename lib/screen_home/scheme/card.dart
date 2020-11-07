@@ -1,11 +1,11 @@
-import 'package:colorstudio/blocs/blocs.dart';
-import 'package:colorstudio/example/util/constants.dart';
-import 'package:colorstudio/example/util/shuffle_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
+import '../../blocs/blocs.dart';
+import '../../example/util/constants.dart';
+import '../../example/util/shuffle_color.dart';
 import '../title_bar.dart';
 import 'expandable_item.dart';
 

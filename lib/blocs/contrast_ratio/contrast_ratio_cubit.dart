@@ -2,16 +2,17 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:bloc/bloc.dart';
-import 'package:colorstudio/blocs/mdc_selected/mdc_selected.dart';
-import 'package:colorstudio/blocs/mdc_selected/mdc_selected_bloc.dart';
-import 'package:colorstudio/example/mdc/util/elevation_overlay.dart';
-import 'package:colorstudio/example/util/calculate_contrast.dart';
-import 'package:colorstudio/example/util/color_util.dart';
-import 'package:colorstudio/example/util/constants.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-enum ContrastSectionType {
+import '../../example/mdc/util/elevation_overlay.dart';
+import '../../example/util/calculate_contrast.dart';
+import '../../example/util/color_util.dart';
+import '../../example/util/constants.dart';
+import '../mdc_selected/mdc_selected.dart';
+import '../mdc_selected/mdc_selected_bloc.dart';
+
+enum ContrastCardType {
   Primary,
   Secondary,
   Elevation,
@@ -31,21 +32,21 @@ class ContrastRatioCubit extends Cubit<ContrastRatioState> {
   StreamSubscription _mdcSubscription;
 
   @override
-  Future<Function> close() {
+  Future<void> close() {
     _mdcSubscription.cancel();
     return super.close();
   }
 
   void set({
     Map<ColorType, Color> rgbColorsWithBlindness,
-    ContrastSectionType contrastSectionType,
+    ContrastCardType contrastSectionType,
   }) {
     final rgb = rgbColorsWithBlindness ?? state.rgbColorsWithBlindness;
 
     final _contrastSectionType =
-        contrastSectionType ?? state.selectedContrastType;
+        contrastSectionType ?? state.selectedContrastCardType;
 
-    if (_contrastSectionType == ContrastSectionType.Primary) {
+    if (_contrastSectionType == ContrastCardType.Primary) {
       emit(
         ContrastRatioState(
           contrastValues: [
@@ -58,11 +59,11 @@ class ContrastRatioCubit extends Cubit<ContrastRatioState> {
               rgb[ColorType.Surface],
             ),
           ],
-          selectedContrastType: _contrastSectionType,
+          selectedContrastCardType: _contrastSectionType,
           rgbColorsWithBlindness: rgb,
         ),
       );
-    } else if (_contrastSectionType == ContrastSectionType.Secondary) {
+    } else if (_contrastSectionType == ContrastCardType.Secondary) {
       // when secondary, compare against background and surface
       emit(
         ContrastRatioState(
@@ -76,7 +77,7 @@ class ContrastRatioCubit extends Cubit<ContrastRatioState> {
               rgb[ColorType.Surface],
             ),
           ],
-          selectedContrastType: _contrastSectionType,
+          selectedContrastCardType: _contrastSectionType,
           rgbColorsWithBlindness: rgb,
         ),
       );
@@ -95,7 +96,7 @@ class ContrastRatioCubit extends Cubit<ContrastRatioState> {
                 rgb[ColorType.Primary],
               ),
           ],
-          selectedContrastType: _contrastSectionType,
+          selectedContrastCardType: _contrastSectionType,
           rgbColorsWithBlindness: rgb,
         ),
       );
@@ -107,22 +108,22 @@ class ContrastRatioState extends Equatable {
   const ContrastRatioState({
     this.contrastValues = const [],
     this.elevationValues = const [],
-    this.selectedContrastType = ContrastSectionType.Primary,
+    this.selectedContrastCardType = ContrastCardType.Primary,
     this.rgbColorsWithBlindness = const {},
   });
 
   final List<double> contrastValues;
   final List<ColorContrast> elevationValues;
-  final ContrastSectionType selectedContrastType;
+  final ContrastCardType selectedContrastCardType;
   final Map<ColorType, Color> rgbColorsWithBlindness;
 
   @override
   String toString() =>
-      'ContrastRatioState: $selectedContrastType $contrastValues $elevationValues';
+      'ContrastRatioState: $selectedContrastCardType $contrastValues $elevationValues';
 
   @override
   List<Object> get props =>
-      [selectedContrastType, contrastValues, elevationValues];
+      [selectedContrastCardType, contrastValues, elevationValues];
 }
 
 class ColorContrast {

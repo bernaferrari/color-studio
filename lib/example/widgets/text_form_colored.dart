@@ -1,10 +1,11 @@
-import 'package:colorstudio/blocs/blocs.dart';
-import 'package:colorstudio/example/util/constants.dart';
-import 'package:colorstudio/example/util/selected.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+
+import '../../blocs/blocs.dart';
+import '../util/constants.dart';
+import '../util/selected.dart';
 
 class TextFormColored extends StatelessWidget {
   const TextFormColored({this.controller, this.radius, this.autofocus = true});

@@ -1,14 +1,14 @@
-import 'package:colorstudio/blocs/blocs.dart';
-import 'package:colorstudio/blocs/contrast_ratio/contrast_ratio_cubit.dart';
-import 'package:colorstudio/example/util/constants.dart';
-import 'package:colorstudio/example/widgets/loading_indicator.dart';
-import 'package:colorstudio/screen_home/title_bar.dart';
-import 'package:colorstudio/util/widget_space.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
+import '../../blocs/blocs.dart';
+import '../../blocs/contrast_ratio/contrast_ratio_cubit.dart';
+import '../../example/util/constants.dart';
+import '../../example/widgets/loading_indicator.dart';
+import '../../util/widget_space.dart';
+import '../title_bar.dart';
 import 'dark_mode_surface_contrast.dart';
 import 'widgets/contrast_widgets.dart';
 
@@ -19,7 +19,7 @@ class ContrastRatioCard extends StatelessWidget {
   );
 
   final Map<ColorType, Color> rgbColorsWithBlindness;
-  final Function toContrastScreen;
+  final VoidCallback toContrastScreen;
 
   @override
   Widget build(BuildContext context) {
@@ -77,8 +77,8 @@ class ContrastRatioCard extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  if (state.selectedContrastType !=
-                      ContrastSectionType.Elevation)
+                  if (state.selectedContrastCardType !=
+                      ContrastCardType.Elevation)
                     Expanded(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -86,7 +86,7 @@ class ContrastRatioCard extends StatelessWidget {
                         children: [
                           SizedBox(),
                           ContrastCircleBar(
-                            title: describeEnum(state.selectedContrastType),
+                            title: describeEnum(state.selectedContrastCardType),
                             subtitle: kBackground,
                             contrast: state.contrastValues[0],
                             contrastingColor:
@@ -95,7 +95,7 @@ class ContrastRatioCard extends StatelessWidget {
                                 rgbColorsWithBlindness[ColorType.Background],
                           ),
                           ContrastCircleBar(
-                            title: describeEnum(state.selectedContrastType),
+                            title: describeEnum(state.selectedContrastCardType),
                             subtitle: kSurface,
                             contrast: state.contrastValues[1],
                             contrastingColor:
@@ -166,8 +166,8 @@ class ContrastRatioCard extends StatelessWidget {
                   children: spaceRow(
                     8,
                     [
-                      ...ContrastSectionType.values.map((d) {
-                        if (d == state.selectedContrastType) {
+                      ...ContrastCardType.values.map((d) {
+                        if (d == state.selectedContrastCardType) {
                           return OutlinedButton(
                             style: OutlinedButton.styleFrom(
                               backgroundColor:
@@ -189,7 +189,7 @@ class ContrastRatioCard extends StatelessWidget {
                             ),
                             onPressed: () {
                               context
-                                  .bloc<ContrastRatioCubit>()
+                                  .read<ContrastRatioCubit>()
                                   .set(contrastSectionType: d);
                             },
                           );
@@ -207,7 +207,7 @@ class ContrastRatioCard extends StatelessWidget {
                             ),
                             onPressed: () {
                               context
-                                  .bloc<ContrastRatioCubit>()
+                                  .read<ContrastRatioCubit>()
                                   .set(contrastSectionType: d);
                             },
                           );
@@ -282,9 +282,9 @@ class _HelpDialog extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    "In a dark theme, at higher levels of elevation, Material Design Components express depth by displaying a lighter surface color. " +
-                        "The higher a surface’s elevation (raising it closer to an implied light source), the lighter that surface becomes. " +
-                        "That lightness is expressed through the application of a semi-transparent overlay using the OnSurface color (default: white).",
+                    "In a dark theme, at higher levels of elevation, Material Design Components express depth by displaying a lighter surface color. "
+                    "The higher a surface’s elevation (raising it closer to an implied light source), the lighter that surface becomes. "
+                    "That lightness is expressed through the application of a semi-transparent overlay using the OnSurface color (default: white).",
                   ),
                   SizedBox(height: 24),
                   Text(

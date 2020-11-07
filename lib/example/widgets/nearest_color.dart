@@ -15,7 +15,7 @@ class NearestColor extends StatelessWidget {
       child: FutureBuilder(
         future: DefaultAssetBundle.of(context)
             .loadString("assets/colornames.json")
-            .then((onValue) => getNearest(onValue)),
+            .then(getNearest),
         builder: (context, snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
             return const SizedBox.shrink();

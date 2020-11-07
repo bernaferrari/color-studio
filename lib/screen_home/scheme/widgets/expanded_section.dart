@@ -27,11 +27,11 @@ class _ExpandedSectionState extends State<ExpandedSection>
       vsync: this,
       duration: Duration(milliseconds: 250),
     );
-    final Animation curve = CurvedAnimation(
+    final Animation<double> curve = CurvedAnimation(
       parent: expandController,
       curve: Curves.easeInOut,
     );
-    animation = Tween(begin: 0.0, end: 1.0).animate(curve)
+    animation = Tween<double>(begin: 0.0, end: 1.0).animate(curve)
       ..addListener(() {
         setState(() {});
       });

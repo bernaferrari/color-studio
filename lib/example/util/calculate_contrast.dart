@@ -1,8 +1,5 @@
 import 'dart:math';
 
-import 'package:colorstudio/example/hsinter.dart';
-import 'package:colorstudio/example/util/color_util.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 double calculateContrast(Color color1, Color color2) {

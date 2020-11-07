@@ -1,10 +1,12 @@
 import 'dart:math' as math;
 import 'dart:ui';
 
-import 'package:colorstudio/example/util/when.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hsluv/hsluvcolor.dart';
+
+import 'util/when.dart';
 
 enum HSInterType {
   HSLuv,
@@ -15,7 +17,7 @@ enum HSInterType {
 /// It is made to wrap both HSV and HSLuv with the same interface.
 /// It could also be easily extended to HSL and others.
 @immutable
-class HSInterColor {
+class HSInterColor extends Equatable {
   /// Creates a [HSInterColor].
   const HSInterColor.fromHSInter(
       this.hue, this.saturation, this.lightness, this.kind, this.maxValue)
@@ -117,29 +119,15 @@ class HSInterColor {
   }
 
   @override
-  bool operator ==(dynamic other) {
-    if (identical(this, other)) return true;
-    if (other is! HSInterColor) return false;
-    final HSInterColor typedOther = other;
-    return typedOther.hue == hue &&
-        typedOther.saturation == saturation &&
-        typedOther.lightness == lightness;
-  }
-
-  @override
-  int get hashCode => hashValues(hue, saturation, lightness);
+  List<Object> get props => [hue, saturation, lightness];
 
   /// Returns this color as a String in the H:250 S:100 L:60 format.
   @override
   String toString() {
-    switch (kind) {
-      case HSInterType.HSLuv:
-        return "H:${hue.toInt()} S:${outputSaturation()} L:${outputLightness()}";
-      case HSInterType.HSV:
-        return "H:${hue.toInt()} S:${outputSaturation()} V:${outputLightness()}";
-    }
+    final String valueLetter = kind == HSInterType.HSLuv ? "L" : "V";
+
     // this is never reached, but is needed for dart analyzer.
-    return "";
+    return "H:${hue.toInt()} S:${outputSaturation()} $valueLetter:${outputLightness()}";
   }
 
   String toPartialStr(int index) {

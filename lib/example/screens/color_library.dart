@@ -1,16 +1,16 @@
 import 'dart:math' as math;
 
-import 'package:colorstudio/example/mdc/components.dart';
-import 'package:colorstudio/example/util/constants.dart';
-import 'package:colorstudio/example/util/selected.dart';
-import 'package:colorstudio/example/util/shuffle_color.dart';
-import 'package:colorstudio/example/widgets/update_color_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../mdc/components.dart';
 import '../util/color_util.dart';
+import '../util/constants.dart';
+import '../util/selected.dart';
+import '../util/shuffle_color.dart';
+import '../widgets/update_color_dialog.dart';
 
 class ColorLibrary extends StatefulWidget {
   const ColorLibrary({this.color, this.isSplitView = false});
@@ -38,7 +38,8 @@ class _ColorLibraryState extends State<ColorLibrary> {
     return Scaffold(
       backgroundColor: widget.color,
       appBar: AppBar(
-        title: Text("Color Library", style: Theme.of(context).textTheme.headline6),
+        title:
+            Text("Color Library", style: Theme.of(context).textTheme.headline6),
         backgroundColor: widget.color,
         elevation: 0,
         centerTitle: widget.isSplitView,
@@ -112,11 +113,13 @@ class _ColorLibraryState extends State<ColorLibrary> {
 //                                  () => currentSegment == 2: () =>
 //                                      "H:${colorsList[i].red}\nS:${colorsList[i].green}\nV${colorsList[i].blue}",
 //                                }),
-                                style:
-                                    Theme.of(context).textTheme.bodyText1.copyWith(
-                                          color: contrastingRGBColor(colorsList[i])
-                                              .withOpacity(0.70),
-                                        ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    .copyWith(
+                                      color: contrastingRGBColor(colorsList[i])
+                                          .withOpacity(0.70),
+                                    ),
                               ),
                             ),
                           ),

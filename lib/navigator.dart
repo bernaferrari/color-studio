@@ -1,13 +1,11 @@
-import 'dart:html';
-
-import 'package:colorstudio/colors_compare/colors_compare_screen.dart';
-import 'package:colorstudio/screen_home/color_blindness/card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import 'blocs/blocs.dart';
+import 'colors_compare/colors_compare_screen.dart';
 import 'example/mdc/components_preview.dart';
+import 'screen_home/color_blindness/card.dart';
 import 'screen_home/contrast_ratio/card.dart';
 import 'screen_home/scheme/card.dart';
 
@@ -41,12 +39,15 @@ class ColorRouteInformationParser
 
     if (uri.pathSegments.length == 1) {
       if (uri.pathSegments[0] == "settings") return ColorRoutePath.settings();
-      if (uri.pathSegments[0] == "multiColor")
+      if (uri.pathSegments[0] == "multiColor") {
         return ColorRoutePath.to(ScreenPanel.multiColor);
-      if (uri.pathSegments[0] == "singleColor")
+      }
+      if (uri.pathSegments[0] == "singleColor") {
         return ColorRoutePath.to(ScreenPanel.singleColor);
-      if (uri.pathSegments[0] == "preview")
+      }
+      if (uri.pathSegments[0] == "preview") {
         return ColorRoutePath.to(ScreenPanel.preview);
+      }
     }
 
     return ColorRoutePath.home();
@@ -257,7 +258,7 @@ class ColorRoutePath {
 class HomeScreen extends StatelessWidget {
   const HomeScreen(this._handleMultiColor);
 
-  final Function _handleMultiColor;
+  final VoidCallback _handleMultiColor;
 
   @override
   Widget build(BuildContext context) {
@@ -303,7 +304,7 @@ class HomeScreen extends StatelessWidget {
     MDCLoadedState currentState,
     bool shouldDisplayElevation,
   ) {
-    final isiPad = MediaQuery.of(context).size.width > 600;
+    final bool isiPad = MediaQuery.of(context).size.width > 600;
 
     return Column(
       children: <Widget>[
@@ -385,7 +386,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              onPressed: () {},
+              onPressed: _handleMultiColor,
             ),
             SizedBox(width: 16),
             ElevatedButton(

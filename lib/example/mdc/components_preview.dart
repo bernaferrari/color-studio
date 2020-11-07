@@ -1,11 +1,12 @@
-import 'package:colorstudio/blocs/blocs.dart';
-import 'package:colorstudio/example/mdc/showcase.dart';
-import 'package:colorstudio/example/screens/home.dart';
-import 'package:colorstudio/example/util/shuffle_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:hive/hive.dart';
+
+import '../../blocs/blocs.dart';
+import '../screens/home.dart';
+import '../util/shuffle_color.dart';
+import 'showcase.dart';
 
 class ComponentsPreview extends StatelessWidget {
   @override

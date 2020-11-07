@@ -1,10 +1,5 @@
 import 'dart:math' as math;
 
-import 'package:colorstudio/blocs/blocs.dart';
-import 'package:colorstudio/blocs/multiple_contrast_compare/rgb_hsluv_tuple.dart';
-import 'package:colorstudio/example/util/constants.dart';
-import 'package:colorstudio/example/util/hsluv_tiny.dart';
-import 'package:colorstudio/example/util/when.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -13,7 +8,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hsluv/hsluvcolor.dart';
 import 'package:infinite_listview/infinite_listview.dart';
 
+import '../blocs/blocs.dart';
+import '../blocs/multiple_contrast_compare/rgb_hsluv_tuple.dart';
 import '../contrast_util.dart';
+import '../example/util/constants.dart';
+import '../example/util/hsluv_tiny.dart';
+import '../example/util/when.dart';
 
 class MultiRowColorPicker extends StatelessWidget {
   const MultiRowColorPicker({
@@ -37,13 +37,13 @@ class MultiRowColorPicker extends StatelessWidget {
     final int hueSize = moreColors ? 90 : 45;
 
     return _MultiRowColorPicker(
-      fetchHue: (HSLuvColor c) => hsluvAlternatives2(c, hueSize)
+      fetchHue: (c) => hsluvAlternatives2(c, hueSize)
           .map((d) => RgbHSLuvTuple(d.toColor(), d))
           .toList(),
-      fetchSat: (HSLuvColor c) => hsluvTones2(c, toneSize, 10, 100)
+      fetchSat: (c) => hsluvTones2(c, toneSize, 10, 100)
           .map((d) => RgbHSLuvTuple(d.toColor(), d))
           .toList(),
-      fetchLight: (HSLuvColor c) => hsluvLightness2(c, toneSize, 5, 95)
+      fetchLight: (c) => hsluvLightness2(c, toneSize, 5, 95)
           .map((d) => RgbHSLuvTuple(d.toColor(), d))
           .toList(),
       toneSize: toneSize,
@@ -77,22 +77,21 @@ class _MultiRowColorPicker extends StatelessWidget {
 
   void contrastColorSelected(BuildContext context, HSLuvColor color) {
     context
-        .bloc<MdcSelectedBloc>()
+        .read<MdcSelectedBloc>()
         .add(MDCUpdateColor(hsLuvColor: color, selected: selected));
   }
 
   @override
   Widget build(BuildContext context) {
-    final Color borderColor =
-        (colorsTuple.hsluvColor.lightness > kLightnessThreshold)
-            ? Colors.black.withOpacity(0.40)
-            : Colors.white.withOpacity(0.40);
-
     final List<RgbHSLuvTuple> light = fetchLight(colorsTuple.hsluvColor);
     final List<RgbHSLuvTuple> hue = fetchHue(colorsTuple.hsluvColor);
     final List<RgbHSLuvTuple> tones = fetchSat(colorsTuple.hsluvColor);
 
     final hueLen = hue.length;
+
+    final borderColor = (colorsTuple.hsluvColor.lightness > kLightnessThreshold)
+        ? Colors.black.withOpacity(0.40)
+        : Colors.white.withOpacity(0.40);
 
     // in the ideal the world they could be calculated in the Bloc &/or in parallel.
     final widgets = <Widget>[
@@ -101,21 +100,21 @@ class _MultiRowColorPicker extends StatelessWidget {
         listSize: hueLen,
         isInfinite: true,
         colorsList: hue,
-        onColorPressed: (HSLuvColor c) => contrastColorSelected(context, c),
+        onColorPressed: (c) => contrastColorSelected(context, c),
       ),
       _HorizontalColorListExpanded(
         category: satStr,
         listSize: toneSize,
         isInfinite: false,
         colorsList: tones,
-        onColorPressed: (HSLuvColor c) => contrastColorSelected(context, c),
+        onColorPressed: (c) => contrastColorSelected(context, c),
       ),
       _HorizontalColorListExpanded(
         category: lightStr,
         listSize: toneSize,
         isInfinite: false,
         colorsList: light,
-        onColorPressed: (HSLuvColor c) => contrastColorSelected(context, c),
+        onColorPressed: (c) => contrastColorSelected(context, c),
       ),
     ];
 
@@ -186,11 +185,16 @@ class _MultiRowColorPicker extends StatelessWidget {
   }
 
   String toPartialStr(HSLuvColor hsluv, int index) {
-    return when({
-      () => index == 0: () => "H:${hsluv.hue.toInt()}",
-      () => index == 1: () => "S:${hsluv.saturation.round()}",
-      () => index == 2: () => "L:${hsluv.lightness.round()}",
-    });
+    switch (index) {
+      case 0:
+        return "H:${hsluv.hue.toInt()}";
+      case 1:
+        return "S:${hsluv.saturation.round()}";
+      case 2:
+        return "L:${hsluv.lightness.round()}";
+      default:
+        return "";
+    }
   }
 }
 
@@ -216,7 +220,7 @@ class _HorizontalColorListExpanded extends StatelessWidget {
           ? InfiniteListView.builder(
               scrollDirection: Axis.horizontal,
               key: PageStorageKey<String>("hPicker $category"),
-              itemBuilder: (BuildContext context, int absoluteIndex) {
+              itemBuilder: (_, absoluteIndex) {
                 final index = absoluteIndex % listSize;
 
                 return _ContrastItemExpanded(
@@ -237,7 +241,7 @@ class _HorizontalColorListExpanded extends StatelessWidget {
                 itemCount: listSize,
                 scrollDirection: Axis.horizontal,
                 key: PageStorageKey<String>("hPicker $category"),
-                itemBuilder: (BuildContext context, int index) {
+                itemBuilder: (_, index) {
                   return _ContrastItemExpanded(
                     rgbHsluvTuple: colorsList[index],
                     category: category,

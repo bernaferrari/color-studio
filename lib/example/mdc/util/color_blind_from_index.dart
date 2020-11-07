@@ -1,10 +1,10 @@
+import 'package:color_blindness/color_blindness.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:colorstudio/example/screens/single_color_blindness.dart';
-import 'package:colorstudio/example/util/when.dart';
 
-import '../../util/color_blindness.dart';
+import '../../screens/single_color_blindness.dart';
+import '../../util/when.dart';
 
 ColorWithBlind getColorBlindFromIndex(Color color, int i) {
   const m = "of males";
