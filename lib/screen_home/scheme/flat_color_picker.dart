@@ -1,5 +1,5 @@
-import 'package:colorstudio/contrast_util.dart';
 import 'package:colorstudio/blocs/blocs.dart';
+import 'package:colorstudio/contrast_util.dart';
 import 'package:colorstudio/example/util/constants.dart';
 import 'package:colorstudio/example/util/when.dart';
 import 'package:flutter/material.dart';
@@ -15,42 +15,39 @@ class FlatColorPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0, left: 24, right: 24),
-      child: Material(
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          side: BorderSide(
-            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
-          ),
-          borderRadius: BorderRadius.circular(16),
+    return Material(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(
+          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
         ),
-        clipBehavior: Clip.antiAlias,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            for (int i = 0; i < colors.length; i++)
-              Expanded(
-                child: SizedBox(
-                  height: 48,
-                  child: _SelectorItem(
-                    color: colors[i].toColor(),
-                    hsLuvColor: colors[i],
-                    category: kind,
-                    onPressed: () {
-                      BlocProvider.of<MdcSelectedBloc>(context).add(
-                        MDCUpdateColor(
-                          hsLuvColor: colors[i],
-                          selected: selected,
-                        ),
-                      );
-                    },
-                  ),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          for (int i = 0; i < colors.length; i++)
+            Expanded(
+              child: SizedBox(
+                height: 48,
+                child: _SelectorItem(
+                  color: colors[i].toColor(),
+                  hsLuvColor: colors[i],
+                  category: kind,
+                  onPressed: () {
+                    BlocProvider.of<MdcSelectedBloc>(context).add(
+                      MDCUpdateColor(
+                        hsLuvColor: colors[i],
+                        selected: selected,
+                      ),
+                    );
+                  },
                 ),
               ),
-          ],
-        ),
+            ),
+        ],
       ),
     );
   }
@@ -91,16 +88,15 @@ class _SelectorItem extends StatelessWidget {
           .copyWith(color: textColor, fontWeight: FontWeight.w700),
     );
 
-    return SizedBox(
-      width: 56,
-      child: MaterialButton(
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
         elevation: 0,
         padding: EdgeInsets.zero,
-        color: color,
+        primary: color,
         shape: const RoundedRectangleBorder(),
-        onPressed: onPressed,
-        child: cornerText,
       ),
+      onPressed: onPressed,
+      child: cornerText,
     );
   }
 }

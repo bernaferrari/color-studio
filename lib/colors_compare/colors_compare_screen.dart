@@ -5,7 +5,7 @@ import 'package:colorstudio/example/util/color_util.dart';
 import 'package:colorstudio/example/util/constants.dart';
 import 'package:colorstudio/example/util/selected.dart';
 import 'package:colorstudio/example/util/shuffle_color.dart';
-import 'package:colorstudio/example/util/widget_space.dart';
+import 'package:colorstudio/util/widget_space.dart';
 import 'package:colorstudio/example/widgets/loading_indicator.dart';
 import 'package:colorstudio/example/widgets/update_color_dialog.dart';
 import 'package:colorstudio/screen_home/scheme/same_as.dart';
@@ -206,7 +206,7 @@ class _ComparisonPart extends StatelessWidget {
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: space(
+      children: spaceRow(
         48.0,
         <Widget>[
           for (Map<String, dynamic> param in parameters)
@@ -400,7 +400,7 @@ class _TopSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: space(
+      children: spaceRow(
         16,
         <Widget>[
           if (!isSelected)
@@ -492,7 +492,7 @@ class _TopSectionButtons extends StatelessWidget {
         : colorFromSelected;
 
     return Row(
-      children: space(
+      children: spaceRow(
         16,
         <Widget>[
           OutlinedButton.icon(

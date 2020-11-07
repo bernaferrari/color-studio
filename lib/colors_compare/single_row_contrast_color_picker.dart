@@ -68,40 +68,39 @@ class _ContrastItemCompacted extends StatelessWidget {
             ? Colors.white.withOpacity(0.87)
             : Colors.black87;
 
-    return SizedBox(
-      width: 56,
-      child: MaterialButton(
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
         elevation: 0,
         padding: EdgeInsets.zero,
-        color: rgbHsluvTuple.rgbColor,
+        primary: rgbHsluvTuple.rgbColor,
         shape: const RoundedRectangleBorder(),
-        onPressed: onPressed,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              rgbHsluvTuple.hsluvColor.lightness.round().toString(),
-              style: Theme.of(context)
-                  .textTheme
-                  .caption
-                  .copyWith(color: textColor),
-            ),
-            Text(
-              contrast.toStringAsPrecision(3),
-              style: Theme.of(context)
-                  .textTheme
-                  .caption
-                  .copyWith(fontSize: 10, color: textColor),
-            ),
-            Text(
-              getContrastLetters(contrast),
-              style: Theme.of(context)
-                  .textTheme
-                  .caption
-                  .copyWith(fontSize: 8, color: textColor),
-            )
-          ],
-        ),
+      ),
+      onPressed: onPressed,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            rgbHsluvTuple.hsluvColor.lightness.round().toString(),
+            style: Theme.of(context)
+                .textTheme
+                .caption
+                .copyWith(color: textColor),
+          ),
+          Text(
+            contrast.toStringAsPrecision(3),
+            style: Theme.of(context)
+                .textTheme
+                .caption
+                .copyWith(fontSize: 10, color: textColor),
+          ),
+          Text(
+            getContrastLetters(contrast),
+            style: Theme.of(context)
+                .textTheme
+                .caption
+                .copyWith(fontSize: 8, color: textColor),
+          )
+        ],
       ),
     );
   }

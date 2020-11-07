@@ -132,26 +132,28 @@ class HSInterColor {
   /// Returns this color as a String in the H:250 S:100 L:60 format.
   @override
   String toString() {
-    return when({
-      () => kind == HSInterType.HSLuv: () =>
-          "H:${hue.toInt()} S:${outputSaturation()} L:${outputLightness()}",
-      () => kind == HSInterType.HSV: () =>
-          "H:${hue.toInt()} S:${outputSaturation()} V:${outputLightness()}",
-    });
+    switch (kind) {
+      case HSInterType.HSLuv:
+        return "H:${hue.toInt()} S:${outputSaturation()} L:${outputLightness()}";
+      case HSInterType.HSV:
+        return "H:${hue.toInt()} S:${outputSaturation()} V:${outputLightness()}";
+    }
+    // this is never reached, but is needed for dart analyzer.
+    return "";
   }
 
   String toPartialStr(int index) {
-    return when({
-      () => kind == HSInterType.HSLuv: () => when({
-            () => index == 0: () => "H:${hue.toInt()}",
-            () => index == 1: () => "S:${outputSaturation()}",
-            () => index == 2: () => "L:${outputLightness()}",
-          }),
-      () => kind == HSInterType.HSV: () => when({
-            () => index == 0: () => "H:${hue.toInt()}",
-            () => index == 1: () => "S:${outputSaturation()}",
-            () => index == 2: () => "V:${outputLightness()}",
-          }),
-    });
+    final String valueLetter = kind == HSInterType.HSLuv ? "L" : "V";
+
+    switch (index) {
+      case 0:
+        return "H:${hue.toInt()}";
+      case 1:
+        return "S:${outputSaturation()}";
+      case 2:
+        return "$valueLetter:${outputLightness()}";
+      default:
+        return "error in toPartialStr";
+    }
   }
 }

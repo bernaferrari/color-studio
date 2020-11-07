@@ -83,44 +83,97 @@ class ContrastRatioCard extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ContrastCircleBar(
-                  title: kPrimary,
-                  subtitle: kBackground,
-                  contrast: state.contrastValues[0],
-                  contrastingColor: rgbColorsWithBlindness[ColorType.Primary],
-                  circleColor: rgbColorsWithBlindness[ColorType.Background],
-                ),
-                if (!areValuesLocked) ...[
-                  ContrastCircleBar(
-                    title: kPrimary,
-                    subtitle: kSurface,
-                    contrast: state.contrastValues[1],
-                    contrastingColor: rgbColorsWithBlindness[ColorType.Primary],
-                    circleColor: rgbColorsWithBlindness[ColorType.Surface],
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ContrastCircleBar(
+                        title: kPrimary,
+                        subtitle: kBackground,
+                        contrast: state.contrastValues[0],
+                        contrastingColor:
+                            rgbColorsWithBlindness[ColorType.Primary],
+                        circleColor:
+                            rgbColorsWithBlindness[ColorType.Background],
+                      ),
+                      ContrastCircleBar(
+                        title: kPrimary,
+                        subtitle: kSurface,
+                        contrast: state.contrastValues[1],
+                        contrastingColor:
+                            rgbColorsWithBlindness[ColorType.Primary],
+                        circleColor: rgbColorsWithBlindness[ColorType.Surface],
+                      ),
+
+                      // if (!areValuesLocked) ...[
+                      //   ContrastCircleBar(
+                      //     title: kPrimary,
+                      //     subtitle: kSurface,
+                      //     contrast: state.contrastValues[1],
+                      //     contrastingColor: rgbColorsWithBlindness[ColorType.Primary],
+                      //     circleColor: rgbColorsWithBlindness[ColorType.Surface],
+                      //   ),
+                      // ContrastCircleBar(
+                      //   title: kSurface,
+                      //   subtitle: kBackground,
+                      //   contrast: state.contrastValues[2],
+                      //   contrastingColor: rgbColorsWithBlindness[kSurface],
+                      //   circleColor: rgbColorsWithBlindness[kBackground],
+                      // ),
+                      // ],
+                      // SizedBox(
+                      //   width: 48,
+                      //   height: 48,
+                      //   child: OutlinedButton(
+                      //     style: OutlinedButton.styleFrom(
+                      //       shape: RoundedRectangleBorder(
+                      //         borderRadius: BorderRadius.circular(32.0)
+                      //       )
+                      //     ),
+                      //     child: Icon(Icons.chevron_right),
+                      //     onPressed: () {},
+                      //   ),
+                      // ),
+                    ],
                   ),
-                  // ContrastCircleBar(
-                  //   title: kSurface,
-                  //   subtitle: kBackground,
-                  //   contrast: state.contrastValues[2],
-                  //   contrastingColor: rgbColorsWithBlindness[kSurface],
-                  //   circleColor: rgbColorsWithBlindness[kBackground],
-                  // ),
-                ],
-                // SizedBox(
-                //   width: 48,
-                //   height: 48,
-                //   child: OutlinedButton(
-                //     style: OutlinedButton.styleFrom(
-                //       shape: RoundedRectangleBorder(
-                //         borderRadius: BorderRadius.circular(32.0)
-                //       )
-                //     ),
-                //     child: Icon(Icons.chevron_right),
-                //     onPressed: () {},
+                ),
+                // Padding(
+                //   padding: const EdgeInsets.all(8.0),
+                //   child: Column(
+                //     children: [
+                //       OutlinedButton(
+                //         child: Row(
+                //           mainAxisSize: MainAxisSize.min,
+                //           children: [
+                //             Radio(
+                //               value: 123,
+                //               // activeColor: primary,
+                //               groupValue: "oooo",
+                //               onChanged: (dynamic changed) {
+                //                 // box.put('shuffle', 1);
+                //               },
+                //             ),
+                //             SizedBox(width: 8),
+                //             Text(
+                //               "Primary",
+                //               style: Theme.of(context).textTheme.headline6,
+                //             ),
+                //           ],
+                //         ),
+                //         onPressed: () {},
+                //       ),
+                //       ElevatedButton(
+                //         child: Text("Secondary"),
+                //         onPressed: () {},
+                //       ),
+                //       ElevatedButton(
+                //         child: Text("Elevation"),
+                //         onPressed: () {},
+                //       ),
+                //     ],
                 //   ),
-                // ),
+                // )
               ],
             ),
             const SizedBox(height: 4),

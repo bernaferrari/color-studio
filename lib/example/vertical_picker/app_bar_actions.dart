@@ -19,27 +19,24 @@ class ColorSearchButton extends StatelessWidget {
     final Color onSurface =
         Theme.of(context).colorScheme.onSurface.withOpacity(0.7);
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8),
-      child: SizedBox(
-        height: 36,
-        child: OutlineButton.icon(
-          icon: Icon(FeatherIcons.search, size: 16),
-          color: color,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(defaultRadius),
-          ),
-          borderSide: BorderSide(color: onSurface),
-          highlightedBorderColor: onSurface,
-          label: Text(color.toHexStr()),
-          textColor: onSurface,
-          onPressed: () {
-            showSlidersDialog(context, color, selected);
-          },
-          onLongPress: () {
-            copyToClipboard(context, color.toHexStr());
-          },
+    return SizedBox(
+      height: 36,
+      child: OutlineButton.icon(
+        icon: Icon(FeatherIcons.search, size: 16),
+        color: color,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(defaultRadius),
         ),
+        borderSide: BorderSide(color: onSurface),
+        highlightedBorderColor: onSurface,
+        label: Text(color.toHexStr()),
+        textColor: onSurface,
+        onPressed: () {
+          showSlidersDialog(context, color, selected);
+        },
+        onLongPress: () {
+          copyToClipboard(context, color.toHexStr());
+        },
       ),
     );
   }

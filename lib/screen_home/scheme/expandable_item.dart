@@ -134,7 +134,7 @@ class _ExpandedAnimated extends StatelessWidget {
           ),
         ),
         child: Container(
-          color: rgbColor,
+          color: rgbColorWithBlindness,
           child: AnimatedSwitcher(
             duration: Duration(milliseconds: 500),
             switchInCurve: Curves.easeInOut,
@@ -150,7 +150,7 @@ class _ExpandedAnimated extends StatelessWidget {
                 : SchemeExpandedItem(
                     rgbColor: rgbColor,
                     hsLuvColor: hsluvColor,
-                    rgbColorWithBlindness: rgbColor,
+                    rgbColorWithBlindness: rgbColorWithBlindness,
                     selected: selected),
           ),
         ),
