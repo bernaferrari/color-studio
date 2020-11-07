@@ -69,22 +69,38 @@ class _CirclePercentageWidgetState extends State<CirclePercentageWidget>
 
   @override
   Widget build(context) {
+
+
+
     return Column(
       children: [
-        Text(widget.title, style: Theme.of(context).textTheme.bodyText2),
-        Text(widget.subtitle, style: Theme.of(context).textTheme.bodyText2),
+        Text(
+          "${widget.title} x",
+          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                fontSize: 14,
+                fontWeight: FontWeight.w200,
+              ),
+        ),
+        Text(
+          widget.subtitle,
+          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+        ),
         Container(
-          width: 70,
-          height: 70,
+          width: 80,
+          height: 80,
           margin: const EdgeInsets.symmetric(vertical: 16),
           child: CustomPaint(
             isComplex: false,
-            painter: SpendingCategoryChartPainter(
-                percent: _controller.value,
-                color: widget.color,
-                circleColor: widget.circleColor,
-                backgroundColor:
-                    Theme.of(context).colorScheme.onSurface.withOpacity(0.15)),
+            painter: CirclePercentagePainter(
+              percent: _controller.value,
+              color: widget.color,
+              circleColor: widget.circleColor,
+              backgroundColor:
+                  Theme.of(context).colorScheme.onSurface.withOpacity(0.15),
+            ),
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

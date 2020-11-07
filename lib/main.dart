@@ -37,21 +37,27 @@ class BoxedApp extends StatefulWidget {
 }
 
 class _BoxedAppState extends State<BoxedApp> {
-  ColorBlindnessCubit colorBlindBloc;
+  ColorBlindnessCubit _colorBlindBloc;
   MdcSelectedBloc _mdcSelectedBloc;
+  ContrastRatioCubit _contrastRatioCubit;
 
   @override
   void initState() {
     super.initState();
-    colorBlindBloc = ColorBlindnessCubit();
-    _mdcSelectedBloc = MdcSelectedBloc(colorBlindBloc)
-      ..add(MDCInitEvent(getRandomMaterialDark()));
+    _colorBlindBloc = ColorBlindnessCubit();
+    _mdcSelectedBloc = MdcSelectedBloc(_colorBlindBloc);
+
+    // this early initialization is needed, so that it always has the first value from _mdcSelectedBloc.
+    _contrastRatioCubit = ContrastRatioCubit(_mdcSelectedBloc);
+
+    // this must come after _contrastRatioCubit is initialized.
+    _mdcSelectedBloc.add(MDCInitEvent(getRandomMaterialDark()));
   }
 
   @override
   void dispose() {
     super.dispose();
-    colorBlindBloc.close();
+    _colorBlindBloc.close();
     _mdcSelectedBloc.close();
   }
 
@@ -63,10 +69,10 @@ class _BoxedAppState extends State<BoxedApp> {
           create: (context) => _mdcSelectedBloc,
         ),
         BlocProvider<ContrastRatioCubit>(
-          create: (context) => ContrastRatioCubit(_mdcSelectedBloc),
+          create: (context) => _contrastRatioCubit,
         ),
         BlocProvider<ColorBlindnessCubit>(
-          create: (context) => colorBlindBloc,
+          create: (context) => _colorBlindBloc,
         )
       ],
       child: BlocBuilder<MdcSelectedBloc, MdcSelectedState>(
@@ -77,14 +83,12 @@ class _BoxedAppState extends State<BoxedApp> {
 
         final currentState = state as MDCLoadedState;
 
-        final primary =
-            currentState.rgbColorsWithBlindness[ColorType.Primary];
+        final primary = currentState.rgbColorsWithBlindness[ColorType.Primary];
         final secondary =
             currentState.rgbColorsWithBlindness[ColorType.Secondary];
         final background =
             currentState.rgbColorsWithBlindness[ColorType.Background];
-        final surface =
-            currentState.rgbColorsWithBlindness[ColorType.Surface];
+        final surface = currentState.rgbColorsWithBlindness[ColorType.Surface];
 
         final isLightSurface =
             currentState.hsluvColors[ColorType.Surface].lightness >=

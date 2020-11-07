@@ -117,7 +117,7 @@ class SchemeCompactedItem extends StatelessWidget {
                   // only show round radius on the last element when not expanded.
                   borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(
-                      (title == kSurface && expanded == false) ? 8.0 : 0.0,
+                      (title == ColorType.Surface && expanded == false) ? 8.0 : 0.0,
                     ),
                   ),
                 ),

@@ -5,17 +5,6 @@ import 'package:flutter/material.dart';
 
 import 'widgets/FAProgressBar.dart';
 
-class ColorWithContrast {
-  ColorWithContrast(this.color, Color color2, [this.name = ""])
-      : lum = color.computeLuminance(),
-        contrast = calculateContrast(color, color2);
-
-  final Color color;
-  final String name;
-  final double contrast;
-  final double lum;
-}
-
 class ContrastText extends StatelessWidget {
   const ContrastText(this.contrast, {this.color, this.withSizedBox = true});
 

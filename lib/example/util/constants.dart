@@ -9,6 +9,8 @@ const String kBackground = "Background";
 const String kSecondary = "Secondary";
 const String kSurface = "Surface";
 
+const String kElevation = "Elevation";
+
 enum ColorType {
   Primary,
   Secondary,

@@ -9,13 +9,21 @@ import 'package:colorstudio/example/util/calculate_contrast.dart';
 import 'package:colorstudio/example/util/color_util.dart';
 import 'package:colorstudio/example/util/constants.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+enum ContrastSectionType {
+  Primary,
+  Secondary,
+  Elevation,
+}
 
 class ContrastRatioCubit extends Cubit<ContrastRatioState> {
   ContrastRatioCubit(MdcSelectedBloc _mdcSelectedBloc)
       : super(ContrastRatioState()) {
     _mdcSubscription = _mdcSelectedBloc.listen((stateValue) async {
+      print("stateValue was changed $stateValue");
       if (stateValue is MDCLoadedState) {
-        set(stateValue.rgbColorsWithBlindness);
+        set(rgbColorsWithBlindness: stateValue.rgbColorsWithBlindness);
       }
     });
   }
@@ -28,38 +36,70 @@ class ContrastRatioCubit extends Cubit<ContrastRatioState> {
     return super.close();
   }
 
-  void set(Map<ColorType, Color> rgbColorsWithBlindness) {
-    final rgb = rgbColorsWithBlindness;
+  void set({
+    Map<ColorType, Color> rgbColorsWithBlindness,
+    ContrastSectionType contrastSectionType,
+  }) {
+    final rgb = rgbColorsWithBlindness ?? state.rgbColorsWithBlindness;
 
-    emit(
-      ContrastRatioState(
-        contrastValues: [
-          calculateContrast(
-            rgb[ColorType.Primary],
-            rgb[ColorType.Background],
-          ),
-          calculateContrast(
-            rgb[ColorType.Primary],
-            rgb[ColorType.Surface],
-          ),
-          calculateContrast(
-            rgb[ColorType.Background],
-            rgb[ColorType.Surface],
-          ),
-        ],
-        elevationValues: [
-          for (int i = 0; i < elevationEntriesList.length; i++)
-            ColorContrast(
-              compositeColors(
-                const Color(0xffffffff),
-                rgb[ColorType.Surface],
-                elevationEntries[i].overlay,
-              ),
+    final _contrastSectionType =
+        contrastSectionType ?? state.selectedContrastType;
+
+    if (_contrastSectionType == ContrastSectionType.Primary) {
+      emit(
+        ContrastRatioState(
+          contrastValues: [
+            calculateContrast(
               rgb[ColorType.Primary],
+              rgb[ColorType.Background],
             ),
-        ],
-      ),
-    );
+            calculateContrast(
+              rgb[ColorType.Primary],
+              rgb[ColorType.Surface],
+            ),
+          ],
+          selectedContrastType: _contrastSectionType,
+          rgbColorsWithBlindness: rgb,
+        ),
+      );
+    } else if (_contrastSectionType == ContrastSectionType.Secondary) {
+      // when secondary, compare against background and surface
+      emit(
+        ContrastRatioState(
+          contrastValues: [
+            calculateContrast(
+              rgb[ColorType.Secondary],
+              rgb[ColorType.Background],
+            ),
+            calculateContrast(
+              rgb[ColorType.Secondary],
+              rgb[ColorType.Surface],
+            ),
+          ],
+          selectedContrastType: _contrastSectionType,
+          rgbColorsWithBlindness: rgb,
+        ),
+      );
+    } else {
+      // when elevation, retrieve all the steps.
+      emit(
+        ContrastRatioState(
+          elevationValues: [
+            for (int i = 0; i < elevationEntriesList.length; i++)
+              ColorContrast(
+                compositeColors(
+                  const Color(0xffffffff),
+                  rgb[ColorType.Surface],
+                  elevationEntries[i].overlay,
+                ),
+                rgb[ColorType.Primary],
+              ),
+          ],
+          selectedContrastType: _contrastSectionType,
+          rgbColorsWithBlindness: rgb,
+        ),
+      );
+    }
   }
 }
 
@@ -67,21 +107,27 @@ class ContrastRatioState extends Equatable {
   const ContrastRatioState({
     this.contrastValues = const [],
     this.elevationValues = const [],
+    this.selectedContrastType = ContrastSectionType.Primary,
+    this.rgbColorsWithBlindness = const {},
   });
 
   final List<double> contrastValues;
   final List<ColorContrast> elevationValues;
+  final ContrastSectionType selectedContrastType;
+  final Map<ColorType, Color> rgbColorsWithBlindness;
 
   @override
-  String toString() => 'ContrastRatioSuccess: $contrastValues';
+  String toString() =>
+      'ContrastRatioState: $selectedContrastType $contrastValues $elevationValues';
 
   @override
-  List<Object> get props => [contrastValues, elevationValues];
+  List<Object> get props =>
+      [selectedContrastType, contrastValues, elevationValues];
 }
 
 class ColorContrast {
-  ColorContrast(this.color, Color color2)
-      : contrast = calculateContrast(color, color2);
+  ColorContrast(this.color, Color againstColor)
+      : contrast = calculateContrast(color, againstColor);
 
   final Color color;
   final double contrast;

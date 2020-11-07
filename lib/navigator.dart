@@ -5,6 +5,7 @@ import 'package:colorstudio/screen_home/color_blindness/card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+
 import 'blocs/blocs.dart';
 import 'example/mdc/components_preview.dart';
 import 'screen_home/contrast_ratio/card.dart';
@@ -364,15 +365,24 @@ class HomeScreen extends StatelessWidget {
           children: [
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.all(24),
+                padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
               ),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(Icons.compare_arrows),
-                  Text("Compare"),
+                  Icon(
+                    Icons.compare_arrows,
+                    size: 36,
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    "Compare\nColors",
+                    // textAlign: TextAlign.center,
+                  ),
                 ],
               ),
               onPressed: () {},
@@ -414,8 +424,6 @@ class HomeScreen extends StatelessWidget {
           constraints: BoxConstraints(maxWidth: 600),
           child: ContrastRatioCard(
             currentState.rgbColorsWithBlindness,
-            shouldDisplayElevation,
-            currentState.locked,
             _handleMultiColor,
           ),
         ),

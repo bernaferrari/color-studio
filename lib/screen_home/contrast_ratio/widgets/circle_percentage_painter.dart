@@ -2,8 +2,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-class SpendingCategoryChartPainter extends CustomPainter {
-  const SpendingCategoryChartPainter({
+class CirclePercentagePainter extends CustomPainter {
+  const CirclePercentagePainter({
     this.percent,
     this.color,
     this.circleColor,
@@ -44,7 +44,7 @@ class SpendingCategoryChartPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(SpendingCategoryChartPainter oldDelegate) {
+  bool shouldRepaint(CirclePercentagePainter oldDelegate) {
     return percent != oldDelegate.percent || color != oldDelegate.color;
   }
 }

@@ -3,6 +3,8 @@ import 'package:colorstudio/blocs/contrast_ratio/contrast_ratio_cubit.dart';
 import 'package:colorstudio/example/util/constants.dart';
 import 'package:colorstudio/example/widgets/loading_indicator.dart';
 import 'package:colorstudio/screen_home/title_bar.dart';
+import 'package:colorstudio/util/widget_space.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -13,29 +15,22 @@ import 'widgets/contrast_widgets.dart';
 class ContrastRatioCard extends StatelessWidget {
   const ContrastRatioCard(
     this.rgbColorsWithBlindness,
-    this.shouldDisplayElevation,
-    this.locked,
     this.toContrastScreen,
   );
 
   final Map<ColorType, Color> rgbColorsWithBlindness;
-  final Map<ColorType, bool> locked;
-  final bool shouldDisplayElevation;
   final Function toContrastScreen;
 
   @override
   Widget build(BuildContext context) {
-    final state =
-        BlocProvider.of<MdcSelectedBloc>(context).state as MDCLoadedState;
-    context.bloc<ContrastRatioCubit>().set(state.rgbColorsWithBlindness);
-
     return BlocBuilder<ContrastRatioCubit, ContrastRatioState>(
         builder: (context, state) {
-      if (state.contrastValues.isEmpty) {
+      if (state.contrastValues.isEmpty && state.elevationValues.isEmpty) {
         return const LoadingIndicator();
       }
 
-      const areValuesLocked = false;
+      final shouldDisplayElevation =
+          Theme.of(context).colorScheme.brightness == Brightness.dark;
 
       return Card(
         child: Column(
@@ -70,11 +65,6 @@ class ContrastRatioCard extends StatelessWidget {
                 // ),
               ],
             ),
-            // const Divider(
-            //   height: 0,
-            //   indent: 1,
-            //   endIndent: 1,
-            // ),
             Container(
               height: 1,
               margin: EdgeInsets.all(1),
@@ -82,141 +72,152 @@ class ContrastRatioCard extends StatelessWidget {
               color: Theme.of(context).colorScheme.onSurface.withOpacity(0.20),
             ),
             const SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ContrastCircleBar(
-                        title: kPrimary,
-                        subtitle: kBackground,
-                        contrast: state.contrastValues[0],
-                        contrastingColor:
-                            rgbColorsWithBlindness[ColorType.Primary],
-                        circleColor:
-                            rgbColorsWithBlindness[ColorType.Background],
+            SizedBox(
+              height: 160,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  if (state.selectedContrastType !=
+                      ContrastSectionType.Elevation)
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(),
+                          ContrastCircleBar(
+                            title: describeEnum(state.selectedContrastType),
+                            subtitle: kBackground,
+                            contrast: state.contrastValues[0],
+                            contrastingColor:
+                                rgbColorsWithBlindness[ColorType.Primary],
+                            circleColor:
+                                rgbColorsWithBlindness[ColorType.Background],
+                          ),
+                          ContrastCircleBar(
+                            title: describeEnum(state.selectedContrastType),
+                            subtitle: kSurface,
+                            contrast: state.contrastValues[1],
+                            contrastingColor:
+                                rgbColorsWithBlindness[ColorType.Primary],
+                            circleColor:
+                                rgbColorsWithBlindness[ColorType.Surface],
+                          ),
+                          SizedBox(),
+                        ],
                       ),
-                      ContrastCircleBar(
-                        title: kPrimary,
-                        subtitle: kSurface,
-                        contrast: state.contrastValues[1],
-                        contrastingColor:
-                            rgbColorsWithBlindness[ColorType.Primary],
-                        circleColor: rgbColorsWithBlindness[ColorType.Surface],
+                    )
+                  else
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          if (shouldDisplayElevation) ...[
+                            Text(
+                              "Primary x Surface with elevation",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
+                            ),
+                            SizedBox(height: 16),
+                            DarkModeSurfaceContrast(state.elevationValues),
+                          ] else ...[
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 36.0,
+                                vertical: 8.0,
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text(
+                                    "In dark surfaces, Material Design Components express depth by displaying lighter surface colors. "
+                                    "The higher a surface’s elevation (raising it closer to an implied light source), the lighter that surface becomes.\n",
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    "You are using a light surface color.",
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1,
+                                    textAlign: TextAlign.center,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ],
                       ),
-
-                      // if (!areValuesLocked) ...[
-                      //   ContrastCircleBar(
-                      //     title: kPrimary,
-                      //     subtitle: kSurface,
-                      //     contrast: state.contrastValues[1],
-                      //     contrastingColor: rgbColorsWithBlindness[ColorType.Primary],
-                      //     circleColor: rgbColorsWithBlindness[ColorType.Surface],
-                      //   ),
-                      // ContrastCircleBar(
-                      //   title: kSurface,
-                      //   subtitle: kBackground,
-                      //   contrast: state.contrastValues[2],
-                      //   contrastingColor: rgbColorsWithBlindness[kSurface],
-                      //   circleColor: rgbColorsWithBlindness[kBackground],
-                      // ),
-                      // ],
-                      // SizedBox(
-                      //   width: 48,
-                      //   height: 48,
-                      //   child: OutlinedButton(
-                      //     style: OutlinedButton.styleFrom(
-                      //       shape: RoundedRectangleBorder(
-                      //         borderRadius: BorderRadius.circular(32.0)
-                      //       )
-                      //     ),
-                      //     child: Icon(Icons.chevron_right),
-                      //     onPressed: () {},
-                      //   ),
-                      // ),
-                    ],
-                  ),
-                ),
-                // Padding(
-                //   padding: const EdgeInsets.all(8.0),
-                //   child: Column(
-                //     children: [
-                //       OutlinedButton(
-                //         child: Row(
-                //           mainAxisSize: MainAxisSize.min,
-                //           children: [
-                //             Radio(
-                //               value: 123,
-                //               // activeColor: primary,
-                //               groupValue: "oooo",
-                //               onChanged: (dynamic changed) {
-                //                 // box.put('shuffle', 1);
-                //               },
-                //             ),
-                //             SizedBox(width: 8),
-                //             Text(
-                //               "Primary",
-                //               style: Theme.of(context).textTheme.headline6,
-                //             ),
-                //           ],
-                //         ),
-                //         onPressed: () {},
-                //       ),
-                //       ElevatedButton(
-                //         child: Text("Secondary"),
-                //         onPressed: () {},
-                //       ),
-                //       ElevatedButton(
-                //         child: Text("Elevation"),
-                //         onPressed: () {},
-                //       ),
-                //     ],
-                //   ),
-                // )
-              ],
+                    ),
+                ],
+              ),
             ),
-            const SizedBox(height: 4),
-            // surface qualifies as dark mode
-            // Text(
-            //   "Primary / Surface with elevation",
-            //   textAlign: TextAlign.center,
-            //   style: TextStyle(
-            //     color: Theme.of(context).colorScheme.onSurface,
-            //   ),
-            // ),
-            if (shouldDisplayElevation == null)
-              SizedBox()
-            else if (shouldDisplayElevation) ...[
-              const SizedBox(height: 8),
-              DarkModeSurfaceContrast(state.elevationValues),
-            ] else ...[
-              SizedBox(
-                height: 128,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 36.0,
-                    vertical: 8.0,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        "In dark surfaces, Material Design Components express depth by displaying lighter surface colors. "
-                        "The higher a surface’s elevation (raising it closer to an implied light source), the lighter that surface becomes.\n",
-                        style: Theme.of(context).textTheme.caption,
-                        textAlign: TextAlign.center,
-                      ),
-                      Text(
-                        "You are using a light surface color.",
-                        style: Theme.of(context).textTheme.bodyText1,
-                        textAlign: TextAlign.center,
-                      )
+            const SizedBox(height: 16),
+            SizedBox(
+              // width: 156,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  // crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: spaceRow(
+                    8,
+                    [
+                      ...ContrastSectionType.values.map((d) {
+                        if (d == state.selectedContrastType) {
+                          return OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.primary,
+                              padding: EdgeInsets.symmetric(
+                                vertical: 16,
+                                horizontal: 24,
+                              ),
+                            ),
+                            child: Text(
+                              describeEnum(d),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle1
+                                  .copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.onPrimary,
+                                  ),
+                            ),
+                            onPressed: () {
+                              context
+                                  .bloc<ContrastRatioCubit>()
+                                  .set(contrastSectionType: d);
+                            },
+                          );
+                        } else {
+                          return OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                              padding: EdgeInsets.symmetric(
+                                vertical: 16,
+                                horizontal: 24,
+                              ),
+                            ),
+                            child: Text(
+                              describeEnum(d),
+                              style: Theme.of(context).textTheme.subtitle1,
+                            ),
+                            onPressed: () {
+                              context
+                                  .bloc<ContrastRatioCubit>()
+                                  .set(contrastSectionType: d);
+                            },
+                          );
+                        }
+                      }),
                     ],
                   ),
                 ),
-              )
-            ],
+              ),
+            ),
             const SizedBox(height: 16),
           ],
         ),
