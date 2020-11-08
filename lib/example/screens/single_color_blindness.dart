@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../shared_widgets/color_search_button.dart';
 import '../mdc/components.dart';
 import '../util/color_util.dart';
 import '../util/selected.dart';
-import '../vertical_picker/app_bar_actions.dart';
 import '../widgets/update_color_dialog.dart';
 
 class SingleColorBlindness extends StatelessWidget {

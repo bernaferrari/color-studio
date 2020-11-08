@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,24 +5,19 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
-import '../../blocs/blocs.dart';
-import '../../screen_home/contrast_ratio/widgets/contrast_widgets.dart';
-import '../../screen_home/scheme/widgets/expanded_section.dart';
-import '../../screen_single/templates/templates_screen.dart';
-import '../mdc/components.dart';
-import '../util/constants.dart';
-import '../util/selected.dart';
-import '../util/when.dart';
-import '../vertical_picker/vertical_picker_main.dart';
-import '../widgets/loading_indicator.dart';
-import '../widgets/update_color_dialog.dart';
-import 'color_library.dart';
-import 'single_color_blindness.dart';
+import '../blocs/blocs.dart';
+import '../example/mdc/components.dart';
+import '../example/screens/color_library.dart';
+import '../example/util/constants.dart';
+import '../example/widgets/loading_indicator.dart';
+import '../example/widgets/update_color_dialog.dart';
+import '../screen_home/contrast_ratio/widgets/contrast_widgets.dart';
+import '../screen_home/scheme/widgets/expanded_section.dart';
+import 'templates/templates_screen.dart';
+import 'vertical_picker/vertical_picker_main.dart';
 
-class SingleColorHome extends StatelessWidget {
-  const SingleColorHome({this.isSplitView = false});
-
-  final bool isSplitView;
+class ScreenSingle extends StatelessWidget {
+  const ScreenSingle();
 
   @override
   Widget build(BuildContext context) {
@@ -52,14 +45,7 @@ class SingleColorHome extends StatelessWidget {
       return Theme(
         data: ThemeData.from(
           colorScheme: colorScheme,
-          textTheme: TextTheme(
-            headline6: GoogleFonts.openSans(),
-            // subtitle2: GoogleFonts.firaSans(fontWeight: FontWeight.w500),
-            // bodyText2: GoogleFonts.firaSans(),
-            // bodyText1: GoogleFonts.b612Mono(fontSize: 12),
-            // caption: GoogleFonts.firaSans(),
-            button: GoogleFonts.b612Mono(),
-          ),
+          textTheme: TextTheme(button: GoogleFonts.b612Mono()),
         ).copyWith(
           cardTheme: Theme.of(context).cardTheme,
           buttonTheme: Theme.of(context).buttonTheme.copyWith(
@@ -71,7 +57,7 @@ class SingleColorHome extends StatelessWidget {
         child: Scaffold(
           backgroundColor: selectedRgbColor,
           body: DefaultTabController(
-            length: 4,
+            length: 3,
             initialIndex: 0,
             child: Column(
               children: <Widget>[
@@ -81,21 +67,14 @@ class SingleColorHome extends StatelessWidget {
                       HSVerticalPicker(
                         color: selectedRgbColor,
                         hsLuvColor: selectedHsluvColor,
-                        isSplitView: isSplitView,
                       ),
-                      SingleColorBlindness(
-                        color: selectedRgbColor,
-                        isSplitView: isSplitView,
-                      ),
+                      // SingleColorBlindness(
+                      //   color: selectedRgbColor,
+                      //   isSplitView: isSplitView,
+                      // ),
                       // About(isSplitView: isSplitView),
-                      ColorLibrary(
-                        color: selectedRgbColor,
-                        isSplitView: isSplitView,
-                      ),
-                      TemplatesScreen(
-                        backgroundColor: selectedRgbColor,
-                        isSplitView: isSplitView,
-                      ),
+                      TemplatesScreen(backgroundColor: selectedRgbColor),
+                      ColorLibrary(color: selectedRgbColor),
                     ],
                   ),
                 ),
@@ -207,18 +186,18 @@ class __BottomHomeState extends State<_BottomHome> {
                   ),
                 ),
               ),
-              tabs: [
+              tabs: const [
 //                            Tab(
 //                              icon: Transform.rotate(
 //                                angle: 0.5 * math.pi,
 //                                child: const Icon(FeatherIcons.sliders),
 //                              ),
 //                            ),
-                const Tab(icon: Icon(FeatherIcons.barChart2)),
-                Tab(icon: Icon(Icons.invert_colors)),
+                Tab(icon: Icon(FeatherIcons.barChart2)),
+                // Tab(icon: Icon(Icons.invert_colors)),
                 // Tab(icon: Icon(FeatherIcons.info)),
-                Tab(icon: Icon(FeatherIcons.bookOpen)),
                 Tab(icon: Icon(FeatherIcons.briefcase)),
+                Tab(icon: Icon(FeatherIcons.bookOpen)),
               ],
             ),
           ],
@@ -251,6 +230,7 @@ class _ColorContrastRow extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              SizedBox(),
               ContrastCircleBar(
                 title: kPrimary,
                 subtitle: kBackground,
@@ -268,75 +248,13 @@ class _ColorContrastRow extends StatelessWidget {
                 circleColor: rgbColors[ColorType.Surface],
                 contrastingColor: rgbColors[ColorType.Primary],
               ),
+              SizedBox(),
             ],
           ),
         ),
       );
     });
   }
-}
-
-class ColorWithDiff {
-  const ColorWithDiff(this.color, this.diff, this.didChange);
-
-  final HSLuvColor color;
-  final int diff;
-  final bool didChange;
-}
-
-List<ColorWithDiff> generateLuvVariations(HSLuvColor luv, String kind) {
-  final luvList = <ColorWithDiff>[];
-
-  for (var i = -10; i < 0; i += 5) {
-    // if lightness becomes 0 or 100 the hue value might be lost
-    // because app is always converting HSLuv to RGB and vice-versa.
-
-    ColorWithDiff withDiff;
-    if (kind == hueStr) {
-      final upd = luv.withHue((luv.hue + i * 2) % 360);
-      withDiff = ColorWithDiff(upd, i * 2, true);
-    } else if (kind == satStr) {
-      final upd = luv.withSaturation(math.max(luv.saturation + i, 5.0));
-      // luv.saturation - upd.saturation > -i - 5
-      // 9 - 5 > - (-5) -5 => 4 > 0 ok
-      // 9 - 5 > - (-10) -5 => 4 > 5 false
-      // this calculation is made so it can be known when -10 is going to be useless.
-      withDiff =
-          ColorWithDiff(upd, i, luv.saturation - upd.saturation > -i - 5);
-    } else if (kind == lightStr) {
-      final upd = luv.withLightness(math.max(luv.lightness + i, 5.0));
-      withDiff = ColorWithDiff(upd, i, luv.lightness - upd.lightness > -i - 5);
-    }
-
-    luvList.add(withDiff);
-  }
-
-  luvList.add(ColorWithDiff(luv, 0, false));
-
-  for (int i = 5; i < 15; i += 5) {
-    // if lightness becomes 0 or 100 the hue value might be lost
-    // because app is always converting HSLuv to RGB and vice-versa.
-
-    ColorWithDiff withDiff;
-    if (kind == hueStr) {
-      final upd = luv.withHue((luv.hue + i * 2) % 360);
-      withDiff = ColorWithDiff(upd, i * 2, true);
-    } else if (kind == satStr) {
-      final upd = luv.withSaturation(math.min(luv.saturation + i, 95.0));
-      // upd.saturation - luv.saturation > -i - 5
-      // 95 - 90 > 5 - 5 => 5 > 0 ok
-      // 95 - 90 > 10 - 5 => 4 > 5 false
-      withDiff = ColorWithDiff(upd, i, upd.saturation - luv.saturation > i - 5);
-    } else if (kind == lightStr) {
-      final min = math.min(luv.lightness + i, 95.0);
-      final upd = luv.withLightness(min);
-      withDiff = ColorWithDiff(upd, i, upd.lightness - luv.lightness > i - 5);
-    }
-
-    luvList.add(withDiff);
-  }
-
-  return luvList;
 }
 
 class ThemeBar extends StatelessWidget {
@@ -491,117 +409,5 @@ class ThemeBar extends StatelessWidget {
         }),
       ),
     );
-  }
-}
-
-class ContrastItem extends StatelessWidget {
-  const ContrastItem({
-    this.colorWithDiff,
-    this.onPressed,
-    this.contrast,
-    this.compactText = false,
-    this.category = "",
-  });
-
-  final ColorWithDiff colorWithDiff;
-  final Function onPressed;
-  final bool compactText;
-  final double contrast;
-  final String category;
-
-  @override
-  Widget build(BuildContext context) {
-    final color = colorWithDiff.color;
-
-    final Color textColor = (color.lightness < kLightnessThreshold)
-        ? Colors.white.withOpacity(0.87)
-        : Colors.black87;
-
-    Widget cornerText;
-    if (colorWithDiff.diff == 0) {
-      final String writtenValue = when<String>({
-        () => category == hueStr: () => color.hue.round().toString(),
-        () => category == satStr: () => "${color.saturation}",
-        () => category == lightStr || category == valueStr: () =>
-            "${color.lightness}",
-      });
-
-      cornerText = Text(
-        writtenValue,
-        style: Theme.of(context)
-            .textTheme
-            .caption
-            .copyWith(color: textColor, fontWeight: FontWeight.w700),
-      );
-    } else if (!colorWithDiff.didChange) {
-      cornerText = null;
-    } else {
-      cornerText = Text(
-        "${colorWithDiff.diff > 0 ? "+" : ""}${colorWithDiff.diff}",
-        style: Theme.of(context).textTheme.caption.copyWith(color: textColor),
-      );
-    }
-
-    return SizedBox(
-      width: 56,
-      child: MaterialButton(
-        elevation: 0,
-        padding: EdgeInsets.zero,
-        color: color.toColor(),
-        shape: const RoundedRectangleBorder(),
-        onPressed: onPressed,
-        child: cornerText,
-      ),
-    );
-  }
-}
-
-class RoundSelectableColor extends StatelessWidget {
-  const RoundSelectableColor(this.kind);
-
-  final String kind;
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<MdcSelectedBloc, MdcSelectedState>(
-        builder: (context, state) {
-      final selected = (state as MDCLoadedState).selected;
-      final allItems = (state as MDCLoadedState).rgbColorsWithBlindness;
-
-      final Color primaryColor = allItems[ColorType.Primary];
-      final Color surfaceColor = allItems[ColorType.Surface];
-
-      final Color correctColor = when({
-        () => kind == kPrimary: () => primaryColor,
-        () => kind == kSurface: () => surfaceColor,
-      });
-
-      return SizedBox(
-        width: 24,
-        height: 24,
-        child: RawMaterialButton(
-          onPressed: () {
-//            BlocProvider.of<MdcSelectedBloc>(context).add(
-//              MDCUpdateAllEvent(
-//                primaryColor: primaryColor,
-//                surfaceColor: surfaceColor,
-//                selectedTitle: kind,
-//              ),
-//            );
-            colorSelected(context, correctColor);
-          },
-          fillColor: correctColor,
-          shape: CircleBorder(
-            side: BorderSide(
-              width: 2,
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
-            ),
-          ),
-          child: kind == selected ? Icon(FeatherIcons.check, size: 16) : null,
-          elevation: 0.0,
-          padding: EdgeInsets.zero,
-        ),
-      );
-    });
   }
 }

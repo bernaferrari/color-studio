@@ -6,10 +6,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'color_blindness_bar.dart';
+import '../example/mdc/color_blindness_bar.dart';
 import 'horizontal_sliders_bar.dart';
-import 'util/elevation_overlay.dart';
-import 'widgets/horizontal_progress_bar.dart';
+import '../example/mdc/util/elevation_overlay.dart';
+import '../example/mdc/widgets/horizontal_progress_bar.dart';
 
 class Showcase extends StatefulWidget {
   const Showcase();

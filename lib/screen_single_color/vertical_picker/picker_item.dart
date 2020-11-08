@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../color_with_inter.dart';
-import '../hsinter.dart';
-import '../util/constants.dart';
-import '../util/selected.dart';
-import '../util/when.dart';
-import '../widgets/update_color_dialog.dart';
-import 'vertical_picker_main.dart';
+import '../../contrast_util.dart';
+import '../../example/color_with_inter.dart';
+import '../../example/hsinter.dart';
+import '../../example/util/constants.dart';
+import '../../example/util/selected.dart';
+import '../../example/util/when.dart';
+import '../../example/widgets/update_color_dialog.dart';
 
 class ColorCompareWidgetDetails extends StatelessWidget {
   const ColorCompareWidgetDetails({
@@ -55,13 +55,8 @@ class ColorCompareWidgetDetails extends StatelessWidget {
           padding: EdgeInsets.zero,
           shape: const RoundedRectangleBorder(),
         ),
-        onPressed: onPressed ??
-            () {
-              colorSelected(context, color.color);
-            },
-        onLongPress: () {
-          showSlidersDialog(context, color.color);
-        },
+        onPressed: onPressed ?? () => colorSelected(context, color.color),
+        onLongPress: () => showSlidersDialog(context, color.color),
         child: compactText ? centeredText : cornerText,
       ),
     );

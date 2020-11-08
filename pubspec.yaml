@@ -32,6 +32,7 @@ dependencies:
   hsluv: ^1.0.5+1
   infinite_listview: ^1.0.1+1
   path_provider: ^1.6.24
+  replay_bloc: ^0.0.1-dev.3
   rxdart: ^0.24.1
   shared_preferences: ^0.5.12+4
   url_launcher: ^5.5.0

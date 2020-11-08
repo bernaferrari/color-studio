@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/blocs.dart';
-import '../vertical_picker/app_bar_actions.dart';
+import '../../shared_widgets/color_search_button.dart';
 import '../widgets/color_sliders.dart';
 import '../widgets/loading_indicator.dart';
 

@@ -1,9 +1,9 @@
+import 'package:colorstudio/example/color_with_inter.dart';
+import 'package:colorstudio/example/hsinter.dart';
+import 'package:colorstudio/example/util/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_listview/infinite_listview.dart';
 
-import '../color_with_inter.dart';
-import '../hsinter.dart';
-import '../util/constants.dart';
 import 'picker_item.dart';
 
 class ExpandableColorBar extends StatelessWidget {
@@ -41,42 +41,41 @@ class ExpandableColorBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        children: <Widget>[
-          SizedBox(
-            width: double.infinity,
-            child: _ExpandableTitle(
-              title: title,
-              index: sectionIndex,
-              expanded: expanded,
-              onTitlePressed: onTitlePressed,
-            ),
-          ),
-          Expanded(
-            child: Card(
-              child: isInfinite
-                  ? InfiniteListView.builder(
-                      key: PageStorageKey<String>("$kind $sectionIndex"),
-                      itemBuilder: (_, absoluteIndex) {
-                        return colorCompare(absoluteIndex % listSize);
-                      },
-                    )
-                  : MediaQuery.removePadding(
-                      // this is necessary on iOS, else there will be a bottom padding.
-                      removeBottom: true,
-                      context: context,
-                      child: ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: listSize,
-                        key: PageStorageKey<String>("$kind $sectionIndex"),
-                        itemBuilder: (_, index) {
-                          return colorCompare(index);
-                        },
-                      ),
-                    ),
-            ),
-          ),
-        ]);
+    return Column(children: <Widget>[
+      SizedBox(
+        width: double.infinity,
+        child: _ExpandableTitle(
+          title: title,
+          index: sectionIndex,
+          expanded: expanded,
+          onTitlePressed: onTitlePressed,
+        ),
+      ),
+      Expanded(
+        child: Card(
+          child: isInfinite
+              ? InfiniteListView.builder(
+                  key: PageStorageKey<String>("$kind $sectionIndex"),
+                  itemBuilder: (_, absoluteIndex) {
+                    return colorCompare(absoluteIndex % listSize);
+                  },
+                )
+              : MediaQuery.removePadding(
+                  // this is necessary on iOS, else there will be a bottom padding.
+                  removeBottom: true,
+                  context: context,
+                  child: ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: listSize,
+                    key: PageStorageKey<String>("$kind $sectionIndex"),
+                    itemBuilder: (_, index) {
+                      return colorCompare(index);
+                    },
+                  ),
+                ),
+        ),
+      ),
+    ]);
   }
 }
 

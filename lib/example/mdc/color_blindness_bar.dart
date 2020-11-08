@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:colorstudio/shared_widgets/outlined_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -8,7 +9,6 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../blocs/blocs.dart';
 import '../screens/single_color_blindness.dart';
 import '../util/constants.dart';
-import '../vertical_picker/app_bar_actions.dart';
 import 'util/color_blind_from_index.dart';
 
 class ColorBlindnessBar extends StatelessWidget {

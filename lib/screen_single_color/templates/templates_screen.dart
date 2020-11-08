@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../../example/vertical_picker/app_bar_actions.dart';
+import '../../shared_widgets/color_search_button.dart';
 import 'templates_item.dart';
 import 'templates_themes.dart';
 
 class TemplatesScreen extends StatelessWidget {
-  const TemplatesScreen({this.backgroundColor, this.isSplitView});
+  const TemplatesScreen({this.backgroundColor});
 
   final Color backgroundColor;
-  final bool isSplitView;
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +15,7 @@ class TemplatesScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("Templates", style: Theme.of(context).textTheme.headline6),
         elevation: 0,
-        centerTitle: isSplitView,
-        leading: isSplitView ? SizedBox.shrink() : null,
+        centerTitle: false,
         actions: <Widget>[
           Center(child: ColorSearchButton(color: backgroundColor)),
           const SizedBox(width: 8),

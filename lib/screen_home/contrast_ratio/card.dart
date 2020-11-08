@@ -77,8 +77,7 @@ class ContrastRatioCard extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  if (state.selectedContrastCardType !=
-                      ContrastCardType.Elevation)
+                  if (state.selectedColorType != null)
                     Expanded(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -86,26 +85,20 @@ class ContrastRatioCard extends StatelessWidget {
                         children: [
                           SizedBox(),
                           ContrastCircleBar(
-                            title: describeEnum(state.selectedContrastCardType),
+                            title: describeEnum(state.selectedColorType),
                             subtitle: kBackground,
                             contrast: state.contrastValues[0],
-                            contrastingColor: rgbColorsWithBlindness[
-                                state.selectedContrastCardType ==
-                                        ContrastCardType.Primary
-                                    ? ColorType.Primary
-                                    : ColorType.Secondary],
+                            contrastingColor:
+                                rgbColorsWithBlindness[state.selectedColorType],
                             circleColor:
                                 rgbColorsWithBlindness[ColorType.Background],
                           ),
                           ContrastCircleBar(
-                            title: describeEnum(state.selectedContrastCardType),
+                            title: describeEnum(state.selectedColorType),
                             subtitle: kSurface,
                             contrast: state.contrastValues[1],
-                            contrastingColor: rgbColorsWithBlindness[
-                                state.selectedContrastCardType ==
-                                        ContrastCardType.Primary
-                                    ? ColorType.Primary
-                                    : ColorType.Secondary],
+                            contrastingColor:
+                                rgbColorsWithBlindness[state.selectedColorType],
                             circleColor:
                                 rgbColorsWithBlindness[ColorType.Surface],
                           ),
@@ -172,8 +165,13 @@ class ContrastRatioCard extends StatelessWidget {
                   children: spaceRow(
                     8,
                     [
-                      ...ContrastCardType.values.map((d) {
-                        if (d == state.selectedContrastCardType) {
+                      ...[
+                        ColorType.Primary,
+                        ColorType.Secondary,
+                        ColorType.Background,
+                        ColorType.Surface
+                      ].map((d) {
+                        if (d == state.selectedColorType) {
                           return OutlinedButton(
                             style: OutlinedButton.styleFrom(
                               backgroundColor:
@@ -196,7 +194,7 @@ class ContrastRatioCard extends StatelessWidget {
                             onPressed: () {
                               context
                                   .read<ContrastRatioCubit>()
-                                  .set(contrastSectionType: d);
+                                  .set(selectedColorType: d);
                             },
                           );
                         } else {
@@ -214,7 +212,7 @@ class ContrastRatioCard extends StatelessWidget {
                             onPressed: () {
                               context
                                   .read<ContrastRatioCubit>()
-                                  .set(contrastSectionType: d);
+                                  .set(selectedColorType: d);
                             },
                           );
                         }

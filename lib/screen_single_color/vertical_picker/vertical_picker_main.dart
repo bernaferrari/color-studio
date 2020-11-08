@@ -1,6 +1,5 @@
 import 'dart:math' as math;
 
-import 'package:colorstudio/util/widget_space.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -8,35 +7,27 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
-import '../color_with_inter.dart';
-import '../hsinter.dart';
-import '../screens/about.dart';
-import '../util/color_util.dart';
-import '../util/constants.dart';
-import '../util/selected.dart';
-import 'app_bar_actions.dart';
+import '../../example/color_with_inter.dart';
+import '../../example/hsinter.dart';
+import '../../example/screens/about.dart';
+import '../../example/util/color_util.dart';
+import '../../example/util/constants.dart';
+import '../../example/util/selected.dart';
+import '../../shared_widgets/color_search_button.dart';
+import '../../shared_widgets/outlined_icon_button.dart';
+import '../../util/widget_space.dart';
 import 'hsluv_selector.dart';
 import 'hsv_selector.dart';
 import 'picker_list.dart';
-
-const hsvStr = "HSV";
-const hsluvStr = "HSLuv";
-
-const hueStr = "Hue";
-const satStr = "Saturation";
-const valueStr = "Value";
-const lightStr = "Lightness";
 
 class HSVerticalPicker extends StatefulWidget {
   const HSVerticalPicker({
     this.color,
     this.hsLuvColor,
-    this.isSplitView = false,
   });
 
   final Color color;
   final HSLuvColor hsLuvColor;
-  final bool isSplitView;
 
   @override
   _HSVerticalPickerState createState() => _HSVerticalPickerState();
@@ -79,8 +70,7 @@ class _HSVerticalPickerState extends State<HSVerticalPicker> {
           style: Theme.of(context).textTheme.headline6,
         ),
         elevation: 0,
-        centerTitle: widget.isSplitView,
-        leading: widget.isSplitView ? SizedBox.shrink() : null,
+        centerTitle: false,
         backgroundColor: widget.color,
         actions: <Widget>[
           Center(child: ColorSearchButton(color: widget.color)),
@@ -105,9 +95,7 @@ class _HSVerticalPickerState extends State<HSVerticalPicker> {
                             .background
                             .withOpacity(kVeryTransparent),
                         elevation: 0,
-                        child: MoreColors(
-                          activeColor: Colors.green,
-                        ),
+                        child: MoreColors(activeColor: Colors.green),
                       ),
                     );
                   });

@@ -1,12 +1,12 @@
-import 'package:colorstudio/phospor_icons.dart';
+import 'package:colorstudio/screen_single_color/screen_single.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:hive/hive.dart';
 
-import '../../blocs/blocs.dart';
-import '../screens/home.dart';
-import '../util/shuffle_color.dart';
+import '../blocs/blocs.dart';
+import '../example/util/shuffle_color.dart';
+import '../phospor_icons.dart';
 import 'showcase.dart';
 
 class ComponentsPreview extends StatelessWidget {
@@ -84,7 +84,7 @@ class ComponentsPreview extends StatelessWidget {
                     child: Showcase(),
                   ),
                   Expanded(
-                    child: SingleColorHome(isSplitView: true),
+                    child: ScreenSingle(),
                   ),
                 ],
               ),

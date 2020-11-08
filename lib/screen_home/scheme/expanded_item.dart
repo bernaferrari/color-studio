@@ -9,7 +9,8 @@ import '../../example/util/calculate_contrast.dart';
 import '../../example/util/color_util.dart';
 import '../../example/util/constants.dart';
 import '../../example/util/when.dart';
-import '../../example/vertical_picker/app_bar_actions.dart';
+import '../../shared_widgets/color_search_button.dart';
+import '../../shared_widgets/outlined_icon_button.dart';
 import '../../util/widget_space.dart';
 import 'flat_color_picker.dart';
 

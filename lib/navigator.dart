@@ -1,14 +1,14 @@
-import 'package:colorstudio/example/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import 'blocs/blocs.dart';
-import 'colors_compare/colors_compare_screen.dart';
-import 'example/mdc/components_preview.dart';
+import 'screen_colors_compare/colors_compare_screen.dart';
 import 'screen_home/color_blindness/card.dart';
 import 'screen_home/contrast_ratio/card.dart';
 import 'screen_home/scheme/card.dart';
+import 'screen_showcase/components_preview.dart';
+import 'screen_single_color/screen_single.dart';
 import 'util/widget_space.dart';
 
 class ColorStudioApp extends StatefulWidget {
@@ -123,7 +123,7 @@ class ColorRouterDelegate extends RouterDelegate<ColorRoutePath>
                       if (selectedScreen == ScreenPanel.singleColor)
                         MaterialPage<dynamic>(
                           key: ValueKey("Single Color"),
-                          child: const SingleColorHome(),
+                          child: const ScreenSingle(),
                         ),
                     ],
                     onPopPage: (route, dynamic result) {

@@ -429,6 +429,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.4"
+  replay_bloc:
+    dependency: "direct main"
+    description:
+      name: replay_bloc
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1-dev.3"
   rxdart:
     dependency: "direct main"
     description:

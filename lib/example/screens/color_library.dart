@@ -13,10 +13,9 @@ import '../util/shuffle_color.dart';
 import '../widgets/update_color_dialog.dart';
 
 class ColorLibrary extends StatefulWidget {
-  const ColorLibrary({this.color, this.isSplitView = false});
+  const ColorLibrary({this.color});
 
   final Color color;
-  final bool isSplitView;
 
   @override
   _ColorLibraryState createState() => _ColorLibraryState();
@@ -42,7 +41,7 @@ class _ColorLibraryState extends State<ColorLibrary> {
             Text("Color Library", style: Theme.of(context).textTheme.headline6),
         backgroundColor: widget.color,
         elevation: 0,
-        centerTitle: widget.isSplitView,
+        centerTitle: false,
         actions: <Widget>[
           IconButton(
             icon: Icon(FeatherIcons.externalLink),
@@ -50,7 +49,6 @@ class _ColorLibraryState extends State<ColorLibrary> {
                 await launch("https://www.vanschneider.com/colors"),
           )
         ],
-        leading: widget.isSplitView ? SizedBox.shrink() : null,
       ),
       body: Center(
         child: ConstrainedBox(
@@ -75,33 +73,36 @@ class _ColorLibraryState extends State<ColorLibrary> {
                 primary: false,
                 slivers: <Widget>[
                   SliverPadding(
-                    padding: const EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(16),
                     sliver: SliverGrid.count(
                       crossAxisSpacing: 8,
                       mainAxisSpacing: 8,
+                      childAspectRatio: 1.5,
                       crossAxisCount:
                           (math.min(builder.maxWidth, 818) / 120).ceil(),
                       children: <Widget>[
                         for (int i = 0; i < colorsList.length; i++)
-                          RawMaterialButton(
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .onSurface
-                                    .withOpacity(kVeryTransparent),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSurface
+                                      .withOpacity(kVeryTransparent),
+                                ),
+                                borderRadius: BorderRadius.circular(16),
                               ),
-                              borderRadius: BorderRadius.circular(16),
+                              elevation: 0,
+                              primary: colorsList[i],
+                              padding: const EdgeInsets.all(8),
                             ),
-                            elevation: 0,
                             onPressed: () {
                               colorSelected(context, colorsList[i]);
                             },
                             onLongPress: () {
                               showSlidersDialog(context, colorsList[i]);
                             },
-                            fillColor: colorsList[i],
-                            padding: const EdgeInsets.all(8),
                             child: Center(
                               child: Text(
                                 colorsList[i].toHexStr(),
