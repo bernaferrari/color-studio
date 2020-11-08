@@ -141,10 +141,11 @@ class _BoxedAppState extends State<BoxedApp> {
                 ),
               ),
               elevation: 0,
-              margin: EdgeInsets.symmetric(
-                horizontal: 16.0,
-                vertical: 8.0,
-              ),
+              margin: EdgeInsets.zero,
+              // margin: EdgeInsets.symmetric(
+              //   horizontal: 16.0,
+              //   vertical: 8.0,
+              // ),
             ),
           ),
           child: ColorStudioApp(),

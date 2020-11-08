@@ -15,8 +15,6 @@ class HSVSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const HSInterType kind = HSInterType.HSV;
-
     // maximum number of items
     final int itemsOnScreen =
         ((MediaQuery.of(context).size.height - 56 * 4) / 56).ceil();
@@ -24,6 +22,7 @@ class HSVSelector extends StatelessWidget {
     final int toneSize = moreColors ? itemsOnScreen * 2 : itemsOnScreen;
     final int hueSize = moreColors ? 90 : 45;
 
+    const HSInterType kind = HSInterType.HSV;
     final HSInterColor inter = HSInterColor.fromColor(color, kind);
 
     return HSGenericScreen(

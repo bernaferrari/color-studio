@@ -16,7 +16,7 @@ class MDCBlindnessEvent extends MdcSelectedEvent {
   final int blindnessSelected;
 
   @override
-  String toString() => "MDCBlindnessEvent... | $blindnessSelected";
+  String toString() => "MDCBlindnessEvent: | $blindnessSelected";
 
   @override
   List<Object> get props => [blindnessSelected];
@@ -44,7 +44,7 @@ class MDCLoadEvent extends MdcSelectedEvent {
   final ColorType selected;
 
   @override
-  String toString() => "MDCLoadEvent... $currentColor | $selected";
+  String toString() => "MDCLoadEvent: $currentColor | $selected";
 
   @override
   List<Object> get props => [currentColor, selected];
@@ -60,7 +60,7 @@ class MDCUpdateLock extends MdcSelectedEvent {
   final ColorType selected;
 
   @override
-  String toString() => "MDCUpdateLock... lock: $isLock on: $selected";
+  String toString() => "MDCUpdateLock: lock: $isLock on: $selected";
 
   @override
   List<Object> get props => [isLock, selected];
@@ -78,7 +78,7 @@ class MDCUpdateColor extends MdcSelectedEvent {
   final ColorType selected;
 
   @override
-  String toString() => "MDCLoadEvent... $color | $selected | $hsLuvColor";
+  String toString() => "MDCLoadEvent: $color | $selected | $hsLuvColor";
 
   @override
   List<Object> get props => [color, hsLuvColor, selected];
@@ -94,7 +94,19 @@ class MDCUpdateAllEvent extends MdcSelectedEvent {
   final bool ignoreLock;
 
   @override
-  String toString() => "MDCUpdateAllEvent... $colors";
+  String toString() => "MDCUpdateAllEvent: $colors";
+
+  @override
+  List<Object> get props => [colors];
+}
+
+class MDCTemplateEvent extends MdcSelectedEvent {
+  const MDCTemplateEvent({this.colors});
+
+  final List<Color> colors;
+
+  @override
+  String toString() => "MDCTemplateEvent: $colors";
 
   @override
   List<Object> get props => [colors];

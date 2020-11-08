@@ -57,11 +57,10 @@ class OutlinedIconButton extends StatelessWidget {
       height: 36,
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
-          shape: CircleBorder(
-            side: BorderSide(
-              color: borderColor ??
-                  Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
-            ),
+          shape: CircleBorder(),
+          side: BorderSide(
+            color: borderColor ??
+                Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
           ),
           primary: Theme.of(context).colorScheme.onSurface,
           padding: EdgeInsets.zero,

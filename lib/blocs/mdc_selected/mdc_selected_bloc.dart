@@ -54,7 +54,9 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
     } else if (event is MDCUpdateColor) {
       yield* _mapUpdateToState(event);
     } else if (event is MDCUpdateLock) {
-      yield* _mapUpdateToLock(event);
+      yield* _mapLockUpdated(event);
+    } else if (event is MDCTemplateEvent) {
+      yield* _mapTemplate(event);
     }
   }
 
@@ -79,7 +81,7 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
     );
   }
 
-  Stream<MdcSelectedState> _mapUpdateToLock(MDCUpdateLock load) async* {
+  Stream<MdcSelectedState> _mapLockUpdated(MDCUpdateLock load) async* {
     final currentState = state as MDCLoadedState;
 
     final allRgb = Map<ColorType, Color>.from(currentState.rgbColors);
@@ -113,7 +115,6 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
   Stream<MdcSelectedState> _mapUpdateToState(MDCUpdateColor load) async* {
     final currentState = state as MDCLoadedState;
 
-    final blindness = currentState.blindnessSelected;
     final allLuv = Map<ColorType, HSLuvColor>.from(currentState.hsluvColors);
     final allRgb = Map<ColorType, Color>.from(currentState.rgbColors);
 
@@ -125,20 +126,15 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
       allRgb[load.selected] = load.hsLuvColor.toColor();
     }
 
-    // update the color of the locked ones.
-    currentState.locked.keys.forEach((key) {
-      if (currentState.locked[key]) {
-        allRgb[key] = findColor(allRgb, key);
-      }
-    });
+    updateLocked(currentState, allRgb);
 
     yield MDCLoadedState(
       allRgb,
       allLuv,
-      getBlindness(allRgb, blindness),
+      getBlindness(allRgb, currentState.blindnessSelected),
       currentState.locked,
       load.selected,
-      blindness,
+      currentState.blindnessSelected,
     );
   }
 
@@ -150,13 +146,6 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
     allRgb[selected] = load.currentColor;
 
     final blindness = currentState.blindnessSelected;
-
-    // update the color of the locked ones.
-    currentState.locked.keys.forEach((k) {
-      if (currentState.locked[k]) {
-        allRgb[k] = findColor(allRgb, k);
-      }
-    });
 
     yield MDCLoadedState(
       allRgb,
@@ -193,23 +182,57 @@ class MdcSelectedBloc extends Bloc<MdcSelectedEvent, MdcSelectedState> {
       }
     });
 
-    // update the color of the locked ones.
-    currentState.locked.keys.forEach((k) {
-      if (currentState.locked[k]) {
-        allRgb[k] = findColor(allRgb, k);
-      }
-    });
-
-    final blindness = (state as MDCLoadedState).blindnessSelected;
+    updateLocked(currentState, allRgb);
 
     yield MDCLoadedState(
       allRgb,
       convertToHSLuv(allRgb),
-      getBlindness(allRgb, blindness),
+      getBlindness(allRgb, currentState.blindnessSelected),
       currentState.locked,
       currentState.selected,
-      blindness,
+      currentState.blindnessSelected,
     );
+  }
+
+  Stream<MdcSelectedState> _mapTemplate(MDCTemplateEvent load) async* {
+    final currentState = state as MDCLoadedState;
+
+    final allRgb = Map<ColorType, Color>.from(currentState.rgbColors);
+
+    // Update Primary with colors[0]
+    allRgb[ColorType.Primary] = load.colors[0];
+
+    // Update Background with colors[1]
+    allRgb[ColorType.Background] = load.colors[1];
+
+    // Automatically retrieve Secondary and Surface
+    allRgb[ColorType.Secondary] = findColor(allRgb, ColorType.Secondary);
+    allRgb[ColorType.Surface] = findColor(allRgb, ColorType.Surface);
+
+    final lock = Map<ColorType, bool>.from(currentState.locked);
+
+    // If Background was locked, unlock it.
+    if (lock[ColorType.Background] == true) {
+      lock[ColorType.Background] = false;
+    }
+
+    yield MDCLoadedState(
+      allRgb,
+      convertToHSLuv(allRgb),
+      getBlindness(allRgb, currentState.blindnessSelected),
+      lock,
+      currentState.selected,
+      currentState.blindnessSelected,
+    );
+  }
+
+  /// update the color of the locked ones.
+  void updateLocked(MDCLoadedState currentState, Map<ColorType, Color> allRgb) {
+    for (var key in currentState.locked.keys) {
+      if (currentState.locked[key]) {
+        allRgb[key] = findColor(allRgb, key);
+      }
+    }
   }
 
   Color findColor(Map<ColorType, Color> mappedList, ColorType category) {

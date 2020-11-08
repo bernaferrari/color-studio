@@ -10,15 +10,14 @@ import 'package:hsluv/hsluvcolor.dart';
 import '../../blocs/blocs.dart';
 import '../../screen_home/contrast_ratio/widgets/contrast_widgets.dart';
 import '../../screen_home/scheme/widgets/expanded_section.dart';
+import '../../screen_single/templates/templates_screen.dart';
 import '../mdc/components.dart';
-import '../mdc/templates.dart';
 import '../util/constants.dart';
 import '../util/selected.dart';
 import '../util/when.dart';
 import '../vertical_picker/vertical_picker_main.dart';
 import '../widgets/loading_indicator.dart';
 import '../widgets/update_color_dialog.dart';
-import 'about.dart';
 import 'color_library.dart';
 import 'single_color_blindness.dart';
 
@@ -33,32 +32,32 @@ class SingleColorHome extends StatelessWidget {
         builder: (context, state) {
       final currentState = state as MDCLoadedState;
 
-      final Color selectedColor = currentState.rgbColors[currentState.selected];
-      final HSLuvColor hsluvColor =
+      final Color selectedRgbColor =
+          currentState.rgbColors[currentState.selected];
+      final HSLuvColor selectedHsluvColor =
           currentState.hsluvColors[currentState.selected];
-      final selected = currentState.selected;
 
-      final colorScheme = (selectedColor.computeLuminance() > kLumContrast)
+      final colorScheme = (selectedHsluvColor.lightness > kLightnessThreshold)
           ? ColorScheme.light(
-              primary: selectedColor,
-              secondary: selectedColor,
-              surface: selectedColor,
+              primary: selectedRgbColor,
+              secondary: selectedRgbColor,
+              surface: selectedRgbColor,
             )
           : ColorScheme.dark(
-              primary: selectedColor,
-              secondary: selectedColor,
-              surface: selectedColor,
+              primary: selectedRgbColor,
+              secondary: selectedRgbColor,
+              surface: selectedRgbColor,
             );
 
       return Theme(
         data: ThemeData.from(
           colorScheme: colorScheme,
           textTheme: TextTheme(
-            headline6: GoogleFonts.firaSans(fontWeight: FontWeight.w600),
-            subtitle2: GoogleFonts.firaSans(fontWeight: FontWeight.w500),
-            bodyText2: GoogleFonts.firaSans(),
-            bodyText1: GoogleFonts.b612Mono(fontSize: 12),
-            caption: GoogleFonts.firaSans(),
+            headline6: GoogleFonts.openSans(),
+            // subtitle2: GoogleFonts.firaSans(fontWeight: FontWeight.w500),
+            // bodyText2: GoogleFonts.firaSans(),
+            // bodyText1: GoogleFonts.b612Mono(fontSize: 12),
+            // caption: GoogleFonts.firaSans(),
             button: GoogleFonts.b612Mono(),
           ),
         ).copyWith(
@@ -70,43 +69,39 @@ class SingleColorHome extends StatelessWidget {
               ),
         ),
         child: Scaffold(
-          backgroundColor: selectedColor,
+          backgroundColor: selectedRgbColor,
           body: DefaultTabController(
-            length: 5,
+            length: 4,
             initialIndex: 0,
             child: Column(
               children: <Widget>[
                 Expanded(
                   child: TabBarView(
                     children: [
-//                        MultipleSliders(
-//                          color: color,
-//                          isSplitView: isSplitView,
-//                        ),
                       HSVerticalPicker(
-                        color: selectedColor,
-                        hsLuvColor: hsluvColor,
+                        color: selectedRgbColor,
+                        hsLuvColor: selectedHsluvColor,
                         isSplitView: isSplitView,
                       ),
                       SingleColorBlindness(
-                        color: selectedColor,
+                        color: selectedRgbColor,
                         isSplitView: isSplitView,
                       ),
-                      About(isSplitView: isSplitView),
+                      // About(isSplitView: isSplitView),
                       ColorLibrary(
-                        color: selectedColor,
+                        color: selectedRgbColor,
                         isSplitView: isSplitView,
                       ),
-                      ColorTemplates(
-                        backgroundColor: selectedColor,
+                      TemplatesScreen(
+                        backgroundColor: selectedRgbColor,
                         isSplitView: isSplitView,
                       ),
                     ],
                   ),
                 ),
                 _BottomHome(
-                  selected: selected,
-                  selectedColor: selectedColor,
+                  selected: currentState.selected,
+                  selectedColor: selectedRgbColor,
                   locked: currentState.locked,
                   rgbColors: currentState.rgbColors,
                 ),
@@ -221,7 +216,7 @@ class __BottomHomeState extends State<_BottomHome> {
 //                            ),
                 const Tab(icon: Icon(FeatherIcons.barChart2)),
                 Tab(icon: Icon(Icons.invert_colors)),
-                Tab(icon: Icon(FeatherIcons.info)),
+                // Tab(icon: Icon(FeatherIcons.info)),
                 Tab(icon: Icon(FeatherIcons.bookOpen)),
                 Tab(icon: Icon(FeatherIcons.briefcase)),
               ],
@@ -265,24 +260,14 @@ class _ColorContrastRow extends StatelessWidget {
                 contrastingColor: rgbColors[ColorType.Background],
               ),
               // don't show the other circles when their values are useless.
-              if (!areValuesLocked) ...[
-                ContrastCircleBar(
-                  title: kPrimary,
-                  subtitle: kSurface,
-                  contrast: state.contrastValues[1],
-                  animateOnInit: false,
-                  circleColor: rgbColors[ColorType.Surface],
-                  contrastingColor: rgbColors[ColorType.Primary],
-                ),
-                ContrastCircleBar(
-                  title: kSurface,
-                  subtitle: kBackground,
-                  contrast: state.contrastValues[2],
-                  animateOnInit: false,
-                  circleColor: rgbColors[ColorType.Background],
-                  contrastingColor: rgbColors[ColorType.Surface],
-                ),
-              ],
+              ContrastCircleBar(
+                title: kPrimary,
+                subtitle: kSurface,
+                contrast: state.contrastValues[1],
+                animateOnInit: false,
+                circleColor: rgbColors[ColorType.Surface],
+                contrastingColor: rgbColors[ColorType.Primary],
+              ),
             ],
           ),
         ),
@@ -424,7 +409,22 @@ class ThemeBar extends StatelessWidget {
                         for (int i = 0; i < mappedList.length; i++) ...[
                           SizedBox(
                             height: 32,
-                            child: RawMaterialButton(
+                            child: OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                elevation: 0.0,
+                                padding: EdgeInsets.zero,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                backgroundColor: mappedList[i],
+                                side: BorderSide(
+                                  width: 1,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSurface
+                                      .withOpacity(0.7),
+                                ),
+                              ),
                               onPressed: () {
                                 colorSelected(
                                   context,
@@ -435,26 +435,6 @@ class ThemeBar extends StatelessWidget {
                               onLongPress: () {
                                 showSlidersDialog(context, mappedList[i]);
                               },
-                              fillColor: mappedList[i],
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
-                                side: BorderSide(
-                                  width: 1,
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onSurface
-                                      .withOpacity(0.7),
-                                ),
-                              ),
-                              textStyle: Theme.of(context)
-                                  .textTheme
-                                  .bodyText2
-                                  .copyWith(
-                                    color: contrastedColors[i],
-                                    fontWeight: (selected == keysList[i])
-                                        ? FontWeight.w700
-                                        : FontWeight.w400,
-                                  ),
                               child: Row(
                                 children: <Widget>[
                                   SizedBox(width: 8),
@@ -471,12 +451,21 @@ class ThemeBar extends StatelessWidget {
                                       color: contrastedColors[i],
                                     ),
                                   SizedBox(width: 4),
-                                  Text(describeEnum(keysList[i])),
+                                  Text(
+                                    describeEnum(keysList[i]),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2
+                                        .copyWith(
+                                          color: contrastedColors[i],
+                                          fontWeight: (selected == keysList[i])
+                                              ? FontWeight.w700
+                                              : FontWeight.w400,
+                                        ),
+                                  ),
                                   SizedBox(width: 8),
                                 ],
                               ),
-                              elevation: 0.0,
-                              padding: EdgeInsets.zero,
                             ),
                           ),
                           const SizedBox(width: 8),

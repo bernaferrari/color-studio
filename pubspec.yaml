@@ -55,6 +55,10 @@ flutter_icons:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: Phospor
+      fonts:
+        - asset: fonts/Phospor.ttf
 
 assets:
   - google_fonts/

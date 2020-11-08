@@ -1,3 +1,4 @@
+import 'package:colorstudio/example/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -8,6 +9,7 @@ import 'example/mdc/components_preview.dart';
 import 'screen_home/color_blindness/card.dart';
 import 'screen_home/contrast_ratio/card.dart';
 import 'screen_home/scheme/card.dart';
+import 'util/widget_space.dart';
 
 class ColorStudioApp extends StatefulWidget {
   @override
@@ -102,7 +104,11 @@ class ColorRouterDelegate extends RouterDelegate<ColorRoutePath>
                     pages: [
                       MaterialPage<dynamic>(
                         key: ValueKey("Scheme/Contrast/Blind"),
-                        child: HomeScreen(_handleMultiColor),
+                        child: HomeScreen(
+                          handleMultiColor: _handleMultiColor,
+                          handleSingleColor: _handleSingleColor,
+                          handleSettings: _handleSettings,
+                        ),
                       ),
                       if (selectedScreen == ScreenPanel.multiColor)
                         MaterialPage<dynamic>(
@@ -113,6 +119,11 @@ class ColorRouterDelegate extends RouterDelegate<ColorRoutePath>
                             ),
                             child: const ColorsCompareScreen(),
                           ),
+                        ),
+                      if (selectedScreen == ScreenPanel.singleColor)
+                        MaterialPage<dynamic>(
+                          key: ValueKey("Single Color"),
+                          child: const SingleColorHome(),
                         ),
                     ],
                     onPopPage: (route, dynamic result) {
@@ -256,179 +267,193 @@ class ColorRoutePath {
 }
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen(this._handleMultiColor);
+  const HomeScreen({
+    @required this.handleMultiColor,
+    @required this.handleSingleColor,
+    @required this.handleSettings,
+  });
 
-  final VoidCallback _handleMultiColor;
+  final VoidCallback handleMultiColor;
+  final VoidCallback handleSingleColor;
+  final VoidCallback handleSettings;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            BlocBuilder<MdcSelectedBloc, MdcSelectedState>(
-                builder: (context, state) {
-              if (state is MDCInitialState) {
-                return SizedBox.shrink();
-              }
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 600),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                BlocBuilder<MdcSelectedBloc, MdcSelectedState>(
+                    builder: (context, state) {
+                  if (state is MDCInitialState) {
+                    return SizedBox.shrink();
+                  }
 
-              final currentState = state as MDCLoadedState;
+                  final currentState = state as MDCLoadedState;
+                  final bool isiPad = MediaQuery.of(context).size.width > 600;
 
-              return Column(
-                children: [
-                  schemeContrast(
-                    context,
-                    Theme.of(context).colorScheme,
-                    currentState,
-                    null,
-                  ),
-                  ConstrainedBox(
-                    constraints: BoxConstraints(maxWidth: 600),
-                    child: ColorBlindnessCard(
-                      currentState.rgbColors,
-                      currentState.locked,
+                  return Column(
+                    children: spaceColumn(
+                      16,
+                      [
+                        Row(
+                          children: <Widget>[
+                            if (isiPad)
+                              SizedBox(width: 24)
+                            else
+                              SizedBox(width: 16),
+                            if (!isiPad) ...[
+                              Expanded(
+                                child: RaisedButton.icon(
+                                  label: Text("Modify"),
+                                  icon: Icon(FeatherIcons.sliders, size: 16),
+                                  textColor:
+                                      Theme.of(context).colorScheme.onSurface,
+                                  color: Theme.of(context).colorScheme.surface,
+                                  onPressed: () {
+                                    Navigator.pushNamed(
+                                        context, "/colordetails");
+                                  },
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                    side: BorderSide(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurface
+                                          .withOpacity(0.3),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                            ],
+                            // Expanded(
+                            //   child: RaisedButton.icon(
+                            //     label: Text("Preview"),
+                            //     icon: Icon(FeatherIcons.layout, size: 16),
+                            //     textColor: colorScheme.onSurface,
+                            //     color: colorScheme.surface,
+                            //     onPressed: () {
+                            //       Navigator.pushNamed(context, "/componentspreview");
+                            //     },
+                            //     shape: RoundedRectangleBorder(
+                            //       borderRadius: BorderRadius.circular(16),
+                            //       side: BorderSide(
+                            //         color: colorScheme.onSurface.withOpacity(0.30),
+                            //       ),
+                            //     ),
+                            //   ),
+                            // ),
+                            if (isiPad)
+                              const SizedBox(width: 8)
+                            else
+                              const SizedBox(width: 16),
+                          ],
+                        ),
+                        ColorSchemeCard(
+                          rgbColors: currentState.rgbColors,
+                          rgbColorsWithBlindness:
+                              currentState.rgbColorsWithBlindness,
+                          hsluvColors: currentState.hsluvColors,
+                          locked: currentState.locked,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: spaceRow(
+                            16.0,
+                            [
+                              MiddleButton(
+                                "Compare",
+                                Icons.compare_arrows_rounded,
+                                handleMultiColor,
+                              ),
+                              MiddleButton(
+                                "Single",
+                                FeatherIcons.sliders,
+                                handleSingleColor,
+                              ),
+                              MiddleButton(
+                                "Settings",
+                                FeatherIcons.settings,
+                                handleSettings,
+                              ),
+                            ],
+                          ),
+                        ),
+                        ContrastRatioCard(
+                          currentState.rgbColorsWithBlindness,
+                          handleMultiColor,
+                        ),
+                        ColorBlindnessCard(
+                          currentState.rgbColors,
+                          currentState.locked,
+                        )
+                      ],
                     ),
-                  )
-                ],
-              );
-            }),
-          ],
+                  );
+                }),
+              ],
+            ),
+          ),
         ),
       ),
     );
   }
+}
 
-  Widget schemeContrast(
-    BuildContext context,
-    ColorScheme colorScheme,
-    MDCLoadedState currentState,
-    bool shouldDisplayElevation,
-  ) {
-    final bool isiPad = MediaQuery.of(context).size.width > 600;
+class MiddleButton extends StatelessWidget {
+  const MiddleButton(this.title, this.iconData, this.toPage);
 
-    return Column(
-      children: <Widget>[
-        SizedBox(height: 4),
-        Row(
-          children: <Widget>[
-            if (isiPad) SizedBox(width: 24) else SizedBox(width: 16),
-            if (!isiPad) ...[
-              Expanded(
-                child: RaisedButton.icon(
-                  label: Text("Modify"),
-                  icon: Icon(FeatherIcons.sliders, size: 16),
-                  textColor: colorScheme.onSurface,
-                  color: colorScheme.surface,
-                  onPressed: () {
-                    Navigator.pushNamed(context, "/colordetails");
-                  },
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                    side: BorderSide(
-                      color: colorScheme.onSurface.withOpacity(0.3),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 16),
-            ],
-            // Expanded(
-            //   child: RaisedButton.icon(
-            //     label: Text("Preview"),
-            //     icon: Icon(FeatherIcons.layout, size: 16),
-            //     textColor: colorScheme.onSurface,
-            //     color: colorScheme.surface,
-            //     onPressed: () {
-            //       Navigator.pushNamed(context, "/componentspreview");
-            //     },
-            //     shape: RoundedRectangleBorder(
-            //       borderRadius: BorderRadius.circular(16),
-            //       side: BorderSide(
-            //         color: colorScheme.onSurface.withOpacity(0.30),
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            if (isiPad) const SizedBox(width: 8) else const SizedBox(width: 16),
-          ],
-        ),
-        ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: 600),
-          child: ColorSchemeCard(
-            rgbColors: currentState.rgbColors,
-            rgbColorsWithBlindness: currentState.rgbColorsWithBlindness,
-            hsluvColors: currentState.hsluvColors,
-            locked: currentState.locked,
+  final String title;
+  final IconData iconData;
+  final VoidCallback toPage;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
           ),
         ),
-        Row(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
+            Container(
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color:
+                    Theme.of(context).colorScheme.onPrimary.withOpacity(0.90),
+                shape: BoxShape.circle,
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Icon(
-                    Icons.compare_arrows,
-                    size: 36,
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    "Compare\nColors",
-                    // textAlign: TextAlign.center,
-                  ),
-                ],
+              child: Icon(
+                iconData,
+                color: Theme.of(context).colorScheme.primary,
+                size: 24,
               ),
-              onPressed: _handleMultiColor,
             ),
-            SizedBox(width: 16),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.all(24),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-              ),
-              child: Column(
-                children: [
-                  Icon(Icons.settings),
-                  Text("Settings"),
-                ],
-              ),
-              onPressed: () {},
-            ),
-            SizedBox(width: 16),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.all(24),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  )),
-              child: Column(
-                children: [
-                  Icon(Icons.settings),
-                  Text("Settings"),
-                ],
-              ),
-              onPressed: () {},
+            SizedBox(height: 8),
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.subtitle1.copyWith(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onPrimary
+                        .withOpacity(0.90),
+                  ),
             ),
           ],
         ),
-        ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: 600),
-          child: ContrastRatioCard(
-            currentState.rgbColorsWithBlindness,
-            _handleMultiColor,
-          ),
-        ),
-      ],
+        onPressed: toPage,
+      ),
     );
   }
 }

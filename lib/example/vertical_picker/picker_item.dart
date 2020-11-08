@@ -46,23 +46,23 @@ class ColorCompareWidgetDetails extends StatelessWidget {
     final Widget centeredText =
         richTextColorToHSV(context, inter, textColor, category[0]);
 
-    return Padding(
-      padding: EdgeInsets.zero,
-      child: SizedBox(
-        height: 56,
-        child: MaterialButton(
-          color: color.color,
+    return SizedBox(
+      height: 56,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: color.color,
           elevation: 0,
+          padding: EdgeInsets.zero,
           shape: const RoundedRectangleBorder(),
-          onPressed: onPressed ??
-              () {
-                colorSelected(context, color.color);
-              },
-          onLongPress: () {
-            showSlidersDialog(context, color.color);
-          },
-          child: compactText ? centeredText : cornerText,
         ),
+        onPressed: onPressed ??
+            () {
+              colorSelected(context, color.color);
+            },
+        onLongPress: () {
+          showSlidersDialog(context, color.color);
+        },
+        child: compactText ? centeredText : cornerText,
       ),
     );
   }

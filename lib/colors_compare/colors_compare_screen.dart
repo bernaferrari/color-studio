@@ -61,7 +61,7 @@ class ColorsCompareScreen extends StatelessWidget {
         child: Scaffold(
           backgroundColor: selectedColor.rgbColor,
           appBar: AppBar(
-            title: const Text("Contrast Compare"),
+            title: const Text("Colors Compare"),
             actions: <Widget>[
               // IconButton(
               //   tooltip: "Reorder",

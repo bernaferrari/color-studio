@@ -1,12 +1,11 @@
 import 'dart:math' as math;
 
+import 'package:colorstudio/util/widget_space.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
 import '../color_with_inter.dart';
@@ -84,13 +83,14 @@ class _HSVerticalPickerState extends State<HSVerticalPicker> {
         leading: widget.isSplitView ? SizedBox.shrink() : null,
         backgroundColor: widget.color,
         actions: <Widget>[
-          ColorSearchButton(color: widget.color),
+          Center(child: ColorSearchButton(color: widget.color)),
+          SizedBox(width: 8),
           OutlinedIconButton(
             child: Icon(FeatherIcons.moreHorizontal, size: 16),
             onPressed: () {
               showDialog<dynamic>(
                   context: context,
-                  builder: (BuildContext ctx) {
+                  builder: (_) {
                     return AlertDialog(
                       contentPadding: const EdgeInsets.all(24),
                       shape: RoundedRectangleBorder(
@@ -144,18 +144,19 @@ class _HSVerticalPickerState extends State<HSVerticalPicker> {
             ),
           ),
           Expanded(
-            child: WatchBoxBuilder(
-              box: Hive.box<dynamic>("settings"),
-              builder: (BuildContext context, Box box) => currentSegment == 0
-                  ? HSLuvSelector(
-                      color: widget.hsLuvColor,
-                      moreColors: box.get("moreItems", defaultValue: false),
-                    )
-                  : HSVSelector(
-                      color: widget.color,
-                      moreColors: box.get("moreItems", defaultValue: false),
-                    ),
-            ),
+            child:
+                // child: WatchBoxBuilder(
+                //   box: Hive.box<dynamic>("settings"),
+                // builder: (_ context, Box box) => currentSegment == 0
+                currentSegment == 0
+                    ? HSLuvSelector(
+                        color: widget.hsLuvColor,
+                        // moreColors: box.get("moreItems", defaultValue: false),
+                      )
+                    : HSVSelector(
+                        color: widget.color,
+                        // moreColors: box.get("moreItems", defaultValue: false),
+                      ),
           ),
         ],
       ),
@@ -230,12 +231,12 @@ class _HSGenericScreenState extends State<HSGenericScreen> {
     final List<ColorWithInter> tones = widget.fetchSat();
     final List<ColorWithInter> values = widget.fetchLight();
 
-    final isColorBrighterThanContrast =
-        color.outputLightness() >= kLightnessThreshold;
+    // final isColorBrighterThanContrast =
+    //     color.outputLightness() >= kLightnessThreshold;
 
-    final Color borderColor = isColorBrighterThanContrast
-        ? Colors.black.withOpacity(0.40)
-        : Colors.white.withOpacity(0.40);
+    // final Color borderColor = isColorBrighterThanContrast
+    //     ? Colors.black.withOpacity(0.40)
+    //     : Colors.white.withOpacity(0.40);
 
     final Widget hueWidget = ExpandableColorBar(
         kind: widget.kind,
@@ -281,20 +282,21 @@ class _HSGenericScreenState extends State<HSGenericScreen> {
     final List<Widget> widgets = <Widget>[hueWidget, satWidget, valueWidget];
 
     return Theme(
-      data: ThemeData.from(
-        colorScheme: isColorBrighterThanContrast
-            ? ColorScheme.light(surface: rgbColor)
-            : ColorScheme.dark(surface: rgbColor),
+      data: Theme.of(context).copyWith(
         textTheme: Theme.of(context).textTheme.copyWith(
               caption: GoogleFonts.b612Mono(),
               button: GoogleFonts.b612Mono(),
             ),
-      ).copyWith(
         cardTheme: Theme.of(context).cardTheme.copyWith(
               margin: EdgeInsets.zero,
               clipBehavior: Clip.antiAlias,
               shape: RoundedRectangleBorder(
-                side: BorderSide(color: borderColor),
+                side: BorderSide(
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onBackground
+                      .withOpacity(0.40),
+                ),
                 borderRadius: BorderRadius.circular(defaultRadius),
               ),
             ),
@@ -305,32 +307,34 @@ class _HSGenericScreenState extends State<HSGenericScreen> {
           child: Column(
             children: <Widget>[
               Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    const SizedBox(width: 8),
-                    for (int i = 0; i < 3; i++) ...<Widget>[
-                      const SizedBox(width: 8),
-                      Flexible(
-                        flex: (i == expanded) ? 1 : 0,
-                        child: LayoutBuilder(
-                          // thanks Remi Rousselet for the idea!
-                          builder: (_, builder) {
-                            return AnimatedContainer(
-                              width: (i == expanded) ? builder.maxWidth : 64,
-                              duration: const Duration(milliseconds: 250),
-                              curve: (i == expanded)
-                                  ? Curves.easeOut
-                                  : Curves.easeIn,
-                              child: widgets[i],
-                            );
-                          },
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                    ],
-                    const SizedBox(width: 8),
-                  ],
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: spaceRow(
+                      16,
+                      <Widget>[
+                        for (int i = 0; i < 3; i++)
+                          Flexible(
+                            flex: (i == expanded) ? 1 : 0,
+                            child: LayoutBuilder(
+                              // thanks Remi Rousselet for the idea!
+                              builder: (_, builder) {
+                                return AnimatedContainer(
+                                  width:
+                                      (i == expanded) ? builder.maxWidth : 64,
+                                  duration: const Duration(milliseconds: 250),
+                                  curve: (i == expanded)
+                                      ? Curves.easeOut
+                                      : Curves.easeIn,
+                                  child: widgets[i],
+                                );
+                              },
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
               Padding(

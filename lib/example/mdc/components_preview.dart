@@ -1,3 +1,4 @@
+import 'package:colorstudio/phospor_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -59,8 +60,10 @@ class ComponentsPreview extends StatelessWidget {
                 ),
                 IconButton(
                   tooltip: "Randomise colors",
-                  icon: Icon(
-                    Icons.shuffle_rounded,
+                  icon: Center(
+                    child: Icon(
+                      Phospor.shuffle,
+                    ),
                   ),
                   onPressed: () async {
                     final box = await Hive.openBox<dynamic>('settings');

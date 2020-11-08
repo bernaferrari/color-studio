@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import '../../blocs/blocs.dart';
 import '../../blocs/contrast_ratio/contrast_ratio_cubit.dart';
@@ -39,14 +38,15 @@ class ContrastRatioCard extends StatelessWidget {
             TitleBar(
               title: "Contrast Ratio",
               children: <Widget>[
-                IconButton(
-                  tooltip: "Contrast compare",
-                  icon: Icon(
-                    FeatherIcons.menu,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  onPressed: toContrastScreen,
-                ),
+                SizedBox(height: 36),
+                // IconButton(
+                //   tooltip: "Contrast compare",
+                //   icon: Icon(
+                //     FeatherIcons.menu,
+                //     color: Theme.of(context).colorScheme.primary,
+                //   ),
+                //   onPressed: toContrastScreen,
+                // ),
                 // IconButton(
                 //   tooltip: "Help",
                 //   icon: Icon(
@@ -89,8 +89,11 @@ class ContrastRatioCard extends StatelessWidget {
                             title: describeEnum(state.selectedContrastCardType),
                             subtitle: kBackground,
                             contrast: state.contrastValues[0],
-                            contrastingColor:
-                                rgbColorsWithBlindness[ColorType.Primary],
+                            contrastingColor: rgbColorsWithBlindness[
+                                state.selectedContrastCardType ==
+                                        ContrastCardType.Primary
+                                    ? ColorType.Primary
+                                    : ColorType.Secondary],
                             circleColor:
                                 rgbColorsWithBlindness[ColorType.Background],
                           ),
@@ -98,8 +101,11 @@ class ContrastRatioCard extends StatelessWidget {
                             title: describeEnum(state.selectedContrastCardType),
                             subtitle: kSurface,
                             contrast: state.contrastValues[1],
-                            contrastingColor:
-                                rgbColorsWithBlindness[ColorType.Primary],
+                            contrastingColor: rgbColorsWithBlindness[
+                                state.selectedContrastCardType ==
+                                        ContrastCardType.Primary
+                                    ? ColorType.Primary
+                                    : ColorType.Secondary],
                             circleColor:
                                 rgbColorsWithBlindness[ColorType.Surface],
                           ),
