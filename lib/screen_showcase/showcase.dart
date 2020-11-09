@@ -409,18 +409,22 @@ class _PrevStore extends StatelessWidget {
           children: <Widget>[
             const SizedBox(width: 16),
             Expanded(
-              child: RaisedButton(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: primary,
+                  textStyle: TextStyle(color: surface),
+                ),
                 child: const Text("Update"),
-                color: primary,
-                textColor: surface,
                 onPressed: () {},
               ),
             ),
             const SizedBox(width: 16),
             Expanded(
-              child: OutlineButton(
-                child: const Text("Uninstall"),
-                textColor: primary,
+              child: OutlinedButton(
+                child: Text(
+                  "Uninstall",
+                  style: TextStyle(color: primary),
+                ),
                 onPressed: () {},
               ),
             ),
@@ -547,8 +551,6 @@ class _PrevSpotify extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isiPad = MediaQuery.of(context).size.width > 600;
-
     return Column(
       children: <Widget>[
         SizedBox(height: 24),
@@ -556,12 +558,11 @@ class _PrevSpotify extends StatelessWidget {
           alignment: WrapAlignment.center,
           runSpacing: 16,
           spacing: 16,
-          // mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Column(
               children: <Widget>[
                 Text(
-                  "Here's your 2019, wrapped.",
+                  "Here's your 2020, wrapped.",
                   style: GoogleFonts.hind(
                     fontSize: 24,
                     fontWeight: FontWeight.w600,
@@ -584,17 +585,13 @@ class _PrevSpotify extends StatelessWidget {
                     ),
                     padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
                   ),
-                  child: Container(
-                    color: Colors.red,
-                    child: Text(
-                      "TAKE A LOOK",
-                      style: GoogleFonts.hind(
-                        fontWeight: FontWeight.w600,
-                        textStyle: TextStyle(
-                          color: Theme.of(context).colorScheme.onPrimary,
-                          textBaseline: TextBaseline.ideographic,
-                        ),
-                      ),
+                  child: Text(
+                    "TAKE A LOOK",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      textBaseline: TextBaseline.ideographic,
+                      fontFamily: "",
                     ),
                   ),
                   onPressed: () {},
@@ -604,32 +601,38 @@ class _PrevSpotify extends StatelessWidget {
             Container(
               width: 144,
               height: 144,
-              color: primary,
+              decoration: BoxDecoration(
+                color: primary,
+                borderRadius: BorderRadius.circular(8),
+              ),
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.only(
+                        left: 16.0,
+                        right: 16,
+                        top: 8.0,
+                      ),
                       child: Text(
                         "Your Top Songs",
-                        style: GoogleFonts.hind(
+                        style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 26,
-                          textStyle: TextStyle(height: 1),
+                          color: Theme.of(context).colorScheme.onBackground,
+                          fontFamily: "",
                         ),
                       ),
                     ),
                     SizedBox(
-                      width: 128,
+                      width: 120,
                       child: FittedBox(
                         child: Text(
                           "2020",
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
-                            // textStyle: TextStyle(
                             color: background,
-                            // ),
                           ),
                         ),
                       ),
@@ -691,20 +694,18 @@ class _PrevFacebook extends StatelessWidget {
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    RawMaterialButton(
-                      onPressed: () {},
-                      constraints: const BoxConstraints(
-                        minHeight: 0,
-                        minWidth: 48,
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: primary,
+                        elevation: 0,
+                        padding: const EdgeInsets.all(24.0),
+                        shape: const CircleBorder(),
                       ),
+                      onPressed: () {},
                       child: Icon(
                         icons[i],
                         color: Theme.of(context).colorScheme.onPrimary,
                       ),
-                      shape: const CircleBorder(),
-                      fillColor: primary,
-                      elevation: 0,
-                      padding: const EdgeInsets.all(12.0),
                     ),
                     SizedBox(height: 4),
                     Text(
@@ -727,9 +728,12 @@ class _PrevFacebook extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: SizedBox(
               width: double.infinity,
-              child: RaisedButton(
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                elevation: 0,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  elevation: 0,
+                  primary: primary,
+                ),
                 child: Text(
                   "VIEW PROFILE ON APP",
                   style: GoogleFonts.lato(
@@ -740,7 +744,6 @@ class _PrevFacebook extends StatelessWidget {
                     ),
                   ),
                 ),
-                color: primary,
                 onPressed: () {},
               ),
             ),
@@ -807,22 +810,19 @@ class _PrevTrip extends StatelessWidget {
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    RawMaterialButton(
-                      onPressed: () {},
-                      constraints: const BoxConstraints(
-                        minHeight: 0,
-                        minWidth: 48,
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        primary: primary.withOpacity(0.20),
+                        shape: const CircleBorder(),
+                        padding: const EdgeInsets.all(36.0),
                       ),
                       child: Icon(
                         icons[i],
                         color: primary,
                         size: 24,
                       ),
-                      highlightElevation: 0,
-                      shape: const CircleBorder(),
-                      fillColor: primary.withOpacity(0.20),
-                      elevation: 0,
-                      padding: const EdgeInsets.all(24.0),
+                      onPressed: () {},
                     ),
                     SizedBox(height: 8),
                     Text(
@@ -886,62 +886,39 @@ class _PrevTrip extends StatelessWidget {
 }
 
 class _PrevSocial extends StatelessWidget {
-  const _PrevSocial({this.primary, this.surface});
+  const _PrevSocial({this.primary, this.secondary});
 
   final Color primary;
-  final Color surface;
+  final Color secondary;
 
   @override
   Widget build(BuildContext context) {
-    const icons1 = [
+    const icons = [
       FeatherIcons.send,
-      FeatherIcons.bookmark,
       FeatherIcons.heart,
       FeatherIcons.home,
-    ];
-
-    const icons2 = [
-      FeatherIcons.grid,
       FeatherIcons.truck,
       FeatherIcons.watch,
       FeatherIcons.gift,
     ];
 
-    final isiPad = MediaQuery.of(context).size.shortestSide > 600;
-
-    return Column(
+    return Wrap(
+      alignment: WrapAlignment.spaceEvenly,
       children: <Widget>[
-//        Padding(
-//          padding: const EdgeInsets.only(top: 24),
-//          child: _ShowcaseTitle("Social"),
-//        ),
-//        const SizedBox(height: 8),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            for (var i in icons1)
-              IconButton(
-                icon: Icon(i),
-                onPressed: () {},
+        for (var i = 0; i < icons.length; i++)
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: IconButton(
+              icon: Icon(
+                icons[i],
+                color: i < 2
+                    ? null
+                    : i < 4
+                        ? secondary
+                        : primary,
               ),
-            if (isiPad)
-              for (var i in icons2)
-                IconButton(
-                  icon: Icon(i, color: primary),
-                  onPressed: () {},
-                ),
-          ],
-        ),
-        if (!isiPad)
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              for (var i in icons2)
-                IconButton(
-                  icon: Icon(i, color: primary),
-                  onPressed: () {},
-                ),
-            ],
+              onPressed: () {},
+            ),
           ),
       ],
     );
@@ -1018,8 +995,18 @@ class _PodcastCard extends StatelessWidget {
                   width: 64,
                   height: 64,
                   decoration: BoxDecoration(
-                    color: primaryColor,
+                    color:
+                        Theme.of(context).colorScheme.onSurface == Colors.white
+                            ? Colors.white.withOpacity(0.1)
+                            : Colors.black.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Icon(
+                    Icons.ac_unit_rounded,
+                    color: subdescription == "Yesterday • 34 MINS"
+                        ? Theme.of(context).colorScheme.primary
+                        : Theme.of(context).colorScheme.secondary,
+                    size: 36,
                   ),
                 ),
                 SizedBox(width: margin),
@@ -1050,7 +1037,7 @@ class _PodcastCard extends StatelessWidget {
                 ),
                 IconButton(
                   icon: Icon(
-                    FeatherIcons.moreVertical,
+                    Icons.more_vert_outlined,
                     color: textColor,
                   ),
                   onPressed: () {},
@@ -1124,23 +1111,29 @@ class _PrevCupertino extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            FlatButton.icon(
-              onPressed: () {},
-              label: const Text("Inbox"),
+            TextButton.icon(
+              label: Text(
+                "Inbox",
+                style: TextStyle(color: onSurface.withOpacity(0.452)),
+              ),
               icon: Icon(FeatherIcons.inbox, size: 24),
-              textColor: onSurface.withOpacity(0.452),
+              onPressed: () {},
             ),
-            FlatButton.icon(
-              label: const Text("Apps"),
+            TextButton.icon(
+              label: Text(
+                "Apps",
+                style: TextStyle(color: onSurface.withOpacity(0.452)),
+              ),
               icon: Icon(FeatherIcons.layers, size: 24),
               onPressed: () {},
-              textColor: primary,
             ),
-            FlatButton.icon(
-              onPressed: () {},
-              textColor: onSurface.withOpacity(0.452),
-              label: const Text("Discover"),
+            TextButton.icon(
+              label: Text(
+                "Discover",
+                style: TextStyle(color: onSurface.withOpacity(0.452)),
+              ),
               icon: Icon(FeatherIcons.award, size: 24),
+              onPressed: () {},
             )
           ],
         ),
@@ -1278,6 +1271,7 @@ class _PrevPhotos extends StatelessWidget {
   Widget build(BuildContext context) {
     final onBackground = Theme.of(context).colorScheme.onBackground;
     final onSurface = Theme.of(context).colorScheme.onSurface;
+    final secondary = Theme.of(context).colorScheme.secondary;
 
     return Column(
       children: <Widget>[
@@ -1322,7 +1316,7 @@ class _PrevPhotos extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-        SizedBox(height: 8),
+        SizedBox(height: 16),
         Wrap(
           key: const PageStorageKey("photosOverlay"),
           // scrollDirection: Axis.horizontal,
@@ -1347,7 +1341,7 @@ class _PrevPhotos extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-        _PrevSocial(primary: primary, surface: surface),
+        _PrevSocial(primary: primary, secondary: secondary),
       ],
     );
   }
@@ -1553,6 +1547,7 @@ class _SdkListTile extends StatelessWidget {
                 height: 24,
                 child: Switch(
                   value: withSwitch,
+                  activeColor: Theme.of(context).colorScheme.secondary,
                   onChanged: (changed) {},
                 ),
               ),
