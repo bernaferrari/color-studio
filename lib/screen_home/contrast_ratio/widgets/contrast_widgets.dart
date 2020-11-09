@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'circle_percentage_widget.dart';
 
-class ContrastCircleBar extends StatelessWidget {
-  const ContrastCircleBar({
+class ContrastCircle extends StatelessWidget {
+  const ContrastCircle({
     this.contrast = 0.5,
     this.title = "",
     this.subtitle = "",

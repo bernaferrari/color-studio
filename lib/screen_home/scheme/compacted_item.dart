@@ -9,14 +9,14 @@ import '../../example/util/constants.dart';
 class SchemeCompactedItem extends StatelessWidget {
   const SchemeCompactedItem({
     this.rgbColor,
-    this.title,
+    this.currentType,
     this.onPressed,
     this.locked = false,
     this.expanded = false,
   });
 
   final Color rgbColor;
-  final ColorType title;
+  final ColorType currentType;
   final bool locked;
   final bool expanded;
   final VoidCallback onPressed;
@@ -58,7 +58,7 @@ class SchemeCompactedItem extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         Text(
-                          describeEnum(title),
+                          describeEnum(currentType),
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.subtitle1,
                         ),
@@ -78,7 +78,7 @@ class SchemeCompactedItem extends StatelessWidget {
             ),
           ),
         ),
-        if (title != ColorType.Primary) ...[
+        if (currentType != ColorType.Primary) ...[
           Container(
             width: 1,
             height: 46,
@@ -91,12 +91,9 @@ class SchemeCompactedItem extends StatelessWidget {
             child: TextButton(
               style: TextButton.styleFrom(shape: RoundedRectangleBorder()),
               onPressed: () {
-                BlocProvider.of<MdcSelectedBloc>(context).add(
-                  MDCUpdateLock(
-                    isLock: !locked,
-                    selected: title,
-                  ),
-                );
+                context
+                    .read<ColorsCubit>()
+                    .updateLock(shouldLock: !locked, selectedLock: currentType);
               },
               child: Container(
                 padding: EdgeInsets.all(8),
@@ -118,7 +115,7 @@ class SchemeCompactedItem extends StatelessWidget {
                   // only show round radius on the last element when not expanded.
                   borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(
-                      (title == ColorType.Surface && expanded == false)
+                      (currentType == ColorType.Surface && expanded == false)
                           ? 8.0
                           : 0.0,
                     ),

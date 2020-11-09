@@ -115,7 +115,7 @@ class ColorRouterDelegate extends RouterDelegate<ColorRoutePath>
                           key: ValueKey("Multiple Color Compare"),
                           child: BlocProvider<MultipleContrastCompareCubit>(
                             create: (context) => MultipleContrastCompareCubit(
-                              BlocProvider.of<MdcSelectedBloc>(context),
+                              BlocProvider.of<ColorsCubit>(context),
                             ),
                             child: const ColorsCompareScreen(),
                           ),
@@ -287,13 +287,12 @@ class HomeScreen extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
-                BlocBuilder<MdcSelectedBloc, MdcSelectedState>(
+                BlocBuilder<ColorsCubit, ColorsState>(
                     builder: (context, state) {
-                  if (state is MDCInitialState) {
+                  if (state.rgbColors.isEmpty) {
                     return SizedBox.shrink();
                   }
 
-                  final currentState = state as MDCLoadedState;
                   final bool isiPad = MediaQuery.of(context).size.width > 600;
 
                   return Column(
@@ -355,11 +354,10 @@ class HomeScreen extends StatelessWidget {
                           ],
                         ),
                         ColorSchemeCard(
-                          rgbColors: currentState.rgbColors,
-                          rgbColorsWithBlindness:
-                              currentState.rgbColorsWithBlindness,
-                          hsluvColors: currentState.hsluvColors,
-                          locked: currentState.locked,
+                          rgbColors: state.rgbColors,
+                          rgbColorsWithBlindness: state.rgbColorsWithBlindness,
+                          hsluvColors: state.hsluvColors,
+                          locked: state.locked,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -385,12 +383,12 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                         ContrastRatioCard(
-                          currentState.rgbColorsWithBlindness,
+                          state.rgbColorsWithBlindness,
                           handleMultiColor,
                         ),
                         ColorBlindnessCard(
-                          currentState.rgbColors,
-                          currentState.locked,
+                          state.rgbColors,
+                          state.locked,
                         )
                       ],
                     ),

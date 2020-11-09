@@ -11,29 +11,25 @@ import '../util/constants.dart';
 class ExportColors extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MdcSelectedBloc, MdcSelectedState>(builder: (_, state) {
-      final currentState = state as MDCLoadedState;
+    return BlocBuilder<ColorsCubit, ColorsState>(builder: (_, state) {
+      final primary = state.rgbColorsWithBlindness[ColorType.Primary];
+      final background = state.rgbColorsWithBlindness[ColorType.Background];
+      final surface = state.rgbColorsWithBlindness[ColorType.Surface];
 
-      final primary = currentState.rgbColorsWithBlindness[ColorType.Primary];
-      final background =
-          currentState.rgbColorsWithBlindness[ColorType.Background];
-      final surface = currentState.rgbColorsWithBlindness[ColorType.Surface];
-
-      final onPrimary = currentState.hsluvColors[ColorType.Primary].lightness >=
-              kLightnessThreshold
-          ? Colors.black
-          : Colors.white;
-
-      final onSurface = currentState.hsluvColors[ColorType.Surface].lightness >=
-              kLightnessThreshold
-          ? Colors.black
-          : Colors.white;
-
-      final onBackground =
-          currentState.hsluvColors[ColorType.Background].lightness >=
-                  kLightnessThreshold
+      final onPrimary =
+          state.hsluvColors[ColorType.Primary].lightness >= kLightnessThreshold
               ? Colors.black
               : Colors.white;
+
+      final onSurface =
+          state.hsluvColors[ColorType.Surface].lightness >= kLightnessThreshold
+              ? Colors.black
+              : Colors.white;
+
+      final onBackground = state.hsluvColors[ColorType.Background].lightness >=
+              kLightnessThreshold
+          ? Colors.black
+          : Colors.white;
 
       final titleStyle = GoogleFonts.firaSans(
         textStyle:

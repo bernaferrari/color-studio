@@ -12,24 +12,20 @@ import '../blocs.dart';
 import 'rgb_hsluv_tuple.dart';
 
 class MultipleContrastCompareCubit extends Cubit<MultipleColorCompareState> {
-  MultipleContrastCompareCubit(MdcSelectedBloc _mdcSelectedBloc)
+  MultipleContrastCompareCubit(ColorsCubit _colorsCubit)
       : super(MultipleColorCompareState()) {
-    if (_mdcSelectedBloc.state is MDCLoadedState) {
-      final value = _mdcSelectedBloc.state as MDCLoadedState;
+    set(
+      rgbColors: _colorsCubit.state.rgbColors,
+      hsluvColors: _colorsCubit.state.hsluvColors,
+      locked: _colorsCubit.state.locked,
+    );
+
+    _mdcSubscription = _colorsCubit.listen((stateValue) async {
       set(
-        rgbColors: value.rgbColors,
-        hsluvColors: value.hsluvColors,
-        locked: value.locked,
+        rgbColors: stateValue.rgbColors,
+        hsluvColors: stateValue.hsluvColors,
+        locked: stateValue.locked,
       );
-    }
-    _mdcSubscription = _mdcSelectedBloc.listen((stateValue) async {
-      if (stateValue is MDCLoadedState) {
-        set(
-          rgbColors: stateValue.rgbColors,
-          hsluvColors: stateValue.hsluvColors,
-          locked: stateValue.locked,
-        );
-      }
     });
   }
 

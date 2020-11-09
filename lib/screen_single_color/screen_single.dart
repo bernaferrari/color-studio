@@ -1,3 +1,4 @@
+import 'package:colorstudio/screen_home/contrast_ratio/contrast_circle_group.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,12 +7,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
 import '../blocs/blocs.dart';
+import '../blocs/colors_cubit.dart';
 import '../example/mdc/components.dart';
 import '../example/screens/color_library.dart';
 import '../example/util/constants.dart';
 import '../example/widgets/loading_indicator.dart';
 import '../example/widgets/update_color_dialog.dart';
-import '../screen_home/contrast_ratio/widgets/contrast_widgets.dart';
 import '../screen_home/scheme/widgets/expanded_section.dart';
 import 'templates/templates_screen.dart';
 import 'vertical_picker/vertical_picker_main.dart';
@@ -21,14 +22,9 @@ class ScreenSingle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MdcSelectedBloc, MdcSelectedState>(
-        builder: (context, state) {
-      final currentState = state as MDCLoadedState;
-
-      final Color selectedRgbColor =
-          currentState.rgbColors[currentState.selected];
-      final HSLuvColor selectedHsluvColor =
-          currentState.hsluvColors[currentState.selected];
+    return BlocBuilder<ColorsCubit, ColorsState>(builder: (_, state) {
+      final Color selectedRgbColor = state.rgbColors[state.selected];
+      final HSLuvColor selectedHsluvColor = state.hsluvColors[state.selected];
 
       final colorScheme = (selectedHsluvColor.lightness > kLightnessThreshold)
           ? ColorScheme.light(
@@ -79,10 +75,10 @@ class ScreenSingle extends StatelessWidget {
                   ),
                 ),
                 _BottomHome(
-                  selected: currentState.selected,
+                  selected: state.selected,
                   selectedColor: selectedRgbColor,
-                  locked: currentState.locked,
-                  rgbColors: currentState.rgbColors,
+                  locked: state.locked,
+                  rgbColors: state.rgbColors,
                 ),
               ],
             ),
@@ -227,30 +223,7 @@ class _ColorContrastRow extends StatelessWidget {
       return Center(
         child: SizedBox(
           width: 500,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              SizedBox(),
-              ContrastCircleBar(
-                title: kPrimary,
-                subtitle: kBackground,
-                contrast: state.contrastValues[0],
-                animateOnInit: false,
-                circleColor: rgbColors[ColorType.Primary],
-                contrastingColor: rgbColors[ColorType.Background],
-              ),
-              // don't show the other circles when their values are useless.
-              ContrastCircleBar(
-                title: kPrimary,
-                subtitle: kSurface,
-                contrast: state.contrastValues[1],
-                animateOnInit: false,
-                circleColor: rgbColors[ColorType.Surface],
-                contrastingColor: rgbColors[ColorType.Primary],
-              ),
-              SizedBox(),
-            ],
-          ),
+          child: ContrastCircleGroup(state, rgbColors),
         ),
       );
     });
@@ -279,12 +252,9 @@ class ThemeBar extends StatelessWidget {
     ColorType selected,
     Color color,
   ) {
-    BlocProvider.of<MdcSelectedBloc>(context).add(
-      MDCLoadEvent(
-        currentColor: color,
-        selected: selected,
-      ),
-    );
+    context
+        .read<ColorsCubit>()
+        .updateRgbColor(rgbColor: color, selected: selected);
   }
 
   @override
@@ -310,9 +280,12 @@ class ThemeBar extends StatelessWidget {
           return Row(
             children: <Widget>[
               // this is necessary to counter-balance the chevronUp icon at the other side.
-              if (leading == null &&
-                  (builder.maxWidth > 400 || mappedList.length < 3))
-                SizedBox(width: 48),
+              if (isExpanded != null)
+                IconButton(
+                  tooltip: "undo",
+                  icon: Icon(Icons.undo_rounded),
+                  onPressed: () => context.read<ColorsCubit>().undo(),
+                ),
               if (leading != null) leading,
               Expanded(
                 child: Center(
@@ -396,11 +369,11 @@ class ThemeBar extends StatelessWidget {
               ),
               if (isExpanded != null)
                 IconButton(
-                  tooltip: isExpanded ? "compact" : "expand contrast",
+                  tooltip: isExpanded ? "hide contrast" : "show contrast",
                   icon: Icon(
                     isExpanded
-                        ? FeatherIcons.chevronDown
-                        : FeatherIcons.chevronUp,
+                        ? Icons.keyboard_arrow_down_rounded
+                        : Icons.keyboard_arrow_up_rounded,
                   ),
                   onPressed: onExpanded,
                 ),

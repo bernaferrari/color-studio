@@ -63,6 +63,11 @@ class ColorsCompareScreen extends StatelessWidget {
           appBar: AppBar(
             title: const Text("Colors Compare"),
             actions: <Widget>[
+              IconButton(
+                tooltip: "Undo",
+                icon: Icon(Icons.undo),
+                onPressed: () => context.read<ColorsCubit>().undo(),
+              )
               // IconButton(
               //   tooltip: "Reorder",
               //   icon: Icon(FeatherIcons.list),
@@ -410,7 +415,7 @@ class _TopSection extends StatelessWidget {
             rgbColor: rgbColor,
             hsluvColor: hsluvColor,
             colorFromSelected: colorFromSelected,
-            currentKey: currentKey,
+            currentType: currentKey,
             isSelected: isSelected,
           ),
         ],
@@ -470,14 +475,14 @@ class _TopSectionButtons extends StatelessWidget {
     @required this.hsluvColor,
     @required this.colorFromSelected,
     @required this.isSelected,
-    @required this.currentKey,
+    @required this.currentType,
   });
 
   final Color rgbColor;
   final HSLuvColor hsluvColor;
   final Color colorFromSelected;
   final bool isSelected;
-  final ColorType currentKey;
+  final ColorType currentType;
 
   @override
   Widget build(BuildContext context) {
@@ -507,7 +512,7 @@ class _TopSectionButtons extends StatelessWidget {
             ),
             label: Text(rgbColor.toHexStr()),
             onPressed: () {
-              showSlidersDialog(context, rgbColor, currentKey);
+              showSlidersDialog(context, rgbColor, currentType);
             },
             onLongPress: () {
               copyToClipboard(context, rgbColor.toHexStr());
@@ -529,12 +534,10 @@ class _TopSectionButtons extends StatelessWidget {
                 color: contrastColor,
               ),
               onPressed: () {
-                BlocProvider.of<MdcSelectedBloc>(context).add(
-                  MDCLoadEvent(
-                    currentColor: getShuffleColor(),
-                    selected: currentKey,
-                  ),
-                );
+                context.read<ColorsCubit>().updateColor(
+                      rgbColor: getShuffleColor(),
+                      selected: currentType,
+                    );
               },
             ),
           ),
@@ -555,11 +558,11 @@ class _TopSectionButtons extends StatelessWidget {
                   size: 16,
                 ),
                 onPressed: () {
-                  print("button is vs $currentKey");
+                  print("button is vs $currentType");
 
                   context
                       .read<MultipleContrastCompareCubit>()
-                      .updateSelectedKey(currentKey);
+                      .updateSelectedKey(currentType);
                 },
               ),
             ),

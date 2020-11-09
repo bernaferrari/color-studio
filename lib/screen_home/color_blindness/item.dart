@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../example/screens/single_color_blindness.dart';
 
@@ -55,7 +56,10 @@ class ColorBlindnessItem extends StatelessWidget {
                     ),
                     Text(
                       subtitle,
-                      style: Theme.of(context).textTheme.caption,
+                      style: GoogleFonts.openSans(
+                          textStyle: Theme.of(context).textTheme.caption,
+                      ),
+                      // style: Theme.of(context).textTheme.caption,
                     ),
                   ],
                 ),
@@ -78,13 +82,6 @@ class ColorBlindnessItem extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: colorWithBlindList[i].color,
                               borderRadius: BorderRadius.circular(6),
-//                              border: Border.all(
-//                                color: Theme.of(context)
-//                                    .colorScheme
-//                                    .onSurface
-//                                    .withOpacity(0.5),
-//                                width: 1,
-//                              ),
                             ),
                           ),
                         ),

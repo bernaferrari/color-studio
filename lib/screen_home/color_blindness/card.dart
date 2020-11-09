@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../blocs/color_blind/color_blindness_cubit.dart';
+import '../../blocs/color_blindness_cubit.dart';
 import '../../example/util/constants.dart';
 import '../title_bar.dart';
 import 'list.dart';

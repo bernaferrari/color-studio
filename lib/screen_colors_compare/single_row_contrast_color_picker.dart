@@ -34,11 +34,9 @@ class SingleRowContrastColorPicker extends StatelessWidget {
                   rgbHsluvTuple: colorsRange[i],
                   contrast: colorsRange[i].contrast,
                   onPressed: () {
-                    context.read<MdcSelectedBloc>().add(
-                          MDCLoadEvent(
-                            currentColor: colorsRange[i].rgbColor,
-                            selected: currentKey,
-                          ),
+                    context.read<ColorsCubit>().updateColor(
+                          rgbColor: colorsRange[i].rgbColor,
+                          selected: currentKey,
                         );
                   },
                 ),

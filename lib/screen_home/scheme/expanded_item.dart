@@ -158,17 +158,16 @@ class TopRow extends StatelessWidget {
                   onPressed: () {
                     final rng = Random();
 
-                    BlocProvider.of<MdcSelectedBloc>(context).add(
-                      MDCLoadEvent(
-                        currentColor: Color.fromARGB(
-                          255,
-                          rng.nextInt(256),
-                          rng.nextInt(256),
-                          rng.nextInt(256),
-                        ),
-                        selected: selected,
-                      ),
+                    final rgbColor = Color.fromARGB(
+                      255,
+                      rng.nextInt(256),
+                      rng.nextInt(256),
+                      rng.nextInt(256),
                     );
+
+                    context
+                        .read<ColorsCubit>()
+                        .updateColor(rgbColor: rgbColor, selected: selected);
                   },
                 ),
             ],

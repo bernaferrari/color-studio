@@ -266,11 +266,11 @@ class ShuffleDarkSection extends StatelessWidget {
             children: <Widget>[
               InkWell(
                 onTap: () {
-                  BlocProvider.of<MdcSelectedBloc>(context).add(
-                    MDCUpdateAllEvent(
-                      colors: getRandomPreference(selected),
-                    ),
-                  );
+                  // BlocProvider.of<MdcSelectedBloc>(context).add(
+                  //   MDCUpdateAllEvent(
+                  //     colors: getRandomPreference(selected),
+                  //   ),
+                  // );
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -344,9 +344,9 @@ class ShuffleMoleSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        BlocProvider.of<MdcSelectedBloc>(context).add(
-          MDCUpdateAllEvent(colors: getRandomMoleTheme()),
-        );
+        // BlocProvider.of<MdcSelectedBloc>(context).add(
+        //   MDCUpdateAllEvent(colors: getRandomMoleTheme()),
+        // );
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16.0),

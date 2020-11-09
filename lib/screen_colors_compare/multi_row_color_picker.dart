@@ -77,8 +77,8 @@ class _MultiRowColorPicker extends StatelessWidget {
 
   void contrastColorSelected(BuildContext context, HSLuvColor color) {
     context
-        .read<MdcSelectedBloc>()
-        .add(MDCUpdateColor(hsLuvColor: color, selected: selected));
+        .read<ColorsCubit>()
+        .updateColor(hsLuvColor: color, selected: selected);
   }
 
   @override

@@ -7,9 +7,9 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../example/mdc/color_blindness_bar.dart';
-import 'horizontal_sliders_bar.dart';
 import '../example/mdc/util/elevation_overlay.dart';
 import '../example/mdc/widgets/horizontal_progress_bar.dart';
+import 'horizontal_sliders_bar.dart';
 
 class Showcase extends StatefulWidget {
   const Showcase();
@@ -139,37 +139,6 @@ class _ShowcaseState extends State<Showcase> {
                     slidersMode = true;
                   });
                 }),
-        ),
-        SafeArea(
-          bottom: true,
-          top: false,
-          right: false,
-          left: false,
-          child: Row(
-            children: <Widget>[
-              const SizedBox(width: 16),
-              Text(
-                "Roundness",
-                style: GoogleFonts.openSans(
-                  textStyle: Theme.of(context).textTheme.caption,
-                ),
-              ),
-              Expanded(
-                child: Slider(
-                  value: sliderValue,
-                  divisions: divisions,
-                  label: "${currentElevation.round()} pt",
-                  onChanged: (changed) {
-                    setState(() {
-                      sliderValue = changed;
-                      PageStorage.of(context).writeState(context, sliderValue,
-                          identifier: const ValueKey("ShapeRadius"));
-                    });
-                  },
-                ),
-              ),
-            ],
-          ),
         ),
         SafeArea(
           bottom: true,
@@ -1272,10 +1241,11 @@ class _PrevPhotosTransparencyState extends State<PrevPhotosTransparency> {
           ],
         ),
         Container(
-          height: 72,
+          height: 80,
           child: ListView(
             key: const PageStorageKey("photosSemiTransparent"),
             scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
             children: <Widget>[
               const SizedBox(width: 16),
               for (double i = currentNumber, c = 0;
@@ -1353,26 +1323,23 @@ class _PrevPhotos extends StatelessWidget {
           ),
         ),
         SizedBox(height: 8),
-        Container(
-          height: 96, // 72 + 24 because of the shadow in 24pt.
-          child: Center(
-            child: ListView(
-              key: const PageStorageKey("photosOverlay"),
-              scrollDirection: Axis.horizontal,
-              shrinkWrap: true,
-              children: <Widget>[
-                const SizedBox(width: 16),
-                for (int i = 0; i < elevationEntries.length; i++)
-                  _PhotosElevationOverlay(
-                    primary: primary,
-                    surface: surface,
-                    elevation: elevationEntriesList[i].toDouble(),
-                  ),
-                const SizedBox(width: 16),
-              ],
-            ),
-          ),
+        Wrap(
+          key: const PageStorageKey("photosOverlay"),
+          // scrollDirection: Axis.horizontal,
+          // shrinkWrap: true,
+          runSpacing: 16,
+          spacing: 16,
+          alignment: WrapAlignment.center,
+          children: <Widget>[
+            for (int i = 0; i < elevationEntries.length; i++)
+              _PhotosElevationOverlay(
+                primary: primary,
+                surface: surface,
+                elevation: elevationEntriesList[i].toDouble(),
+              ),
+          ],
         ),
+        SizedBox(height: 8),
         Text(
           "Icons",
           style: GoogleFonts.heebo(
@@ -1476,18 +1443,19 @@ class _PhotosElevationOverlay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        RawMaterialButton(
-          onPressed: () {},
-          constraints: const BoxConstraints(minHeight: 0, minWidth: 56),
-          child: Icon(
-            FeatherIcons.anchor,
-            color: primary,
-            size: 16.0,
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            shape: const CircleBorder(),
+            elevation: elevation,
+            primary: surface,
+            padding: const EdgeInsets.all(24.0),
           ),
-          shape: const CircleBorder(),
-          elevation: elevation,
-          fillColor: surface,
-          padding: const EdgeInsets.all(16.0),
+          onPressed: () {},
+          child: Icon(
+            Icons.layers_outlined,
+            color: primary,
+            size: 24.0,
+          ),
         ),
         const SizedBox(height: 8),
         Text("${elevation.round()} pt",
@@ -1506,24 +1474,27 @@ class _PhotosSemiTransparent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        RawMaterialButton(
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            shape: const CircleBorder(),
+            elevation: 0,
+            primary: primary.withOpacity(opacity),
+            padding: const EdgeInsets.all(24.0),
+          ),
           onPressed: () {},
-          constraints: const BoxConstraints(minHeight: 0, minWidth: 56),
-          highlightElevation: 0,
           child: Icon(
             FeatherIcons.film,
             color: primary,
             size: 16.0,
           ),
-          shape: const CircleBorder(),
-          elevation: 0.0,
-          fillColor: primary.withOpacity(opacity),
-          padding: const EdgeInsets.all(16.0),
         ),
         const SizedBox(height: 8),
-        Text("${(opacity * 100).round()}%",
-            style: Theme.of(context).textTheme.caption)
+        Text(
+          "${(opacity * 100).round()}%",
+          style: Theme.of(context).textTheme.caption,
+        ),
       ],
     );
   }
@@ -1584,7 +1555,7 @@ class _SdkListTile extends StatelessWidget {
                   value: withSwitch,
                   onChanged: (changed) {},
                 ),
-              )
+              ),
           ],
         ),
       ),

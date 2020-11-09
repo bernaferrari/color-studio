@@ -5,12 +5,11 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../example/mdc/util/elevation_overlay.dart';
-import '../../example/util/calculate_contrast.dart';
-import '../../example/util/color_util.dart';
-import '../../example/util/constants.dart';
-import '../mdc_selected/mdc_selected.dart';
-import '../mdc_selected/mdc_selected_bloc.dart';
+import '../example/mdc/util/elevation_overlay.dart';
+import '../example/util/calculate_contrast.dart';
+import '../example/util/color_util.dart';
+import '../example/util/constants.dart';
+import 'blocs.dart';
 
 // enum ContrastCardType {
 //   Primary,
@@ -20,13 +19,19 @@ import '../mdc_selected/mdc_selected_bloc.dart';
 // }
 
 class ContrastRatioCubit extends Cubit<ContrastRatioState> {
-  ContrastRatioCubit(MdcSelectedBloc _mdcSelectedBloc)
-      : super(ContrastRatioState()) {
-    _mdcSubscription = _mdcSelectedBloc.listen((stateValue) async {
+  ContrastRatioCubit(ColorsCubit _colorsCubit) : super(ContrastRatioState()) {
+    // on first run, listen will not be called because it will already have a value.
+    set(
+      rgbColorsWithBlindness: _colorsCubit.state.rgbColorsWithBlindness,
+      selectedColorType: _colorsCubit.state.selected,
+    );
+
+    _mdcSubscription = _colorsCubit.listen((stateValue) async {
       print("stateValue was changed $stateValue");
-      if (stateValue is MDCLoadedState) {
-        set(rgbColorsWithBlindness: stateValue.rgbColorsWithBlindness);
-      }
+      set(
+        rgbColorsWithBlindness: stateValue.rgbColorsWithBlindness,
+        selectedColorType: stateValue.selected,
+      );
     });
   }
 
@@ -42,12 +47,17 @@ class ContrastRatioCubit extends Cubit<ContrastRatioState> {
     Map<ColorType, Color> rgbColorsWithBlindness,
     ColorType selectedColorType,
   }) {
+    // ignore when there was no change.
+    if (rgbColorsWithBlindness == state.rgbColorsWithBlindness &&
+        selectedColorType == state.selectedColorType) {
+      return;
+    }
+
     final rgb = rgbColorsWithBlindness ?? state.rgbColorsWithBlindness;
+    final _contrastSectionType = selectedColorType ?? state.selectedColorType;
 
-    final _contrastSectionType =
-        selectedColorType ?? state.selectedColorType;
-
-    if (_contrastSectionType == ColorType.Primary || _contrastSectionType == ColorType.Secondary) {
+    if (_contrastSectionType == ColorType.Primary ||
+        _contrastSectionType == ColorType.Secondary) {
       emit(
         ContrastRatioState(
           contrastValues: [

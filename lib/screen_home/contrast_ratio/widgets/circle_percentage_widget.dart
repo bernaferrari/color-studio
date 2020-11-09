@@ -124,6 +124,23 @@ class _CirclePercentageWidgetState extends State<CirclePercentageWidget>
             ),
           ),
         ),
+        // write the longest possible string, so that the circles don't keep alternating the size.
+        Visibility(
+          maintainSize: true,
+          maintainAnimation: true,
+          maintainState: true,
+          visible: false,
+          child: SizedBox(
+            height: 0,
+            child: Text(
+              "Background x",
+              style: Theme.of(context).textTheme.bodyText1.copyWith(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w200,
+                  ),
+            ),
+          ),
+        ),
       ],
     );
   }

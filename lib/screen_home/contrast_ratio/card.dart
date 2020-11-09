@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/blocs.dart';
-import '../../blocs/contrast_ratio/contrast_ratio_cubit.dart';
+import '../../blocs/contrast_ratio_cubit.dart';
 import '../../example/util/constants.dart';
 import '../../example/widgets/loading_indicator.dart';
 import '../../util/widget_space.dart';
 import '../title_bar.dart';
-import 'dark_mode_surface_contrast.dart';
-import 'widgets/contrast_widgets.dart';
+import 'contrast_circle_group.dart';
 
 class ContrastRatioCard extends StatelessWidget {
   const ContrastRatioCard(
@@ -72,155 +71,194 @@ class ContrastRatioCard extends StatelessWidget {
               color: Theme.of(context).colorScheme.onSurface.withOpacity(0.20),
             ),
             const SizedBox(height: 16),
-            SizedBox(
-              height: 160,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  if (state.selectedColorType != null)
-                    Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(),
-                          ContrastCircleBar(
-                            title: describeEnum(state.selectedColorType),
-                            subtitle: kBackground,
-                            contrast: state.contrastValues[0],
-                            contrastingColor:
-                                rgbColorsWithBlindness[state.selectedColorType],
-                            circleColor:
-                                rgbColorsWithBlindness[ColorType.Background],
-                          ),
-                          ContrastCircleBar(
-                            title: describeEnum(state.selectedColorType),
-                            subtitle: kSurface,
-                            contrast: state.contrastValues[1],
-                            contrastingColor:
-                                rgbColorsWithBlindness[state.selectedColorType],
-                            circleColor:
-                                rgbColorsWithBlindness[ColorType.Surface],
-                          ),
-                          SizedBox(),
-                        ],
-                      ),
-                    )
-                  else
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          if (shouldDisplayElevation) ...[
-                            Text(
-                              "Primary x Surface with elevation",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Theme.of(context).colorScheme.onSurface,
-                              ),
-                            ),
-                            SizedBox(height: 16),
-                            DarkModeSurfaceContrast(state.elevationValues),
-                          ] else ...[
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 36.0,
-                                vertical: 8.0,
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text(
-                                    "In dark surfaces, Material Design Components express depth by displaying lighter surface colors. "
-                                    "The higher a surface’s elevation (raising it closer to an implied light source), the lighter that surface becomes.\n",
-                                    style:
-                                        Theme.of(context).textTheme.bodyText1,
-                                    textAlign: TextAlign.center,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // if (state.selectedColorType != null)
+                Expanded(
+                  child: ContrastCircleGroup(state, rgbColorsWithBlindness),
+                ),
+                SizedBox(
+                  width: 164,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: spaceColumn(
+                        8,
+                        [
+                          ...[
+                            ColorType.Primary,
+                            ColorType.Secondary,
+                            ColorType.Background,
+                            ColorType.Surface
+                          ].map((currentType) {
+                            if (currentType == state.selectedColorType) {
+                              return OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  backgroundColor:
+                                      Theme.of(context).colorScheme.primary,
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 16,
+                                    horizontal: 24,
                                   ),
-                                  Text(
-                                    "You are using a light surface color.",
-                                    style:
-                                        Theme.of(context).textTheme.bodyText1,
-                                    textAlign: TextAlign.center,
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
+                                ),
+                                child: Text(
+                                  describeEnum(currentType),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle1
+                                      .copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary,
+                                      ),
+                                ),
+                                onPressed: () {
+                                  context
+                                      .read<ColorsCubit>()
+                                      .updateSelected(currentType);
+                                },
+                              );
+                            } else {
+                              return OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 16,
+                                    horizontal: 24,
+                                  ),
+                                ),
+                                child: Text(
+                                  describeEnum(currentType),
+                                  style: Theme.of(context).textTheme.subtitle1,
+                                ),
+                                onPressed: () {
+                                  context
+                                      .read<ColorsCubit>()
+                                      .updateSelected(currentType);
+                                },
+                              );
+                            }
+                          }),
                         ],
                       ),
                     ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 16),
-            SizedBox(
-              // width: 156,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  // crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: spaceRow(
-                    8,
-                    [
-                      ...[
-                        ColorType.Primary,
-                        ColorType.Secondary,
-                        ColorType.Background,
-                        ColorType.Surface
-                      ].map((d) {
-                        if (d == state.selectedColorType) {
-                          return OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.primary,
-                              padding: EdgeInsets.symmetric(
-                                vertical: 16,
-                                horizontal: 24,
-                              ),
-                            ),
-                            child: Text(
-                              describeEnum(d),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle1
-                                  .copyWith(
-                                    color:
-                                        Theme.of(context).colorScheme.onPrimary,
-                                  ),
-                            ),
-                            onPressed: () {
-                              context
-                                  .read<ContrastRatioCubit>()
-                                  .set(selectedColorType: d);
-                            },
-                          );
-                        } else {
-                          return OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                              padding: EdgeInsets.symmetric(
-                                vertical: 16,
-                                horizontal: 24,
-                              ),
-                            ),
-                            child: Text(
-                              describeEnum(d),
-                              style: Theme.of(context).textTheme.subtitle1,
-                            ),
-                            onPressed: () {
-                              context
-                                  .read<ContrastRatioCubit>()
-                                  .set(selectedColorType: d);
-                            },
-                          );
-                        }
-                      }),
-                    ],
                   ),
                 ),
-              ),
+                // else
+                //   Expanded(
+                //     child: Column(
+                //       mainAxisAlignment: MainAxisAlignment.center,
+                //       children: [
+                //         if (shouldDisplayElevation) ...[
+                //           Text(
+                //             "Primary x Surface with elevation",
+                //             textAlign: TextAlign.center,
+                //             style: TextStyle(
+                //               fontSize: 14,
+                //               color: Theme.of(context).colorScheme.onSurface,
+                //             ),
+                //           ),
+                //           SizedBox(height: 16),
+                //           DarkModeSurfaceContrast(state.elevationValues),
+                //         ] else ...[
+                //           Padding(
+                //             padding: const EdgeInsets.symmetric(
+                //               horizontal: 36.0,
+                //               vertical: 8.0,
+                //             ),
+                //             child: Column(
+                //               mainAxisAlignment: MainAxisAlignment.center,
+                //               children: <Widget>[
+                //                 Text(
+                //                   "In dark surfaces, Material Design Components express depth by displaying lighter surface colors. "
+                //                   "The higher a surface’s elevation (raising it closer to an implied light source), the lighter that surface becomes.\n",
+                //                   style:
+                //                       Theme.of(context).textTheme.bodyText1,
+                //                   textAlign: TextAlign.center,
+                //                 ),
+                //                 Text(
+                //                   "You are using a light surface color.",
+                //                   style:
+                //                       Theme.of(context).textTheme.bodyText1,
+                //                   textAlign: TextAlign.center,
+                //                 )
+                //               ],
+                //             ),
+                //           ),
+                //         ],
+                //       ],
+                //     ),
+                //   ),            // const SizedBox(height: 16),
+                // SizedBox(
+                //   // width: 156,
+                //   child: Padding(
+                //     padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                //     child: Row(
+                //       mainAxisAlignment: MainAxisAlignment.center,
+                //       // crossAxisAlignment: CrossAxisAlignment.stretch,
+                //       children: spaceRow(
+                //         8,
+                //         [
+                //           ...[
+                //             ColorType.Primary,
+                //             ColorType.Secondary,
+                //             ColorType.Background,
+                //             ColorType.Surface
+                //           ].map((d) {
+                //             if (d == state.selectedColorType) {
+                //               return OutlinedButton(
+                //                 style: OutlinedButton.styleFrom(
+                //                   backgroundColor:
+                //                       Theme.of(context).colorScheme.primary,
+                //                   padding: EdgeInsets.symmetric(
+                //                     vertical: 16,
+                //                     horizontal: 24,
+                //                   ),
+                //                 ),
+                //                 child: Text(
+                //                   describeEnum(d),
+                //                   style: Theme.of(context)
+                //                       .textTheme
+                //                       .subtitle1
+                //                       .copyWith(
+                //                         color:
+                //                             Theme.of(context).colorScheme.onPrimary,
+                //                       ),
+                //                 ),
+                //                 onPressed: () {
+                //                   context
+                //                       .read<ContrastRatioCubit>()
+                //                       .set(selectedColorType: d);
+                //                 },
+                //               );
+                //             } else {
+                //               return OutlinedButton(
+                //                 style: OutlinedButton.styleFrom(
+                //                   padding: EdgeInsets.symmetric(
+                //                     vertical: 16,
+                //                     horizontal: 24,
+                //                   ),
+                //                 ),
+                //                 child: Text(
+                //                   describeEnum(d),
+                //                   style: Theme.of(context).textTheme.subtitle1,
+                //                 ),
+                //                 onPressed: () {
+                //                   context
+                //                       .read<ContrastRatioCubit>()
+                //                       .set(selectedColorType: d);
+                //                 },
+                //               );
+                //             }
+                //           }),
+                //         ],
+                //       ),
+                //     ),
+                //   ),
+                // ),
+              ],
             ),
             const SizedBox(height: 16),
           ],

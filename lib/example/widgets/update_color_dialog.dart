@@ -4,8 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import '../../blocs/blocs.dart';
-import '../../blocs/mdc_selected/mdc_selected_bloc.dart';
-import '../../blocs/mdc_selected/mdc_selected_event.dart';
 import '../util/color_util.dart';
 import '../util/constants.dart';
 import 'color_sliders.dart';
@@ -29,17 +27,11 @@ Future<void> showSlidersDialog(
 
   if (result != null) {
     if (selected == null && result is Color) {
-      BlocProvider.of<MdcSelectedBloc>(context).add(
-        MDCLoadEvent(currentColor: result),
-      );
-//      BlocProvider.of<SliderColorBloc>(context).add(MoveColor(result, true));
+      context.read<ColorsCubit>().updateColor(rgbColor: result);
     } else if (result is Color && selected != null) {
-      BlocProvider.of<MdcSelectedBloc>(context).add(
-        MDCUpdateColor(
-          color: result,
-          selected: selected,
-        ),
-      );
+      context
+          .read<ColorsCubit>()
+          .updateColor(rgbColor: result, selected: selected);
     }
   }
 }
@@ -95,7 +87,7 @@ class UpdateColorDialog extends StatelessWidget {
             ? ColorScheme.light(primary: color, surface: surface)
             : ColorScheme.dark(primary: color, surface: surface);
 
-        final selectableColor = compositeColors(
+        final thumbColor = compositeColors(
           scheme.background,
           scheme.primary,
           0.20,
@@ -132,10 +124,10 @@ class UpdateColorDialog extends StatelessWidget {
                     padding: const EdgeInsets.only(
                         left: 8.0, right: 8.0, top: 12.0, bottom: 8.0),
                     child: SliderWithSelector(
-                      [rgb, hsluv, hsv],
-                      color,
-                      selectableColor,
-                      context,
+                      sliders: [rgb, hsluv, hsv],
+                      color: color,
+                      thumbColor: thumbColor,
+                      context: context,
                     ),
                   ),
                 ),
@@ -180,7 +172,7 @@ class UpdateColorDialog extends StatelessWidget {
                   width: 500,
                   height: 36,
                   child: FlatButton.icon(
-                    color: selectableColor,
+                    color: thumbColor,
                     onPressed: () {
                       Navigator.of(context).pop(color);
                     },

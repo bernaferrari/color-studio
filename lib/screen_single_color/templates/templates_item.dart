@@ -67,9 +67,7 @@ class TemplatePreview extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  context
-                      .read<MdcSelectedBloc>()
-                      .add(MDCTemplateEvent(colors: colors));
+                  context.read<ColorsCubit>().fromTemplate(colors: colors);
                 },
               ),
             ),
@@ -114,7 +112,7 @@ class HexButton extends StatelessWidget {
         ),
       ),
       onPressed: () {
-        context.read<MdcSelectedBloc>().add(MDCLoadEvent(currentColor: color));
+        context.read<ColorsCubit>().updateRgbColor(rgbColor: color);
       },
       child: Text(
         text,

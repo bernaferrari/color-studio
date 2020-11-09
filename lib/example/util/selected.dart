@@ -17,7 +17,5 @@ void copyToClipboard(BuildContext context, String text) {
 }
 
 void colorSelected(BuildContext context, Color color) {
-  BlocProvider.of<MdcSelectedBloc>(context).add(
-    MDCLoadEvent(currentColor: color),
-  );
+  context.read<ColorsCubit>().updateColor(rgbColor: color);
 }

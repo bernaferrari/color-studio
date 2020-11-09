@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../blocs/blocs.dart';
-import '../../blocs/contrast_ratio/contrast_ratio_cubit.dart';
+import '../../blocs/contrast_ratio_cubit.dart';
 import '../../contrast_util.dart';
 import '../../example/mdc/contrast_compare.dart';
 import '../../example/mdc/util/elevation_overlay.dart';

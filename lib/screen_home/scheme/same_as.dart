@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../blocs/blocs.dart';
 import '../../example/util/color_util.dart';
@@ -41,12 +42,9 @@ class SameAs extends StatelessWidget {
           SizedBox(height: 8),
           OutlineButton.icon(
             onPressed: () {
-              BlocProvider.of<MdcSelectedBloc>(context).add(
-                MDCUpdateLock(
-                  isLock: false,
-                  selected: selected,
-                ),
-              );
+              context
+                  .read<ColorsCubit>()
+                  .updateLock(shouldLock: false, selectedLock: selected);
             },
             highlightedBorderColor: textColor.withOpacity(0.70),
             borderSide: BorderSide(color: textColor.withOpacity(0.70)),
@@ -57,7 +55,9 @@ class SameAs extends StatelessWidget {
             ),
             label: Text(
               "Manual",
-              style: TextStyle(fontWeight: FontWeight.w700),
+              style: GoogleFonts.b612Mono(
+                textStyle: TextStyle(fontWeight: FontWeight.w700),
+              ),
             ),
           ),
           SizedBox(height: 8),

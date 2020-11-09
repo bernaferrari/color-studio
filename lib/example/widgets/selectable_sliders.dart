@@ -2,12 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SliderWithSelector extends StatefulWidget {
-  const SliderWithSelector(
-      this.sliders, this.color, this.selectableColor, this.context);
+  const SliderWithSelector({
+    @required this.sliders,
+    @required this.color,
+    @required this.thumbColor,
+    @required this.context,
+  });
 
-  final Color color;
-  final Color selectableColor;
   final List<Widget> sliders;
+  final Color color;
+  final Color thumbColor;
 
   // this is necessary to save the selected position.
   // Flutter will discard the Dialog's context when Dialog closes.
@@ -57,7 +61,7 @@ class _SliderWithSelectorState extends State<SliderWithSelector> {
           children: children,
           backgroundColor:
               Theme.of(context).colorScheme.onBackground.withOpacity(0.20),
-          thumbColor: widget.selectableColor,
+          thumbColor: widget.thumbColor,
           onValueChanged: onValueChanged,
           groupValue: currentSegment,
         ),

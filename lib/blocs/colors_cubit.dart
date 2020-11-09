@@ -1,16 +1,15 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:hsluv/hsluvcolor.dart';
+import 'package:replay_bloc/replay_bloc.dart';
 
-import '../../example/mdc/util/color_blind_from_index.dart';
-import '../../example/util/color_util.dart';
-import '../../example/util/constants.dart';
-import '../color_blind/color_blindness_cubit.dart';
-import 'mdc_selected.dart';
+import '../example/mdc/util/color_blind_from_index.dart';
+import '../example/util/color_util.dart';
+import '../example/util/constants.dart';
+import 'color_blindness_cubit.dart';
 
 class ColorsState extends Equatable {
   const ColorsState({
@@ -62,19 +61,12 @@ class ColorsState extends Equatable {
   }
 }
 
-class ColorsCubit extends Cubit<ColorsState> {
-  ColorsCubit(ColorBlindnessCubit _colorBlindnessCubit)
+class ColorsCubit extends ReplayCubit<ColorsState> {
+  ColorsCubit(
+      ColorBlindnessCubit _colorBlindnessCubit, ColorsState initialState)
       : assert(_colorBlindnessCubit != null),
-        super(
-          ColorsState(
-            rgbColors: const {},
-            hsluvColors: const {},
-            rgbColorsWithBlindness: const {},
-            locked: const {},
-            selected: ColorType.Primary,
-            blindnessSelected: 0,
-          ),
-        ) {
+        super(initialState) {
+    limit = 50;
     _blindnessSubscription = _colorBlindnessCubit.listen((stateValue) async {
       updateBlindness(stateValue);
     });
@@ -88,7 +80,9 @@ class ColorsCubit extends Cubit<ColorsState> {
     return super.close();
   }
 
-  void initialState(Map<ColorType, Color> initialColors) {
+  /// This method retrieves a ColorState which is going to be used in super().
+  /// The reason is undo/redo support. First ColorCubit value can't be empty.
+  static ColorsState initialState(Map<ColorType, Color> initialColors) {
     final initial = {
       ColorType.Primary: initialColors[ColorType.Primary],
       ColorType.Secondary: initialColors[ColorType.Secondary],
@@ -99,15 +93,13 @@ class ColorsCubit extends Cubit<ColorsState> {
 
     final initialLocked = <ColorType, bool>{};
 
-    emit(
-      ColorsState(
-        rgbColors: initial,
-        hsluvColors: convertToHSLuv(initial),
-        rgbColorsWithBlindness: initial,
-        locked: initialLocked,
-        selected: ColorType.Primary,
-        blindnessSelected: 0,
-      ),
+    return ColorsState(
+      rgbColors: initial,
+      hsluvColors: _convertToHSLuv(initial),
+      rgbColorsWithBlindness: initial,
+      locked: initialLocked,
+      selected: ColorType.Primary,
+      blindnessSelected: 0,
     );
   }
 
@@ -128,7 +120,7 @@ class ColorsCubit extends Cubit<ColorsState> {
     ].forEach((key) {
       // if it is null, Dart throws an exception
       if (lock[key] == true) {
-        final updatedColor = findColor(allRgb, key);
+        final updatedColor = _findColor(allRgb, key);
         allRgb[key] = updatedColor;
       }
     });
@@ -136,50 +128,52 @@ class ColorsCubit extends Cubit<ColorsState> {
     emit(
       state.copyWith(
         rgbColors: allRgb,
-        hsluvColors: convertToHSLuv(allRgb),
-        rgbColorsWithBlindness: getBlindness(allRgb, state.blindnessSelected),
+        hsluvColors: _convertToHSLuv(allRgb),
+        rgbColorsWithBlindness: _getBlindness(allRgb, state.blindnessSelected),
         locked: lock,
       ),
     );
   }
 
   void updateColor({
-    @required ColorType selected,
+    ColorType selected,
     Color rgbColor,
     HSLuvColor hsLuvColor,
   }) {
     assert(rgbColor != null || hsLuvColor != null);
 
+    final _selected = selected ?? state.selected;
+
     final allLuv = Map<ColorType, HSLuvColor>.from(state.hsluvColors);
     final allRgb = Map<ColorType, Color>.from(state.rgbColors);
 
     if (rgbColor != null && hsLuvColor != null) {
-      allLuv[selected] = hsLuvColor;
-      allRgb[selected] = rgbColor;
+      allLuv[_selected] = hsLuvColor;
+      allRgb[_selected] = rgbColor;
     } else if (rgbColor != null) {
-      allLuv[selected] = HSLuvColor.fromColor(rgbColor);
-      allRgb[selected] = rgbColor;
+      allLuv[_selected] = HSLuvColor.fromColor(rgbColor);
+      allRgb[_selected] = rgbColor;
     } else {
-      allLuv[selected] = hsLuvColor;
-      allRgb[selected] = hsLuvColor.toColor();
+      allLuv[_selected] = hsLuvColor;
+      allRgb[_selected] = hsLuvColor.toColor();
     }
 
-    updateLocked(state, allRgb);
+    _updateLocked(state, allRgb);
 
     emit(
       state.copyWith(
         rgbColors: allRgb,
         hsluvColors: allLuv,
-        rgbColorsWithBlindness: getBlindness(
+        rgbColorsWithBlindness: _getBlindness(
           allRgb,
           state.blindnessSelected,
         ),
-        selected: selected,
+        selected: _selected,
       ),
     );
   }
 
-  void loadColor({ColorType selected, @required Color rgbColor}) {
+  void updateRgbColor({ColorType selected, @required Color rgbColor}) {
     final _selected = selected ?? state.selected;
 
     final Map<ColorType, Color> allRgb = Map.from(state.rgbColors);
@@ -188,8 +182,8 @@ class ColorsCubit extends Cubit<ColorsState> {
     emit(
       state.copyWith(
         rgbColors: allRgb,
-        hsluvColors: convertToHSLuv(allRgb),
-        rgbColorsWithBlindness: getBlindness(
+        hsluvColors: _convertToHSLuv(allRgb),
+        rgbColorsWithBlindness: _getBlindness(
           allRgb,
           state.blindnessSelected,
         ),
@@ -201,7 +195,7 @@ class ColorsCubit extends Cubit<ColorsState> {
   void updateBlindness(int blindnessSelected) {
     emit(
       state.copyWith(
-        rgbColorsWithBlindness: getBlindness(
+        rgbColorsWithBlindness: _getBlindness(
           state.rgbColors,
           blindnessSelected,
         ),
@@ -210,8 +204,17 @@ class ColorsCubit extends Cubit<ColorsState> {
     );
   }
 
+  void updateSelected(ColorType selection) {
+    emit(
+      state.copyWith(selected: selection),
+    );
+  }
+
   // todo add a settings bloc that retrieve the preference shuffle and already shuffles.
-  void updateAllColors({bool ignoreLock, Map<ColorType, Color> colors}) {
+  void updateAllColors({
+    bool ignoreLock = false,
+    @required Map<ColorType, Color> colors,
+  }) {
     final Map<ColorType, Color> allRgb = Map.from(state.rgbColors);
 
     allRgb.forEach((title, _) {
@@ -220,21 +223,19 @@ class ColorsCubit extends Cubit<ColorsState> {
       }
     });
 
-    updateLocked(state, allRgb);
+    _updateLocked(state, allRgb);
 
     emit(
       state.copyWith(
         rgbColors: allRgb,
-        hsluvColors: convertToHSLuv(allRgb),
-        rgbColorsWithBlindness: getBlindness(allRgb, state.blindnessSelected),
+        hsluvColors: _convertToHSLuv(allRgb),
+        rgbColorsWithBlindness: _getBlindness(allRgb, state.blindnessSelected),
       ),
     );
   }
 
-  void fromTemplate(List<Color> colors) {
-    final currentState = state as MDCLoadedState;
-
-    final allRgb = Map<ColorType, Color>.from(currentState.rgbColors);
+  void fromTemplate({@required List<Color> colors}) {
+    final allRgb = Map<ColorType, Color>.from(state.rgbColors);
 
     // Update Primary with colors[0]
     allRgb[ColorType.Primary] = colors[0];
@@ -243,10 +244,10 @@ class ColorsCubit extends Cubit<ColorsState> {
     allRgb[ColorType.Background] = colors[1];
 
     // Automatically retrieve Secondary and Surface
-    allRgb[ColorType.Secondary] = findColor(allRgb, ColorType.Secondary);
-    allRgb[ColorType.Surface] = findColor(allRgb, ColorType.Surface);
+    allRgb[ColorType.Secondary] = _findColor(allRgb, ColorType.Secondary);
+    allRgb[ColorType.Surface] = _findColor(allRgb, ColorType.Surface);
 
-    final lock = Map<ColorType, bool>.from(currentState.locked);
+    final lock = Map<ColorType, bool>.from(state.locked);
 
     // If Background was locked, unlock it.
     if (lock[ColorType.Background] == true) {
@@ -256,10 +257,10 @@ class ColorsCubit extends Cubit<ColorsState> {
     emit(
       state.copyWith(
         rgbColors: allRgb,
-        hsluvColors: convertToHSLuv(allRgb),
-        rgbColorsWithBlindness: getBlindness(
+        hsluvColors: _convertToHSLuv(allRgb),
+        rgbColorsWithBlindness: _getBlindness(
           allRgb,
-          currentState.blindnessSelected,
+          state.blindnessSelected,
         ),
         locked: lock,
       ),
@@ -267,29 +268,31 @@ class ColorsCubit extends Cubit<ColorsState> {
   }
 
   /// update the color of the locked ones.
-  void updateLocked(ColorsState state, Map<ColorType, Color> allRgb) {
+  void _updateLocked(ColorsState state, Map<ColorType, Color> allRgb) {
     for (var key in state.locked.keys) {
       if (state.locked[key]) {
-        allRgb[key] = findColor(allRgb, key);
+        allRgb[key] = _findColor(allRgb, key);
       }
     }
   }
 
-  Color findColor(Map<ColorType, Color> mappedList, ColorType category) {
+  Color _findColor(Map<ColorType, Color> mappedList, ColorType category) {
     if (category == ColorType.Background) {
       return blendColorWithBackground(mappedList[ColorType.Primary]);
     } else if (category == ColorType.Surface) {
       final luv = HSLuvColor.fromColor(mappedList[ColorType.Background]);
       return luv.withLightness(luv.lightness + 5).toColor();
     } else if (category == ColorType.Secondary) {
-      final luv = HSLuvColor.fromColor(mappedList[ColorType.Primary]);
-      return luv.withHue((luv.lightness + 90) % 360).toColor();
+      // use HSV because we want imperfection.
+      // HSLuv is going to have the same contrast.
+      final hsv = HSVColor.fromColor(mappedList[ColorType.Primary]);
+      return hsv.withHue((hsv.hue + 90) % 360).toColor();
+    } else {
+      throw Exception("Unsupported category in _findColor from ColorsCubit");
     }
-
-    return const Color(0xffffffff);
   }
 
-  Map<ColorType, HSLuvColor> convertToHSLuv(
+  static Map<ColorType, HSLuvColor> _convertToHSLuv(
     Map<ColorType, Color> updatableMap,
   ) {
     final luvMap = <ColorType, HSLuvColor>{};
@@ -301,7 +304,7 @@ class ColorsCubit extends Cubit<ColorsState> {
     return luvMap;
   }
 
-  Map<ColorType, Color> getBlindness(
+  Map<ColorType, Color> _getBlindness(
       Map<ColorType, Color> updatableMap, int index) {
     if (index == 0) {
       return updatableMap;

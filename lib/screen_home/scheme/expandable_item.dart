@@ -59,7 +59,7 @@ class _SchemeExpandableItemState extends State<SchemeExpandableItem> {
         for (int i = 0; i < widget.rgbColors.length; i++) ...[
           SchemeCompactedItem(
             rgbColor: rgbColorsList[i],
-            title: keysList[i],
+            currentType: keysList[i],
             expanded: index == i,
             locked: widget.locked[keysList[i]] ?? false,
             onPressed: () {

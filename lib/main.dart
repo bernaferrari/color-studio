@@ -37,74 +37,72 @@ class BoxedApp extends StatefulWidget {
 }
 
 class _BoxedAppState extends State<BoxedApp> {
-  ColorBlindnessCubit _colorBlindBloc;
-  MdcSelectedBloc _mdcSelectedBloc;
+  ColorBlindnessCubit _colorBlindnessCubit;
   ContrastRatioCubit _contrastRatioCubit;
+  ColorsCubit _colorsCubit;
 
   @override
   void initState() {
     super.initState();
-    _colorBlindBloc = ColorBlindnessCubit();
-    _mdcSelectedBloc = MdcSelectedBloc(_colorBlindBloc);
-
-    // this early initialization is needed, so that it always has the first value from _mdcSelectedBloc.
-    _contrastRatioCubit = ContrastRatioCubit(_mdcSelectedBloc);
-
-    // this must come after _contrastRatioCubit is initialized.
-    _mdcSelectedBloc.add(MDCInitEvent(getRandomMaterialDark()));
+    _colorBlindnessCubit = ColorBlindnessCubit();
+    _colorsCubit = ColorsCubit(
+      _colorBlindnessCubit,
+      ColorsCubit.initialState(getRandomMaterialDark()),
+    );
+    _contrastRatioCubit = ContrastRatioCubit(_colorsCubit);
   }
 
   @override
   void dispose() {
     super.dispose();
-    _colorBlindBloc.close();
-    _mdcSelectedBloc.close();
+    _colorBlindnessCubit.close();
+    _colorsCubit.close();
   }
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<MdcSelectedBloc>(
-          create: (context) => _mdcSelectedBloc,
+        BlocProvider<ColorsCubit>(
+          create: (context) => _colorsCubit,
         ),
         BlocProvider<ContrastRatioCubit>(
           create: (context) => _contrastRatioCubit,
         ),
         BlocProvider<ColorBlindnessCubit>(
-          create: (context) => _colorBlindBloc,
+          create: (context) => _colorBlindnessCubit,
         )
       ],
-      child: BlocBuilder<MdcSelectedBloc, MdcSelectedState>(
-          builder: (context, state) {
-        if (state is MDCInitialState) {
+      child: BlocBuilder<ColorsCubit, ColorsState>(builder: (_, state) {
+        if (state.rgbColors.isEmpty) {
           return SizedBox.shrink();
         }
 
-        final currentState = state as MDCLoadedState;
+        final primary = state.rgbColorsWithBlindness[ColorType.Primary];
+        final secondary = state.rgbColorsWithBlindness[ColorType.Secondary];
+        final background = state.rgbColorsWithBlindness[ColorType.Background];
+        final surface = state.rgbColorsWithBlindness[ColorType.Surface];
 
-        final primary = currentState.rgbColorsWithBlindness[ColorType.Primary];
-        final secondary =
-            currentState.rgbColorsWithBlindness[ColorType.Secondary];
-        final background =
-            currentState.rgbColorsWithBlindness[ColorType.Background];
-        final surface = currentState.rgbColorsWithBlindness[ColorType.Surface];
-
-        final isLightSurface =
-            currentState.hsluvColors[ColorType.Surface].lightness >=
-                kLightnessThreshold;
+        final isLightSurface = state.hsluvColors[ColorType.Surface].lightness >=
+            kLightnessThreshold;
 
         final onSurface = isLightSurface ? Colors.black : Colors.white;
 
         final onBackground =
-            currentState.hsluvColors[ColorType.Background].lightness <
+            state.hsluvColors[ColorType.Background].lightness >=
                     kLightnessThreshold
-                ? Colors.white
-                : Colors.black;
+                ? Colors.black
+                : Colors.white;
+
+        final onPrimary = state.hsluvColors[ColorType.Primary].lightness >=
+                kLightnessThreshold
+            ? Colors.black
+            : Colors.white;
 
         final colorScheme = isLightSurface
             ? ColorScheme.light(
                 primary: primary,
+                onPrimary: onPrimary,
                 secondary: secondary,
                 background: background,
                 onBackground: onBackground,
@@ -113,6 +111,7 @@ class _BoxedAppState extends State<BoxedApp> {
               )
             : ColorScheme.dark(
                 primary: primary,
+                onPrimary: onPrimary,
                 secondary: secondary,
                 background: background,
                 onBackground: onBackground,
@@ -128,7 +127,7 @@ class _BoxedAppState extends State<BoxedApp> {
               subtitle1: GoogleFonts.openSans(fontWeight: FontWeight.w700),
               subtitle2: GoogleFonts.openSans(fontWeight: FontWeight.w400),
               bodyText2: GoogleFonts.lato(),
-              caption: GoogleFonts.b612Mono(),
+              caption: GoogleFonts.openSans(),
             ),
           ).copyWith(
             cardTheme: CardTheme(

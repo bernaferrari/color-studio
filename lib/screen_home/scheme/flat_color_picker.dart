@@ -38,12 +38,9 @@ class FlatColorPicker extends StatelessWidget {
                   hsLuvColor: colors[i],
                   category: kind,
                   onPressed: () {
-                    BlocProvider.of<MdcSelectedBloc>(context).add(
-                      MDCUpdateColor(
-                        hsLuvColor: colors[i],
-                        selected: selected,
-                      ),
-                    );
+                    context
+                        .read<ColorsCubit>()
+                        .updateColor(hsLuvColor: colors[i], selected: selected);
                   },
                 ),
               ),

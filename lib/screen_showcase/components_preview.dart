@@ -69,9 +69,9 @@ class ComponentsPreview extends StatelessWidget {
                     final box = await Hive.openBox<dynamic>('settings');
                     final int pref = box.get('shuffle', defaultValue: 0);
 
-                    BlocProvider.of<MdcSelectedBloc>(context).add(
-                      MDCUpdateAllEvent(colors: getRandomPreference(pref)),
-                    );
+                    // BlocProvider.of<MdcSelectedBloc>(context).add(
+                    //   MDCUpdateAllEvent(colors: getRandomPreference(pref)),
+                    // );
                   },
                 )
               ],
