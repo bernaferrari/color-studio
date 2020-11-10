@@ -13,11 +13,9 @@ import 'contrast_circle_group.dart';
 class ContrastRatioCard extends StatelessWidget {
   const ContrastRatioCard(
     this.rgbColorsWithBlindness,
-    this.toContrastScreen,
   );
 
   final Map<ColorType, Color> rgbColorsWithBlindness;
-  final VoidCallback toContrastScreen;
 
   @override
   Widget build(BuildContext context) {

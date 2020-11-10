@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import 'blocs/blocs.dart';
 import 'screen_colors_compare/colors_compare_screen.dart';
-import 'screen_home/color_blindness/card.dart';
-import 'screen_home/contrast_ratio/card.dart';
-import 'screen_home/scheme/card.dart';
+import 'screen_home/home_screen.dart';
 import 'screen_showcase/components_preview.dart';
 import 'screen_single_color/screen_single.dart';
-import 'util/widget_space.dart';
 
 class ColorStudioApp extends StatefulWidget {
   @override
@@ -81,7 +77,7 @@ class ColorRouterDelegate extends RouterDelegate<ColorRoutePath>
   @override
   final GlobalKey<NavigatorState> navigatorKey;
 
-  ScreenPanel selectedScreen = ScreenPanel.home;
+  ScreenPanel selectedScreen = ScreenPanel.singleColor;
 
   @override
   ColorRoutePath get currentConfiguration {
@@ -105,9 +101,9 @@ class ColorRouterDelegate extends RouterDelegate<ColorRoutePath>
                       MaterialPage<dynamic>(
                         key: ValueKey("Scheme/Contrast/Blind"),
                         child: HomeScreen(
-                          handleMultiColor: _handleMultiColor,
-                          handleSingleColor: _handleSingleColor,
-                          handleSettings: _handleSettings,
+                          toMultiColor: _handleMultiColor,
+                          toSingleColor: _handleSingleColor,
+                          toSettings: _handleSettings,
                         ),
                       ),
                       if (selectedScreen == ScreenPanel.multiColor)
@@ -264,194 +260,4 @@ class ColorRoutePath {
   bool get isSettingsPage => panel == ScreenPanel.settings;
 
   bool get isPreviewPage => panel == ScreenPanel.preview;
-}
-
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({
-    @required this.handleMultiColor,
-    @required this.handleSingleColor,
-    @required this.handleSettings,
-  });
-
-  final VoidCallback handleMultiColor;
-  final VoidCallback handleSingleColor;
-  final VoidCallback handleSettings;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: 600),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                BlocBuilder<ColorsCubit, ColorsState>(
-                    builder: (context, state) {
-                  if (state.rgbColors.isEmpty) {
-                    return SizedBox.shrink();
-                  }
-
-                  final bool isiPad = MediaQuery.of(context).size.width > 600;
-
-                  return Column(
-                    children: spaceColumn(
-                      16,
-                      [
-                        Row(
-                          children: <Widget>[
-                            if (isiPad)
-                              SizedBox(width: 24)
-                            else
-                              SizedBox(width: 16),
-                            if (!isiPad) ...[
-                              Expanded(
-                                child: RaisedButton.icon(
-                                  label: Text("Modify"),
-                                  icon: Icon(FeatherIcons.sliders, size: 16),
-                                  textColor:
-                                      Theme.of(context).colorScheme.onSurface,
-                                  color: Theme.of(context).colorScheme.surface,
-                                  onPressed: () {
-                                    Navigator.pushNamed(
-                                        context, "/colordetails");
-                                  },
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16),
-                                    side: BorderSide(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSurface
-                                          .withOpacity(0.3),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 16),
-                            ],
-                            // Expanded(
-                            //   child: RaisedButton.icon(
-                            //     label: Text("Preview"),
-                            //     icon: Icon(FeatherIcons.layout, size: 16),
-                            //     textColor: colorScheme.onSurface,
-                            //     color: colorScheme.surface,
-                            //     onPressed: () {
-                            //       Navigator.pushNamed(context, "/componentspreview");
-                            //     },
-                            //     shape: RoundedRectangleBorder(
-                            //       borderRadius: BorderRadius.circular(16),
-                            //       side: BorderSide(
-                            //         color: colorScheme.onSurface.withOpacity(0.30),
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
-                            if (isiPad)
-                              const SizedBox(width: 8)
-                            else
-                              const SizedBox(width: 16),
-                          ],
-                        ),
-                        ColorSchemeCard(
-                          rgbColors: state.rgbColors,
-                          rgbColorsWithBlindness: state.rgbColorsWithBlindness,
-                          hsluvColors: state.hsluvColors,
-                          locked: state.locked,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: spaceRow(
-                            16.0,
-                            [
-                              MiddleButton(
-                                "Compare",
-                                Icons.compare_arrows_rounded,
-                                handleMultiColor,
-                              ),
-                              MiddleButton(
-                                "Single",
-                                FeatherIcons.sliders,
-                                handleSingleColor,
-                              ),
-                              MiddleButton(
-                                "Settings",
-                                FeatherIcons.settings,
-                                handleSettings,
-                              ),
-                            ],
-                          ),
-                        ),
-                        ContrastRatioCard(
-                          state.rgbColorsWithBlindness,
-                          handleMultiColor,
-                        ),
-                        ColorBlindnessCard(
-                          state.rgbColors,
-                          state.locked,
-                        )
-                      ],
-                    ),
-                  );
-                }),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class MiddleButton extends StatelessWidget {
-  const MiddleButton(this.title, this.iconData, this.toPage);
-
-  final String title;
-  final IconData iconData;
-  final VoidCallback toPage;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color:
-                    Theme.of(context).colorScheme.onPrimary.withOpacity(0.90),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                iconData,
-                color: Theme.of(context).colorScheme.primary,
-                size: 24,
-              ),
-            ),
-            SizedBox(height: 8),
-            Text(
-              title,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.subtitle1.copyWith(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .onPrimary
-                        .withOpacity(0.90),
-                  ),
-            ),
-          ],
-        ),
-        onPressed: toPage,
-      ),
-    );
-  }
 }

@@ -1,8 +1,12 @@
 import 'dart:ui';
 
+import 'package:colorstudio/screen_home/page_header.dart';
+import 'package:colorstudio/util/widget_space.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -52,10 +56,22 @@ class _ShowcaseState extends State<Showcase> {
               key: const PageStorageKey("PreviewList"),
               children: <Widget>[
                 const SizedBox(height: 8),
-                _PrevThankful(
-                  primary: primaryColor,
-                  background: backgroundColor,
+                // _PrevShowcase(
+                //   primary: primaryColor,
+                //   background: backgroundColor,
+                // ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  child: PageHeader(
+                    title: "Preview",
+                    subtitle: "Simulate real-world scenarios and components",
+                    iconData: Icons.art_track_rounded,
+                  ),
                 ),
+                // _PrevThankful(
+                //   primary: primaryColor,
+                //   background: backgroundColor,
+                // ),
                 _PrevSpotify(
                   primary: primaryColor,
                   background: backgroundColor,
@@ -70,26 +86,21 @@ class _ShowcaseState extends State<Showcase> {
                   surface: surfaceColor,
                   elevation: currentElevation,
                 ),
-                if (isiPad)
-                  Row(
-                    children: <Widget>[
-                      Expanded(child: _PrevClock(primary: primaryColor)),
-                      Expanded(
-                        child: _PrevStore(
-                          primary: primaryColor,
-                          surface: surfaceColor,
-                        ),
-                      ),
-                    ],
-                  )
-                else ...[
-                  _PrevClock(primary: primaryColor),
-                  _PrevStore(
-                    primary: primaryColor,
-                    surface: surfaceColor,
-                  ),
-                ],
-//        _PrevCupertino(primary: primaryColor, backgroundColor: backgroundColor),
+                Wrap(
+                  alignment: WrapAlignment.spaceAround,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  runSpacing: 16,
+                  spacing: 8,
+                  children: <Widget>[
+                    _PrevClock(primary: primaryColor),
+                    _PrevStore(
+                      primary: primaryColor,
+                      background: backgroundColor,
+                      surface: surfaceColor,
+                    ),
+                  ],
+                ),
+       _PrevCupertino(primary: primaryColor, backgroundColor: backgroundColor),
                 _PrevPhotos(
                   primary: primaryColor,
                   surface: surfaceColor,
@@ -338,20 +349,17 @@ class _PrevPodcast extends StatelessWidget {
 }
 
 class _PrevStore extends StatelessWidget {
-  const _PrevStore({this.primary, this.surface});
+  const _PrevStore({this.primary, this.background, this.surface});
 
   final Color primary;
+  final Color background;
   final Color surface;
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        SizedBox(height: 24),
-//        Padding(
-//          padding: const EdgeInsets.only(top: 24),
-//          child: _ShowcaseTitle("Store"),
-//        ),
         Text(
           "Rddt",
           style: Theme.of(context)
@@ -367,6 +375,7 @@ class _PrevStore extends StatelessWidget {
               .copyWith(color: primary, fontWeight: FontWeight.w600),
         ),
         Row(
+          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             IconButton(
@@ -392,8 +401,7 @@ class _PrevStore extends StatelessWidget {
           ],
         ),
         Container(
-          width: 256,
-          margin: const EdgeInsets.symmetric(horizontal: 16),
+          width: 224,
           child: HorizontalProgressBar(
             currentValue: 50,
             size: 15,
@@ -406,30 +414,27 @@ class _PrevStore extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Row(
-          children: <Widget>[
-            const SizedBox(width: 16),
-            Expanded(
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: primary,
-                  textStyle: TextStyle(color: surface),
+          mainAxisSize: MainAxisSize.min,
+          children: spaceRow(
+            16,
+            <Widget>[
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: primary),
+                child: Text(
+                  "Update",
+                  style: TextStyle(color: background),
                 ),
-                child: const Text("Update"),
                 onPressed: () {},
               ),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: OutlinedButton(
+              OutlinedButton(
                 child: Text(
                   "Uninstall",
                   style: TextStyle(color: primary),
                 ),
                 onPressed: () {},
               ),
-            ),
-            const SizedBox(width: 16),
-          ],
+            ],
+          ),
         )
       ],
     );
@@ -444,11 +449,8 @@ class _PrevClock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-//        Padding(
-//          padding: const EdgeInsets.only(top: 24, bottom: 16.0),
-//          child: _ShowcaseTitle("Clock"),
-//        ),
         OutlinedButton(
           style: OutlinedButton.styleFrom(
             shape: CircleBorder(),
@@ -484,23 +486,98 @@ class _PrevClock extends StatelessWidget {
         ),
         const SizedBox(height: 24),
         Row(
+          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            TextButton(
-              child: const Text("Reset"),
-              onPressed: () {},
-            ),
-            FloatingActionButton(
-              onPressed: () {},
-              child: Icon(Icons.pause_circle_outline),
-            ),
-            TextButton(
-              child: const Text("Share"),
-              onPressed: () {},
-            ),
-          ],
-        )
+          children: spaceRow(
+            8.0,
+            <Widget>[
+              TextButton(
+                child: const Text("Reset"),
+                onPressed: () {},
+              ),
+              FloatingActionButton(
+                onPressed: () {},
+                child: Icon(Icons.pause_circle_outline),
+              ),
+              TextButton(
+                child: const Text("Share"),
+                onPressed: () {},
+              ),
+            ],
+          ),
+        ),
       ],
+    );
+  }
+}
+
+class _PrevShowcase extends StatelessWidget {
+  const _PrevShowcase({this.primary, this.background});
+
+  final Color primary;
+  final Color background;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          SizedBox(height: 24),
+          SizedBox(width: 16),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(
+                    Icons.art_track_rounded,
+                    color: primary,
+                    size: 36,
+                  ),
+                  Text(
+                    "Preview",
+                    style: Theme.of(context).textTheme.headline4.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: primary,
+                        ),
+                  ),
+                ],
+              ),
+
+              // there is a deeper level into this app
+              Text(
+                "See how themes behave in real-world scenarios.",
+                style: GoogleFonts.hind(
+                  fontSize: 16,
+                  textStyle: TextStyle(color: primary),
+                ),
+              ),
+              Text(
+                "Border.",
+                style: GoogleFonts.hind(
+                  fontSize: 16,
+                  textStyle: TextStyle(color: primary),
+                ),
+              ),
+              SizedBox(height: 8),
+              Container(
+                width: double.infinity,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: primary,
+                  borderRadius: BorderRadius.circular(16),
+                ),
+              ),
+              SizedBox(height: 8),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
@@ -556,6 +633,7 @@ class _PrevSpotify extends StatelessWidget {
         SizedBox(height: 24),
         Wrap(
           alignment: WrapAlignment.center,
+          crossAxisAlignment: WrapCrossAlignment.center,
           runSpacing: 16,
           spacing: 16,
           children: <Widget>[
@@ -1108,34 +1186,37 @@ class _PrevCupertino extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.surface,
         // avoiding CupertinoNavigationBar because of:
         // https://github.com/flutter/flutter/issues/42979
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            TextButton.icon(
-              label: Text(
-                "Inbox",
-                style: TextStyle(color: onSurface.withOpacity(0.452)),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              TextButton.icon(
+                label: Text(
+                  "Inbox",
+                  style: TextStyle(color: onSurface.withOpacity(0.452)),
+                ),
+                icon: Icon(FeatherIcons.inbox, size: 24),
+                onPressed: () {},
               ),
-              icon: Icon(FeatherIcons.inbox, size: 24),
-              onPressed: () {},
-            ),
-            TextButton.icon(
-              label: Text(
-                "Apps",
-                style: TextStyle(color: onSurface.withOpacity(0.452)),
+              TextButton.icon(
+                label: Text(
+                  "Apps",
+                  style: TextStyle(color: onSurface.withOpacity(0.452)),
+                ),
+                icon: Icon(FeatherIcons.layers, size: 24),
+                onPressed: () {},
               ),
-              icon: Icon(FeatherIcons.layers, size: 24),
-              onPressed: () {},
-            ),
-            TextButton.icon(
-              label: Text(
-                "Discover",
-                style: TextStyle(color: onSurface.withOpacity(0.452)),
-              ),
-              icon: Icon(FeatherIcons.award, size: 24),
-              onPressed: () {},
-            )
-          ],
+              TextButton.icon(
+                label: Text(
+                  "Discover",
+                  style: TextStyle(color: onSurface.withOpacity(0.452)),
+                ),
+                icon: Icon(FeatherIcons.award, size: 24),
+                onPressed: () {},
+              )
+            ],
+          ),
         ),
       ),
     ]);
@@ -1285,30 +1366,30 @@ class _PrevPhotos extends StatelessWidget {
         ),
         PrevPhotosTransparency(primary: primary),
         SizedBox(height: 16),
-        Card(
-          elevation: 0,
-          clipBehavior: Clip.antiAlias,
-          margin: EdgeInsets.all(16),
-          color: background,
-          child: Column(
-            children: [
-              generateItem(primary, onBackground, "Primary"),
-              generateItem(onBackground, onBackground, "onBg"),
-            ],
-          ),
-        ),
-        Card(
-          elevation: elevation.toDouble(),
-          clipBehavior: Clip.antiAlias,
-          margin: EdgeInsets.all(16),
-          child: Column(
-            children: <Widget>[
-              generateItem(primary, onSurface, "Primary"),
-              generateItem(onSurface, onSurface, "onSurface"),
-            ],
-          ),
-        ),
-        const SizedBox(height: 8),
+        // Card(
+        //   elevation: 0,
+        //   clipBehavior: Clip.antiAlias,
+        //   margin: EdgeInsets.all(16),
+        //   color: background,
+        //   child: Column(
+        //     children: [
+        //       generateItem(primary, onBackground, "Primary"),
+        //       generateItem(onBackground, onBackground, "onBg"),
+        //     ],
+        //   ),
+        // ),
+        // Card(
+        //   elevation: elevation.toDouble(),
+        //   clipBehavior: Clip.antiAlias,
+        //   margin: EdgeInsets.all(16),
+        //   child: Column(
+        //     children: <Widget>[
+        //       generateItem(primary, onSurface, "Primary"),
+        //       generateItem(onSurface, onSurface, "onSurface"),
+        //     ],
+        //   ),
+        // ),
+        // const SizedBox(height: 8),
         Text(
           "Material Elevation",
           style: GoogleFonts.heebo(
