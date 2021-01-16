@@ -48,6 +48,7 @@ class ColorBlindnessBar extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         blindPrimary?.name ?? "Color Blindness",
+                        overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.openSans(
                           fontWeight: FontWeight.w600,
                         ),

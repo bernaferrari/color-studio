@@ -280,113 +280,109 @@ class ThemeBar extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0, top: 4.0),
-      child: SizedBox(
-        width: 500,
-        child: LayoutBuilder(builder: (context, builder) {
-          return Row(
-            children: <Widget>[
-              // this is necessary to counter-balance the chevronUp icon at the other side.
-              if (isExpanded != null)
-                IconButton(
-                  tooltip: "undo",
-                  icon: Icon(Icons.undo_rounded),
-                  onPressed: () => context.read<ColorsCubit>().undo(),
-                ),
-              if (leading != null) leading,
-              Expanded(
-                child: Center(
-                  child: SizedBox(
-                    height: 36,
-                    child: ListView(
-                      shrinkWrap: true,
-                      // in a previous iteration, shrinkWrap
-                      scrollDirection: Axis.horizontal,
-                      children: <Widget>[
-                        const SizedBox(width: 16),
-                        for (int i = 0; i < mappedList.length; i++) ...[
-                          SizedBox(
-                            height: 32,
-                            child: OutlinedButton(
-                              style: OutlinedButton.styleFrom(
-                                elevation: 0.0,
-                                padding: EdgeInsets.zero,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                backgroundColor: mappedList[i],
-                                side: BorderSide(
-                                  width: 1,
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onSurface
-                                      .withOpacity(0.7),
-                                ),
-                              ),
-                              onPressed: () {
-                                colorSelected(
-                                  context,
-                                  keysList[i],
-                                  mappedList[i],
-                                );
-                              },
-                              onLongPress: () {
-                                showSlidersDialog(context, mappedList[i]);
-                              },
-                              child: Row(
-                                children: <Widget>[
-                                  SizedBox(width: 8),
-                                  if (selected == keysList[i])
-                                    Icon(
-                                      FeatherIcons.checkCircle,
-                                      size: 16,
-                                      color: contrastedColors[i],
-                                    )
-                                  else
-                                    Icon(
-                                      FeatherIcons.circle,
-                                      size: 16,
-                                      color: contrastedColors[i],
-                                    ),
-                                  SizedBox(width: 4),
-                                  Text(
-                                    describeEnum(keysList[i]),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText2
-                                        .copyWith(
-                                          color: contrastedColors[i],
-                                          fontWeight: (selected == keysList[i])
-                                              ? FontWeight.w700
-                                              : FontWeight.w400,
-                                        ),
-                                  ),
-                                  SizedBox(width: 8),
-                                ],
-                              ),
+      child: LayoutBuilder(builder: (context, builder) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            // this is necessary to counter-balance the chevronUp icon at the other side.
+            if (isExpanded != null)
+              IconButton(
+                tooltip: "undo",
+                icon: Icon(Icons.undo_rounded),
+                onPressed: () => context.read<ColorsCubit>().undo(),
+              ),
+            if (leading != null) leading,
+            Flexible(
+              child: SizedBox(
+                height: 36,
+                child: ListView(
+                  shrinkWrap: true,
+                  // in a previous iteration, shrinkWrap
+                  scrollDirection: Axis.horizontal,
+                  children: <Widget>[
+                    const SizedBox(width: 16),
+                    for (int i = 0; i < mappedList.length; i++) ...[
+                      SizedBox(
+                        height: 32,
+                        child: OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            elevation: 0.0,
+                            padding: EdgeInsets.zero,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            backgroundColor: mappedList[i],
+                            side: BorderSide(
+                              width: 1,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurface
+                                  .withOpacity(0.7),
                             ),
                           ),
-                          const SizedBox(width: 8),
-                        ],
-                        const SizedBox(width: 8),
-                      ],
-                    ),
-                  ),
+                          onPressed: () {
+                            colorSelected(
+                              context,
+                              keysList[i],
+                              mappedList[i],
+                            );
+                          },
+                          onLongPress: () {
+                            showSlidersDialog(context, mappedList[i]);
+                          },
+                          child: Row(
+                            children: <Widget>[
+                              SizedBox(width: 8),
+                              if (selected == keysList[i])
+                                Icon(
+                                  FeatherIcons.checkCircle,
+                                  size: 16,
+                                  color: contrastedColors[i],
+                                )
+                              else
+                                Icon(
+                                  FeatherIcons.circle,
+                                  size: 16,
+                                  color: contrastedColors[i],
+                                ),
+                              SizedBox(width: 4),
+                              Text(
+                                describeEnum(keysList[i]),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2
+                                    .copyWith(
+                                      color: contrastedColors[i],
+                                      fontWeight: (selected == keysList[i])
+                                          ? FontWeight.w700
+                                          : FontWeight.w400,
+                                    ),
+                              ),
+                              SizedBox(width: 8),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                    ],
+                    const SizedBox(width: 8),
+                  ],
                 ),
               ),
-              if (isExpanded != null)
-                IconButton(
-                  tooltip: isExpanded ? "hide contrast" : "show contrast",
-                  icon: Icon(
-                    isExpanded
-                        ? Icons.keyboard_arrow_down_rounded
-                        : Icons.keyboard_arrow_up_rounded,
-                  ),
-                  onPressed: onExpanded,
+            ),
+            if (isExpanded != null)
+              IconButton(
+                tooltip: isExpanded ? "hide contrast" : "show contrast",
+                icon: Icon(
+                  isExpanded
+                      ? Icons.keyboard_arrow_down_rounded
+                      : Icons.keyboard_arrow_up_rounded,
                 ),
-            ],
-          );
-        }),
-      ),
+                onPressed: onExpanded,
+              ),
+          ],
+        );
+      }),
     );
   }
 }
