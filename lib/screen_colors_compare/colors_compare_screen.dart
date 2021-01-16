@@ -11,13 +11,13 @@ import '../blocs/blocs.dart';
 import '../blocs/multiple_contrast_compare/rgb_hsluv_tuple.dart';
 import '../contrast_util.dart';
 import '../example/mdc/components.dart';
-import '../example/util/color_util.dart';
-import '../example/util/constants.dart';
-import '../example/util/selected.dart';
-import '../example/util/shuffle_color.dart';
 import '../example/widgets/loading_indicator.dart';
 import '../example/widgets/update_color_dialog.dart';
 import '../screen_home/scheme/same_as.dart';
+import '../util/color_util.dart';
+import '../util/constants.dart';
+import '../util/selected.dart';
+import '../util/shuffle_color.dart';
 import '../util/widget_space.dart';
 import 'multi_row_color_picker.dart';
 import 'single_row_contrast_color_picker.dart';
@@ -558,8 +558,6 @@ class _TopSectionButtons extends StatelessWidget {
                   size: 16,
                 ),
                 onPressed: () {
-                  print("button is vs $currentType");
-
                   context
                       .read<MultipleContrastCompareCubit>()
                       .updateSelectedKey(currentType);

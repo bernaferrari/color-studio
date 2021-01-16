@@ -9,13 +9,14 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../blocs/blocs.dart';
-import '../util/constants.dart';
-import '../util/shuffle_color.dart';
+import '../../util/constants.dart';
+import '../../util/shuffle_color.dart';
 
-class About extends StatelessWidget {
-  const About({this.isSplitView = false});
+class AboutScreen extends StatelessWidget {
+  const AboutScreen({this.toExportPage, this.isSplitView = false});
 
   final bool isSplitView;
+  final VoidCallback toExportPage;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +26,7 @@ class About extends StatelessWidget {
         title: Text("About", style: Theme.of(context).textTheme.headline6),
         backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0,
+        iconTheme: IconThemeData(color: Theme.of(context).colorScheme.onSurface),
         centerTitle: isSplitView,
         leading: isSplitView ? SizedBox.shrink() : null,
       ),
@@ -34,26 +36,16 @@ class About extends StatelessWidget {
           child: ListView(
             key: const PageStorageKey("about"),
             children: <Widget>[
-              Padding(padding: EdgeInsets.all(4)),
+              SizedBox(height: 8),
               TranslucentCard(
                 child: _ContactInfo(),
               ),
-              Row(
-                children: const <Widget>[
-                  Expanded(
-                    child: TranslucentCard(
-                      margin: EdgeInsets.only(left: 16, top: 8),
-                      child: ColorCompare(),
-                    ),
-                  ),
-                  SizedBox(width: 8),
-                  Expanded(
-                    child: TranslucentCard(
-                      margin: EdgeInsets.only(right: 16, top: 8),
-                      child: ColorExport(),
-                    ),
-                  ),
-                ],
+              TranslucentCard(
+                margin: EdgeInsets.only(right: 16, left: 16, top: 8),
+                child: InkWell(
+                  onTap: toExportPage,
+                  child: ColorExport(),
+                ),
               ),
               TranslucentCard(
                 child: ShuffleDarkSection(),
@@ -61,7 +53,7 @@ class About extends StatelessWidget {
               TranslucentCard(
                 child: GDPR(),
               ),
-              Padding(padding: EdgeInsets.all(4)),
+              SizedBox(height: 8),
             ],
           ),
         ),
@@ -180,7 +172,7 @@ class ColorCompare extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, "/multiplecontrastcompare");
+        // Navigator.pushNamed(context, "/multiplecontrastcompare");
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -217,35 +209,19 @@ class ColorExport extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.pushNamed(context, "/export");
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16.0),
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Icon(FeatherIcons.share, size: 20),
-                  const SizedBox(width: 16),
-                  Text(
-                    "Export",
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline6
-                        .copyWith(fontSize: 18),
-                  ),
-                ],
-              ),
-            ),
-//            Icon(FeatherIcons.chevronRight),
-//            const SizedBox(width: 16),
-          ],
-        ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Icon(FeatherIcons.share, size: 20),
+          const SizedBox(width: 16),
+          Text(
+            "Export",
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 18),
+          ),
+        ],
       ),
     );
   }
@@ -256,9 +232,9 @@ class ShuffleDarkSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WatchBoxBuilder(
-        box: Hive.box<dynamic>("settings"),
-        builder: (context, box) {
+    return ValueListenableBuilder(
+        valueListenable: Hive.box<dynamic>("settings").listenable(),
+        builder: (BuildContext context, Box box, Widget widget) {
           final int selected = box.get("shuffle", defaultValue: 0);
           final primary = Theme.of(context).colorScheme.onSurface;
 
@@ -266,11 +242,10 @@ class ShuffleDarkSection extends StatelessWidget {
             children: <Widget>[
               InkWell(
                 onTap: () {
-                  // BlocProvider.of<MdcSelectedBloc>(context).add(
-                  //   MDCUpdateAllEvent(
-                  //     colors: getRandomPreference(selected),
-                  //   ),
-                  // );
+                  context.read<ColorsCubit>().updateAllColors(
+                    ignoreLock: false,
+                    colors: getRandomPreference(selected),
+                  );
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -306,6 +281,10 @@ class ShuffleDarkSection extends StatelessWidget {
                   groupValue: selected,
                   onChanged: (dynamic changed) {
                     box.put('shuffle', 0);
+                    context.read<ColorsCubit>().updateAllColors(
+                          ignoreLock: false,
+                          colors: getRandomPreference(0),
+                        );
                   }),
               RadioListTile(
                   title: Text("Material Light"),
@@ -314,6 +293,10 @@ class ShuffleDarkSection extends StatelessWidget {
                   groupValue: selected,
                   onChanged: (dynamic changed) {
                     box.put('shuffle', 1);
+                    context.read<ColorsCubit>().updateAllColors(
+                          ignoreLock: false,
+                          colors: getRandomPreference(1),
+                        );
                   }),
               RadioListTile(
                   title: Text("Material Dark or Light"),
@@ -322,6 +305,10 @@ class ShuffleDarkSection extends StatelessWidget {
                   groupValue: selected,
                   onChanged: (dynamic changed) {
                     box.put('shuffle', 2);
+                    context.read<ColorsCubit>().updateAllColors(
+                          ignoreLock: false,
+                          colors: getRandomPreference(2),
+                        );
                   }),
               RadioListTile(
                   title: Text("Truly Random"),
@@ -330,6 +317,10 @@ class ShuffleDarkSection extends StatelessWidget {
                   groupValue: selected,
                   onChanged: (dynamic changed) {
                     box.put('shuffle', 3);
+                    context.read<ColorsCubit>().updateAllColors(
+                          ignoreLock: false,
+                          colors: getRandomPreference(3),
+                        );
                   }),
             ],
           );
@@ -386,9 +377,9 @@ class MoreColors extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WatchBoxBuilder(
-      box: Hive.box<dynamic>("settings"),
-      builder: (context, box) {
+    return ValueListenableBuilder(
+      valueListenable: Hive.box<dynamic>("settings").listenable(),
+      builder: (_, Box box, Widget widget) {
         return SwitchListTile(
           contentPadding:
               const EdgeInsets.only(top: 8, bottom: 8, right: 16, left: 16),

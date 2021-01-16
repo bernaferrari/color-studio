@@ -4,8 +4,8 @@ import 'package:hsluv/hsluvcolor.dart';
 
 import '../../blocs/blocs.dart';
 import '../../contrast_util.dart';
-import '../../example/util/constants.dart';
-import '../../example/util/when.dart';
+import '../../util/constants.dart';
+import '../../util/when.dart';
 
 class FlatColorPicker extends StatelessWidget {
   const FlatColorPicker({this.kind, this.selected, this.colors});

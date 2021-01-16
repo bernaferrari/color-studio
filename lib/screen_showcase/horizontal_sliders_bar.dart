@@ -4,11 +4,11 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
 import '../blocs/blocs.dart';
-import '../example/util/constants.dart';
 import '../example/widgets/color_sliders.dart';
 import '../example/widgets/selectable_sliders.dart';
 import '../screen_single_color/screen_single.dart';
 import '../shared_widgets/outlined_icon_button.dart';
+import '../util/constants.dart';
 
 class HorizontalSlidersBar extends StatelessWidget {
   const HorizontalSlidersBar({this.onPressed});

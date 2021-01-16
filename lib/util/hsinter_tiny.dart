@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../hsinter.dart';
+import '../example/hsinter.dart';
 
 extension on Color {
   List<double> toRGBList() {

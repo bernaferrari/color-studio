@@ -1,4 +1,3 @@
-import 'package:colorstudio/screen_home/contrast_ratio/contrast_circle_group.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,10 +9,12 @@ import '../blocs/blocs.dart';
 import '../blocs/colors_cubit.dart';
 import '../example/mdc/components.dart';
 import '../example/screens/color_library.dart';
-import '../example/util/constants.dart';
 import '../example/widgets/loading_indicator.dart';
 import '../example/widgets/update_color_dialog.dart';
+import '../screen_home/contrast_ratio/contrast_circle_group.dart';
 import '../screen_home/scheme/widgets/expanded_section.dart';
+import '../util/constants.dart';
+import 'templates/dynamic_templates_screen.dart';
 import 'templates/templates_screen.dart';
 import 'vertical_picker/vertical_picker_main.dart';
 
@@ -60,6 +61,10 @@ class ScreenSingle extends StatelessWidget {
                 Expanded(
                   child: TabBarView(
                     children: [
+                      // DynamicTemplatesScreen(
+                      //   backgroundColor: selectedRgbColor,
+                      //   state: state,
+                      // ),
                       HSVerticalPicker(
                         color: selectedRgbColor,
                         hsLuvColor: selectedHsluvColor,
@@ -68,7 +73,7 @@ class ScreenSingle extends StatelessWidget {
                       //   color: selectedRgbColor,
                       //   isSplitView: isSplitView,
                       // ),
-                      // About(isSplitView: isSplitView),
+                      // AboutScreen(isSplitView: isSplitView),
                       TemplatesScreen(backgroundColor: selectedRgbColor),
                       ColorLibrary(color: selectedRgbColor),
                     ],
@@ -189,6 +194,7 @@ class __BottomHomeState extends State<_BottomHome> {
 //                                child: const Icon(FeatherIcons.sliders),
 //                              ),
 //                            ),
+//                 Tab(icon: Icon(FeatherIcons.map)),
                 Tab(icon: Icon(FeatherIcons.barChart2)),
                 // Tab(icon: Icon(Icons.invert_colors)),
                 // Tab(icon: Icon(FeatherIcons.info)),

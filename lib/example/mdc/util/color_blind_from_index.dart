@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../screens/single_color_blindness.dart';
-import '../../util/when.dart';
+import '../../../util/when.dart';
 
 ColorWithBlind getColorBlindFromIndex(Color color, int i) {
   const m = "of males";

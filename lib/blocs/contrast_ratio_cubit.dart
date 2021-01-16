@@ -6,17 +6,10 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../example/mdc/util/elevation_overlay.dart';
-import '../example/util/calculate_contrast.dart';
-import '../example/util/color_util.dart';
-import '../example/util/constants.dart';
+import '../util/calculate_contrast.dart';
+import '../util/color_util.dart';
+import '../util/constants.dart';
 import 'blocs.dart';
-
-// enum ContrastCardType {
-//   Primary,
-//   Secondary,
-//   Background,
-//   Surface,
-// }
 
 class ContrastRatioCubit extends Cubit<ContrastRatioState> {
   ContrastRatioCubit(ColorsCubit _colorsCubit) : super(ContrastRatioState()) {

@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import '../../blocs/blocs.dart';
-import '../../example/util/constants.dart';
+import '../../util/constants.dart';
 
 class SchemeCompactedItem extends StatelessWidget {
   const SchemeCompactedItem({

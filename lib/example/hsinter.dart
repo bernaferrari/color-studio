@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
-import 'util/when.dart';
+import '../util/when.dart';
 
 enum HSInterType {
   HSLuv,

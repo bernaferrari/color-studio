@@ -1,20 +1,27 @@
+import 'package:colorstudio/screen_home/color_blindness/list_simplified.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import '../../blocs/color_blindness_cubit.dart';
-import '../../example/util/constants.dart';
+import '../../util/constants.dart';
 import '../title_bar.dart';
 import 'list.dart';
 
-class ColorBlindnessCard extends StatelessWidget {
+class ColorBlindnessCard extends StatefulWidget {
+  final Map<ColorType, Color> rgbColors;
+  final Map<ColorType, bool> locked;
+
   const ColorBlindnessCard(
     this.rgbColors,
     this.locked,
   );
 
-  final Map<ColorType, Color> rgbColors;
-  final Map<ColorType, bool> locked;
+  @override
+  _ColorBlindnessCardState createState() => _ColorBlindnessCardState();
+}
+
+class _ColorBlindnessCardState extends State<ColorBlindnessCard> {
+  bool proMode = false;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +40,9 @@ class ColorBlindnessCard extends StatelessWidget {
                   color: Theme.of(context).colorScheme.primary,
                 ),
                 onPressed: () {
-                  context.read<ColorBlindnessCubit>().decrement();
+                  setState(() {
+                    proMode = !proMode;
+                  });
                 },
               ),
               IconButton(
@@ -64,10 +73,16 @@ class ColorBlindnessCard extends StatelessWidget {
             width: double.infinity,
             color: Theme.of(context).colorScheme.onSurface.withOpacity(0.20),
           ),
-          ColorBlindnessList(
-            contrastedList: rgbColors,
-            locked: locked,
-          ),
+          if (proMode)
+            ColorBlindnessList(
+              contrastedList: widget.rgbColors,
+              locked: widget.locked,
+            )
+          else
+            ColorBlindnessListSimplified(
+              contrastedList: widget.rgbColors,
+              locked: widget.locked,
+            )
         ],
       ),
     );

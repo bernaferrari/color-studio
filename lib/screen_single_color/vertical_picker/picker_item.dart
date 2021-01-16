@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import '../../contrast_util.dart';
 import '../../example/color_with_inter.dart';
 import '../../example/hsinter.dart';
-import '../../example/util/constants.dart';
-import '../../example/util/selected.dart';
-import '../../example/util/when.dart';
 import '../../example/widgets/update_color_dialog.dart';
+import '../../util/constants.dart';
+import '../../util/selected.dart';
+import '../../util/when.dart';
 
 class ColorCompareWidgetDetails extends StatelessWidget {
   const ColorCompareWidgetDetails({

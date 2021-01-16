@@ -88,6 +88,55 @@ Map<ColorType, Color> getRandomMaterialDark() {
   };
 }
 
+Map<ColorType, Color> getRandomDarkFrom(
+    ColorType type, HSLuvColor currentColor) {
+  final rng = Random();
+
+  int primaryHue;
+  double primarySaturation;
+  double primaryLightness;
+
+  if (type == ColorType.Primary) {
+    primaryHue = currentColor.hue.round();
+    primarySaturation = currentColor.saturation;
+    primaryLightness = currentColor.lightness;
+  } else {
+    primaryHue = rng.nextInt(360);
+    primarySaturation = 60 + rng.nextInt(41).toDouble();
+    primaryLightness = 65 + rng.nextInt(21).toDouble();
+  }
+
+  // avoid too similar values between background and surface.
+  final backgroundLightness = rng.nextInt(26);
+  var surfaceLightness = rng.nextInt(31);
+  if ((surfaceLightness - backgroundLightness).abs() < 5) {
+    surfaceLightness = backgroundLightness + 5;
+  }
+
+  return {
+    ColorType.Primary: HSLuvColor.fromHSL(
+      primaryHue.toDouble(),
+      primarySaturation,
+      primaryLightness.toDouble(),
+    ).toColor(),
+    ColorType.Secondary: HSLuvColor.fromHSL(
+      ((primaryHue + 90 + rng.nextInt(90)) % 360).toDouble(),
+      primarySaturation,
+      primaryLightness,
+    ).toColor(),
+    ColorType.Surface: HSLuvColor.fromHSL(
+      rng.nextInt(360).toDouble(),
+      rng.nextInt(101).toDouble(),
+      surfaceLightness.toDouble(),
+    ).toColor(),
+    ColorType.Background: HSLuvColor.fromHSL(
+      rng.nextInt(360).toDouble(),
+      rng.nextInt(101).toDouble(),
+      backgroundLightness.toDouble(),
+    ).toColor(),
+  };
+}
+
 // Also check RandomColorScheme: https://github.com/bernaferrari/RandomColorScheme
 Map<ColorType, Color> getRandomMaterialLight() {
   final rng = Random();
@@ -139,9 +188,14 @@ Map<ColorType, Color> getRandomMoleTheme() {
   final backgroundSat = (25 + rng.nextInt(75)).toDouble();
   final backgroundHue = rng.nextInt(360).toDouble();
 
+  final primaryHue = rng.nextInt(360);
+
   return {
     ColorType.Primary:
-        HSLuvColor.fromHSL(rng.nextInt(360).toDouble(), 0, 100).toColor(),
+        HSLuvColor.fromHSL(primaryHue.toDouble(), 0, 100).toColor(),
+    ColorType.Secondary: HSLuvColor.fromHSL(
+            ((primaryHue + 90 + rng.nextInt(90)) % 360).toDouble(), 0, 100)
+        .toColor(),
     ColorType.Background: HSLuvColor.fromHSL(
       backgroundHue,
       backgroundSat,
@@ -170,18 +224,35 @@ Map<ColorType, Color> getRandomPreference(int prefs) {
     return getRandomMaterial();
   } else if (prefs == 3) {
     final rng = Random();
-
-    // return [
-    //   for (int i = 0; i < 3; i++)
-    //     Color.fromARGB(
-    //       255,
-    //       rng.nextInt(256),
-    //       rng.nextInt(256),
-    //       rng.nextInt(256),
-    //     )
-    // ];
+    return {
+      ColorType.Primary: Color.fromARGB(
+        255,
+        rng.nextInt(256),
+        rng.nextInt(256),
+        rng.nextInt(256),
+      ),
+      ColorType.Secondary: Color.fromARGB(
+        255,
+        rng.nextInt(256),
+        rng.nextInt(256),
+        rng.nextInt(256),
+      ),
+      ColorType.Background: Color.fromARGB(
+        255,
+        rng.nextInt(256),
+        rng.nextInt(256),
+        rng.nextInt(256),
+      ),
+      ColorType.Surface: Color.fromARGB(
+        255,
+        rng.nextInt(256),
+        rng.nextInt(256),
+        rng.nextInt(256),
+      ),
+    };
   }
 
+  throw ("invalid preference number");
   // return <Color>[];
 }
 

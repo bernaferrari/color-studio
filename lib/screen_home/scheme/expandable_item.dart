@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
-import '../../example/util/constants.dart';
+import '../../util/constants.dart';
 import 'compacted_item.dart';
 import 'expanded_item.dart';
 import 'same_as.dart';

@@ -8,6 +8,7 @@ import '../blocs/blocs.dart';
 import '../util/widget_space.dart';
 import 'color_blindness/card.dart';
 import 'contrast_ratio/card.dart';
+import 'new_screen.dart';
 import 'scheme/card.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -40,64 +41,70 @@ class HomeScreen extends StatelessWidget {
                 children: spaceColumn(
                   16,
                   [
-                    // Row(
-                    //   children: <Widget>[
-                    //     if (isiPad)
-                    //       SizedBox(width: 24)
-                    //     else
-                    //       SizedBox(width: 16),
-                    //     // if (!isiPad) ...[
-                    //     //   Expanded(
-                    //     //     child: RaisedButton.icon(
-                    //     //       label: Text("Modify"),
-                    //     //       icon: Icon(FeatherIcons.sliders, size: 16),
-                    //     //       textColor:
-                    //     //           Theme.of(context).colorScheme.onSurface,
-                    //     //       color: Theme.of(context).colorScheme.surface,
-                    //     //       onPressed: () {
-                    //     //         Navigator.pushNamed(context, "/colordetails");
-                    //     //       },
-                    //     //       shape: RoundedRectangleBorder(
-                    //     //         borderRadius: BorderRadius.circular(16),
-                    //     //         side: BorderSide(
-                    //     //           color: Theme.of(context)
-                    //     //               .colorScheme
-                    //     //               .onSurface
-                    //     //               .withOpacity(0.3),
-                    //     //         ),
-                    //     //       ),
-                    //     //     ),
-                    //     //   ),
-                    //     //   const SizedBox(width: 16),
-                    //     // ],
-                    //     // Expanded(
-                    //     //   child: RaisedButton.icon(
-                    //     //     label: Text("Preview"),
-                    //     //     icon: Icon(FeatherIcons.layout, size: 16),
-                    //     //     textColor: colorScheme.onSurface,
-                    //     //     color: colorScheme.surface,
-                    //     //     onPressed: () {
-                    //     //       Navigator.pushNamed(context, "/componentspreview");
-                    //     //     },
-                    //     //     shape: RoundedRectangleBorder(
-                    //     //       borderRadius: BorderRadius.circular(16),
-                    //     //       side: BorderSide(
-                    //     //         color: colorScheme.onSurface.withOpacity(0.30),
-                    //     //       ),
-                    //     //     ),
-                    //     //   ),
-                    //     // ),
-                    //     if (isiPad)
-                    //       const SizedBox(width: 8)
-                    //     else
-                    //       const SizedBox(width: 16),
-                    //   ],
-                    // ),
+                    Row(
+                      children: <Widget>[
+                        if (isiPad)
+                          SizedBox(width: 24)
+                        else
+                          SizedBox(width: 16),
+                        // if (!isiPad) ...[
+                        //   Expanded(
+                        //     child: RaisedButton.icon(
+                        //       label: Text("Modify"),
+                        //       icon: Icon(FeatherIcons.sliders, size: 16),
+                        //       textColor:
+                        //           Theme.of(context).colorScheme.onSurface,
+                        //       color: Theme.of(context).colorScheme.surface,
+                        //       onPressed: () {
+                        //         Navigator.pushNamed(context, "/colordetails");
+                        //       },
+                        //       shape: RoundedRectangleBorder(
+                        //         borderRadius: BorderRadius.circular(16),
+                        //         side: BorderSide(
+                        //           color: Theme.of(context)
+                        //               .colorScheme
+                        //               .onSurface
+                        //               .withOpacity(0.3),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        //   const SizedBox(width: 16),
+                        // ],
+                        // Expanded(
+                        //   child: RaisedButton.icon(
+                        //     label: Text("Preview"),
+                        //     icon: Icon(FeatherIcons.layout, size: 16),
+                        //     textColor: colorScheme.onSurface,
+                        //     color: colorScheme.surface,
+                        //     onPressed: () {
+                        //       Navigator.pushNamed(context, "/componentspreview");
+                        //     },
+                        //     shape: RoundedRectangleBorder(
+                        //       borderRadius: BorderRadius.circular(16),
+                        //       side: BorderSide(
+                        //         color: colorScheme.onSurface.withOpacity(0.30),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+                        if (isiPad)
+                          const SizedBox(width: 8)
+                        else
+                          const SizedBox(width: 16),
+                      ],
+                    ),
                     // PageHeader(
                     //   title: "Color Studio",
                     //   subtitle: "",
                     //   iconData: FeatherIcons.home,
                     //   isFeather: true,
+                    // ),
+                    // NewScreen(
+                    //   rgbColors: state.rgbColors,
+                    //   rgbColorsWithBlindness: state.rgbColorsWithBlindness,
+                    //   hsluvColors: state.hsluvColors,
+                    //   locked: state.locked,
                     // ),
                     ColorSchemeCard(
                       rgbColors: state.rgbColors,
@@ -129,10 +136,10 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     ContrastRatioCard(state.rgbColorsWithBlindness),
-                    ColorBlindnessCardSimplified(
-                      state.rgbColors,
-                      state.locked,
-                    ),
+                    // ColorBlindnessCardSimplified(
+                    //   state.rgbColors,
+                    //   state.locked,
+                    // ),
                     ColorBlindnessCard(
                       state.rgbColors,
                       state.locked,
@@ -186,6 +193,7 @@ class MiddleButton extends StatelessWidget {
             Text(
               title,
               textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.subtitle1.copyWith(
                     color: Theme.of(context)
                         .colorScheme

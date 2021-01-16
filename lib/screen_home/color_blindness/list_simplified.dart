@@ -4,8 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/blocs.dart';
 import '../../example/screens/single_color_blindness.dart';
-import '../../example/util/constants.dart';
-import 'item.dart';
+import '../../util/constants.dart';
 import 'item_simplified.dart';
 
 class ColorBlindnessListSimplified extends StatelessWidget {

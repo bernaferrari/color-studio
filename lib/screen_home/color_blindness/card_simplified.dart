@@ -1,11 +1,10 @@
-import 'package:colorstudio/screen_home/color_blindness/list_simplified.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/color_blindness_cubit.dart';
-import '../../example/util/constants.dart';
+import '../../util/constants.dart';
 import '../title_bar.dart';
-import 'list.dart';
+import 'list_simplified.dart';
 
 class ColorBlindnessCardSimplified extends StatelessWidget {
   const ColorBlindnessCardSimplified(

@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../blocs/blocs.dart';
-import '../../example/util/constants.dart';
+import '../../util/constants.dart';
 import 'widgets/contrast_widgets.dart';
 
 class ContrastCircleGroup extends StatelessWidget {

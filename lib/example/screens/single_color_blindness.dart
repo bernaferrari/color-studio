@@ -5,9 +5,9 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../shared_widgets/color_search_button.dart';
+import '../../util/color_util.dart';
+import '../../util/selected.dart';
 import '../mdc/components.dart';
-import '../util/color_util.dart';
-import '../util/selected.dart';
 import '../widgets/update_color_dialog.dart';
 
 class SingleColorBlindness extends StatelessWidget {

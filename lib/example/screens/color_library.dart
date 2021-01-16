@@ -1,16 +1,14 @@
 import 'dart:math' as math;
 
-import 'package:colorstudio/shared_widgets/color_search_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:url_launcher/url_launcher.dart';
 
+import '../../shared_widgets/color_search_button.dart';
+import '../../util/color_util.dart';
+import '../../util/constants.dart';
+import '../../util/selected.dart';
+import '../../util/shuffle_color.dart';
 import '../mdc/components.dart';
-import '../util/color_util.dart';
-import '../util/constants.dart';
-import '../util/selected.dart';
-import '../util/shuffle_color.dart';
 import '../widgets/update_color_dialog.dart';
 
 class ColorLibrary extends StatefulWidget {
@@ -36,7 +34,6 @@ class _ColorLibraryState extends State<ColorLibrary> {
     final colorsList = getColorClaim();
 
     return Scaffold(
-      backgroundColor: widget.color,
       appBar: AppBar(
         title:
             Text("Color Library", style: Theme.of(context).textTheme.headline6),
@@ -45,6 +42,7 @@ class _ColorLibraryState extends State<ColorLibrary> {
         centerTitle: false,
         actions: <Widget>[
           Center(child: ColorSearchButton(color: widget.color)),
+          const SizedBox(width: 8),
           // IconButton(
           //   icon: Icon(FeatherIcons.externalLink),
           //   onPressed: () async =>

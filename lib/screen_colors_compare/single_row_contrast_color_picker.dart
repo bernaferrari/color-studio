@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocs/blocs.dart';
 import '../blocs/multiple_contrast_compare/rgb_hsluv_tuple.dart';
 import '../contrast_util.dart';
-import '../example/util/constants.dart';
+import '../util/constants.dart';
 
 class SingleRowContrastColorPicker extends StatelessWidget {
   const SingleRowContrastColorPicker({

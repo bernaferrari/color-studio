@@ -3,12 +3,13 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
+import '../../util/calculate_contrast.dart';
+import '../../util/color_util.dart';
+import '../../util/constants.dart';
+import '../../util/selected.dart';
+import '../../util/shuffle_color.dart';
 import '../mdc/util/elevation_overlay.dart';
-import '../util/calculate_contrast.dart';
-import '../util/color_util.dart';
 import '../util/constants.dart';
-import '../util/selected.dart';
-import '../util/shuffle_color.dart';
 
 class Components extends StatelessWidget {
   const Components(

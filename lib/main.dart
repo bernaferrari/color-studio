@@ -10,14 +10,15 @@ import 'package:path_provider/path_provider.dart';
 
 import 'blocs/blocs.dart';
 import 'example/util/constants.dart';
-import 'example/util/shuffle_color.dart';
 import 'navigator.dart';
+import 'util/constants.dart';
+import 'util/shuffle_color.dart';
 
 Future<void> main() async {
   // this is needed so Hive can be initialised synchronously.
   // when the app runs, Hive should have a value already.
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await openBox();
+  WidgetsFlutterBinding.ensureInitialized();
+  await openBox();
   Bloc.observer = SimpleBlocObserver();
   runApp(BoxedApp());
 }

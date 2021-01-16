@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../blocs/blocs.dart';
 import '../../shared_widgets/outlined_icon_button.dart';
+import '../../util/constants.dart';
 import '../screens/single_color_blindness.dart';
 import '../util/constants.dart';
 import 'util/color_blind_from_index.dart';

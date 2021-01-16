@@ -1,9 +1,9 @@
-import 'package:colorstudio/example/color_with_inter.dart';
-import 'package:colorstudio/example/hsinter.dart';
-import 'package:colorstudio/example/util/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_listview/infinite_listview.dart';
 
+import '../../example/color_with_inter.dart';
+import '../../example/hsinter.dart';
+import '../../util/constants.dart';
 import 'picker_item.dart';
 
 class ExpandableColorBar extends StatelessWidget {

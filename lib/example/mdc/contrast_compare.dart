@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../util/color_util.dart';
+import '../../util/color_util.dart';
+import '../../util/constants.dart';
 import '../util/constants.dart';
 import 'widgets/horizontal_progress_bar.dart';
 

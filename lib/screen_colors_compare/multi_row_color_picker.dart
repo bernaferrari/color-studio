@@ -11,9 +11,9 @@ import 'package:infinite_listview/infinite_listview.dart';
 import '../blocs/blocs.dart';
 import '../blocs/multiple_contrast_compare/rgb_hsluv_tuple.dart';
 import '../contrast_util.dart';
-import '../example/util/constants.dart';
-import '../example/util/hsluv_tiny.dart';
-import '../example/util/when.dart';
+import '../util/constants.dart';
+import '../util/hsluv_tiny.dart';
+import '../util/when.dart';
 
 class MultiRowColorPicker extends StatelessWidget {
   const MultiRowColorPicker({

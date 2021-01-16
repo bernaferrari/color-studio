@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/blocs.dart';
 import '../../blocs/contrast_ratio_cubit.dart';
-import '../../example/util/constants.dart';
 import '../../example/widgets/loading_indicator.dart';
+import '../../util/constants.dart';
 import '../../util/widget_space.dart';
 import '../title_bar.dart';
 import 'contrast_circle_group.dart';

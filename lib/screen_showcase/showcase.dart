@@ -1,7 +1,5 @@
 import 'dart:ui';
 
-import 'package:colorstudio/screen_home/page_header.dart';
-import 'package:colorstudio/util/widget_space.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -13,6 +11,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../example/mdc/color_blindness_bar.dart';
 import '../example/mdc/util/elevation_overlay.dart';
 import '../example/mdc/widgets/horizontal_progress_bar.dart';
+import '../screen_home/page_header.dart';
+import '../util/widget_space.dart';
 import 'horizontal_sliders_bar.dart';
 
 class Showcase extends StatefulWidget {
@@ -100,7 +100,8 @@ class _ShowcaseState extends State<Showcase> {
                     ),
                   ],
                 ),
-       _PrevCupertino(primary: primaryColor, backgroundColor: backgroundColor),
+                _PrevCupertino(
+                    primary: primaryColor, backgroundColor: backgroundColor),
                 _PrevPhotos(
                   primary: primaryColor,
                   surface: surfaceColor,
@@ -497,7 +498,10 @@ class _PrevClock extends StatelessWidget {
               ),
               FloatingActionButton(
                 onPressed: () {},
-                child: Icon(Icons.pause_circle_outline),
+                child: Icon(
+                  Icons.pause_circle_outline,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
               ),
               TextButton(
                 child: const Text("Share"),

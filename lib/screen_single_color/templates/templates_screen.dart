@@ -13,7 +13,7 @@ class TemplatesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Templates", style: Theme.of(context).textTheme.headline6),
+        title: Text("Pre-Defined Templates", style: Theme.of(context).textTheme.headline6),
         elevation: 0,
         centerTitle: false,
         actions: <Widget>[

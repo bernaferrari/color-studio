@@ -7,8 +7,8 @@ import 'package:hsluv/hsluvcolor.dart';
 import 'package:replay_bloc/replay_bloc.dart';
 
 import '../example/mdc/util/color_blind_from_index.dart';
-import '../example/util/color_util.dart';
-import '../example/util/constants.dart';
+import '../util/color_util.dart';
+import '../util/constants.dart';
 import 'color_blindness_cubit.dart';
 
 class ColorsState extends Equatable {
@@ -83,11 +83,18 @@ class ColorsCubit extends ReplayCubit<ColorsState> {
   /// This method retrieves a ColorState which is going to be used in super().
   /// The reason is undo/redo support. First ColorCubit value can't be empty.
   static ColorsState initialState(Map<ColorType, Color> initialColors) {
+    // final initial = {
+    //   ColorType.Primary: initialColors[ColorType.Primary],
+    //   ColorType.Secondary: initialColors[ColorType.Secondary],
+    //   ColorType.Background:
+    //   blendColorWithBackground(initialColors[ColorType.Primary]),
+    //   ColorType.Surface: initialColors[ColorType.Surface],
+    // };
+
     final initial = {
-      ColorType.Primary: initialColors[ColorType.Primary],
+      ColorType.Primary: Color(0xff0087FA),
       ColorType.Secondary: initialColors[ColorType.Secondary],
-      ColorType.Background:
-          blendColorWithBackground(initialColors[ColorType.Primary]),
+      ColorType.Background: blendColorWithBackground(Color(0xff0087FA)),
       ColorType.Surface: initialColors[ColorType.Surface],
     };
 
@@ -176,7 +183,7 @@ class ColorsCubit extends ReplayCubit<ColorsState> {
   void updateRgbColor({ColorType selected, @required Color rgbColor}) {
     final _selected = selected ?? state.selected;
 
-    final Map<ColorType, Color> allRgb = Map.from(state.rgbColors);
+    final allRgb = Map<ColorType, Color>.from(state.rgbColors);
     allRgb[_selected] = rgbColor;
 
     emit(
@@ -215,7 +222,7 @@ class ColorsCubit extends ReplayCubit<ColorsState> {
     bool ignoreLock = false,
     @required Map<ColorType, Color> colors,
   }) {
-    final Map<ColorType, Color> allRgb = Map.from(state.rgbColors);
+    final allRgb = Map<ColorType, Color>.from(state.rgbColors);
 
     allRgb.forEach((title, _) {
       if (state.locked[title] != true || ignoreLock) {
@@ -310,7 +317,7 @@ class ColorsCubit extends ReplayCubit<ColorsState> {
       return updatableMap;
     }
 
-    final Map<ColorType, Color> blindMap = Map.from(updatableMap);
+    final blindMap = Map<ColorType, Color>.from(updatableMap);
     for (var key in blindMap.keys) {
       blindMap[key] = getColorBlindFromIndex(blindMap[key], index).color;
     }

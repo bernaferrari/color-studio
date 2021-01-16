@@ -1,10 +1,15 @@
+import 'package:colorstudio/example/screens/about.dart';
+import 'package:colorstudio/example/screens/export_colors.dart';
+import 'package:colorstudio/gradient.dart';
+import 'package:colorstudio/screen_showcase/components_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'blocs/blocs.dart';
+import 'blocs/colors_cubit.dart';
+import 'home2.dart';
 import 'screen_colors_compare/colors_compare_screen.dart';
 import 'screen_home/home_screen.dart';
-import 'screen_showcase/components_preview.dart';
 import 'screen_single_color/screen_single.dart';
 
 class ColorStudioApp extends StatefulWidget {
@@ -46,6 +51,15 @@ class ColorRouteInformationParser
       if (uri.pathSegments[0] == "preview") {
         return ColorRoutePath.to(ScreenPanel.preview);
       }
+      if (uri.pathSegments[0] == "home2") {
+        return ColorRoutePath.to(ScreenPanel.home2);
+      }
+      if (uri.pathSegments[0] == "colorExport") {
+        return ColorRoutePath.to(ScreenPanel.colorExport);
+      }
+      if (uri.pathSegments[0] == "gradient") {
+        return ColorRoutePath.to(ScreenPanel.gradient);
+      }
     }
 
     return ColorRoutePath.home();
@@ -54,18 +68,26 @@ class ColorRouteInformationParser
   @override
   RouteInformation restoreRouteInformation(ColorRoutePath path) {
     print("restoreRouteInformation path is ${path.panel}");
-    if (path.isHomePage) {
-      return RouteInformation(location: '/');
+    switch (path.panel) {
+      case ScreenPanel.home:
+        return RouteInformation(location: '/');
+      case ScreenPanel.home2:
+        return RouteInformation(location: '/home2');
+      case ScreenPanel.gradient:
+        return RouteInformation(location: '/gradient');
+      case ScreenPanel.multiColor:
+        return RouteInformation(location: '/multiColor');
+      case ScreenPanel.settings:
+        return RouteInformation(location: '/settings');
+      case ScreenPanel.colorExport:
+        return RouteInformation(location: '/colorExport');
+      case ScreenPanel.singleColor:
+        return RouteInformation(location: '/singleColor');
+      case ScreenPanel.preview:
+        // This should never exist.
+        return RouteInformation(location: '/');
     }
-    if (path.isMultiColorPage) {
-      return RouteInformation(location: '/multiColor');
-    }
-    if (path.isSettingsPage) {
-      return RouteInformation(location: '/multiColor');
-    }
-    if (path.isSingleColorPage) {
-      return RouteInformation(location: '/singleColor');
-    }
+
     return null;
   }
 }
@@ -77,7 +99,8 @@ class ColorRouterDelegate extends RouterDelegate<ColorRoutePath>
   @override
   final GlobalKey<NavigatorState> navigatorKey;
 
-  ScreenPanel selectedScreen = ScreenPanel.singleColor;
+  // Default
+  ScreenPanel selectedScreen = ScreenPanel.home;
 
   @override
   ColorRoutePath get currentConfiguration {
@@ -121,6 +144,18 @@ class ColorRouterDelegate extends RouterDelegate<ColorRoutePath>
                           key: ValueKey("Single Color"),
                           child: const ScreenSingle(),
                         ),
+                      if (selectedScreen == ScreenPanel.settings)
+                        MaterialPage<dynamic>(
+                          key: ValueKey("About Screen"),
+                          child: AboutScreen(
+                            toExportPage: toExportPage,
+                          ),
+                        ),
+                      if (selectedScreen == ScreenPanel.colorExport)
+                        MaterialPage<dynamic>(
+                          key: ValueKey("Color Export Screen"),
+                          child: ExportColorsScreen(),
+                        ),
                     ],
                     onPopPage: (route, dynamic result) {
                       print("POP1 ");
@@ -131,7 +166,11 @@ class ColorRouterDelegate extends RouterDelegate<ColorRoutePath>
                       // Update the list of pages by setting _selectedBook to null
                       // _selectedBook = null;
                       // show404 = false;
-                      selectedScreen = ScreenPanel.home;
+                      if (selectedScreen == ScreenPanel.colorExport) {
+                        selectedScreen = ScreenPanel.settings;
+                      } else {
+                        selectedScreen = ScreenPanel.home;
+                      }
                       notifyListeners();
 
                       return true;
@@ -145,7 +184,7 @@ class ColorRouterDelegate extends RouterDelegate<ColorRoutePath>
                   child: Navigator(
                     pages: [
                       MaterialPage<dynamic>(
-                        key: ValueKey("Scheme/Contrast/Blind2"),
+                        key: ValueKey("ComponentsPreview"),
                         child: ComponentsPreview(),
                       ),
                     ],
@@ -169,6 +208,16 @@ class ColorRouterDelegate extends RouterDelegate<ColorRoutePath>
             ],
           ),
         ),
+        if (selectedScreen == ScreenPanel.home2)
+          MaterialPage<dynamic>(
+            key: ValueKey("two panels2"),
+            child: Home2(),
+          ),
+        if (selectedScreen == ScreenPanel.gradient)
+          MaterialPage<dynamic>(
+            key: ValueKey("gradient"),
+            child: GradientScreen(),
+          ),
       ],
       onPopPage: (route, dynamic result) {
         print("POP2 ");
@@ -186,6 +235,11 @@ class ColorRouterDelegate extends RouterDelegate<ColorRoutePath>
         return true;
       },
     );
+  }
+
+  void toExportPage() {
+    selectedScreen = ScreenPanel.colorExport;
+    notifyListeners();
   }
 
   @override
@@ -236,7 +290,10 @@ class ColorRouterDelegate extends RouterDelegate<ColorRoutePath>
 
 enum ScreenPanel {
   home,
+  home2,
+  gradient,
   singleColor,
+  colorExport,
   multiColor,
   settings,
   preview,
@@ -244,6 +301,8 @@ enum ScreenPanel {
 
 class ColorRoutePath {
   ColorRoutePath.home() : panel = ScreenPanel.home;
+
+  ColorRoutePath.home2() : panel = ScreenPanel.home2;
 
   ColorRoutePath.settings() : panel = ScreenPanel.home;
 
@@ -253,7 +312,13 @@ class ColorRoutePath {
 
   bool get isHomePage => panel == ScreenPanel.home;
 
+  bool get isHomePage2 => panel == ScreenPanel.home2;
+
+  bool get isGradient => panel == ScreenPanel.gradient;
+
   bool get isMultiColorPage => panel == ScreenPanel.multiColor;
+
+  bool get isColorExport => panel == ScreenPanel.colorExport;
 
   bool get isSingleColorPage => panel == ScreenPanel.singleColor;
 

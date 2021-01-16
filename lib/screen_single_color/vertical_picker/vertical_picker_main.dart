@@ -5,16 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
 import '../../example/color_with_inter.dart';
 import '../../example/hsinter.dart';
 import '../../example/screens/about.dart';
-import '../../example/util/color_util.dart';
-import '../../example/util/constants.dart';
-import '../../example/util/selected.dart';
 import '../../shared_widgets/color_search_button.dart';
 import '../../shared_widgets/outlined_icon_button.dart';
+import '../../util/color_util.dart';
+import '../../util/constants.dart';
+import '../../util/selected.dart';
 import '../../util/widget_space.dart';
 import 'hsluv_selector.dart';
 import 'hsv_selector.dart';
@@ -132,19 +134,20 @@ class _HSVerticalPickerState extends State<HSVerticalPicker> {
             ),
           ),
           Expanded(
-            child:
-                // child: WatchBoxBuilder(
-                //   box: Hive.box<dynamic>("settings"),
-                // builder: (_ context, Box box) => currentSegment == 0
-                currentSegment == 0
+            child: ValueListenableBuilder(
+              valueListenable: Hive.box<dynamic>("settings").listenable(),
+              builder: (_, Box box, Widget child) {
+                return currentSegment == 0
                     ? HSLuvSelector(
                         color: widget.hsLuvColor,
-                        // moreColors: box.get("moreItems", defaultValue: false),
+                        moreColors: box.get("moreItems", defaultValue: false),
                       )
                     : HSVSelector(
                         color: widget.color,
-                        // moreColors: box.get("moreItems", defaultValue: false),
-                      ),
+                        moreColors: box.get("moreItems", defaultValue: false),
+                      );
+              },
+            ),
           ),
         ],
       ),

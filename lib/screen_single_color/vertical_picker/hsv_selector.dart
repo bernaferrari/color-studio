@@ -3,16 +3,17 @@ import 'package:flutter/material.dart';
 import '../../contrast_util.dart';
 import '../../example/color_with_inter.dart';
 import '../../example/hsinter.dart';
-import '../../example/util/hsinter_tiny.dart';
+import '../../util/hsinter_tiny.dart';
 import 'vertical_picker_main.dart';
 
 class HSVSelector extends StatelessWidget {
+  final bool moreColors;
+
   const HSVSelector({this.color, this.moreColors = false});
 
   // initial color
   final Color color;
 
-  final bool moreColors;
 
   @override
   Widget build(BuildContext context) {

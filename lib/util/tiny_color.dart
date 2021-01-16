@@ -133,7 +133,8 @@ List<Color> hueVariations(Color color, [int n = 6]) {
 }
 
 // get variation in Hue.
-List<Color> hsluvHueToneVariation(Color color, [int n = 6, double toneDiff = 0]) {
+List<Color> hsluvHueToneVariation(Color color,
+    [int n = 6, double toneDiff = 0]) {
   // HSLColor and HSVColor will always have the same hue.
   final HSLuvColor hsluv = HSLuvColor.fromColor(color);
 

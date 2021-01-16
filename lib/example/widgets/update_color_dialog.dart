@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import '../../blocs/blocs.dart';
-import '../util/color_util.dart';
-import '../util/constants.dart';
+import '../../util/color_util.dart';
+import '../../util/constants.dart';
 import 'color_sliders.dart';
 import 'loading_indicator.dart';
 import 'selectable_sliders.dart';

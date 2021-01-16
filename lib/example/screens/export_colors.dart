@@ -5,10 +5,11 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../blocs/blocs.dart';
-import '../util/color_util.dart';
-import '../util/constants.dart';
+import '../../util/color_util.dart';
+import '../../util/constants.dart';
+import '../../util/widget_space.dart';
 
-class ExportColors extends StatelessWidget {
+class ExportColorsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ColorsCubit, ColorsState>(builder: (_, state) {
@@ -31,11 +32,6 @@ class ExportColors extends StatelessWidget {
           ? Colors.black
           : Colors.white;
 
-      final titleStyle = GoogleFonts.firaSans(
-        textStyle:
-            Theme.of(context).textTheme.headline6.copyWith(color: onBackground),
-      );
-
       return Scaffold(
         appBar: AppBar(
           title: Text("Export Colors"),
@@ -47,36 +43,62 @@ class ExportColors extends StatelessWidget {
               constraints: const BoxConstraints(maxWidth: 818),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  const SizedBox(height: 24),
-                  Text("Flutter", style: titleStyle),
-                  _ExportRow(primary, background, surface, onPrimary,
-                      onBackground, onSurface, "Flutter"),
-                  const SizedBox(height: 16),
-                  Text("Android (colors.xml)", style: titleStyle),
-                  _ExportRow(primary, background, surface, onPrimary,
-                      onBackground, onSurface, "Android (colors.xml)"),
-                  Text("Android (styles.xml)", style: titleStyle),
-                  _ExportRow(primary, background, surface, onPrimary,
-                      onBackground, onSurface, "Android (styles.xml)"),
-                  const SizedBox(height: 16),
-                  Text("iOS (Swift)", style: titleStyle),
-                  _ExportRow(primary, background, surface, onPrimary,
-                      onBackground, onSurface, "iOS (Swift)"),
-                  Text("iOS (Objective C)", style: titleStyle),
-                  _ExportRow(primary, background, surface, onPrimary,
-                      onBackground, onSurface, "iOS (Objective C)"),
-                  Text("Hex List", style: titleStyle),
-                  _ExportRow(primary, background, surface, onPrimary,
-                      onBackground, onSurface, "List"),
-                  const SizedBox(height: 8),
-                ],
+                children: spaceColumn(
+                  24,
+                  [
+                    SizedBox(),
+                    _CardTitle(primary, background, surface, onPrimary,
+                        onBackground, onSurface, "Flutter"),
+                    _CardTitle(primary, background, surface, onPrimary,
+                        onBackground, onSurface, "Android (colors.xml)"),
+                    _CardTitle(primary, background, surface, onPrimary,
+                        onBackground, onSurface, "Android (styles.xml)"),
+                    _CardTitle(primary, background, surface, onPrimary,
+                        onBackground, onSurface, "iOS (Swift)"),
+                    _CardTitle(primary, background, surface, onPrimary,
+                        onBackground, onSurface, "iOS (Objective C)"),
+                    _CardTitle(primary, background, surface, onPrimary,
+                        onBackground, onSurface, "Hex List"),
+                  ],
+                ),
               ),
             ),
           ),
         ),
       );
     });
+  }
+}
+
+class _CardTitle extends StatelessWidget {
+  const _CardTitle(this.primary, this.background, this.surface, this.onPrimary,
+      this.onSurface, this.onBackground, this.kind);
+
+  final Color primary;
+  final Color background;
+  final Color surface;
+  final Color onPrimary;
+  final Color onSurface;
+  final Color onBackground;
+  final String kind;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          kind,
+          style: GoogleFonts.firaSans(
+            textStyle: Theme.of(context)
+                .textTheme
+                .headline6
+                .copyWith(color: onBackground),
+          ),
+        ),
+        _ExportRow(primary, background, surface, onPrimary, onBackground,
+            onSurface, kind),
+      ],
+    );
   }
 }
 
@@ -177,7 +199,7 @@ colorScheme.onPrimaryColor = ColorFromRGB(0x${onPrimary.toStr()});
 colorScheme.onBackgroundColor = ColorFromRGB(0x${onBackground.toStr()});
 colorScheme.onSurfaceColor = ColorFromRGB(0x${onSurface.toStr()});
 ''';
-    } else if (kind == "List") {
+    } else if (kind == "Hex List") {
       return "${primary.toHexStr()}, ${surface.toHexStr()}, ${background.toHexStr()}, ${onPrimary.toHexStr()}, ${onSurface.toHexStr()}, ${onBackground.toHexStr()}";
     }
 
@@ -193,8 +215,7 @@ colorScheme.onSurfaceColor = ColorFromRGB(0x${onSurface.toStr()});
       margin: const EdgeInsets.all(16.0),
       clipBehavior: Clip.antiAlias,
       child: Padding(
-        padding:
-            const EdgeInsets.only(top: 16, bottom: 8, left: 16.0, right: 16.0),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: <Widget>[
             SizedBox(
@@ -207,15 +228,17 @@ colorScheme.onSurfaceColor = ColorFromRGB(0x${onSurface.toStr()});
                 ),
               ),
             ),
-            SizedBox(height: 8),
+            SizedBox(height: 16),
             Row(
               children: <Widget>[
                 Expanded(
-                  child: RaisedButton.icon(
+                  child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                    ),
                     label: Text("Copy"),
                     icon: Icon(FeatherIcons.copy, size: 16),
-                    color: primary,
-                    textColor: onPrimary,
                     onPressed: () {
                       Clipboard.setData(ClipboardData(text: retrievedText));
 

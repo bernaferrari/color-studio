@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-import '../example/util/color_util.dart';
 import '../example/util/constants.dart';
-import '../example/util/selected.dart';
 import '../example/widgets/update_color_dialog.dart';
+import '../util/color_util.dart';
+import '../util/constants.dart';
+import '../util/selected.dart';
 
 class ColorSearchButton extends StatelessWidget {
   const ColorSearchButton({
@@ -26,7 +27,7 @@ class ColorSearchButton extends StatelessWidget {
         icon: Icon(FeatherIcons.search, size: 16),
         color: color,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(defaultRadius),
+          borderRadius: BorderRadius.circular(16),
         ),
         borderSide: BorderSide(color: onSurface),
         highlightedBorderColor: onSurface,
@@ -42,4 +43,3 @@ class ColorSearchButton extends StatelessWidget {
     );
   }
 }
-

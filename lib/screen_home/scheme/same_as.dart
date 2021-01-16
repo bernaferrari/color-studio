@@ -4,8 +4,8 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../blocs/blocs.dart';
-import '../../example/util/color_util.dart';
-import '../../example/util/constants.dart';
+import '../../util/color_util.dart';
+import '../../util/constants.dart';
 
 class SameAs extends StatelessWidget {
   const SameAs({

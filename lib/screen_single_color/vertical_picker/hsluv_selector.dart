@@ -1,6 +1,6 @@
 import 'package:colorstudio/example/color_with_inter.dart';
 import 'package:colorstudio/example/hsinter.dart';
-import 'package:colorstudio/example/util/hsinter_tiny.dart';
+import 'package:colorstudio/util/hsinter_tiny.dart';
 import 'package:flutter/material.dart';
 import 'package:hsluv/hsluvcolor.dart';
 

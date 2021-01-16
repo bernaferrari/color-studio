@@ -5,9 +5,9 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
-import '../../example/util/calculate_contrast.dart';
-import '../../example/util/color_util.dart';
-import '../../example/util/constants.dart';
+import '../../util/calculate_contrast.dart';
+import '../../util/color_util.dart';
+import '../../util/constants.dart';
 import '../blocs.dart';
 import 'rgb_hsluv_tuple.dart';
 

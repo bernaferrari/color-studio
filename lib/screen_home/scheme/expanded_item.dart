@@ -5,12 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
 import '../../blocs/blocs.dart';
-import '../../example/util/calculate_contrast.dart';
-import '../../example/util/color_util.dart';
-import '../../example/util/constants.dart';
-import '../../example/util/when.dart';
 import '../../shared_widgets/color_search_button.dart';
 import '../../shared_widgets/outlined_icon_button.dart';
+import '../../util/calculate_contrast.dart';
+import '../../util/color_util.dart';
+import '../../util/constants.dart';
+import '../../util/when.dart';
 import '../../util/widget_space.dart';
 import 'flat_color_picker.dart';
 
