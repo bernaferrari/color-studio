@@ -12,6 +12,7 @@ import '../example/mdc/color_blindness_bar.dart';
 import '../example/mdc/util/elevation_overlay.dart';
 import '../example/mdc/widgets/horizontal_progress_bar.dart';
 import '../screen_home/page_header.dart';
+import '../util/constants.dart';
 import '../util/widget_space.dart';
 import 'horizontal_sliders_bar.dart';
 
@@ -43,6 +44,8 @@ class _ShowcaseState extends State<Showcase> {
     final primaryColor = Theme.of(context).colorScheme.primary;
     final backgroundColor = Theme.of(context).colorScheme.background;
     final surfaceColor = Theme.of(context).colorScheme.surface;
+
+    final isLightBackground = backgroundColor.computeLuminance() > kLumContrast;
 
     final isiPad = MediaQuery.of(context).size.width > 600;
 
@@ -134,23 +137,36 @@ class _ShowcaseState extends State<Showcase> {
           width: double.infinity,
           color: Theme.of(context).colorScheme.onSurface.withOpacity(0.40),
         ),
-        AnimatedSwitcher(
-          duration: const Duration(milliseconds: 400),
-          switchInCurve: Curves.easeInOut,
-          transitionBuilder: (child, animation) {
-            return SizeTransition(child: child, sizeFactor: animation);
-          },
-          child: (slidersMode ?? false)
-              ? HorizontalSlidersBar(onPressed: () {
-                  setState(() {
-                    slidersMode = false;
-                  });
-                })
-              : ColorBlindnessBar(onPressed: () {
-                  setState(() {
-                    slidersMode = true;
-                  });
-                }),
+        Theme(
+          data: ThemeData.from(
+            colorScheme: isLightBackground
+                ? ColorScheme.light(
+                    primary: primaryColor,
+                    background: backgroundColor,
+                  )
+                : ColorScheme.dark(
+                    primary: primaryColor,
+                    background: backgroundColor,
+                  ),
+          ),
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 400),
+            switchInCurve: Curves.easeInOut,
+            transitionBuilder: (child, animation) {
+              return SizeTransition(child: child, sizeFactor: animation);
+            },
+            child: (slidersMode ?? false)
+                ? HorizontalSlidersBar(onPressed: () {
+                    setState(() {
+                      slidersMode = false;
+                    });
+                  })
+                : ColorBlindnessBar(onPressed: () {
+                    setState(() {
+                      slidersMode = true;
+                    });
+                  }),
+          ),
         ),
         SafeArea(
           bottom: true,
@@ -163,7 +179,9 @@ class _ShowcaseState extends State<Showcase> {
               Text(
                 "Elevation",
                 style: GoogleFonts.openSans(
-                  textStyle: Theme.of(context).textTheme.caption,
+                  textStyle: Theme.of(context).textTheme.caption.copyWith(
+                        color: Theme.of(context).colorScheme.onBackground,
+                      ),
                 ),
               ),
               Expanded(
@@ -1309,7 +1327,12 @@ class _PrevPhotosTransparencyState extends State<PrevPhotosTransparency> {
         Row(
           children: <Widget>[
             const SizedBox(width: 16),
-            Text("interval", style: Theme.of(context).textTheme.caption),
+            Text(
+              "interval",
+              style: Theme.of(context).textTheme.caption.copyWith(
+                    color: Theme.of(context).colorScheme.onBackground,
+                  ),
+            ),
             Expanded(
               child: Slider(
                 value: sliderValue,
@@ -1593,8 +1616,8 @@ class _PhotosSemiTransparent extends StatelessWidget {
         Text(
           "${(opacity * 100).round()}%",
           style: Theme.of(context).textTheme.caption.copyWith(
-            color: Theme.of(context).colorScheme.onBackground,
-          ),
+                color: Theme.of(context).colorScheme.onBackground,
+              ),
         ),
       ],
     );

@@ -69,7 +69,6 @@ class HorizontalSlidersBar extends StatelessWidget {
               child: OutlinedIconButton(
                 child: Icon(FeatherIcons.x, size: 16),
                 onPressed: onPressed,
-                borderColor: Theme.of(context).colorScheme.onBackground,
               ),
             ),
           ),

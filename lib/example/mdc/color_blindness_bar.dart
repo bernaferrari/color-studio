@@ -9,7 +9,6 @@ import '../../blocs/blocs.dart';
 import '../../shared_widgets/outlined_icon_button.dart';
 import '../../util/constants.dart';
 import '../screens/single_color_blindness.dart';
-import '../util/constants.dart';
 import 'util/color_blind_from_index.dart';
 
 class ColorBlindnessBar extends StatelessWidget {
@@ -36,7 +35,10 @@ class ColorBlindnessBar extends StatelessWidget {
                 OutlinedIconButton(
                   child: Transform.rotate(
                     angle: 0.5 * math.pi,
-                    child: const Icon(FeatherIcons.sliders, size: 16),
+                    child: Icon(
+                      FeatherIcons.sliders,
+                      size: 16,
+                    ),
                   ),
                   onPressed: onPressed,
                 ),
@@ -50,7 +52,10 @@ class ColorBlindnessBar extends StatelessWidget {
                         blindPrimary?.name ?? "Color Blindness",
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.openSans(
-                          fontWeight: FontWeight.w600,
+                          textStyle:
+                              Theme.of(context).textTheme.bodyText2.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                  ),
                         ),
                       ),
                       Text(
