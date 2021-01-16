@@ -92,9 +92,9 @@ class ColorsCubit extends ReplayCubit<ColorsState> {
     // };
 
     final initial = {
-      ColorType.Primary: Color(0xff0087FA),
+      ColorType.Primary: initialColors[ColorType.Primary],
       ColorType.Secondary: initialColors[ColorType.Secondary],
-      ColorType.Background: blendColorWithBackground(Color(0xff0087FA)),
+      ColorType.Background: initialColors[ColorType.Background],
       ColorType.Surface: initialColors[ColorType.Surface],
     };
 

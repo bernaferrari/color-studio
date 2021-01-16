@@ -298,6 +298,7 @@ class _PrevPodcast extends StatelessWidget {
           style: GoogleFonts.lato(
             fontSize: 26,
             fontWeight: FontWeight.w900,
+            color: Theme.of(context).colorScheme.onBackground,
           ),
           textAlign: TextAlign.center,
         ),
@@ -363,10 +364,10 @@ class _PrevStore extends StatelessWidget {
       children: <Widget>[
         Text(
           "Rddt",
-          style: Theme.of(context)
-              .textTheme
-              .headline5
-              .copyWith(fontWeight: FontWeight.w600),
+          style: Theme.of(context).textTheme.headline5.copyWith(
+                color: Theme.of(context).colorScheme.onBackground,
+                fontWeight: FontWeight.w600,
+              ),
         ),
         Text(
           "Alien Labs",
@@ -648,15 +649,22 @@ class _PrevSpotify extends StatelessWidget {
                   style: GoogleFonts.hind(
                     fontSize: 24,
                     fontWeight: FontWeight.w600,
+                    color: Theme.of(context).colorScheme.onBackground,
                   ),
                 ),
                 Text(
                   "Dig into the music that made your year.",
-                  style: GoogleFonts.hind(fontSize: 16),
+                  style: GoogleFonts.hind(
+                    fontSize: 16,
+                    color: Theme.of(context).colorScheme.onBackground,
+                  ),
                 ),
                 Text(
                   "What's your #1?",
-                  style: GoogleFonts.hind(fontSize: 16),
+                  style: GoogleFonts.hind(
+                    fontSize: 16,
+                    color: Theme.of(context).colorScheme.onBackground,
+                  ),
                 ),
                 SizedBox(height: 8),
                 ElevatedButton(
@@ -994,7 +1002,7 @@ class _PrevSocial extends StatelessWidget {
               icon: Icon(
                 icons[i],
                 color: i < 2
-                    ? null
+                    ? Theme.of(context).colorScheme.onBackground
                     : i < 4
                         ? secondary
                         : primary,
@@ -1366,6 +1374,7 @@ class _PrevPhotos extends StatelessWidget {
           style: GoogleFonts.heebo(
             fontSize: 18,
             fontWeight: FontWeight.w600,
+            color: Theme.of(context).colorScheme.onBackground,
           ),
         ),
         PrevPhotosTransparency(primary: primary),
@@ -1399,6 +1408,7 @@ class _PrevPhotos extends StatelessWidget {
           style: GoogleFonts.heebo(
             fontSize: 18,
             fontWeight: FontWeight.w600,
+            color: Theme.of(context).colorScheme.onBackground,
           ),
         ),
         SizedBox(height: 16),
@@ -1424,6 +1434,7 @@ class _PrevPhotos extends StatelessWidget {
           style: GoogleFonts.heebo(
             fontSize: 18,
             fontWeight: FontWeight.w600,
+            color: Theme.of(context).colorScheme.onBackground,
           ),
         ),
         _PrevSocial(primary: primary, secondary: secondary),
@@ -1474,7 +1485,12 @@ class _ShowcaseTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(title, style: Theme.of(context).textTheme.headline6);
+    return Text(
+      title,
+      style: Theme.of(context).textTheme.headline6.copyWith(
+            color: Theme.of(context).colorScheme.onBackground,
+          ),
+    );
   }
 }
 
@@ -1537,8 +1553,12 @@ class _PhotosElevationOverlay extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        Text("${elevation.round()} pt",
-            style: Theme.of(context).textTheme.caption)
+        Text(
+          "${elevation.round()} pt",
+          style: Theme.of(context).textTheme.caption.copyWith(
+                color: Theme.of(context).colorScheme.onBackground,
+              ),
+        )
       ],
     );
   }
@@ -1572,7 +1592,9 @@ class _PhotosSemiTransparent extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           "${(opacity * 100).round()}%",
-          style: Theme.of(context).textTheme.caption,
+          style: Theme.of(context).textTheme.caption.copyWith(
+            color: Theme.of(context).colorScheme.onBackground,
+          ),
         ),
       ],
     );
