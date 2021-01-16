@@ -235,19 +235,20 @@ colorScheme.onSurfaceColor = ColorFromRGB(0x${onSurface.toStr()});
                   child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                     ),
                     label: Text("Copy"),
                     icon: Icon(FeatherIcons.copy, size: 16),
                     onPressed: () {
                       Clipboard.setData(ClipboardData(text: retrievedText));
 
-                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                      ScaffoldMessenger.maybeOf(context).hideCurrentSnackBar();
                       final snackBar = SnackBar(
                         content: Text('$kind copied!'),
                         duration: const Duration(milliseconds: 1000),
                       );
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      ScaffoldMessenger.maybeOf(context).showSnackBar(snackBar);
                     },
                   ),
                 ),
