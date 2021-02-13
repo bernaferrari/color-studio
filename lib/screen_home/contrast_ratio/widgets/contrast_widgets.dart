@@ -10,6 +10,7 @@ class ContrastCircle extends StatelessWidget {
     this.animateOnInit = true,
     this.circleColor,
     this.contrastingColor,
+    this.sizeCondition,
   });
 
   final double contrast;
@@ -18,6 +19,7 @@ class ContrastCircle extends StatelessWidget {
   final bool animateOnInit;
   final Color circleColor;
   final Color contrastingColor;
+  final bool sizeCondition;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +35,7 @@ class ContrastCircle extends StatelessWidget {
       animatedInit: animateOnInit,
       circleColor: (contrast > 2) ? circleColor : null,
       contrastingColor: (contrast > 2) ? contrastingColor : null,
+        sizeCondition: sizeCondition,
     );
   }
 

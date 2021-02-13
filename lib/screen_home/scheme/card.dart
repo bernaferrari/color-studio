@@ -25,7 +25,7 @@ class ColorSchemeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isiPad = MediaQuery.of(context).size.width > 600;
+    // final isiPad = MediaQuery.of(context).size.width > 600;
 
     return Card(
       child: Column(

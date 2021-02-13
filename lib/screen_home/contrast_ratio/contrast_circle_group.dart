@@ -6,14 +6,22 @@ import '../../util/constants.dart';
 import 'widgets/contrast_widgets.dart';
 
 class ContrastCircleGroup extends StatelessWidget {
-  const ContrastCircleGroup(this.state, this.rgbColorsWithBlindness);
+  const ContrastCircleGroup({
+    @required this.state,
+    @required this.rgbColorsWithBlindness,
+    @required this.isInCard,
+  });
 
   final ContrastRatioState state;
   final Map<ColorType, Color> rgbColorsWithBlindness;
+  final bool isInCard;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    final sizeCondition = MediaQuery.of(context).size.width > 850 || !isInCard;
+
+    return Flex(
+      direction: sizeCondition ? Axis.horizontal : Axis.vertical,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -25,6 +33,7 @@ class ContrastCircleGroup extends StatelessWidget {
             contrast: state.contrastValues[0],
             contrastingColor: rgbColorsWithBlindness[state.selectedColorType],
             circleColor: rgbColorsWithBlindness[ColorType.Background],
+            sizeCondition: sizeCondition,
           ),
           ContrastCircle(
             title: describeEnum(state.selectedColorType),
@@ -32,6 +41,7 @@ class ContrastCircleGroup extends StatelessWidget {
             contrast: state.contrastValues[1],
             contrastingColor: rgbColorsWithBlindness[state.selectedColorType],
             circleColor: rgbColorsWithBlindness[ColorType.Surface],
+            sizeCondition: sizeCondition,
           ),
         ] else if (state.selectedColorType == ColorType.Background ||
             state.selectedColorType == ColorType.Surface) ...[
@@ -41,6 +51,7 @@ class ContrastCircleGroup extends StatelessWidget {
             contrast: state.contrastValues[0],
             contrastingColor: rgbColorsWithBlindness[ColorType.Primary],
             circleColor: rgbColorsWithBlindness[state.selectedColorType],
+            sizeCondition: sizeCondition,
           ),
           ContrastCircle(
             title: describeEnum(state.selectedColorType),
@@ -48,6 +59,7 @@ class ContrastCircleGroup extends StatelessWidget {
             contrast: state.contrastValues[1],
             contrastingColor: rgbColorsWithBlindness[ColorType.Secondary],
             circleColor: rgbColorsWithBlindness[state.selectedColorType],
+            sizeCondition: sizeCondition,
           ),
         ]
       ],

@@ -1,15 +1,15 @@
-import 'package:colorstudio/example/screens/about.dart';
-import 'package:colorstudio/example/screens/export_colors.dart';
-import 'package:colorstudio/gradient.dart';
-import 'package:colorstudio/screen_showcase/components_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'blocs/blocs.dart';
 import 'blocs/colors_cubit.dart';
-import 'home2.dart';
+import 'example/screens/about.dart';
+import 'example/screens/export_colors.dart';
+import 'gradient.dart';
+import 'home.dart';
 import 'screen_colors_compare/colors_compare_screen.dart';
 import 'screen_home/home_screen.dart';
+import 'screen_showcase/components_preview.dart';
 import 'screen_single_color/screen_single.dart';
 
 class ColorStudioApp extends StatefulWidget {
@@ -26,7 +26,10 @@ class _ColorStudioAppState extends State<ColorStudioApp> {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Color Studio',
-      theme: Theme.of(context),
+      theme: Theme.of(context).copyWith(
+        // this is needed so iPad and Web work the same way.
+        visualDensity: VisualDensity(),
+      ),
       routerDelegate: _routerDelegate,
       routeInformationParser: _routeInformationParser,
     );

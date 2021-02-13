@@ -32,121 +32,119 @@ class HomeScreen extends StatelessWidget {
       final bool isiPad = MediaQuery.of(context).size.width > 600;
 
       return Scaffold(
-        body: SingleChildScrollView(
-          child: Center(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: 600),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: spaceColumn(
-                    16,
-                    [
-                      Row(
-                        children: <Widget>[
-                          if (isiPad)
-                            SizedBox(width: 24)
-                          else
-                            SizedBox(width: 16),
-                          // if (!isiPad) ...[
-                          //   Expanded(
-                          //     child: RaisedButton.icon(
-                          //       label: Text("Modify"),
-                          //       icon: Icon(FeatherIcons.sliders, size: 16),
-                          //       textColor:
-                          //           Theme.of(context).colorScheme.onSurface,
-                          //       color: Theme.of(context).colorScheme.surface,
-                          //       onPressed: () {
-                          //         Navigator.pushNamed(context, "/colordetails");
-                          //       },
-                          //       shape: RoundedRectangleBorder(
-                          //         borderRadius: BorderRadius.circular(16),
-                          //         side: BorderSide(
-                          //           color: Theme.of(context)
-                          //               .colorScheme
-                          //               .onSurface
-                          //               .withOpacity(0.3),
-                          //         ),
-                          //       ),
-                          //     ),
-                          //   ),
-                          //   const SizedBox(width: 16),
-                          // ],
-                          // Expanded(
-                          //   child: RaisedButton.icon(
-                          //     label: Text("Preview"),
-                          //     icon: Icon(FeatherIcons.layout, size: 16),
-                          //     textColor: colorScheme.onSurface,
-                          //     color: colorScheme.surface,
-                          //     onPressed: () {
-                          //       Navigator.pushNamed(context, "/componentspreview");
-                          //     },
-                          //     shape: RoundedRectangleBorder(
-                          //       borderRadius: BorderRadius.circular(16),
-                          //       side: BorderSide(
-                          //         color: colorScheme.onSurface.withOpacity(0.30),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-                          if (isiPad)
-                            const SizedBox(width: 8)
-                          else
-                            const SizedBox(width: 16),
+        body: Center(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 600),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ListView(
+                children: spaceColumn(
+                  16,
+                  [
+                    Row(
+                      children: <Widget>[
+                        if (isiPad)
+                          SizedBox(width: 24)
+                        else
+                          SizedBox(width: 16),
+                        // if (!isiPad) ...[
+                        //   Expanded(
+                        //     child: RaisedButton.icon(
+                        //       label: Text("Modify"),
+                        //       icon: Icon(FeatherIcons.sliders, size: 16),
+                        //       textColor:
+                        //           Theme.of(context).colorScheme.onSurface,
+                        //       color: Theme.of(context).colorScheme.surface,
+                        //       onPressed: () {
+                        //         Navigator.pushNamed(context, "/colordetails");
+                        //       },
+                        //       shape: RoundedRectangleBorder(
+                        //         borderRadius: BorderRadius.circular(16),
+                        //         side: BorderSide(
+                        //           color: Theme.of(context)
+                        //               .colorScheme
+                        //               .onSurface
+                        //               .withOpacity(0.3),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        //   const SizedBox(width: 16),
+                        // ],
+                        // Expanded(
+                        //   child: RaisedButton.icon(
+                        //     label: Text("Preview"),
+                        //     icon: Icon(FeatherIcons.layout, size: 16),
+                        //     textColor: colorScheme.onSurface,
+                        //     color: colorScheme.surface,
+                        //     onPressed: () {
+                        //       Navigator.pushNamed(context, "/componentspreview");
+                        //     },
+                        //     shape: RoundedRectangleBorder(
+                        //       borderRadius: BorderRadius.circular(16),
+                        //       side: BorderSide(
+                        //         color: colorScheme.onSurface.withOpacity(0.30),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+                        if (isiPad)
+                          const SizedBox(width: 8)
+                        else
+                          const SizedBox(width: 16),
+                      ],
+                    ),
+                    // PageHeader(
+                    //   title: "Color Studio",
+                    //   subtitle: "",
+                    //   iconData: FeatherIcons.home,
+                    //   isFeather: true,
+                    // ),
+                    // NewScreen(
+                    //   rgbColors: state.rgbColors,
+                    //   rgbColorsWithBlindness: state.rgbColorsWithBlindness,
+                    //   hsluvColors: state.hsluvColors,
+                    //   locked: state.locked,
+                    // ),
+                    ColorSchemeCard(
+                      rgbColors: state.rgbColors,
+                      rgbColorsWithBlindness: state.rgbColorsWithBlindness,
+                      hsluvColors: state.hsluvColors,
+                      locked: state.locked,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: spaceRow(
+                        16.0,
+                        [
+                          MiddleButton(
+                            "Compare",
+                            Icons.compare_arrows_rounded,
+                            toMultiColor,
+                          ),
+                          MiddleButton(
+                            "Single",
+                            FeatherIcons.sliders,
+                            toSingleColor,
+                          ),
+                          MiddleButton(
+                            "Settings",
+                            FeatherIcons.settings,
+                            toSettings,
+                          ),
                         ],
                       ),
-                      // PageHeader(
-                      //   title: "Color Studio",
-                      //   subtitle: "",
-                      //   iconData: FeatherIcons.home,
-                      //   isFeather: true,
-                      // ),
-                      // NewScreen(
-                      //   rgbColors: state.rgbColors,
-                      //   rgbColorsWithBlindness: state.rgbColorsWithBlindness,
-                      //   hsluvColors: state.hsluvColors,
-                      //   locked: state.locked,
-                      // ),
-                      ColorSchemeCard(
-                        rgbColors: state.rgbColors,
-                        rgbColorsWithBlindness: state.rgbColorsWithBlindness,
-                        hsluvColors: state.hsluvColors,
-                        locked: state.locked,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: spaceRow(
-                          16.0,
-                          [
-                            MiddleButton(
-                              "Compare",
-                              Icons.compare_arrows_rounded,
-                              toMultiColor,
-                            ),
-                            MiddleButton(
-                              "Single",
-                              FeatherIcons.sliders,
-                              toSingleColor,
-                            ),
-                            MiddleButton(
-                              "Settings",
-                              FeatherIcons.settings,
-                              toSettings,
-                            ),
-                          ],
-                        ),
-                      ),
-                      ContrastRatioCard(state.rgbColorsWithBlindness),
-                      // ColorBlindnessCardSimplified(
-                      //   state.rgbColors,
-                      //   state.locked,
-                      // ),
-                      ColorBlindnessCard(
-                        state.rgbColors,
-                        state.locked,
-                      )
-                    ],
-                  ),
+                    ),
+                    ContrastRatioCard(state.rgbColorsWithBlindness),
+                    // ColorBlindnessCardSimplified(
+                    //   state.rgbColors,
+                    //   state.locked,
+                    // ),
+                    ColorBlindnessCard(
+                      state.rgbColors,
+                      state.locked,
+                    )
+                  ],
                 ),
               ),
             ),
@@ -169,7 +167,7 @@ class MiddleButton extends StatelessWidget {
     return Expanded(
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+          padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),

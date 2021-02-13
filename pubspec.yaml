@@ -1,5 +1,6 @@
 name: colorstudio
 description: Discover new colors.
+publish_to: none
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -11,22 +12,22 @@ description: Discover new colors.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.1
+version: 1.0.0
 
 environment:
-  sdk: ">=2.9.0 <3.0.0"
+  sdk: ">=2.11.0 <3.0.0"
 
 dependencies:
   animations: ^1.1.2
   bloc: ^6.1.1
   color_blindness: ^0.0.1
   effective_dart: ^1.3.0
-  equatable: ^1.2.5
+  equatable: ^1.2.6
   flutter:
     sdk: flutter
-  flutter_bloc: ^6.1.1
+  flutter_bloc: ^6.1.2
   flutter_feather_icons: ^1.0.3
-  google_fonts: ^1.1.1
+  google_fonts: ^1.1.2
   hive: ^1.4.4+1
   hive_flutter: ^0.3.1
   hsluv: ^1.0.6
@@ -36,6 +37,11 @@ dependencies:
   rxdart: ^0.25.0
   shared_preferences: ^0.5.12+4
   url_launcher: ^5.5.0
+  window_size:
+    git:
+      url: git://github.com/google/flutter-desktop-embedding.git
+      path: plugins/window_size
+      ref: 405e6c5476fbdfd3859cf2f8570b21afb692ea3a
 
 dev_dependencies:
   flutter_launcher_icons: ^0.8.1

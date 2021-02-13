@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -7,9 +9,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:window_size/window_size.dart';
 
 import 'blocs/blocs.dart';
-import 'example/util/constants.dart';
 import 'navigator.dart';
 import 'util/constants.dart';
 import 'util/shuffle_color.dart';
@@ -18,6 +20,12 @@ Future<void> main() async {
   // this is needed so Hive can be initialised synchronously.
   // when the app runs, Hive should have a value already.
   WidgetsFlutterBinding.ensureInitialized();
+  if (!kIsWeb) {
+    if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+      setWindowTitle("Color Studio");
+      setWindowMinSize(Size(300, 600));
+    }
+  }
   await openBox();
   Bloc.observer = SimpleBlocObserver();
   runApp(BoxedApp());
@@ -142,68 +150,11 @@ class _BoxedAppState extends State<BoxedApp> {
               ),
               elevation: 0,
               margin: EdgeInsets.zero,
-              // margin: EdgeInsets.symmetric(
-              //   horizontal: 16.0,
-              //   vertical: 8.0,
-              // ),
             ),
           ),
           child: ColorStudioApp(),
         );
       }),
-      // MaterialApp(
-      //   routes: {
-      //     "/": (context) {
-      //       return Home();
-      //     },
-      //     "/colordetails": (context) {
-      //       updateStateIfNecessary();
-      //       return SingleColorHome();
-      //     },
-      //     "/componentspreview": (context) {
-      //       // necessary if it opens in split-view
-      //       updateStateIfNecessary();
-      //       return ComponentsPreview();
-      //     },
-      //     "/export": (context) => ExportColors(),
-      //   },
-      //   theme: ThemeData(
-      //     typography: Typography.material2018().copyWith(
-      //       black: Typography.dense2018,
-      //       tall: Typography.tall2018,
-      //       englishLike: Typography.englishLike2018,
-      //     ),
-      //     dialogTheme: DialogTheme(
-      //       shape: RoundedRectangleBorder(
-      //         borderRadius: BorderRadius.circular(defaultRadius),
-      //       ),
-      //     ),
-      //     buttonTheme: ButtonThemeData(
-      //       padding: EdgeInsets.zero,
-      //       shape: RoundedRectangleBorder(
-      //         borderRadius: BorderRadius.circular(defaultRadius / 2),
-      //       ),
-      //     ),
-      //     cardTheme: CardTheme(
-      //       shape: RoundedRectangleBorder(
-      //         borderRadius: BorderRadius.circular(defaultRadius),
-      //       ),
-      //     ),
-      //   ),
-      // ),
     );
   }
-
-// void updateStateIfNecessary() {
-//   final currentState = _mdcSelectedBloc.state as MDCLoadedState;
-//
-//   if (currentState.locked[currentState.selected] == true) {
-//     _mdcSelectedBloc.add(
-//       MDCLoadEvent(
-//         currentColor: currentState.rgbColors[kPrimary],
-//         selected: kPrimary,
-//       ),
-//     );
-//   }
-// }
 }

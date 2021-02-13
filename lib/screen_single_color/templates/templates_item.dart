@@ -44,7 +44,6 @@ class TemplatePreview extends StatelessWidget {
             child: Center(
               child: ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.all(16),
                   elevation: 0,
                   primary: primary,
                   // textStyle: TextStyle(color: primary),
@@ -118,7 +117,7 @@ class HexButton extends StatelessWidget {
         text,
         style: GoogleFonts.b612Mono(
           textStyle: Theme.of(context).textTheme.bodyText2,
-          fontSize: 12,
+          fontSize: 10,
           color: onColor,
         ),
         overflow: TextOverflow.ellipsis,

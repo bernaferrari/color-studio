@@ -54,82 +54,80 @@ class _ShowcaseState extends State<Showcase> {
         Expanded(
           // SingleChildScrollView + Column has a better performance than a ListView
           // Flutter works in mysterious ways.
-          child: SingleChildScrollView(
-            child: Column(
-              key: const PageStorageKey("PreviewList"),
-              children: <Widget>[
-                const SizedBox(height: 8),
-                // _PrevShowcase(
-                //   primary: primaryColor,
-                //   background: backgroundColor,
-                // ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                  child: PageHeader(
-                    title: "Preview",
-                    subtitle: "Simulate real-world scenarios and components",
-                    iconData: Icons.art_track_rounded,
+          child: ListView(
+            key: const PageStorageKey("PreviewList"),
+            children: <Widget>[
+              const SizedBox(height: 8),
+              // _PrevShowcase(
+              //   primary: primaryColor,
+              //   background: backgroundColor,
+              // ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: PageHeader(
+                  title: "Preview",
+                  subtitle: "Simulate real-world scenarios and components",
+                  iconData: Icons.art_track_rounded,
+                ),
+              ),
+              // _PrevThankful(
+              //   primary: primaryColor,
+              //   background: backgroundColor,
+              // ),
+              _PrevSpotify(
+                primary: primaryColor,
+                background: backgroundColor,
+              ),
+              _PrevFacebook(
+                primary: primaryColor,
+                background: backgroundColor,
+                elevation: currentElevation,
+              ),
+              _PrevTrip(
+                primary: primaryColor,
+                surface: surfaceColor,
+                elevation: currentElevation,
+              ),
+              Wrap(
+                alignment: WrapAlignment.spaceAround,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                runSpacing: 16,
+                spacing: 8,
+                children: <Widget>[
+                  _PrevClock(primary: primaryColor),
+                  _PrevStore(
+                    primary: primaryColor,
+                    background: backgroundColor,
+                    surface: surfaceColor,
                   ),
-                ),
-                // _PrevThankful(
-                //   primary: primaryColor,
-                //   background: backgroundColor,
-                // ),
-                _PrevSpotify(
-                  primary: primaryColor,
-                  background: backgroundColor,
-                ),
-                _PrevFacebook(
-                  primary: primaryColor,
-                  background: backgroundColor,
-                  elevation: currentElevation,
-                ),
-                _PrevTrip(
-                  primary: primaryColor,
-                  surface: surfaceColor,
-                  elevation: currentElevation,
-                ),
-                Wrap(
-                  alignment: WrapAlignment.spaceAround,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  runSpacing: 16,
-                  spacing: 8,
-                  children: <Widget>[
-                    _PrevClock(primary: primaryColor),
-                    _PrevStore(
-                      primary: primaryColor,
-                      background: backgroundColor,
-                      surface: surfaceColor,
-                    ),
-                  ],
-                ),
-                _PrevCupertino(
-                    primary: primaryColor, backgroundColor: backgroundColor),
-                _PrevPhotos(
-                  primary: primaryColor,
-                  surface: surfaceColor,
-                  background: backgroundColor,
-                  elevation: currentElevation,
-                ),
-                _PrevPodcast(
-                  primary: primaryColor,
-                  surface: surfaceColor,
-                  elevation: currentElevation,
-                ),
-                const SizedBox(height: 24),
-                _PrevSDKMonitor(
-                  primary: primaryColor,
-                  elevation: currentElevation,
-                ),
-                SizedBox(height: 24),
-                _PrevPodcasts(
-                  primary: primaryColor,
-                  elevation: currentElevation,
-                ),
-                SizedBox(height: 48),
-                const SizedBox(height: 16),
-              ],
-            ),
+                ],
+              ),
+              _PrevCupertino(
+                  primary: primaryColor, backgroundColor: backgroundColor),
+              _PrevPhotos(
+                primary: primaryColor,
+                surface: surfaceColor,
+                background: backgroundColor,
+                elevation: currentElevation,
+              ),
+              _PrevPodcast(
+                primary: primaryColor,
+                surface: surfaceColor,
+                elevation: currentElevation,
+              ),
+              const SizedBox(height: 24),
+              _PrevSDKMonitor(
+                primary: primaryColor,
+                elevation: currentElevation,
+              ),
+              SizedBox(height: 24),
+              _PrevPodcasts(
+                primary: primaryColor,
+                elevation: currentElevation,
+              ),
+              SizedBox(height: 48),
+              const SizedBox(height: 16),
+            ],
           ),
         ),
         Container(
@@ -844,6 +842,7 @@ class _PrevFacebook extends StatelessWidget {
                 ),
                 child: Text(
                   "VIEW PROFILE ON APP",
+                  overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.lato(
                     fontWeight: FontWeight.w600,
                     fontSize: 16,
@@ -1350,7 +1349,7 @@ class _PrevPhotosTransparencyState extends State<PrevPhotosTransparency> {
           ],
         ),
         Container(
-          height: 80,
+          height: 100,
           child: ListView(
             key: const PageStorageKey("photosSemiTransparent"),
             scrollDirection: Axis.horizontal,

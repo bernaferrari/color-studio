@@ -14,7 +14,6 @@ import '../example/widgets/update_color_dialog.dart';
 import '../screen_home/contrast_ratio/contrast_circle_group.dart';
 import '../screen_home/scheme/widgets/expanded_section.dart';
 import '../util/constants.dart';
-import 'templates/dynamic_templates_screen.dart';
 import 'templates/templates_screen.dart';
 import 'vertical_picker/vertical_picker_main.dart';
 
@@ -227,9 +226,13 @@ class _ColorContrastRow extends StatelessWidget {
       }
 
       return Center(
-        child: SizedBox(
-          width: 500,
-          child: ContrastCircleGroup(state, rgbColors),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 500),
+          child: ContrastCircleGroup(
+            state: state,
+            rgbColorsWithBlindness: rgbColors,
+            isInCard: false,
+          ),
         ),
       );
     });

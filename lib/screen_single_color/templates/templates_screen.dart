@@ -31,7 +31,7 @@ class TemplatesScreen extends StatelessWidget {
             sliver: SliverGrid(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: MediaQuery.of(context).size.width / 600,
+                childAspectRatio: MediaQuery.of(context).size.width / 700,
                 crossAxisSpacing: 8,
                 mainAxisSpacing: 8,
               ),

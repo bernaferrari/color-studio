@@ -191,19 +191,19 @@ class _ComparisonPart extends StatelessWidget {
         "title": "Optimal",
         "letters": "AAA",
         "contrast": 7.0,
-        "fontSize": 14,
+        "fontSize": 14.0,
       },
       {
         "title": "Small",
         "letters": "AA",
         "contrast": 4.5,
-        "fontSize": 14,
+        "fontSize": 14.0,
       },
       {
         "title": "Large",
         "letters": "AA Large",
         "contrast": 3.0,
-        "fontSize": 18
+        "fontSize": 18.0
       },
     ];
 
@@ -225,7 +225,7 @@ class _ComparisonPart extends StatelessWidget {
                       style: TextStyle(
                         fontSize: param["fontSize"],
                         color: otherColor,
-                        fontWeight: param["fontSize"] == 18
+                        fontWeight: param["fontSize"] == 18.0
                             ? FontWeight.w500
                             : FontWeight.w400,
                       ),
@@ -526,6 +526,7 @@ class _TopSectionButtons extends StatelessWidget {
                   borderRadius: BorderRadius.circular(defaultRadius),
                 ),
                 side: BorderSide(color: outlinedButtonSideColor),
+                padding: EdgeInsets.zero,
                 primary: contrastColor,
               ),
               child: Icon(
@@ -549,6 +550,7 @@ class _TopSectionButtons extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(defaultRadius),
                   ),
+                  padding: EdgeInsets.zero,
                   side: BorderSide(color: outlinedButtonSideColor),
                   primary: contrastColor,
                   elevation: 0,

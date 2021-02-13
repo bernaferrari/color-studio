@@ -30,9 +30,10 @@ class SchemeCompactedItem extends StatelessWidget {
             onPressed: onPressed,
             style: TextButton.styleFrom(
               shape: RoundedRectangleBorder(),
+              padding: EdgeInsets.zero,
             ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12.0),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: 48),
               child: Row(
                 children: <Widget>[
                   SizedBox(width: 16),
@@ -85,66 +86,74 @@ class SchemeCompactedItem extends StatelessWidget {
             color: Theme.of(context).colorScheme.onSurface.withOpacity(0.20),
           ),
           // SizedBox(width: 8),
-          SizedBox(
-            width: 112,
-            height: 48,
-            child: TextButton(
-              style: TextButton.styleFrom(shape: RoundedRectangleBorder()),
-              onPressed: () {
-                context
-                    .read<ColorsCubit>()
-                    .updateLock(shouldLock: !locked, selectedLock: currentType);
-              },
-              child: Container(
-                padding: EdgeInsets.all(8),
-                margin: EdgeInsets.symmetric(horizontal: 8),
-                decoration: BoxDecoration(
-                  color: !locked
-                      ? null
-                      : Theme.of(context)
-                          .colorScheme
-                          .onSurface
-                          .withOpacity(0.10),
-                  border: Border.all(
+          TextButton(
+            style: TextButton.styleFrom(shape: RoundedRectangleBorder()),
+            onPressed: () {
+              context
+                  .read<ColorsCubit>()
+                  .updateLock(shouldLock: !locked, selectedLock: currentType);
+            },
+            child: Container(
+              padding: EdgeInsets.all(8),
+              margin: EdgeInsets.symmetric(horizontal: 8),
+              decoration: BoxDecoration(
+                color: !locked
+                    ? null
+                    : Theme.of(context).colorScheme.onSurface.withOpacity(0.10),
+                border: Border.all(
+                  color:
+                      Theme.of(context).colorScheme.onSurface.withOpacity(0.20),
+                ),
+                // even the tiniest detail must be honored.
+                // only show round radius on the last element when not expanded.
+                borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(
+                    (currentType == ColorType.Surface && expanded == false)
+                        ? 8.0
+                        : 0.0,
+                  ),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  // Apply MANUAL text on top of AUTO, so size always fits.
+                  Stack(
+                    children: [
+                      Text(
+                        locked ? "AUTO" : "MANUAL",
+                        style: Theme.of(context).textTheme.caption.copyWith(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurface
+                                  .withOpacity(locked ? 1.0 : 0.5),
+                            ),
+                      ),
+                      Visibility(
+                        maintainState: true,
+                        maintainAnimation: true,
+                        maintainInteractivity: true,
+                        maintainSemantics: true,
+                        maintainSize: true,
+                        visible: false,
+                        child: Text(
+                          "MANUAL",
+                          style: Theme.of(context).textTheme.caption,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(width: 8),
+                  Icon(
+                    locked ? FeatherIcons.lock : FeatherIcons.unlock,
+                    size: 16,
                     color: Theme.of(context)
                         .colorScheme
                         .onSurface
-                        .withOpacity(0.20),
+                        .withOpacity(locked ? 1.0 : 0.5),
                   ),
-                  // even the tiniest detail must be honored.
-                  // only show round radius on the last element when not expanded.
-                  borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(
-                      (currentType == ColorType.Surface && expanded == false)
-                          ? 8.0
-                          : 0.0,
-                    ),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      locked ? "AUTO" : "MANUAL",
-                      style: Theme.of(context).textTheme.caption.copyWith(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSurface
-                                .withOpacity(locked ? 1.0 : 0.5),
-                          ),
-                    ),
-                    SizedBox(width: 8),
-                    Icon(
-                      locked ? FeatherIcons.lock : FeatherIcons.unlock,
-                      size: 16,
-                      color: Theme.of(context)
-                          .colorScheme
-                          .onSurface
-                          .withOpacity(locked ? 1.0 : 0.5),
-                    ),
-                  ],
-                ),
+                ],
               ),
             ),
           ),

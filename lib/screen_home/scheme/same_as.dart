@@ -40,15 +40,17 @@ class SameAs extends StatelessWidget {
             style: TextStyle(color: textColor, fontWeight: FontWeight.w300),
           ),
           SizedBox(height: 8),
-          OutlineButton.icon(
+          OutlinedButton.icon(
+            style: OutlinedButton.styleFrom(
+              // highlightedBorderColor: textColor.withOpacity(0.70),
+              // borderSide: BorderSide(color: textColor.withOpacity(0.70)),
+              // textColor: textColor,
+            ),
             onPressed: () {
               context
                   .read<ColorsCubit>()
                   .updateLock(shouldLock: false, selectedLock: selected);
             },
-            highlightedBorderColor: textColor.withOpacity(0.70),
-            borderSide: BorderSide(color: textColor.withOpacity(0.70)),
-            textColor: textColor,
             icon: Icon(
               FeatherIcons.unlock,
               size: 16,

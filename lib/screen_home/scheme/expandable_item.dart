@@ -74,14 +74,6 @@ class _SchemeExpandableItemState extends State<SchemeExpandableItem> {
             isLocked: widget.locked[keysList[i]],
             selected: keysList[i],
           ),
-          // These dividers get ugly in web mode.
-          if (!kIsWeb && i != widget.rgbColors.length - 1)
-            Divider(
-              height: 0,
-              indent: (index == i) ? 0 : 56,
-              endIndent: 1,
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.30),
-            ),
         ],
       ],
     );

@@ -14,6 +14,7 @@ class CirclePercentageWidget extends StatefulWidget {
     this.circleColor,
     this.contrastingColor,
     this.animatedInit = true,
+    this.sizeCondition,
   });
 
   final String title;
@@ -24,6 +25,7 @@ class CirclePercentageWidget extends StatefulWidget {
   final Color circleColor;
   final Color contrastingColor;
   final bool animatedInit;
+  final bool sizeCondition;
 
   @override
   State createState() => _CirclePercentageWidgetState();
@@ -69,25 +71,56 @@ class _CirclePercentageWidgetState extends State<CirclePercentageWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    final isLargeSize = MediaQuery.of(context).size.width > 850;
+
+    return Flex(
+      direction: widget.sizeCondition ? Axis.vertical : Axis.horizontal,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Text(
-          "${widget.title} x",
-          style: Theme.of(context).textTheme.bodyText1.copyWith(
-                fontSize: 14,
-                fontWeight: FontWeight.w200,
+        Flexible(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "${widget.title} x",
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.bodyText1.copyWith(
+                      fontSize: isLargeSize ? 16 : 14,
+                      fontWeight: FontWeight.w200,
+                    ),
               ),
-        ),
-        Text(
-          widget.subtitle,
-          style: Theme.of(context).textTheme.bodyText1.copyWith(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
+              Text(
+                widget.subtitle,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.bodyText1.copyWith(
+                      fontSize: isLargeSize ? 16 : 14,
+                      fontWeight: FontWeight.w600,
+                    ),
               ),
+              // write the longest possible string, so that the circles don't keep alternating the size.
+              Visibility(
+                maintainSize: true,
+                maintainAnimation: true,
+                maintainState: true,
+                visible: false,
+                child: SizedBox(
+                  height: 0,
+                  child: Text(
+                    "Background x",
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyText1.copyWith(
+                          fontSize: isLargeSize ? 16 : 14,
+                          fontWeight: FontWeight.w200,
+                        ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
         Container(
-          width: 80,
-          height: 80,
+          width: isLargeSize ? 100 : 80,
+          height: isLargeSize ? 100 : 80,
           margin: const EdgeInsets.symmetric(vertical: 16),
           child: CustomPaint(
             isComplex: false,
@@ -121,23 +154,6 @@ class _CirclePercentageWidgetState extends State<CirclePercentageWidget>
                   ),
                 ],
               ),
-            ),
-          ),
-        ),
-        // write the longest possible string, so that the circles don't keep alternating the size.
-        Visibility(
-          maintainSize: true,
-          maintainAnimation: true,
-          maintainState: true,
-          visible: false,
-          child: SizedBox(
-            height: 0,
-            child: Text(
-              "Background x",
-              style: Theme.of(context).textTheme.bodyText1.copyWith(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w200,
-                  ),
             ),
           ),
         ),
