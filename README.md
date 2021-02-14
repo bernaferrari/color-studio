@@ -9,8 +9,9 @@ specification and form a coherent theme. This project aims to help solve these p
 
 <a href="https://bernaferrari.github.io/color-studio"><img src="assets/try_here.png" height="50"/></a> [<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="80">](https://play.google.com/store/apps/details?id=com.bernaferrari.colorstudio)
 
-| Main | Single Selector | |:-:|:-:| | ![First](assets/web_0.png?raw=true)
-| ![Sec](assets/web_1.png?raw=true) |
+| Main | Single Selector |
+|:-:|:-:|
+| ![First](assets/web_0.png?raw=true) | ![Sec](assets/web_1.png?raw=true) |
 
 ### History
 
@@ -69,17 +70,6 @@ or [this](https://www.carbondesignsystem.com/guidelines/accessibility/color/).
 This project allows you to select between 8 different Color Blindness scenarios using the formulas from a Swift library
 named [Colorblinds](https://github.com/jdekock/Colorblinds). It automatically updates the contrast ratio between colors,
 so that you can see simulate a color blind scenario.
-
-#### Preview Page
-
-Wouldn't be great to immediately test your colors against a template and simulate how a real app would look like with
-them? This is exactly what this page is about. You can change the elevation from 0 to 24pt or color blindness value and
-immediately see how the layout adapts. There are many layouts inspired by real designs: Spotify, Facebook, Microsoft,
-Skyscanner, Kayak, Google's Clock app, Play Store, SDK Monitor and PocketCasts. In iPad, web or a device with a large
-screen, this screen is shown in split-view with the Edit colors screen. This way, it gets even easier to update your
-design.
-
-<p align="center"><img src="assets/preview_purple.PNG?raw=true" alt="Split-view in iPad" height="350px"></p>
 
 ## Reporting Issues
 
