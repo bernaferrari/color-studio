@@ -77,46 +77,46 @@ class _CirclePercentageWidgetState extends State<CirclePercentageWidget>
       direction: widget.sizeCondition ? Axis.vertical : Axis.horizontal,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Flexible(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                "${widget.title} x",
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyText1.copyWith(
-                      fontSize: isLargeSize ? 16 : 14,
-                      fontWeight: FontWeight.w200,
-                    ),
-              ),
-              Text(
-                widget.subtitle,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyText1.copyWith(
-                      fontSize: isLargeSize ? 16 : 14,
-                      fontWeight: FontWeight.w600,
-                    ),
-              ),
-              // write the longest possible string, so that the circles don't keep alternating the size.
-              Visibility(
-                maintainSize: true,
-                maintainAnimation: true,
-                maintainState: true,
-                visible: false,
-                child: SizedBox(
-                  height: 0,
-                  child: Text(
-                    "Background x",
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyText1.copyWith(
-                          fontSize: isLargeSize ? 16 : 14,
-                          fontWeight: FontWeight.w200,
-                        ),
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              "${widget.title} x",
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText1.copyWith(
+                    fontSize: isLargeSize ? 16 : 14,
+                    fontWeight: FontWeight.w200,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
+            ),
+            Text(
+              widget.subtitle,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText1.copyWith(
+                    fontSize: isLargeSize ? 16 : 14,
+                    fontWeight: FontWeight.w600,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+            ),
+            // write the longest possible string, so that the circles don't keep alternating the size.
+            Visibility(
+              maintainSize: true,
+              maintainAnimation: true,
+              maintainState: true,
+              visible: false,
+              child: SizedBox(
+                height: 0,
+                child: Text(
+                  "Background x",
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyText1.copyWith(
+                        fontSize: isLargeSize ? 16 : 14,
+                        fontWeight: FontWeight.w200,
+                      ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
         Container(
           width: isLargeSize ? 100 : 80,

@@ -120,7 +120,7 @@ class ContrastRatioCard extends StatelessWidget {
                                                   .onPrimary
                                               : Theme.of(context)
                                                   .colorScheme
-                                                  .onBackground,
+                                                  .onSurface,
                                     ),
                               ),
                               onPressed: () {

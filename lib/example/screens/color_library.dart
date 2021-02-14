@@ -11,37 +11,24 @@ import '../../util/shuffle_color.dart';
 import '../mdc/components.dart';
 import '../widgets/update_color_dialog.dart';
 
-class ColorLibrary extends StatefulWidget {
-  const ColorLibrary({this.color});
+class ColorLibrary extends StatelessWidget {
+  const ColorLibrary({this.backgroundColor});
 
-  final Color color;
-
-  @override
-  _ColorLibraryState createState() => _ColorLibraryState();
-}
-
-class _ColorLibraryState extends State<ColorLibrary> {
-  int currentSegment = 0;
-
-  void onValueChanged(int newValue) {
-    setState(() {
-      currentSegment = newValue;
-    });
-  }
+  final Color backgroundColor;
 
   @override
   Widget build(BuildContext context) {
     final colorsList = getColorClaim();
 
     return Scaffold(
+      backgroundColor: backgroundColor,
       appBar: AppBar(
         title:
             Text("Color Library", style: Theme.of(context).textTheme.headline6),
-        backgroundColor: widget.color,
         elevation: 0,
         centerTitle: false,
         actions: <Widget>[
-          Center(child: ColorSearchButton(color: widget.color)),
+          Center(child: ColorSearchButton(color: backgroundColor)),
           const SizedBox(width: 8),
           // IconButton(
           //   icon: Icon(FeatherIcons.externalLink),

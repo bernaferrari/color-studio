@@ -53,10 +53,13 @@ class _BoxedAppState extends State<BoxedApp> {
   @override
   void initState() {
     super.initState();
+
+    final int shuffle = Hive.box<dynamic>("settings").get("shuffle");
+
     _colorBlindnessCubit = ColorBlindnessCubit();
     _colorsCubit = ColorsCubit(
       _colorBlindnessCubit,
-      ColorsCubit.initialState(getRandomMaterialDark()),
+      ColorsCubit.initialState(getRandomPreference(shuffle)),
     );
     _contrastRatioCubit = ContrastRatioCubit(_colorsCubit);
   }

@@ -74,7 +74,7 @@ class ScreenSingle extends StatelessWidget {
                       // ),
                       // AboutScreen(isSplitView: isSplitView),
                       TemplatesScreen(backgroundColor: selectedRgbColor),
-                      ColorLibrary(color: selectedRgbColor),
+                      ColorLibrary(backgroundColor: selectedRgbColor),
                     ],
                   ),
                 ),

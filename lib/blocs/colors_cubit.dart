@@ -118,6 +118,8 @@ class ColorsCubit extends ReplayCubit<ColorsState> {
     final lock = Map<ColorType, bool>.from(state.locked);
     lock[selectedLock] = shouldLock;
 
+    ColorType currentSelected = state.selected;
+
     // Background needs to call [findColor] before Surface does, else
     // Surface will receive the previous Background color.
     [
@@ -129,6 +131,10 @@ class ColorsCubit extends ReplayCubit<ColorsState> {
       if (lock[key] == true) {
         final updatedColor = _findColor(allRgb, key);
         allRgb[key] = updatedColor;
+        // When the one selected is locked, select primary (which can't be locked).
+        if (currentSelected == key) {
+          currentSelected = ColorType.Primary;
+        }
       }
     });
 
@@ -138,6 +144,7 @@ class ColorsCubit extends ReplayCubit<ColorsState> {
         hsluvColors: _convertToHSLuv(allRgb),
         rgbColorsWithBlindness: _getBlindness(allRgb, state.blindnessSelected),
         locked: lock,
+        selected: currentSelected,
       ),
     );
   }

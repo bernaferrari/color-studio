@@ -61,7 +61,9 @@ class SchemeCompactedItem extends StatelessWidget {
                         Text(
                           describeEnum(currentType),
                           overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.subtitle1,
+                          style: Theme.of(context).textTheme.subtitle1.copyWith(
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
                         ),
                       ],
                     ),
