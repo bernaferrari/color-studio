@@ -216,7 +216,7 @@ Map<ColorType, Color> getRandomMaterial() {
 }
 
 Map<ColorType, Color> getRandomPreference(int prefs) {
-  if (prefs == 0) {
+  if (prefs == 0 || prefs == null) {
     return getRandomMaterialDark();
   } else if (prefs == 1) {
     return getRandomMaterialLight();
