@@ -30,6 +30,7 @@ class _ColorStudioAppState extends State<ColorStudioApp> {
         // this is needed so iPad and Web work the same way.
         visualDensity: VisualDensity(),
       ),
+      debugShowCheckedModeBanner: false,
       routerDelegate: _routerDelegate,
       routeInformationParser: _routeInformationParser,
     );
