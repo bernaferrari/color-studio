@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class TemplateStruct {
   const TemplateStruct({
-    @required this.title,
-    @required this.colors,
-    @required this.contrastingColors,
+    required this.title,
+    required this.colors,
+    required this.contrastingColors,
   });
 
   final String title;

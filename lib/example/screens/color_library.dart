@@ -12,7 +12,7 @@ import '../mdc/components.dart';
 import '../widgets/update_color_dialog.dart';
 
 class ColorLibrary extends StatelessWidget {
-  const ColorLibrary({this.backgroundColor});
+  const ColorLibrary({required this.backgroundColor});
 
   final Color backgroundColor;
 
@@ -89,7 +89,7 @@ class ColorLibrary extends StatelessWidget {
 //                                }),
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText1
+                                  .bodyText1!
                                   .copyWith(
                                     color: contrastingRGBColor(colorsList[i])
                                         .withOpacity(0.70),

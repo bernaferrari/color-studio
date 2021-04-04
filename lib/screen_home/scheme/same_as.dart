@@ -9,16 +9,16 @@ import '../../util/constants.dart';
 
 class SameAs extends StatelessWidget {
   const SameAs({
-    @required this.selected,
-    @required this.color,
-    @required this.lightness,
+    required this.selected,
+    required this.color,
+    required this.lightness,
     this.children,
   });
 
   final ColorType selected;
   final Color color;
   final double lightness;
-  final List<Widget> children;
+  final List<Widget>? children;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +65,7 @@ class SameAs extends StatelessWidget {
             ),
           ),
           SizedBox(height: 8),
-          if (children != null) ...children
+          if (children != null) ...children!
         ],
       ),
     );

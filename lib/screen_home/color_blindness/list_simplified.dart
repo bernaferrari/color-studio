@@ -8,7 +8,8 @@ import '../../util/constants.dart';
 import 'item_simplified.dart';
 
 class ColorBlindnessListSimplified extends StatelessWidget {
-  const ColorBlindnessListSimplified({this.contrastedList, this.locked});
+  const ColorBlindnessListSimplified(
+      {required this.contrastedList, required this.locked});
 
   final Map<ColorType, Color> contrastedList;
   final Map<ColorType, bool> locked;
@@ -20,7 +21,7 @@ class ColorBlindnessListSimplified extends StatelessWidget {
       mappedValues[key] = retrieveColorBlindList(value);
     });
 
-    final List<ColorWithBlind> primaryBlind = mappedValues[ColorType.Primary];
+    final List<ColorWithBlind>? primaryBlind = mappedValues[ColorType.Primary];
     final surfaceBlind = mappedValues[ColorType.Surface];
 
     return BlocBuilder<ColorBlindnessCubit, int>(builder: (_, state) {
@@ -31,14 +32,14 @@ class ColorBlindnessListSimplified extends StatelessWidget {
           spacing: 8,
           alignment: WrapAlignment.center,
           children: <Widget>[
-            for (int i = 0; i < primaryBlind.length; i++)
+            for (int i = 0; i < primaryBlind!.length; i++)
               ColorBlindnessItemSimplified(
                 value: i,
                 groupValue: state,
-                backgroundColor: surfaceBlind[i].color,
+                backgroundColor: surfaceBlind![i].color,
                 colorWithBlindList: [
                   for (var item in mappedValues.keys)
-                    if (item != ColorType.Surface) mappedValues[item][i],
+                    if (item != ColorType.Surface) mappedValues[item]![i],
                 ],
                 primaryColor: primaryBlind[i].color,
                 onChanged: (selectedIndex) {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-import '../example/util/constants.dart';
 import '../example/widgets/update_color_dialog.dart';
 import '../util/color_util.dart';
 import '../util/constants.dart';
@@ -9,12 +8,12 @@ import '../util/selected.dart';
 
 class ColorSearchButton extends StatelessWidget {
   const ColorSearchButton({
-    @required this.color,
+    required this.color,
     this.selected,
   });
 
   final Color color;
-  final ColorType selected;
+  final ColorType? selected;
 
   @override
   Widget build(BuildContext context) {

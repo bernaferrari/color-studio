@@ -8,8 +8,8 @@ import '../../util/constants.dart';
 
 class SchemeCompactedItem extends StatelessWidget {
   const SchemeCompactedItem({
-    this.rgbColor,
-    this.currentType,
+    required this.rgbColor,
+    required this.currentType,
     this.onPressed,
     this.locked = false,
     this.expanded = false,
@@ -19,7 +19,7 @@ class SchemeCompactedItem extends StatelessWidget {
   final ColorType currentType;
   final bool locked;
   final bool expanded;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -61,9 +61,12 @@ class SchemeCompactedItem extends StatelessWidget {
                         Text(
                           describeEnum(currentType),
                           overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.subtitle1.copyWith(
-                            color: Theme.of(context).colorScheme.onSurface,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1!
+                              .copyWith(
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
                         ),
                       ],
                     ),
@@ -125,7 +128,7 @@ class SchemeCompactedItem extends StatelessWidget {
                     children: [
                       Text(
                         locked ? "AUTO" : "MANUAL",
-                        style: Theme.of(context).textTheme.caption.copyWith(
+                        style: Theme.of(context).textTheme.caption!.copyWith(
                               color: Theme.of(context)
                                   .colorScheme
                                   .onSurface

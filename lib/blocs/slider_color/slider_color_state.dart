@@ -19,11 +19,12 @@ class SliderColorLoading extends SliderColorState {
 }
 
 class SliderColorLoaded extends SliderColorState {
-  const SliderColorLoaded(this.hsvColor,
-      this.rgbColor,
-      this.hsluvColor, [
-        this.updateTextField = false,
-      ]);
+  const SliderColorLoaded(
+    this.hsvColor,
+    this.rgbColor,
+    this.hsluvColor, [
+    this.updateTextField = false,
+  ]);
 
   final Color rgbColor;
   final HSVColor hsvColor;

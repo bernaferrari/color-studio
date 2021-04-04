@@ -33,7 +33,7 @@ class TemplatePreview extends StatelessWidget {
             child: Text(
               title,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.headline6.copyWith(
+              style: Theme.of(context).textTheme.headline6!.copyWith(
                     fontFamily: "",
                     fontWeight: FontWeight.w900,
                     color: primary,
@@ -83,7 +83,10 @@ class TemplatePreview extends StatelessWidget {
               children: spaceRow(8.0, [
                 for (int i = 0; i < colors.length; i++)
                   HexButton(
-                      colors[i].toHexStr(), colors[i], contrastingColors[i])
+                    colors[i].toHexStr(),
+                    colors[i],
+                    contrastingColors[i],
+                  )
               ]),
             ),
           ),

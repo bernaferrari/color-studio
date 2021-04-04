@@ -11,11 +11,11 @@ import 'expandable_item.dart';
 
 class ColorSchemeCard extends StatelessWidget {
   const ColorSchemeCard({
-    this.rgbColors,
-    this.rgbColorsWithBlindness,
-    this.hsluvColors,
-    this.locked,
-    Key key,
+    required this.rgbColors,
+    required this.rgbColorsWithBlindness,
+    required this.hsluvColors,
+    required this.locked,
+    Key? key,
   }) : super(key: key);
 
   final Map<ColorType, Color> rgbColors;
@@ -42,7 +42,7 @@ class ColorSchemeCard extends StatelessWidget {
                 ),
                 onPressed: () async {
                   final box = await Hive.openBox<dynamic>('settings');
-                  final int pref = box.get('shuffle', defaultValue: 0);
+                  final int? pref = box.get('shuffle', defaultValue: 0);
                   context.read<ColorsCubit>().updateAllColors(
                         ignoreLock: false,
                         colors: getRandomPreference(pref),

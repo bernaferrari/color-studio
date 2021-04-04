@@ -7,15 +7,15 @@ import '../../example/screens/single_color_blindness.dart';
 
 class ColorBlindnessItemSimplified extends StatelessWidget {
   const ColorBlindnessItemSimplified({
-    Key key,
-    this.value,
-    this.groupValue,
-    this.title,
-    this.subtitle,
-    this.backgroundColor,
-    this.primaryColor,
-    this.colorWithBlindList,
-    this.onChanged,
+    Key? key,
+    required this.value,
+    required this.groupValue,
+    required this.title,
+    required this.subtitle,
+    required this.backgroundColor,
+    required this.primaryColor,
+    required this.colorWithBlindList,
+    required this.onChanged,
   }) : super(key: key);
 
   final int value;

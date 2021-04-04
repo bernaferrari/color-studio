@@ -7,7 +7,7 @@ import '../widgets/color_sliders.dart';
 import '../widgets/loading_indicator.dart';
 
 class MultipleSliders extends StatelessWidget {
-  const MultipleSliders({this.color, this.isSplitView = false});
+  const MultipleSliders({required this.color, this.isSplitView = false});
 
   final Color color;
   final bool isSplitView;
@@ -27,13 +27,13 @@ class MultipleSliders extends StatelessWidget {
           });
 
       final Widget hsl = HSLuvSlider(
-          color: (state as SliderColorLoaded).hsluvColor,
+          color: state.hsluvColor,
           onChanged: (h, s, l) {
             context.read<SliderColorBloc>().add(MoveHSLuv(h, s, l));
           });
 
       final Widget hsv = HSVSlider(
-          color: (state as SliderColorLoaded).hsvColor,
+          color: state.hsvColor,
           onChanged: (h, s, v) {
             context.read<SliderColorBloc>().add(MoveHSV(h, s, v));
           });

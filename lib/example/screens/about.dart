@@ -13,7 +13,7 @@ import '../../util/constants.dart';
 import '../../util/shuffle_color.dart';
 
 class AboutScreen extends StatelessWidget {
-  const AboutScreen({this.toExportPage, this.isSplitView = false});
+  const AboutScreen({required this.toExportPage, this.isSplitView = false});
 
   final bool isSplitView;
   final VoidCallback toExportPage;
@@ -26,7 +26,8 @@ class AboutScreen extends StatelessWidget {
         title: Text("About", style: Theme.of(context).textTheme.headline6),
         backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0,
-        iconTheme: IconThemeData(color: Theme.of(context).colorScheme.onSurface),
+        iconTheme:
+            IconThemeData(color: Theme.of(context).colorScheme.onSurface),
         centerTitle: isSplitView,
         leading: isSplitView ? SizedBox.shrink() : null,
       ),
@@ -73,7 +74,7 @@ class _ContactInfo extends StatelessWidget {
         Text(
           "Color Studio",
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.headline6.copyWith(
+          style: Theme.of(context).textTheme.headline6!.copyWith(
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
               ),
@@ -189,7 +190,7 @@ class ColorCompare extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: Theme.of(context)
                         .textTheme
-                        .headline6
+                        .headline6!
                         .copyWith(fontSize: 18),
                   ),
                 ],
@@ -219,7 +220,8 @@ class ColorExport extends StatelessWidget {
           Text(
             "Export",
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 18),
+            style:
+                Theme.of(context).textTheme.headline6!.copyWith(fontSize: 18),
           ),
         ],
       ),
@@ -234,8 +236,8 @@ class ShuffleDarkSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
         valueListenable: Hive.box<dynamic>("settings").listenable(),
-        builder: (BuildContext context, Box box, Widget widget) {
-          final int selected = box.get("shuffle", defaultValue: 0);
+        builder: (BuildContext context, Box box, Widget? widget) {
+          final int? selected = box.get("shuffle", defaultValue: 0);
           final primary = Theme.of(context).colorScheme.onSurface;
 
           return Column(
@@ -243,9 +245,9 @@ class ShuffleDarkSection extends StatelessWidget {
               InkWell(
                 onTap: () {
                   context.read<ColorsCubit>().updateAllColors(
-                    ignoreLock: false,
-                    colors: getRandomPreference(selected),
-                  );
+                        ignoreLock: false,
+                        colors: getRandomPreference(selected),
+                      );
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -262,7 +264,7 @@ class ShuffleDarkSection extends StatelessWidget {
                               textAlign: TextAlign.center,
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline6
+                                  .headline6!
                                   .copyWith(fontSize: 18),
                             ),
                           ],
@@ -371,7 +373,7 @@ class ShuffleMoleSection extends StatelessWidget {
 }
 
 class MoreColors extends StatelessWidget {
-  const MoreColors({this.activeColor});
+  const MoreColors({required this.activeColor});
 
   final Color activeColor;
 
@@ -379,7 +381,7 @@ class MoreColors extends StatelessWidget {
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: Hive.box<dynamic>("settings").listenable(),
-      builder: (_, Box box, Widget widget) {
+      builder: (_, Box box, Widget? widget) {
         return SwitchListTile(
           contentPadding:
               const EdgeInsets.only(top: 8, bottom: 8, right: 16, left: 16),
@@ -440,7 +442,7 @@ class TranslucentCard extends StatelessWidget {
     this.margin = const EdgeInsets.only(left: 16, right: 16, top: 8),
   });
 
-  final Widget child;
+  final Widget? child;
   final EdgeInsetsGeometry margin;
 
   @override

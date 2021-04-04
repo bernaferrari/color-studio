@@ -15,39 +15,39 @@ publish_to: none
 version: 1.0.3
 
 environment:
-  sdk: ">=2.11.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
-  animations: ^1.1.2
-  bloc: ^6.1.1
-  color_blindness: ^0.0.1
-  effective_dart: ^1.3.0
-  equatable: ^1.2.6
+  animations: ^2.0.0
+  bloc: ^7.0.0
+  color_blindness: ^0.1.0
+  effective_dart: ^1.3.1
+  equatable: ^2.0.0
   flutter:
     sdk: flutter
-  flutter_bloc: ^6.1.2
-  flutter_feather_icons: ^1.0.3
-  google_fonts: ^1.1.2
-  hive: ^1.4.4+1
-  hive_flutter: ^0.3.1
-  hsluv: ^1.0.6
-  infinite_listview: ^1.0.1+1
-  path_provider: ^1.6.27
-  replay_bloc: ^0.0.1-dev.4
-  rxdart: ^0.25.0
-  shared_preferences: ^0.5.12+4
-  url_launcher: ^5.5.0
+  flutter_bloc: ^7.0.0
+  flutter_feather_icons: ^2.0.0+1
+  google_fonts: ^2.0.0
+  hive: ^2.0.2
+  hive_flutter: ^1.0.0
+  hsluv: ^1.1.2
+  infinite_listview: ^1.1.0
+  path_provider: ^2.0.1
+  replay_bloc: ^0.0.1
+  rxdart: ^0.26.0
+  shared_preferences: ^2.0.5
+  url_launcher: ^6.0.3
   window_size:
     git:
       url: git://github.com/google/flutter-desktop-embedding.git
       path: plugins/window_size
-      ref: 405e6c5476fbdfd3859cf2f8570b21afb692ea3a
+      ref: 57a2cd88486105d3d813583339eb0e23c9bfd6d2
 
 dev_dependencies:
-  flutter_launcher_icons: ^0.8.1
+  flutter_launcher_icons: ^0.9.0
   flutter_test:
     sdk: flutter
-  hive_generator: ^0.8.2
+  hive_generator: ^1.0.1
 
 flutter_icons:
   # unfortunately, this only works without bugs for iOS.
@@ -58,7 +58,6 @@ flutter_icons:
   ios: true
   adaptive_icon_background: "assets/sample_bg.png" # Android 8+
   adaptive_icon_foreground: "assets/sample_fg.png" # Android 8+
-
 
 flutter:
   uses-material-design: true

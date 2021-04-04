@@ -3,13 +3,13 @@ import 'package:google_fonts/google_fonts.dart';
 
 class PageHeader extends StatelessWidget {
   const PageHeader({
-    @required this.title,
-    @required this.subtitle,
-    this.iconData,
+    required this.title,
+    required this.subtitle,
+    required this.iconData,
     this.isFeather = false,
   });
 
-  final IconData iconData;
+  final IconData /*?*/ iconData;
   final String title;
   final String subtitle;
   final bool isFeather;
@@ -39,7 +39,7 @@ class PageHeader extends StatelessWidget {
               ),
             Text(
               title,
-              style: Theme.of(context).textTheme.headline4.copyWith(
+              style: Theme.of(context).textTheme.headline4!.copyWith(
                     fontWeight: FontWeight.w600,
                     color: primary,
                   ),

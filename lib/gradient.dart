@@ -84,11 +84,11 @@ class InteractiveGradient extends StatefulWidget {
 }
 
 class _InteractiveGradientState extends State<InteractiveGradient> {
-  double x1;
-  double y1;
+  late double x1;
+  late double y1;
 
-  double x2;
-  double y2;
+  late double x2;
+  late double y2;
 
   double angle = 2;
 

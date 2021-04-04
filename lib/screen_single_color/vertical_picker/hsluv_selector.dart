@@ -11,9 +11,9 @@ class HSLuvSelector extends StatelessWidget {
   const HSLuvSelector({this.color, this.moreColors = false});
 
   // initial color
-  final HSLuvColor color;
+  final HSLuvColor? color;
 
-  final bool moreColors;
+  final bool? moreColors;
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +23,10 @@ class HSLuvSelector extends StatelessWidget {
     final int itemsOnScreen =
         ((MediaQuery.of(context).size.height - 56 * 4) / 56).ceil();
 
-    final int toneSize = moreColors ? itemsOnScreen * 2 : itemsOnScreen;
-    final int hueSize = moreColors ? 90 : 45;
+    final int toneSize = moreColors! ? itemsOnScreen * 2 : itemsOnScreen;
+    final int hueSize = moreColors! ? 90 : 45;
 
-    final inter = HSInterColor.fromHSLuv(color);
+    final inter = HSInterColor.fromHSLuv(color!);
 
     return HSGenericScreen(
       color: inter,

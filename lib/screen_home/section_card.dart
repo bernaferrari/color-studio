@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class SectionCard extends StatelessWidget {
   const SectionCard({this.child, this.color});
 
-  final Widget child;
-  final Color color;
+  final Widget? child;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {

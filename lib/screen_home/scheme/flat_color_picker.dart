@@ -10,9 +10,9 @@ import '../../util/when.dart';
 class FlatColorPicker extends StatelessWidget {
   const FlatColorPicker({this.kind, this.selected, this.colors});
 
-  final String kind;
-  final ColorType selected;
-  final List<HSLuvColor> colors;
+  final String? kind;
+  final ColorType? selected;
+  final List<HSLuvColor>? colors;
 
   @override
   Widget build(BuildContext context) {
@@ -29,18 +29,17 @@ class FlatColorPicker extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          for (int i = 0; i < colors.length; i++)
+          for (int i = 0; i < colors!.length; i++)
             Expanded(
               child: SizedBox(
                 height: 48,
                 child: _SelectorItem(
-                  color: colors[i].toColor(),
-                  hsLuvColor: colors[i],
+                  color: colors![i].toColor(),
+                  hsLuvColor: colors![i],
                   category: kind,
                   onPressed: () {
-                    context
-                        .read<ColorsCubit>()
-                        .updateColor(hsLuvColor: colors[i], selected: selected);
+                    context.read<ColorsCubit>().updateColor(
+                        hsLuvColor: colors![i], selected: selected);
                   },
                 ),
               ),
@@ -59,30 +58,30 @@ class _SelectorItem extends StatelessWidget {
     this.hsLuvColor,
   });
 
-  final Color color;
-  final String category;
-  final HSLuvColor hsLuvColor;
-  final VoidCallback onPressed;
+  final Color? color;
+  final String? category;
+  final HSLuvColor? hsLuvColor;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
-    final Color textColor = (hsLuvColor.lightness < kLightnessThreshold)
+    final Color textColor = (hsLuvColor!.lightness < kLightnessThreshold)
         ? Colors.white.withOpacity(0.87)
         : Colors.black87;
 
     final String writtenValue = when<String>({
-      () => category == hueStr: () => hsLuvColor.hue.round().toString(),
+      () => category == hueStr: () => hsLuvColor!.hue.round().toString(),
       () => category == satStr: () =>
-          "${hsLuvColor.saturation.toStringAsFixed(0)}",
+          "${hsLuvColor!.saturation.toStringAsFixed(0)}",
       () => category == lightStr || category == valueStr: () =>
-          "${hsLuvColor.lightness.toStringAsFixed(0)}",
+          "${hsLuvColor!.lightness.toStringAsFixed(0)}",
     });
 
     final cornerText = Text(
       writtenValue,
       style: Theme.of(context)
           .textTheme
-          .caption
+          .caption!
           .copyWith(color: textColor, fontWeight: FontWeight.w700),
     );
 

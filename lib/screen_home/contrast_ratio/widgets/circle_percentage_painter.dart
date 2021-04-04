@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 
 class CirclePercentagePainter extends CustomPainter {
   const CirclePercentagePainter({
-    this.percent,
-    this.color,
+    required this.percent,
+    required this.color,
+    required this.backgroundColor,
     this.circleColor,
-    this.backgroundColor,
   });
 
   final double percent;
   final Color color;
-  final Color circleColor;
   final Color backgroundColor;
+  final Color? circleColor;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -38,7 +38,7 @@ class CirclePercentagePainter extends CustomPainter {
       canvas.drawCircle(
         Offset(size.width / 2, size.height / 2),
         size.width / 2 - 3,
-        Paint()..color = circleColor,
+        Paint()..color = circleColor!,
       );
     }
   }

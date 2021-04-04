@@ -16,11 +16,11 @@ import 'flat_color_picker.dart';
 
 class SchemeExpandedItem extends StatelessWidget {
   const SchemeExpandedItem({
-    Key key,
-    this.selected,
-    this.rgbColor,
-    this.hsLuvColor,
-    this.rgbColorWithBlindness,
+    Key? key,
+    required this.selected,
+    required this.rgbColor,
+    required this.hsLuvColor,
+    required this.rgbColorWithBlindness,
   }) : super(key: key);
 
   final ColorType selected;
@@ -79,12 +79,13 @@ class SchemeExpandedItem extends StatelessWidget {
 
   // this is necessary because of https://github.com/flutter/flutter/issues/11416
   void setTextAndPosition(TextEditingController controller, String newText,
-      {int caretPosition}) {
+      {int? caretPosition}) {
     final int offset = caretPosition ?? newText.length;
     controller.value = controller.value.copyWith(
-        text: newText,
-        selection: TextSelection.collapsed(offset: offset),
-        composing: TextRange.empty);
+      text: newText,
+      selection: TextSelection.collapsed(offset: offset),
+      composing: TextRange.empty,
+    );
   }
 }
 

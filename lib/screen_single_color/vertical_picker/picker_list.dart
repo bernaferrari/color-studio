@@ -8,14 +8,14 @@ import 'picker_item.dart';
 
 class ExpandableColorBar extends StatelessWidget {
   const ExpandableColorBar({
-    this.kind,
-    this.title,
-    this.expanded,
-    this.sectionIndex,
-    this.listSize,
-    this.colorsList,
-    this.onTitlePressed,
-    this.onColorPressed,
+    required this.kind,
+    required this.title,
+    required this.expanded,
+    required this.sectionIndex,
+    required this.listSize,
+    required this.colorsList,
+    required this.onTitlePressed,
+    required this.onColorPressed,
     this.isInfinite = false,
   });
 
@@ -48,7 +48,7 @@ class ExpandableColorBar extends StatelessWidget {
           title: title,
           index: sectionIndex,
           expanded: expanded,
-          onTitlePressed: onTitlePressed,
+          onTitlePressed: onTitlePressed as void Function()?,
         ),
       ),
       Expanded(
@@ -89,10 +89,10 @@ class _ExpandableTitle extends StatelessWidget {
     this.onTitlePressed,
   });
 
-  final VoidCallback onTitlePressed;
-  final String title;
-  final int expanded;
-  final int index;
+  final VoidCallback? onTitlePressed;
+  final String? title;
+  final int? expanded;
+  final int? index;
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +105,7 @@ class _ExpandableTitle extends StatelessWidget {
       ),
       onPressed: onTitlePressed,
       child: Text(
-        expanded == index ? title : title[0],
+        expanded == index ? title! : title![0],
         overflow: TextOverflow.ellipsis,
         style: TextStyle(
           color: Theme.of(context).colorScheme.onBackground,

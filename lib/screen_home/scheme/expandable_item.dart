@@ -27,11 +27,11 @@ class SchemeExpandableItem extends StatefulWidget {
 }
 
 class _SchemeExpandableItemState extends State<SchemeExpandableItem> {
-  int index = -1;
+  late int index;
 
   @override
   void initState() {
-    index = PageStorage.of(context).readState(context,
+    index = PageStorage.of(context)!.readState(context,
             identifier: const ValueKey<String>("SchemeExpandableItem")) ??
         -1;
 
@@ -41,7 +41,7 @@ class _SchemeExpandableItemState extends State<SchemeExpandableItem> {
   void onValueChanged(int newValue) {
     setState(() {
       index = newValue;
-      PageStorage.of(context).writeState(
+      PageStorage.of(context)!.writeState(
         context,
         index,
         identifier: const ValueKey<String>("SchemeExpandableItem"),
@@ -69,8 +69,8 @@ class _SchemeExpandableItemState extends State<SchemeExpandableItem> {
           _ExpandedAnimated(
             expanded: index == i,
             rgbColor: rgbColorsList[i],
-            hsluvColor: widget.hsluvColors[keysList[i]],
-            rgbColorWithBlindness: widget.colorWithBlindness[keysList[i]],
+            hsluvColor: widget.hsluvColors[keysList[i]]!,
+            rgbColorWithBlindness: widget.colorWithBlindness[keysList[i]]!,
             isLocked: widget.locked[keysList[i]],
             selected: keysList[i],
           ),
@@ -82,11 +82,11 @@ class _SchemeExpandableItemState extends State<SchemeExpandableItem> {
 
 class _ExpandedAnimated extends StatelessWidget {
   const _ExpandedAnimated({
-    this.expanded,
-    this.rgbColor,
-    this.hsluvColor,
-    this.rgbColorWithBlindness,
-    this.selected,
+    required this.expanded,
+    required this.rgbColor,
+    required this.hsluvColor,
+    required this.rgbColorWithBlindness,
+    required this.selected,
     this.isLocked,
   });
 
@@ -95,7 +95,7 @@ class _ExpandedAnimated extends StatelessWidget {
   final HSLuvColor hsluvColor;
   final Color rgbColorWithBlindness;
   final ColorType selected;
-  final bool isLocked;
+  final bool? isLocked;
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +143,8 @@ class _ExpandedAnimated extends StatelessWidget {
                     rgbColor: rgbColor,
                     hsLuvColor: hsluvColor,
                     rgbColorWithBlindness: rgbColorWithBlindness,
-                    selected: selected),
+                    selected: selected,
+                  ),
           ),
         ),
       ),

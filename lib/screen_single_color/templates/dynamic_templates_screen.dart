@@ -7,7 +7,10 @@ import '../../util/shuffle_color.dart';
 import 'templates_themes.dart';
 
 class DynamicTemplatesScreen extends StatelessWidget {
-  const DynamicTemplatesScreen({this.backgroundColor, this.state});
+  const DynamicTemplatesScreen({
+    required this.backgroundColor,
+    required this.state,
+  });
 
   final Color backgroundColor;
   final ColorsState state;
@@ -42,14 +45,14 @@ class DynamicTemplatesScreen extends StatelessWidget {
               delegate: SliverChildBuilderDelegate(
                 (_, index) {
                   final colors = getRandomDarkFrom(
-                      state.selected, state.hsluvColors[state.selected]);
+                      state.selected, state.hsluvColors[state.selected]!);
 
                   final struct = TemplateStruct(
                     title: "1",
                     colors: [
-                      colors[ColorType.Surface],
-                      colors[ColorType.Background],
-                      colors[ColorType.Secondary]
+                      colors[ColorType.Surface]!,
+                      colors[ColorType.Background]!,
+                      colors[ColorType.Secondary]!,
                     ],
                     contrastingColors: [
                       Colors.black,

@@ -29,7 +29,7 @@ class MultipleContrastCompareCubit extends Cubit<MultipleColorCompareState> {
     });
   }
 
-  StreamSubscription _mdcSubscription;
+  late StreamSubscription _mdcSubscription;
 
   @override
   Future<void> close() {
@@ -47,19 +47,19 @@ class MultipleContrastCompareCubit extends Cubit<MultipleColorCompareState> {
   }
 
   void set({
-    Map<ColorType, Color> rgbColors,
-    Map<ColorType, HSLuvColor> hsluvColors,
-    Map locked,
-    ColorType selectedKey,
+    required Map<ColorType, Color> rgbColors,
+    Map<ColorType, HSLuvColor>? hsluvColors,
+    Map? locked,
+    ColorType? selectedKey,
   }) {
-    final colorsCompared = <ColorType, ColorCompareContrast>{};
+    final colorsCompared = <ColorType /*!*/, ColorCompareContrast>{};
     final _selectedKey = selectedKey ?? state.selectedKey;
 
     for (var key in rgbColors.keys) {
       if (key == _selectedKey) {
         colorsCompared[key] = ColorCompareContrast.withoutRange(
-          rgbColor: rgbColors[key],
-          hsluvColor: hsluvColors[key],
+          rgbColor: rgbColors[key]!,
+          hsluvColor: hsluvColors![key]!,
           name: key,
         );
         continue;
@@ -67,7 +67,7 @@ class MultipleContrastCompareCubit extends Cubit<MultipleColorCompareState> {
 
       final colorsRange = <RgbHSLuvTupleWithContrast>[];
       for (var i = -10; i < 15; i += 5) {
-        final luv = hsluvColors[key];
+        final luv = hsluvColors![key]!;
 
         // if lightness becomes 0 or 100 the hue value might be lost
         // because app is always converting HSLuv to RGB and vice-versa.
@@ -78,17 +78,17 @@ class MultipleContrastCompareCubit extends Cubit<MultipleColorCompareState> {
           RgbHSLuvTupleWithContrast(
             rgbColor: updatedLuv.toColor(),
             hsluvColor: updatedLuv,
-            againstColor: rgbColors[_selectedKey],
+            againstColor: rgbColors[_selectedKey]!,
           ),
         );
       }
 
       colorsCompared[key] = ColorCompareContrast(
-        rgbColor: rgbColors[key],
-        hsluvColor: hsluvColors[key],
+        rgbColor: rgbColors[key]!,
+        hsluvColor: hsluvColors![key]!,
         name: key,
         colorsRange: colorsRange,
-        againstColor: rgbColors[_selectedKey],
+        againstColor: rgbColors[_selectedKey]!,
       );
     }
 
@@ -97,7 +97,7 @@ class MultipleContrastCompareCubit extends Cubit<MultipleColorCompareState> {
         colorsCompared: colorsCompared,
         locked: state.locked,
         originalRgb: rgbColors,
-        originalHsluv: hsluvColors,
+        originalHsluv: hsluvColors!,
         selectedKey: _selectedKey,
       ),
     );
@@ -116,7 +116,7 @@ class MultipleColorCompareState extends Equatable {
   final Map<ColorType, Color> originalRgb;
   final Map<ColorType, HSLuvColor> originalHsluv;
 
-  final Map<ColorType, ColorCompareContrast> colorsCompared;
+  final Map<ColorType /*!*/, ColorCompareContrast> colorsCompared;
   final Map<ColorType, bool> locked;
   final ColorType selectedKey;
 
@@ -130,17 +130,17 @@ class MultipleColorCompareState extends Equatable {
 
 class ColorCompareContrast extends Equatable {
   ColorCompareContrast({
-    @required this.rgbColor,
-    @required this.hsluvColor,
-    @required this.name,
-    @required this.colorsRange,
-    @required Color againstColor,
+    required this.rgbColor,
+    required this.hsluvColor,
+    required this.name,
+    required this.colorsRange,
+    required Color againstColor,
   }) : contrast = calculateContrast(rgbColor, againstColor);
 
   const ColorCompareContrast.withoutRange({
-    @required this.rgbColor,
-    @required this.hsluvColor,
-    @required this.name,
+    required this.rgbColor,
+    required this.hsluvColor,
+    required this.name,
     this.colorsRange = const [],
     this.contrast = 0,
   });

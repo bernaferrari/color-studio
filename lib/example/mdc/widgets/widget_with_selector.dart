@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class WidgetWithSelector extends StatelessWidget {
-  const WidgetWithSelector({this.child, this.selector});
+  const WidgetWithSelector({required this.child, required this.selector});
 
   final Widget child;
-  final Widget selector;
+  final Widget? selector;
 
   @override
   Widget build(BuildContext context) {
@@ -13,12 +13,12 @@ class WidgetWithSelector extends StatelessWidget {
     }
 
     return Column(
-      children: <Widget>[Expanded(child: wrapInCard(child: child)), selector],
+      children: <Widget>[Expanded(child: wrapInCard(child: child)), selector!],
     );
   }
 }
 
-Widget wrapInCard({@required Widget child}) {
+Widget wrapInCard({required Widget child}) {
   return ConstrainedBox(
     constraints: const BoxConstraints(maxWidth: 850),
     child: Card(

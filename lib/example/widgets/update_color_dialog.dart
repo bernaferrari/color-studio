@@ -14,7 +14,7 @@ import 'text_form_colored.dart';
 Future<void> showSlidersDialog(
   BuildContext context,
   Color color, [
-  ColorType selected,
+  ColorType? selected,
 ]) async {
   final dynamic result = await showDialog<dynamic>(
       context: context,
@@ -53,7 +53,7 @@ class UpdateColorDialog extends StatelessWidget {
 
         final Color color = (state as SliderColorLoaded).rgbColor;
 
-        if ((state as SliderColorLoaded).updateTextField) {
+        if (state.updateTextField) {
           final clrStr = color.toStr();
 
           if (controller.text != clrStr) {
@@ -68,13 +68,13 @@ class UpdateColorDialog extends StatelessWidget {
             });
 
         final hsluv = HSLuvSlider(
-            color: (state as SliderColorLoaded).hsluvColor,
+            color: state.hsluvColor,
             onChanged: (h, s, l) {
               BlocProvider.of<SliderColorBloc>(context).add(MoveHSLuv(h, s, l));
             });
 
         final hsv = HSVSlider(
-            color: (state as SliderColorLoaded).hsvColor,
+            color: state.hsvColor,
             onChanged: (h, s, v) {
               BlocProvider.of<SliderColorBloc>(context).add(MoveHSV(h, s, v));
             });
@@ -98,8 +98,10 @@ class UpdateColorDialog extends StatelessWidget {
         return Theme(
           data: ThemeData.from(colorScheme: scheme).copyWith(
             highlightColor: surface,
-            textSelectionColor: surface,
-            textSelectionHandleColor: surface,
+            textSelectionTheme: TextSelectionThemeData(
+              selectionColor: surface,
+              selectionHandleColor: surface,
+            ),
           ),
           child: AlertDialog(
             contentPadding: const EdgeInsets.all(24),
@@ -184,7 +186,7 @@ class UpdateColorDialog extends StatelessWidget {
                     label: const Text("Select"),
                   ),
                 ),
-//                   const SizedBox(height: 16),
+//                  const SizedBox(height: 16),
 //                  NearestColor(color: color),
               ],
             ),
@@ -196,7 +198,7 @@ class UpdateColorDialog extends StatelessWidget {
 
   // this is necessary because of https://github.com/flutter/flutter/issues/11416
   void setTextAndPosition(TextEditingController controller, String newText,
-      {int caretPosition}) {
+      {int? caretPosition}) {
     final int offset = caretPosition ?? newText.length;
     controller.value = controller.value.copyWith(
       text: newText,

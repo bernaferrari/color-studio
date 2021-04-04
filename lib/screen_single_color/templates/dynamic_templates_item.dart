@@ -10,17 +10,17 @@ import '../../util/widget_space.dart';
 
 class DynamicTemplatePreview extends StatelessWidget {
   DynamicTemplatePreview({
-    @required this.backgroundColor,
-    @required this.surfaceColor,
+    required this.backgroundColor,
+    required this.surfaceColor,
     this.title = '',
     this.isDynamic,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   final Color backgroundColor;
   final Color surfaceColor;
   final String title;
-  final bool isDynamic;
+  final bool? isDynamic;
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +96,7 @@ class DynamicTemplatePreview extends StatelessWidget {
                                 color: Theme.of(context).colorScheme.surface,
                               ),
                             ),
-                            if (isDynamic)
+                            if (isDynamic!)
                               Expanded(
                                 flex: 2,
                                 child: Container(
@@ -115,7 +115,7 @@ class DynamicTemplatePreview extends StatelessWidget {
                       //     fontWeight: FontWeight.bold,
                       //   ),),
                       // )
-                      if (isDynamic)
+                      if (isDynamic!)
                         Positioned(
                           top: 0,
                           bottom: 0,
@@ -134,7 +134,7 @@ class DynamicTemplatePreview extends StatelessWidget {
                             ),
                           ),
                         ),
-                      if (!isDynamic)
+                      if (!isDynamic!)
                         Center(
                           child: Transform.rotate(
                             angle: math.pi / 4,
@@ -364,7 +364,7 @@ class HexButton extends StatelessWidget {
 
 class RowColorItem extends StatelessWidget {
   const RowColorItem({
-    @required this.color,
+    required this.color,
     this.isPrimary = false,
   });
 

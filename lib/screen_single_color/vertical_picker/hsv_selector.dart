@@ -7,13 +7,12 @@ import '../../util/hsinter_tiny.dart';
 import 'vertical_picker_main.dart';
 
 class HSVSelector extends StatelessWidget {
-  final bool moreColors;
+  final bool? moreColors;
 
   const HSVSelector({this.color, this.moreColors = false});
 
   // initial color
-  final Color color;
-
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +20,11 @@ class HSVSelector extends StatelessWidget {
     final int itemsOnScreen =
         ((MediaQuery.of(context).size.height - 56 * 4) / 56).ceil();
 
-    final int toneSize = moreColors ? itemsOnScreen * 2 : itemsOnScreen;
-    final int hueSize = moreColors ? 90 : 45;
+    final int toneSize = moreColors! ? itemsOnScreen * 2 : itemsOnScreen;
+    final int hueSize = moreColors! ? 90 : 45;
 
     const HSInterType kind = HSInterType.HSV;
-    final HSInterColor inter = HSInterColor.fromColor(color, kind);
+    final HSInterColor inter = HSInterColor.fromColor(color!, kind);
 
     return HSGenericScreen(
       color: inter,

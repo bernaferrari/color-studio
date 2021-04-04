@@ -111,7 +111,7 @@ class ContrastRatioCard extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .subtitle1
+                                    .subtitle1!
                                     .copyWith(
                                       color:
                                           currentType == state.selectedColorType

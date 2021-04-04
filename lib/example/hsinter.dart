@@ -6,8 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
-import '../util/when.dart';
-
 enum HSInterType {
   HSLuv,
   HSV,
@@ -20,20 +18,28 @@ enum HSInterType {
 class HSInterColor extends Equatable {
   /// Creates a [HSInterColor].
   const HSInterColor.fromHSInter(
-      this.hue, this.saturation, this.lightness, this.kind, this.maxValue)
-      : assert(hue != null),
-        assert(saturation != null),
-        assert(lightness != null);
+    this.hue,
+    this.saturation,
+    this.lightness,
+    this.kind,
+    this.maxValue,
+  );
 
   /// Creates an [HSInterColor] from an RGB [Color].
   ///
   /// This constructor does not necessarily round-trip with [toColor] because
   /// of floating-point imprecision.
   factory HSInterColor.fromColor(Color color, HSInterType kind) {
-    final double maxV = when({
-      () => kind == HSInterType.HSLuv: () => 100.0,
-      () => kind == HSInterType.HSV: () => 1.0,
-    }, orElse: () => 0.0);
+    late final double maxV;
+
+    switch (kind) {
+      case HSInterType.HSLuv:
+        maxV = 100.0;
+        break;
+      case HSInterType.HSV:
+        maxV = 1.0;
+        break;
+    }
 
     if (kind == HSInterType.HSLuv) {
       final luv = HSLuvColor.fromColor(color);
@@ -73,18 +79,22 @@ class HSInterColor extends Equatable {
 
   /// output [saturation] in [0-100] interval.
   int outputSaturation() {
-    return when({
-      () => kind == HSInterType.HSLuv: () => saturation,
-      () => kind == HSInterType.HSV: () => saturation * 100,
-    }).toInt();
+    switch (kind) {
+      case HSInterType.HSLuv:
+        return saturation.toInt();
+      case HSInterType.HSV:
+        return (saturation * 100).toInt();
+    }
   }
 
   /// output [lightness] in [0-100] interval.
   int outputLightness() {
-    return when({
-      () => kind == HSInterType.HSLuv: () => lightness,
-      () => kind == HSInterType.HSV: () => lightness * 100,
-    }).toInt();
+    switch (kind) {
+      case HSInterType.HSLuv:
+        return lightness.toInt();
+      case HSInterType.HSV:
+        return (lightness * 100).toInt();
+    }
   }
 
   /// Returns a copy of this color with the [hue] parameter replaced with the
@@ -110,12 +120,12 @@ class HSInterColor extends Equatable {
   /// Returns this color in RGB.
   /// Calls the [toColor] method from either HSLuvColor or HSVColor.
   Color toColor() {
-    return when({
-      () => kind == HSInterType.HSLuv: () =>
-          HSLuvColor.fromHSL(hue, saturation, lightness).toColor(),
-      () => kind == HSInterType.HSV: () =>
-          HSVColor.fromAHSV(1.0, hue, saturation, lightness).toColor(),
-    });
+    switch (kind) {
+      case HSInterType.HSLuv:
+        return HSLuvColor.fromHSL(hue, saturation, lightness).toColor();
+      case HSInterType.HSV:
+        return HSVColor.fromAHSV(1.0, hue, saturation, lightness).toColor();
+    }
   }
 
   @override

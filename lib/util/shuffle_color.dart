@@ -89,7 +89,9 @@ Map<ColorType, Color> getRandomMaterialDark() {
 }
 
 Map<ColorType, Color> getRandomDarkFrom(
-    ColorType type, HSLuvColor currentColor) {
+  ColorType type,
+  HSLuvColor currentColor,
+) {
   final rng = Random();
 
   int primaryHue;
@@ -215,7 +217,7 @@ Map<ColorType, Color> getRandomMaterial() {
   return isDark ? getRandomMaterialDark() : getRandomMaterialLight();
 }
 
-Map<ColorType, Color> getRandomPreference(int prefs) {
+Map<ColorType, Color> getRandomPreference(int? prefs) {
   if (prefs == 0 || prefs == null) {
     return getRandomMaterialDark();
   } else if (prefs == 1) {

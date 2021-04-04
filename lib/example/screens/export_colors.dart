@@ -13,21 +13,21 @@ class ExportColorsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ColorsCubit, ColorsState>(builder: (_, state) {
-      final primary = state.rgbColorsWithBlindness[ColorType.Primary];
-      final background = state.rgbColorsWithBlindness[ColorType.Background];
-      final surface = state.rgbColorsWithBlindness[ColorType.Surface];
+      final primary = state.rgbColorsWithBlindness[ColorType.Primary]!;
+      final background = state.rgbColorsWithBlindness[ColorType.Background]!;
+      final surface = state.rgbColorsWithBlindness[ColorType.Surface]!;
 
       final onPrimary =
-          state.hsluvColors[ColorType.Primary].lightness >= kLightnessThreshold
+          state.hsluvColors[ColorType.Primary]!.lightness >= kLightnessThreshold
               ? Colors.black
               : Colors.white;
 
       final onSurface =
-          state.hsluvColors[ColorType.Surface].lightness >= kLightnessThreshold
+          state.hsluvColors[ColorType.Surface]!.lightness >= kLightnessThreshold
               ? Colors.black
               : Colors.white;
 
-      final onBackground = state.hsluvColors[ColorType.Background].lightness >=
+      final onBackground = state.hsluvColors[ColorType.Background]!.lightness >=
               kLightnessThreshold
           ? Colors.black
           : Colors.white;
@@ -91,7 +91,7 @@ class _CardTitle extends StatelessWidget {
           style: GoogleFonts.firaSans(
             textStyle: Theme.of(context)
                 .textTheme
-                .headline6
+                .headline6!
                 .copyWith(color: onBackground),
           ),
         ),
@@ -243,12 +243,13 @@ colorScheme.onSurfaceColor = ColorFromRGB(0x${onSurface.toStr()});
                     onPressed: () {
                       Clipboard.setData(ClipboardData(text: retrievedText));
 
-                      ScaffoldMessenger.maybeOf(context).hideCurrentSnackBar();
+                      ScaffoldMessenger.maybeOf(context)!.hideCurrentSnackBar();
                       final snackBar = SnackBar(
                         content: Text('$kind copied!'),
                         duration: const Duration(milliseconds: 1000),
                       );
-                      ScaffoldMessenger.maybeOf(context).showSnackBar(snackBar);
+                      ScaffoldMessenger.maybeOf(context)!
+                          .showSnackBar(snackBar);
                     },
                   ),
                 ),

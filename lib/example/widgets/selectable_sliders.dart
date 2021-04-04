@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 class SliderWithSelector extends StatefulWidget {
   const SliderWithSelector({
-    @required this.sliders,
-    @required this.color,
-    @required this.thumbColor,
-    @required this.context,
+    required this.sliders,
+    required this.color,
+    required this.thumbColor,
+    required this.context,
   });
 
   final List<Widget> sliders;
@@ -22,7 +22,7 @@ class SliderWithSelector extends StatefulWidget {
 }
 
 class _SliderWithSelectorState extends State<SliderWithSelector> {
-  int currentSegment;
+  int? currentSegment;
 
   final Map<int, Widget> children = const <int, Widget>{
     0: Text("RGB"),
@@ -32,7 +32,7 @@ class _SliderWithSelectorState extends State<SliderWithSelector> {
 
   @override
   void initState() {
-    currentSegment = PageStorage.of(widget.context).readState(
+    currentSegment = PageStorage.of(widget.context)!.readState(
           widget.context,
           identifier: const ValueKey("Selectable Sliders"),
         ) ??
@@ -41,10 +41,10 @@ class _SliderWithSelectorState extends State<SliderWithSelector> {
     super.initState();
   }
 
-  void onValueChanged(int newValue) {
+  void onValueChanged(int? newValue) {
     setState(() {
       currentSegment = newValue;
-      PageStorage.of(widget.context).writeState(
+      PageStorage.of(widget.context)!.writeState(
         widget.context,
         currentSegment,
         identifier: const ValueKey("Selectable Sliders"),
@@ -68,7 +68,7 @@ class _SliderWithSelectorState extends State<SliderWithSelector> {
         Padding(
           // this is the right padding, so text don't get glued to the border.
           padding: const EdgeInsets.only(top: 8),
-          child: widget.sliders[currentSegment],
+          child: widget.sliders[currentSegment!],
         ),
       ],
     );

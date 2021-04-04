@@ -30,7 +30,7 @@ class Home2 extends StatelessWidget {
                     child: Center(
                       child: Text(
                         "Gradient",
-                        style: Theme.of(context).textTheme.headline6.copyWith(
+                        style: Theme.of(context).textTheme.headline6!.copyWith(
                               color: Colors.black,
                             ),
                       ),

@@ -13,7 +13,9 @@ import '../util/constants.dart';
 
 class Components extends StatelessWidget {
   const Components(
-      {this.primaryColor, this.surfaceColor, this.backgroundColor});
+      {required this.primaryColor,
+      required this.surfaceColor,
+      required this.backgroundColor});
 
   final Color primaryColor;
   final Color surfaceColor;
@@ -302,7 +304,7 @@ class ElevatedCardSample extends StatelessWidget {
               "${entry.elevation.toInt()} pt",
               style: Theme.of(context)
                   .textTheme
-                  .headline6
+                  .headline6!
                   .copyWith(color: primary),
             ),
             SizedBox(height: 4),
@@ -310,7 +312,7 @@ class ElevatedCardSample extends StatelessWidget {
               "${colorWithElevation.toHexStr()}",
               style: Theme.of(context)
                   .textTheme
-                  .caption
+                  .caption!
                   .copyWith(color: primary.withOpacity(0.7)),
             ),
           ],
@@ -324,7 +326,7 @@ class NavigationBarSample extends StatefulWidget {
   const NavigationBarSample(this.color, [this.bgColor]);
 
   final Color color;
-  final Color bgColor;
+  final Color? bgColor;
 
   @override
   _NavigationBarSampleState createState() => _NavigationBarSampleState();
@@ -371,7 +373,9 @@ class _NavigationBarSampleState extends State<NavigationBarSample> {
 
 class ComponentsSample extends StatefulWidget {
   const ComponentsSample(
-      {this.primaryColor, this.contrastColor, this.surfaceColor});
+      {required this.primaryColor,
+      required this.contrastColor,
+      required this.surfaceColor});
 
   final Color primaryColor;
   final Color surfaceColor;
@@ -383,7 +387,7 @@ class ComponentsSample extends StatefulWidget {
 
 class _ComponentsSampleState extends State<ComponentsSample> {
   double _sliderValue = 0.5;
-  bool isSwitchEnabled = true;
+  bool? isSwitchEnabled = true;
 
   @override
   Widget build(BuildContext context) {
@@ -399,7 +403,7 @@ class _ComponentsSampleState extends State<ComponentsSample> {
               },
             ),
             Switch(
-              value: isSwitchEnabled,
+              value: isSwitchEnabled!,
               onChanged: (switchEnabled) {
                 setState(() {
                   isSwitchEnabled = switchEnabled;
@@ -477,15 +481,15 @@ class SliderWithSelectorComponents extends StatefulWidget {
 class _SliderWithSelectorComponentsState
     extends State<SliderWithSelectorComponents> {
   List<bool> isSelected = [true, false, false];
-  bool _isExpanded;
+  bool? _isExpanded;
 
   @override
   void initState() {
-    _isExpanded = PageStorage.of(context)
+    _isExpanded = PageStorage.of(context)!
             .readState(context, identifier: const ValueKey("expanded")) ??
         widget.initiallyExpanded;
 
-    final List<bool> wasSelected = PageStorage.of(context)
+    final List<bool>? wasSelected = PageStorage.of(context)!
         .readState(context, identifier: const ValueKey("PWSS"));
 
     if (wasSelected != null) {
@@ -500,7 +504,7 @@ class _SliderWithSelectorComponentsState
       margin: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
       clipBehavior: Clip.antiAlias,
       child: ExpandedSection3(
-        child: _isExpanded
+        child: _isExpanded!
             ? Stack(
                 children: <Widget>[
                   Positioned.directional(
@@ -513,7 +517,7 @@ class _SliderWithSelectorComponentsState
                       onPressed: () {
                         setState(() {
                           _isExpanded = false;
-                          PageStorage.of(context).writeState(
+                          PageStorage.of(context)!.writeState(
                             context,
                             _isExpanded,
                             identifier: const ValueKey("expanded"),
@@ -544,7 +548,7 @@ class _SliderWithSelectorComponentsState
                                   isSelected[buttonIndex] = false;
                                 }
                               }
-                              PageStorage.of(context).writeState(
+                              PageStorage.of(context)!.writeState(
                                   context, isSelected,
                                   identifier: const ValueKey("PWSS"));
                             });
@@ -574,7 +578,7 @@ class _SliderWithSelectorComponentsState
                   onPressed: () {
                     setState(() {
                       _isExpanded = true;
-                      PageStorage.of(context).writeState(
+                      PageStorage.of(context)!.writeState(
                         context,
                         _isExpanded,
                         identifier: const ValueKey("expanded"),
@@ -591,7 +595,7 @@ class _SliderWithSelectorComponentsState
 class ExpandedSection3 extends StatefulWidget {
   const ExpandedSection3({this.child});
 
-  final Widget child;
+  final Widget? child;
 
   @override
   _ExpandedSection3State createState() => _ExpandedSection3State();

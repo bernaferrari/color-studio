@@ -8,11 +8,12 @@ import '../../util/constants.dart';
 import '../../util/selected.dart';
 
 class TextFormColored extends StatelessWidget {
-  const TextFormColored({this.controller, this.radius, this.autofocus = true});
+  const TextFormColored(
+      {this.controller, required this.radius, this.autofocus = true});
 
   final double radius;
   final bool autofocus;
-  final TextEditingController controller;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +55,7 @@ class TextFormColored extends StatelessWidget {
           height: 36,
           child: IconButton(
             onPressed: () {
-              copyToClipboard(context, controller.text);
+              copyToClipboard(context, controller!.text);
             },
             tooltip: "Copy to clipboard",
             icon: Icon(
@@ -64,7 +65,7 @@ class TextFormColored extends StatelessWidget {
           ),
         ),
       ),
-      style: Theme.of(context).textTheme.headline6.copyWith(
+      style: Theme.of(context).textTheme.headline6!.copyWith(
             color: Theme.of(context).colorScheme.onBackground,
           ),
     );

@@ -17,19 +17,19 @@ class ColorCompareWidgetDetails extends StatelessWidget {
     this.kind,
   });
 
-  final ColorWithInter color;
-  final VoidCallback onPressed;
+  final ColorWithInter? color;
+  final VoidCallback? onPressed;
   final bool compactText;
   final String category;
-  final HSInterType kind;
+  final HSInterType? kind;
 
   @override
   Widget build(BuildContext context) {
-    final Color textColor = (color.lum < kLumContrast)
+    final Color textColor = (color!.lum < kLumContrast)
         ? Colors.white.withOpacity(0.87)
         : Colors.black87;
 
-    final HSInterColor inter = color.inter;
+    final HSInterColor inter = color!.inter;
 
     final String writtenValue = when<String>({
       () => category == hueStr: () => inter.hue.round().toString(),
@@ -40,7 +40,7 @@ class ColorCompareWidgetDetails extends StatelessWidget {
 
     final Widget cornerText = Text(
       writtenValue,
-      style: Theme.of(context).textTheme.caption.copyWith(color: textColor),
+      style: Theme.of(context).textTheme.caption!.copyWith(color: textColor),
     );
 
     final Widget centeredText =
@@ -50,13 +50,13 @@ class ColorCompareWidgetDetails extends StatelessWidget {
       height: 56,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: color.color,
+          primary: color!.color,
           elevation: 0,
           padding: EdgeInsets.zero,
           shape: const RoundedRectangleBorder(),
         ),
-        onPressed: onPressed ?? () => colorSelected(context, color.color),
-        onLongPress: () => showSlidersDialog(context, color.color),
+        onPressed: onPressed ?? (() => colorSelected(context, color!.color)),
+        onLongPress: () => showSlidersDialog(context, color!.color),
         child: compactText ? centeredText : cornerText,
       ),
     );
@@ -78,7 +78,7 @@ class ColorCompareWidgetDetails extends StatelessWidget {
 
   Widget richTextColorToHSV(BuildContext context, HSInterColor hsi,
       Color textColor, String category) {
-    final TextStyle theme = Theme.of(context).textTheme.caption;
+    final TextStyle theme = Theme.of(context).textTheme.caption!;
 
     final shortestSide = MediaQuery.of(context).size.width;
 

@@ -16,14 +16,14 @@ class SingleSlider extends StatelessWidget {
     this.value,
     this.strValue,
     this.colorList, {
-    this.scale,
-    this.onChanged,
+    required this.scale,
+    required this.onChanged,
   });
 
   final String title;
   final double value;
   final String strValue;
-  final int scale;
+  final int /*!*/ scale;
   final List<Color> colorList;
   final ValueChanged<double> onChanged;
 
@@ -81,11 +81,11 @@ class _GradientRoundedRectSliderTrackShape extends SliderTrackShape
   void paint(
     PaintingContext context,
     Offset offset, {
-    @required RenderBox parentBox,
-    @required SliderThemeData sliderTheme,
-    @required Animation<double> enableAnimation,
-    @required TextDirection textDirection,
-    @required Offset thumbCenter,
+    required RenderBox parentBox,
+    required SliderThemeData sliderTheme,
+    required Animation<double> enableAnimation,
+    required TextDirection textDirection,
+    required Offset thumbCenter,
     bool isDiscrete = false,
     bool isEnabled = false,
   }) {
@@ -104,7 +104,7 @@ class _GradientRoundedRectSliderTrackShape extends SliderTrackShape
     // If the slider track height is less than or equal to 0, then it makes no
     // difference whether the track is painted or not, therefore the painting
     // can be a no-op.
-    if (sliderTheme.trackHeight <= 0) {
+    if (sliderTheme.trackHeight! <= 0) {
       return;
     }
 
@@ -165,7 +165,7 @@ class _RoundSliderThumbShape2 extends SliderComponentShape {
     this.strValue,
   });
 
-  final String strValue;
+  final String? strValue;
 
   /// The preferred radius of the round thumb shape when the slider is enabled.
   ///
@@ -176,7 +176,7 @@ class _RoundSliderThumbShape2 extends SliderComponentShape {
   ///
   /// If no disabledRadius is provided, then it is equal to the
   /// [enabledThumbRadius]
-  final double disabledThumbRadius;
+  final double? disabledThumbRadius;
 
   double get _disabledThumbRadius => disabledThumbRadius ?? enabledThumbRadius;
 
@@ -190,16 +190,16 @@ class _RoundSliderThumbShape2 extends SliderComponentShape {
   void paint(
     PaintingContext context,
     Offset center, {
-    Animation<double> activationAnimation,
-    @required Animation<double> enableAnimation,
-    bool isDiscrete,
-    TextPainter labelPainter,
-    RenderBox parentBox,
-    @required SliderThemeData sliderTheme,
-    TextDirection textDirection,
-    double value,
-    double textScaleFactor,
-    Size sizeWithOverflow,
+    Animation<double>? activationAnimation,
+    required Animation<double> enableAnimation,
+    bool? isDiscrete,
+    TextPainter? labelPainter,
+    RenderBox? parentBox,
+    required SliderThemeData sliderTheme,
+    TextDirection? textDirection,
+    double? value,
+    double? textScaleFactor,
+    Size? sizeWithOverflow,
   }) {
     assert(context != null);
     assert(center != null);
@@ -220,7 +220,7 @@ class _RoundSliderThumbShape2 extends SliderComponentShape {
     canvas.drawCircle(
       center,
       radiusTween.evaluate(enableAnimation),
-      Paint()..color = colorTween.evaluate(enableAnimation),
+      Paint()..color = colorTween.evaluate(enableAnimation)!,
     );
 
     final textStyle = GoogleFonts.b612Mono(

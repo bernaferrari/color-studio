@@ -24,8 +24,12 @@ List<HSInterColor> hsinterAlternatives(HSInterColor hsInterColor, [int n = 6]) {
   return [for (int i = 0; i < n; i++) hsInterColor.withHue((div * i) % 360.0)];
 }
 
-List<HSInterColor> hsinterTones(HSInterColor hsInterColor,
-    [int size, double start = 5.0, double stop = 100.0]) {
+List<HSInterColor> hsinterTones(
+  HSInterColor hsInterColor,
+  int size, [
+  double start = 5.0,
+  double stop = 100.0,
+]) {
   final step = (stop - start) / (size - 1);
 
   return [
@@ -35,8 +39,12 @@ List<HSInterColor> hsinterTones(HSInterColor hsInterColor,
   ];
 }
 
-List<HSInterColor> hsinterLightness(HSInterColor hsInterColor,
-    [int size, double start = 5.0, double stop = 95.0]) {
+List<HSInterColor> hsinterLightness(
+  HSInterColor hsInterColor,
+  int size, [
+  double start = 5.0,
+  double stop = 95.0,
+]) {
   final step = (stop - start) / (size - 1);
 
   return [

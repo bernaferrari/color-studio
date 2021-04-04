@@ -8,8 +8,8 @@ import '../util/constants.dart';
 
 class SingleRowContrastColorPicker extends StatelessWidget {
   const SingleRowContrastColorPicker({
-    @required this.colorsRange,
-    @required this.currentKey,
+    required this.colorsRange,
+    required this.currentKey,
   });
 
   final ColorType currentKey;
@@ -50,14 +50,14 @@ class SingleRowContrastColorPicker extends StatelessWidget {
 
 class _ContrastItemCompacted extends StatelessWidget {
   const _ContrastItemCompacted({
-    this.rgbHsluvTuple,
-    this.contrast,
+    required this.rgbHsluvTuple,
+    required this.contrast,
     this.onPressed,
   });
 
   final RgbHSLuvTupleWithContrast rgbHsluvTuple;
   final double contrast;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -79,20 +79,20 @@ class _ContrastItemCompacted extends StatelessWidget {
           Text(
             rgbHsluvTuple.hsluvColor.lightness.round().toString(),
             style:
-                Theme.of(context).textTheme.caption.copyWith(color: textColor),
+                Theme.of(context).textTheme.caption!.copyWith(color: textColor),
           ),
           Text(
             contrast.toStringAsPrecision(3),
             style: Theme.of(context)
                 .textTheme
-                .caption
+                .caption!
                 .copyWith(fontSize: 10, color: textColor),
           ),
           Text(
             getContrastLetters(contrast),
             style: Theme.of(context)
                 .textTheme
-                .caption
+                .caption!
                 .copyWith(fontSize: 8, color: textColor),
           )
         ],

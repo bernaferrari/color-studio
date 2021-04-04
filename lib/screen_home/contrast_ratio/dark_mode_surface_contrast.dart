@@ -95,7 +95,7 @@ class _VerticalBarWithText extends StatelessWidget {
             child: Text(
               elevationEntries[i].elevation.toString(),
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.caption.copyWith(
+              style: Theme.of(context).textTheme.caption!.copyWith(
                     color: Theme.of(context).colorScheme.primary,
                   ),
             ),

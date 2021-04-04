@@ -13,14 +13,16 @@ class RgbHSLuvTuple {
 }
 
 class RgbHSLuvTupleWithContrast extends Equatable {
-  RgbHSLuvTupleWithContrast(
-      {this.rgbColor, this.hsluvColor, Color againstColor})
-      : contrast = calculateContrast(rgbColor, againstColor);
+  RgbHSLuvTupleWithContrast({
+    required this.rgbColor,
+    required this.hsluvColor,
+    required Color againstColor,
+  }) : contrast = calculateContrast(rgbColor, againstColor);
 
   final Color rgbColor;
   final HSLuvColor hsluvColor;
   final double contrast;
 
   @override
-  List<Object> get props => [rgbColor, hsluvColor, contrast];
+  List<Object?> get props => [rgbColor, hsluvColor, contrast];
 }

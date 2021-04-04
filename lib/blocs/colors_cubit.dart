@@ -13,12 +13,12 @@ import 'color_blindness_cubit.dart';
 
 class ColorsState extends Equatable {
   const ColorsState({
-    @required this.rgbColors,
-    @required this.hsluvColors,
-    @required this.rgbColorsWithBlindness,
-    @required this.locked,
-    @required this.selected,
-    @required this.blindnessSelected,
+    required this.rgbColors,
+    required this.hsluvColors,
+    required this.rgbColorsWithBlindness,
+    required this.locked,
+    required this.selected,
+    required this.blindnessSelected,
   });
 
   final Map<ColorType, Color> rgbColors;
@@ -42,12 +42,12 @@ class ColorsState extends Equatable {
       ];
 
   ColorsState copyWith({
-    Map<ColorType, Color> rgbColors,
-    Map<ColorType, HSLuvColor> hsluvColors,
-    Map<ColorType, Color> rgbColorsWithBlindness,
-    Map<ColorType, bool> locked,
-    ColorType selected,
-    int blindnessSelected,
+    Map<ColorType, Color>? rgbColors,
+    Map<ColorType, HSLuvColor>? hsluvColors,
+    Map<ColorType, Color>? rgbColorsWithBlindness,
+    Map<ColorType, bool>? locked,
+    ColorType? selected,
+    int? blindnessSelected,
   }) {
     return ColorsState(
       rgbColors: rgbColors ?? this.rgbColors,
@@ -64,15 +64,15 @@ class ColorsState extends Equatable {
 class ColorsCubit extends ReplayCubit<ColorsState> {
   ColorsCubit(
       ColorBlindnessCubit _colorBlindnessCubit, ColorsState initialState)
-      : assert(_colorBlindnessCubit != null),
-        super(initialState) {
+      : super(initialState) {
     limit = 50;
-    _blindnessSubscription = _colorBlindnessCubit.listen((stateValue) async {
+    _blindnessSubscription =
+        _colorBlindnessCubit.stream.listen((stateValue) async {
       updateBlindness(stateValue);
     });
   }
 
-  StreamSubscription _blindnessSubscription;
+  late StreamSubscription _blindnessSubscription;
 
   @override
   Future<void> close() {
@@ -91,11 +91,11 @@ class ColorsCubit extends ReplayCubit<ColorsState> {
     //   ColorType.Surface: initialColors[ColorType.Surface],
     // };
 
-    final initial = {
-      ColorType.Primary: initialColors[ColorType.Primary],
-      ColorType.Secondary: initialColors[ColorType.Secondary],
-      ColorType.Background: initialColors[ColorType.Background],
-      ColorType.Surface: initialColors[ColorType.Surface],
+    final Map<ColorType, Color> initial = {
+      ColorType.Primary: initialColors[ColorType.Primary]!,
+      ColorType.Secondary: initialColors[ColorType.Secondary]!,
+      ColorType.Background: initialColors[ColorType.Background]!,
+      ColorType.Surface: initialColors[ColorType.Surface]!,
     };
 
     final initialLocked = <ColorType, bool>{};
@@ -111,8 +111,8 @@ class ColorsCubit extends ReplayCubit<ColorsState> {
   }
 
   void updateLock({
-    @required ColorType selectedLock,
-    @required bool shouldLock,
+    required ColorType selectedLock,
+    required bool shouldLock,
   }) {
     final allRgb = Map<ColorType, Color>.from(state.rgbColors);
     final lock = Map<ColorType, bool>.from(state.locked);
@@ -150,9 +150,9 @@ class ColorsCubit extends ReplayCubit<ColorsState> {
   }
 
   void updateColor({
-    ColorType selected,
-    Color rgbColor,
-    HSLuvColor hsLuvColor,
+    ColorType? selected,
+    Color? rgbColor,
+    HSLuvColor? hsLuvColor,
   }) {
     assert(rgbColor != null || hsLuvColor != null);
 
@@ -168,7 +168,7 @@ class ColorsCubit extends ReplayCubit<ColorsState> {
       allLuv[_selected] = HSLuvColor.fromColor(rgbColor);
       allRgb[_selected] = rgbColor;
     } else {
-      allLuv[_selected] = hsLuvColor;
+      allLuv[_selected] = hsLuvColor!;
       allRgb[_selected] = hsLuvColor.toColor();
     }
 
@@ -187,7 +187,7 @@ class ColorsCubit extends ReplayCubit<ColorsState> {
     );
   }
 
-  void updateRgbColor({ColorType selected, @required Color rgbColor}) {
+  void updateRgbColor({ColorType? selected, required Color rgbColor}) {
     final _selected = selected ?? state.selected;
 
     final allRgb = Map<ColorType, Color>.from(state.rgbColors);
@@ -227,13 +227,13 @@ class ColorsCubit extends ReplayCubit<ColorsState> {
   // todo add a settings bloc that retrieve the preference shuffle and already shuffles.
   void updateAllColors({
     bool ignoreLock = false,
-    @required Map<ColorType, Color> colors,
+    required Map<ColorType, Color> colors,
   }) {
     final allRgb = Map<ColorType, Color>.from(state.rgbColors);
 
     allRgb.forEach((title, _) {
       if (state.locked[title] != true || ignoreLock) {
-        allRgb[title] = colors[title];
+        allRgb[title] = colors[title]!;
       }
     });
 
@@ -248,7 +248,7 @@ class ColorsCubit extends ReplayCubit<ColorsState> {
     );
   }
 
-  void fromTemplate({@required List<Color> colors}) {
+  void fromTemplate({required List<Color> colors}) {
     final allRgb = Map<ColorType, Color>.from(state.rgbColors);
 
     // Update Primary with colors[0]
@@ -284,7 +284,7 @@ class ColorsCubit extends ReplayCubit<ColorsState> {
   /// update the color of the locked ones.
   void _updateLocked(ColorsState state, Map<ColorType, Color> allRgb) {
     for (var key in state.locked.keys) {
-      if (state.locked[key]) {
+      if (state.locked[key]!) {
         allRgb[key] = _findColor(allRgb, key);
       }
     }
@@ -292,14 +292,14 @@ class ColorsCubit extends ReplayCubit<ColorsState> {
 
   Color _findColor(Map<ColorType, Color> mappedList, ColorType category) {
     if (category == ColorType.Background) {
-      return blendColorWithBackground(mappedList[ColorType.Primary]);
+      return blendColorWithBackground(mappedList[ColorType.Primary]!);
     } else if (category == ColorType.Surface) {
-      final luv = HSLuvColor.fromColor(mappedList[ColorType.Background]);
+      final luv = HSLuvColor.fromColor(mappedList[ColorType.Background]!);
       return luv.withLightness(luv.lightness + 5).toColor();
     } else if (category == ColorType.Secondary) {
       // use HSV because we want imperfection.
       // HSLuv is going to have the same contrast.
-      final hsv = HSVColor.fromColor(mappedList[ColorType.Primary]);
+      final hsv = HSVColor.fromColor(mappedList[ColorType.Primary]!);
       return hsv.withHue((hsv.hue + 90) % 360).toColor();
     } else {
       throw Exception("Unsupported category in _findColor from ColorsCubit");
@@ -312,21 +312,23 @@ class ColorsCubit extends ReplayCubit<ColorsState> {
     final luvMap = <ColorType, HSLuvColor>{};
 
     for (var key in updatableMap.keys) {
-      luvMap[key] = HSLuvColor.fromColor(updatableMap[key]);
+      luvMap[key] = HSLuvColor.fromColor(updatableMap[key]!);
     }
 
     return luvMap;
   }
 
   Map<ColorType, Color> _getBlindness(
-      Map<ColorType, Color> updatableMap, int index) {
+    Map<ColorType, Color> updatableMap,
+    int index,
+  ) {
     if (index == 0) {
       return updatableMap;
     }
 
     final blindMap = Map<ColorType, Color>.from(updatableMap);
     for (var key in blindMap.keys) {
-      blindMap[key] = getColorBlindFromIndex(blindMap[key], index).color;
+      blindMap[key] = getColorBlindFromIndex(blindMap[key]!, index)!.color;
     }
 
     return blindMap;

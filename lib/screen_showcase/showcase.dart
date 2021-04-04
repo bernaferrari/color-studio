@@ -24,12 +24,12 @@ class Showcase extends StatefulWidget {
 }
 
 class _ShowcaseState extends State<Showcase> {
-  double sliderValue;
-  bool slidersMode;
+  late double sliderValue;
+  bool slidersMode = false;
 
   @override
   void initState() {
-    sliderValue = PageStorage.of(context)
+    sliderValue = PageStorage.of(context)!
             .readState(context, identifier: ValueKey("CardElevation")) ??
         1 / (elevationEntriesList.length - 1);
     super.initState();
@@ -153,7 +153,7 @@ class _ShowcaseState extends State<Showcase> {
             transitionBuilder: (child, animation) {
               return SizeTransition(child: child, sizeFactor: animation);
             },
-            child: (slidersMode ?? false)
+            child: slidersMode
                 ? HorizontalSlidersBar(onPressed: () {
                     setState(() {
                       slidersMode = false;
@@ -177,7 +177,7 @@ class _ShowcaseState extends State<Showcase> {
               Text(
                 "Elevation",
                 style: GoogleFonts.openSans(
-                  textStyle: Theme.of(context).textTheme.caption.copyWith(
+                  textStyle: Theme.of(context).textTheme.caption!.copyWith(
                         color: Theme.of(context).colorScheme.onBackground,
                       ),
                 ),
@@ -190,7 +190,7 @@ class _ShowcaseState extends State<Showcase> {
                   onChanged: (changed) {
                     setState(() {
                       sliderValue = changed;
-                      PageStorage.of(context).writeState(context, sliderValue,
+                      PageStorage.of(context)!.writeState(context, sliderValue,
                           identifier: const ValueKey("CardElevation"));
                     });
                   },
@@ -205,7 +205,11 @@ class _ShowcaseState extends State<Showcase> {
 }
 
 class SafariBar extends StatelessWidget {
-  const SafariBar({this.color, this.bgColor, this.secondaryColor});
+  const SafariBar({
+    required this.color,
+    required this.bgColor,
+    required this.secondaryColor,
+  });
 
   final Color color;
   final Color secondaryColor;
@@ -279,13 +283,13 @@ class _PrevPodcast extends StatelessWidget {
     this.elevation,
   });
 
-  final Color primary;
-  final Color surface;
-  final int elevation;
+  final Color? primary;
+  final Color? surface;
+  final int? elevation;
 
   @override
   Widget build(BuildContext context) {
-    Color adaptivePrimary;
+    Color? adaptivePrimary;
     if (Theme.of(context).brightness == Brightness.dark) {
       adaptivePrimary = primary;
     } else {
@@ -324,7 +328,7 @@ class _PrevPodcast extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
           ),
           margin: EdgeInsets.all(8),
-          elevation: elevation.toDouble(),
+          elevation: elevation!.toDouble(),
           clipBehavior: Clip.antiAlias,
           child: Column(
             children: <Widget>[
@@ -367,7 +371,11 @@ class _PrevPodcast extends StatelessWidget {
 }
 
 class _PrevStore extends StatelessWidget {
-  const _PrevStore({this.primary, this.background, this.surface});
+  const _PrevStore({
+    required this.primary,
+    required this.background,
+    required this.surface,
+  });
 
   final Color primary;
   final Color background;
@@ -380,7 +388,7 @@ class _PrevStore extends StatelessWidget {
       children: <Widget>[
         Text(
           "Rddt",
-          style: Theme.of(context).textTheme.headline5.copyWith(
+          style: Theme.of(context).textTheme.headline5!.copyWith(
                 color: Theme.of(context).colorScheme.onBackground,
                 fontWeight: FontWeight.w600,
               ),
@@ -389,7 +397,7 @@ class _PrevStore extends StatelessWidget {
           "Alien Labs",
           style: Theme.of(context)
               .textTheme
-              .bodyText1
+              .bodyText1!
               .copyWith(color: primary, fontWeight: FontWeight.w600),
         ),
         Row(
@@ -425,8 +433,8 @@ class _PrevStore extends StatelessWidget {
             size: 15,
             progressColor: primary,
             backgroundColor: (Theme.of(context).brightness == Brightness.light)
-                ? Colors.grey[500].withOpacity(0.4)
-                : Colors.grey[800].withOpacity(0.4),
+                ? Colors.grey[500]!.withOpacity(0.4)
+                : Colors.grey[800]!.withOpacity(0.4),
             borderWidth: 0,
           ),
         ),
@@ -460,7 +468,7 @@ class _PrevStore extends StatelessWidget {
 }
 
 class _PrevClock extends StatelessWidget {
-  const _PrevClock({this.primary});
+  const _PrevClock({required this.primary});
 
   final Color primary;
 
@@ -495,7 +503,7 @@ class _PrevClock extends StatelessWidget {
                   text: ' 17',
                   style: Theme.of(context)
                       .textTheme
-                      .headline6
+                      .headline6!
                       .copyWith(fontSize: 24, color: primary),
                 ),
               ],
@@ -533,7 +541,7 @@ class _PrevClock extends StatelessWidget {
 }
 
 class _PrevShowcase extends StatelessWidget {
-  const _PrevShowcase({this.primary, this.background});
+  const _PrevShowcase({required this.primary, required this.background});
 
   final Color primary;
   final Color background;
@@ -562,7 +570,7 @@ class _PrevShowcase extends StatelessWidget {
                   ),
                   Text(
                     "Preview",
-                    style: Theme.of(context).textTheme.headline4.copyWith(
+                    style: Theme.of(context).textTheme.headline4!.copyWith(
                           fontWeight: FontWeight.w600,
                           color: primary,
                         ),
@@ -604,7 +612,7 @@ class _PrevShowcase extends StatelessWidget {
 }
 
 class _PrevThankful extends StatelessWidget {
-  const _PrevThankful({this.primary, this.background});
+  const _PrevThankful({required this.primary, required this.background});
 
   final Color primary;
   final Color background;
@@ -642,7 +650,7 @@ class _PrevThankful extends StatelessWidget {
 }
 
 class _PrevSpotify extends StatelessWidget {
-  const _PrevSpotify({this.primary, this.background});
+  const _PrevSpotify({required this.primary, required this.background});
 
   final Color primary;
   final Color background;
@@ -757,9 +765,9 @@ class _PrevSpotify extends StatelessWidget {
 
 class _PrevFacebook extends StatelessWidget {
   const _PrevFacebook({
-    this.primary,
-    this.background,
-    this.elevation,
+    required this.primary,
+    required this.background,
+    required this.elevation,
   });
 
   final Color primary;
@@ -864,9 +872,9 @@ class _PrevFacebook extends StatelessWidget {
 
 class _PrevTrip extends StatelessWidget {
   const _PrevTrip({
-    this.primary,
-    this.surface,
-    this.elevation,
+    required this.primary,
+    required this.surface,
+    required this.elevation,
   });
 
   final Color primary;
@@ -993,7 +1001,7 @@ class _PrevTrip extends StatelessWidget {
 }
 
 class _PrevSocial extends StatelessWidget {
-  const _PrevSocial({this.primary, this.secondary});
+  const _PrevSocial({required this.primary, required this.secondary});
 
   final Color primary;
   final Color secondary;
@@ -1033,7 +1041,7 @@ class _PrevSocial extends StatelessWidget {
 }
 
 class _PrevPodcasts extends StatelessWidget {
-  const _PrevPodcasts({this.primary, this.elevation});
+  const _PrevPodcasts({required this.primary, required this.elevation});
 
   final Color primary;
   final int elevation;
@@ -1070,12 +1078,12 @@ class _PrevPodcasts extends StatelessWidget {
 
 class _PodcastCard extends StatelessWidget {
   const _PodcastCard({
-    this.elevation,
-    this.primaryColor,
-    this.textColor,
-    this.title,
-    this.description,
-    this.subdescription,
+    required this.elevation,
+    required this.primaryColor,
+    required this.textColor,
+    required this.title,
+    required this.description,
+    required this.subdescription,
   });
 
   final int elevation;
@@ -1190,7 +1198,7 @@ class _PodcastCard extends StatelessWidget {
 }
 
 class _PrevCupertino extends StatelessWidget {
-  const _PrevCupertino({this.primary, this.backgroundColor});
+  const _PrevCupertino({required this.primary, required this.backgroundColor});
 
   final Color primary;
   final Color backgroundColor;
@@ -1254,20 +1262,20 @@ class _PrevCupertino extends StatelessWidget {
 
 class WrapWithFrostyBackground extends StatelessWidget {
   const WrapWithFrostyBackground({
-    this.border,
-    this.child,
+    required this.child,
+    required this.backgroundColor,
     this.updateSystemUiOverlay = true,
-    this.backgroundColor,
+    this.border,
   });
 
-  final Border border;
+  final Border? border;
   final Widget child;
   final bool updateSystemUiOverlay;
   final Color backgroundColor;
 
   @override
   Widget build(BuildContext context) {
-    Widget result = child;
+    Widget? result = child;
 
     if (updateSystemUiOverlay) {
       final darkBackground = backgroundColor.computeLuminance() < 0.179;
@@ -1298,7 +1306,7 @@ class WrapWithFrostyBackground extends StatelessWidget {
 }
 
 class PrevPhotosTransparency extends StatefulWidget {
-  const PrevPhotosTransparency({this.primary});
+  const PrevPhotosTransparency({required this.primary});
 
   final Color primary;
 
@@ -1307,11 +1315,11 @@ class PrevPhotosTransparency extends StatefulWidget {
 }
 
 class _PrevPhotosTransparencyState extends State<PrevPhotosTransparency> {
-  double sliderValue;
+  late double sliderValue;
 
   @override
   void initState() {
-    sliderValue = PageStorage.of(context).readState(context,
+    sliderValue = PageStorage.of(context)!.readState(context,
             identifier: const ValueKey("prevPhotosState")) ??
         3 / 6;
     super.initState();
@@ -1328,7 +1336,7 @@ class _PrevPhotosTransparencyState extends State<PrevPhotosTransparency> {
             const SizedBox(width: 16),
             Text(
               "interval",
-              style: Theme.of(context).textTheme.caption.copyWith(
+              style: Theme.of(context).textTheme.caption!.copyWith(
                     color: Theme.of(context).colorScheme.onBackground,
                   ),
             ),
@@ -1340,7 +1348,7 @@ class _PrevPhotosTransparencyState extends State<PrevPhotosTransparency> {
                 onChanged: (changed) {
                   setState(() {
                     sliderValue = changed;
-                    PageStorage.of(context).writeState(context, sliderValue,
+                    PageStorage.of(context)!.writeState(context, sliderValue,
                         identifier: const ValueKey("prevPhotosState"));
                   });
                 },
@@ -1371,10 +1379,10 @@ class _PrevPhotosTransparencyState extends State<PrevPhotosTransparency> {
 
 class _PrevPhotos extends StatelessWidget {
   const _PrevPhotos({
-    this.primary,
-    this.background,
-    this.surface,
-    this.elevation,
+    required this.primary,
+    required this.background,
+    required this.surface,
+    required this.elevation,
   });
 
   final Color primary;
@@ -1509,7 +1517,7 @@ class _ShowcaseTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: Theme.of(context).textTheme.headline6.copyWith(
+      style: Theme.of(context).textTheme.headline6!.copyWith(
             color: Theme.of(context).colorScheme.onBackground,
           ),
     );
@@ -1517,7 +1525,7 @@ class _ShowcaseTitle extends StatelessWidget {
 }
 
 class _PrevSDKMonitor extends StatelessWidget {
-  const _PrevSDKMonitor({this.primary, this.elevation});
+  const _PrevSDKMonitor({required this.primary, required this.elevation});
 
   final Color primary;
   final int elevation;
@@ -1550,7 +1558,11 @@ class _PrevSDKMonitor extends StatelessWidget {
 }
 
 class _PhotosElevationOverlay extends StatelessWidget {
-  const _PhotosElevationOverlay({this.primary, this.surface, this.elevation});
+  const _PhotosElevationOverlay({
+    required this.primary,
+    required this.surface,
+    required this.elevation,
+  });
 
   final Color primary;
   final Color surface;
@@ -1577,7 +1589,7 @@ class _PhotosElevationOverlay extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           "${elevation.round()} pt",
-          style: Theme.of(context).textTheme.caption.copyWith(
+          style: Theme.of(context).textTheme.caption!.copyWith(
                 color: Theme.of(context).colorScheme.onBackground,
               ),
         )
@@ -1587,7 +1599,7 @@ class _PhotosElevationOverlay extends StatelessWidget {
 }
 
 class _PhotosSemiTransparent extends StatelessWidget {
-  const _PhotosSemiTransparent({this.primary, this.opacity});
+  const _PhotosSemiTransparent({required this.primary, required this.opacity});
 
   final Color primary;
   final double opacity;
@@ -1614,7 +1626,7 @@ class _PhotosSemiTransparent extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           "${(opacity * 100).round()}%",
-          style: Theme.of(context).textTheme.caption.copyWith(
+          style: Theme.of(context).textTheme.caption!.copyWith(
                 color: Theme.of(context).colorScheme.onBackground,
               ),
         ),
@@ -1625,18 +1637,16 @@ class _PhotosSemiTransparent extends StatelessWidget {
 
 class _SdkListTile extends StatelessWidget {
   const _SdkListTile({
-    this.title,
-    this.subtitle,
-    this.iconData,
-    this.withSwitch,
+    required this.title,
+    required this.iconData,
     this.elevation = 1,
+    this.withSwitch,
   });
 
   final String title;
-  final String subtitle;
   final IconData iconData;
-  final bool withSwitch;
   final int elevation;
+  final bool? withSwitch;
 
   @override
   Widget build(BuildContext context) {
@@ -1675,7 +1685,7 @@ class _SdkListTile extends StatelessWidget {
               SizedBox(
                 height: 24,
                 child: Switch(
-                  value: withSwitch,
+                  value: withSwitch!,
                   activeColor: Theme.of(context).colorScheme.secondary,
                   onChanged: (changed) {},
                 ),

@@ -28,7 +28,7 @@ class ContrastRatioCubit extends Cubit<ContrastRatioState> {
     });
   }
 
-  StreamSubscription _mdcSubscription;
+  late StreamSubscription _mdcSubscription;
 
   @override
   Future<void> close() {
@@ -37,8 +37,8 @@ class ContrastRatioCubit extends Cubit<ContrastRatioState> {
   }
 
   void set({
-    Map<ColorType, Color> rgbColorsWithBlindness,
-    ColorType selectedColorType,
+    Map<ColorType, Color>? rgbColorsWithBlindness,
+    ColorType? selectedColorType,
   }) {
     // ignore when there was no change.
     if (rgbColorsWithBlindness == state.rgbColorsWithBlindness &&
@@ -55,12 +55,12 @@ class ContrastRatioCubit extends Cubit<ContrastRatioState> {
         ContrastRatioState(
           contrastValues: [
             calculateContrast(
-              rgb[_contrastSectionType],
-              rgb[ColorType.Background],
+              rgb[_contrastSectionType]!,
+              rgb[ColorType.Background]!,
             ),
             calculateContrast(
-              rgb[_contrastSectionType],
-              rgb[ColorType.Surface],
+              rgb[_contrastSectionType]!,
+              rgb[ColorType.Surface]!,
             ),
           ],
           selectedColorType: _contrastSectionType,
@@ -73,12 +73,12 @@ class ContrastRatioCubit extends Cubit<ContrastRatioState> {
         ContrastRatioState(
           contrastValues: [
             calculateContrast(
-              rgb[ColorType.Primary],
-              rgb[ColorType.Background],
+              rgb[ColorType.Primary]!,
+              rgb[ColorType.Background]!,
             ),
             calculateContrast(
-              rgb[ColorType.Secondary],
-              rgb[ColorType.Background],
+              rgb[ColorType.Secondary]!,
+              rgb[ColorType.Background]!,
             ),
           ],
           selectedColorType: _contrastSectionType,
@@ -91,12 +91,12 @@ class ContrastRatioCubit extends Cubit<ContrastRatioState> {
         ContrastRatioState(
           contrastValues: [
             calculateContrast(
-              rgb[ColorType.Primary],
-              rgb[ColorType.Surface],
+              rgb[ColorType.Primary]!,
+              rgb[ColorType.Surface]!,
             ),
             calculateContrast(
-              rgb[ColorType.Secondary],
-              rgb[ColorType.Surface],
+              rgb[ColorType.Secondary]!,
+              rgb[ColorType.Surface]!,
             ),
           ],
           selectedColorType: _contrastSectionType,
@@ -112,10 +112,10 @@ class ContrastRatioCubit extends Cubit<ContrastRatioState> {
               ColorContrast(
                 compositeColors(
                   const Color(0xffffffff),
-                  rgb[ColorType.Surface],
+                  rgb[ColorType.Surface]!,
                   elevationEntries[i].overlay,
                 ),
-                rgb[ColorType.Primary],
+                rgb[ColorType.Primary]!,
               ),
           ],
           selectedColorType: _contrastSectionType,

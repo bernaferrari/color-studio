@@ -7,13 +7,13 @@ import 'widgets/contrast_widgets.dart';
 
 class ContrastCircleGroup extends StatelessWidget {
   const ContrastCircleGroup({
-    @required this.state,
-    @required this.rgbColorsWithBlindness,
-    @required this.isInCard,
+    required this.state,
+    required this.rgbColorsWithBlindness,
+    required this.isInCard,
   });
 
   final ContrastRatioState state;
-  final Map<ColorType, Color> rgbColorsWithBlindness;
+  final Map<ColorType, Color>? rgbColorsWithBlindness;
   final bool isInCard;
 
   @override
@@ -31,16 +31,16 @@ class ContrastCircleGroup extends StatelessWidget {
             title: describeEnum(state.selectedColorType),
             subtitle: describeEnum(ColorType.Background),
             contrast: state.contrastValues[0],
-            contrastingColor: rgbColorsWithBlindness[state.selectedColorType],
-            circleColor: rgbColorsWithBlindness[ColorType.Background],
+            contrastingColor: rgbColorsWithBlindness![state.selectedColorType],
+            circleColor: rgbColorsWithBlindness![ColorType.Background],
             sizeCondition: sizeCondition,
           ),
           ContrastCircle(
             title: describeEnum(state.selectedColorType),
             subtitle: describeEnum(ColorType.Surface),
             contrast: state.contrastValues[1],
-            contrastingColor: rgbColorsWithBlindness[state.selectedColorType],
-            circleColor: rgbColorsWithBlindness[ColorType.Surface],
+            contrastingColor: rgbColorsWithBlindness![state.selectedColorType],
+            circleColor: rgbColorsWithBlindness![ColorType.Surface],
             sizeCondition: sizeCondition,
           ),
         ] else if (state.selectedColorType == ColorType.Background ||
@@ -49,16 +49,16 @@ class ContrastCircleGroup extends StatelessWidget {
             title: describeEnum(state.selectedColorType),
             subtitle: describeEnum(ColorType.Primary),
             contrast: state.contrastValues[0],
-            contrastingColor: rgbColorsWithBlindness[ColorType.Primary],
-            circleColor: rgbColorsWithBlindness[state.selectedColorType],
+            contrastingColor: rgbColorsWithBlindness![ColorType.Primary],
+            circleColor: rgbColorsWithBlindness![state.selectedColorType],
             sizeCondition: sizeCondition,
           ),
           ContrastCircle(
             title: describeEnum(state.selectedColorType),
             subtitle: describeEnum(ColorType.Secondary),
             contrast: state.contrastValues[1],
-            contrastingColor: rgbColorsWithBlindness[ColorType.Secondary],
-            circleColor: rgbColorsWithBlindness[state.selectedColorType],
+            contrastingColor: rgbColorsWithBlindness![ColorType.Secondary],
+            circleColor: rgbColorsWithBlindness![state.selectedColorType],
             sizeCondition: sizeCondition,
           ),
         ]

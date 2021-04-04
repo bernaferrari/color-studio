@@ -22,10 +22,10 @@ class CirclePercentageWidget extends StatefulWidget {
   final double percent;
   final double contrastValue;
   final Color color;
-  final Color circleColor;
-  final Color contrastingColor;
+  final Color? circleColor;
+  final Color? contrastingColor;
   final bool animatedInit;
-  final bool sizeCondition;
+  final bool? sizeCondition;
 
   @override
   State createState() => _CirclePercentageWidgetState();
@@ -33,7 +33,7 @@ class CirclePercentageWidget extends StatefulWidget {
 
 class _CirclePercentageWidgetState extends State<CirclePercentageWidget>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
+  late AnimationController _controller;
 
   @override
   void initState() {
@@ -74,7 +74,7 @@ class _CirclePercentageWidgetState extends State<CirclePercentageWidget>
     final isLargeSize = MediaQuery.of(context).size.width > 850;
 
     return Flex(
-      direction: widget.sizeCondition ? Axis.vertical : Axis.horizontal,
+      direction: widget.sizeCondition! ? Axis.vertical : Axis.horizontal,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Column(
@@ -83,7 +83,7 @@ class _CirclePercentageWidgetState extends State<CirclePercentageWidget>
             Text(
               "${widget.title} x",
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyText1.copyWith(
+              style: Theme.of(context).textTheme.bodyText1!.copyWith(
                     fontSize: isLargeSize ? 16 : 14,
                     fontWeight: FontWeight.w200,
                     color: Theme.of(context).colorScheme.onSurface,
@@ -92,7 +92,7 @@ class _CirclePercentageWidgetState extends State<CirclePercentageWidget>
             Text(
               widget.subtitle,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyText1.copyWith(
+              style: Theme.of(context).textTheme.bodyText1!.copyWith(
                     fontSize: isLargeSize ? 16 : 14,
                     fontWeight: FontWeight.w600,
                     color: Theme.of(context).colorScheme.onSurface,
@@ -109,7 +109,7 @@ class _CirclePercentageWidgetState extends State<CirclePercentageWidget>
                 child: Text(
                   "Background x",
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyText1.copyWith(
+                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
                         fontSize: isLargeSize ? 16 : 14,
                         fontWeight: FontWeight.w200,
                       ),
@@ -148,7 +148,7 @@ class _CirclePercentageWidgetState extends State<CirclePercentageWidget>
                   ),
                   Text(
                     getContrastLetters(widget.contrastValue),
-                    style: Theme.of(context).textTheme.overline.copyWith(
+                    style: Theme.of(context).textTheme.overline!.copyWith(
                           color: widget.contrastingColor,
                         ),
                   ),

@@ -13,12 +13,12 @@ import '../util/constants.dart';
 class HorizontalSlidersBar extends StatelessWidget {
   const HorizontalSlidersBar({this.onPressed});
 
-  final Function onPressed;
+  final Function? onPressed;
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ColorsCubit, ColorsState>(builder: (_, state) {
-      final rgbColor = state.rgbColors[state.selected];
+      final rgbColor = state.rgbColors[state.selected]!;
 
       final rgb = RGBSlider(
           color: rgbColor,
@@ -29,7 +29,7 @@ class HorizontalSlidersBar extends StatelessWidget {
           });
 
       final hsluv = HSLuvSlider(
-          color: state.hsluvColors[state.selected],
+          color: state.hsluvColors[state.selected]!,
           onChanged: (h, s, l) {
             context
                 .read<ColorsCubit>()
@@ -55,7 +55,7 @@ class HorizontalSlidersBar extends StatelessWidget {
             child: SliderWithSelector(
               sliders: [rgb, hsluv, hsv],
               color: rgbColor,
-              thumbColor: state.rgbColors[ColorType.Background],
+              thumbColor: state.rgbColors[ColorType.Background]!,
               context: context,
             ),
           ),
@@ -68,7 +68,7 @@ class HorizontalSlidersBar extends StatelessWidget {
               padding: const EdgeInsets.only(left: 8.0),
               child: OutlinedIconButton(
                 child: Icon(FeatherIcons.x, size: 16),
-                onPressed: onPressed,
+                onPressed: onPressed as void Function()?,
               ),
             ),
           ),

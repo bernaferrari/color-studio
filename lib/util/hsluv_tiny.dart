@@ -24,8 +24,12 @@ List<Color> hsluvAlternatives(Color color, [int n = 6]) {
   return [for (int i = 0; i < n; i++) luv.withHue((div * i) % 360.0).toColor()];
 }
 
-List<Color> hsluvTones(Color color,
-    [int size, double start = 5.0, double stop = 100.0]) {
+List<Color> hsluvTones(
+  Color color,
+  int size, [
+  double start = 5.0,
+  double stop = 100.0,
+]) {
   final HSLuvColor hsluv = HSLuvColor.fromColor(color);
   final step = (stop - start) / (size - 1);
 
@@ -36,8 +40,12 @@ List<Color> hsluvTones(Color color,
   ];
 }
 
-List<Color> hsluvLightness(Color color,
-    [int size, double start = 5.0, double stop = 95.0]) {
+List<Color> hsluvLightness(
+  Color color,
+  int size, [
+  double start = 5.0,
+  double stop = 95.0,
+]) {
   final HSLuvColor hsluv = HSLuvColor.fromColor(color);
   final step = (stop - start) / (size - 1);
 
@@ -49,8 +57,12 @@ List<Color> hsluvLightness(Color color,
   ];
 }
 
-List<HSLuvColor> hsluvTones2(HSLuvColor hsluv,
-    [int size, double start = 5.0, double stop = 100.0]) {
+List<HSLuvColor> hsluvTones2(
+  HSLuvColor hsluv,
+  int size, [
+  double start = 5.0,
+  double stop = 100.0,
+]) {
   final step = (stop - start) / (size - 1);
 
   return [
@@ -60,8 +72,12 @@ List<HSLuvColor> hsluvTones2(HSLuvColor hsluv,
   ];
 }
 
-List<HSLuvColor> hsluvLightness2(HSLuvColor hsluv,
-    [int size, double start = 5.0, double stop = 95.0]) {
+List<HSLuvColor> hsluvLightness2(
+  HSLuvColor hsluv,
+  int size, [
+  double start = 5.0,
+  double stop = 95.0,
+]) {
   final step = (stop - start) / (size - 1);
 
   return [

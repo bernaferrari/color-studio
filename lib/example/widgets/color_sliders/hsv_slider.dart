@@ -5,7 +5,8 @@ import 'package:flutter/rendering.dart';
 import 'single_slider.dart';
 
 class HSVSlider extends StatefulWidget {
-  const HSVSlider({Key key, this.color, this.onChanged}) : super(key: key);
+  const HSVSlider({Key? key, required this.color, required this.onChanged})
+      : super(key: key);
 
   final Function(double, double, double) onChanged;
   final HSVColor color;
@@ -19,9 +20,9 @@ class _HSVSliderState extends State<HSVSlider> {
   double valueS = 0.0;
   double valueB = 0.0;
 
-  List<Color> colorH;
-  List<Color> colorS;
-  List<Color> colorB;
+  late List<Color> colorH;
+  late List<Color> colorS;
+  late List<Color> colorB;
 
   void updateColorLists() {
     final vh = valueH;

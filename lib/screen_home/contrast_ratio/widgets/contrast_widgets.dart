@@ -17,9 +17,9 @@ class ContrastCircle extends StatelessWidget {
   final String title;
   final String subtitle;
   final bool animateOnInit;
-  final Color circleColor;
-  final Color contrastingColor;
-  final bool sizeCondition;
+  final Color? circleColor;
+  final Color? contrastingColor;
+  final bool? sizeCondition;
 
   @override
   Widget build(BuildContext context) {
@@ -35,19 +35,19 @@ class ContrastCircle extends StatelessWidget {
       animatedInit: animateOnInit,
       circleColor: (contrast > 2) ? circleColor : null,
       contrastingColor: (contrast > 2) ? contrastingColor : null,
-        sizeCondition: sizeCondition,
+      sizeCondition: sizeCondition,
     );
   }
 
   Color _getProgressColor(double contrast) {
     if (contrast < 3.0) {
-      return Colors.redAccent[200];
+      return Colors.redAccent[200]!;
     } else if (contrast < 4.5) {
-      return Colors.orangeAccent[200];
+      return Colors.orangeAccent[200]!;
     } else if (contrast < 7) {
-      return Colors.lightGreen[200];
+      return Colors.lightGreen[200]!;
     } else {
-      return Colors.greenAccent[200];
+      return Colors.greenAccent[200]!;
     }
   }
 

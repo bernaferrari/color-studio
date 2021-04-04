@@ -44,7 +44,6 @@ const darkTheme2 = [
   [Color(0xffff3d38), Color(0xff191313)],
   [Color(0xfff654c0), Color(0xff280656)],
   [Color(0xfff49232), Color(0xffc9f9fc)],
-
 ];
 
 const lightTheme = [
@@ -219,7 +218,10 @@ const claimTheme = [
 ];
 
 HSLuvColor addLuv(
-    {HSLuvColor luv, int hue = 0, int saturation = 0, int lightness = 0}) {
+    {required HSLuvColor luv,
+    int hue = 0,
+    int saturation = 0,
+    int lightness = 0}) {
   return HSLuvColor.fromHSL(
     math.max(0, (luv.hue + hue).abs() % 360),
     math.max(0, math.min(luv.saturation + saturation, 100)),
@@ -228,7 +230,7 @@ HSLuvColor addLuv(
 }
 
 Color luvSetHue(
-    {HSLuvColor luv,
+    {required HSLuvColor luv,
     double hue = 0,
     double saturation = 0,
     double lightness = 0}) {
@@ -245,13 +247,13 @@ class NewScreen extends StatelessWidget {
     this.rgbColorsWithBlindness,
     this.hsluvColors,
     this.locked,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
-  final Map<ColorType, Color> rgbColors;
-  final Map<ColorType, Color> rgbColorsWithBlindness;
-  final Map<ColorType, HSLuvColor> hsluvColors;
-  final Map<ColorType, bool> locked;
+  final Map<ColorType, Color>? rgbColors;
+  final Map<ColorType, Color>? rgbColorsWithBlindness;
+  final Map<ColorType, HSLuvColor>? hsluvColors;
+  final Map<ColorType, bool>? locked;
 
   @override
   Widget build(BuildContext context) {
@@ -314,7 +316,7 @@ class NewScreen extends StatelessWidget {
       Color(0xff00B0FF),
     ];
 
-    final hsluv = HSLuvColor.fromColor(rgbColors[ColorType.Primary]);
+    final hsluv = HSLuvColor.fromColor(rgbColors![ColorType.Primary]!);
 
     final grayColors = [
       [
@@ -550,7 +552,7 @@ class NewScreen extends StatelessWidget {
                             ...cupertinoiOS.map(
                               (d) => ColorButton(
                                 color: d,
-                                selected: d == rgbColors[ColorType.Primary],
+                                selected: d == rgbColors![ColorType.Primary],
                               ),
                             ),
                             RainbowButton(),
@@ -648,9 +650,9 @@ class NewScreen extends StatelessWidget {
 
 class ColorButton extends StatelessWidget {
   const ColorButton({
-    Key key,
-    this.color,
-    this.selected,
+    Key? key,
+    required this.color,
+    required this.selected,
   }) : super(key: key);
 
   final Color color;
@@ -692,11 +694,11 @@ class ColorButton extends StatelessWidget {
 
 class RainbowButton extends StatelessWidget {
   const RainbowButton({
-    Key key,
+    Key? key,
     this.selected,
   }) : super(key: key);
 
-  final bool selected;
+  final bool? selected;
 
   @override
   Widget build(BuildContext context) {
@@ -742,16 +744,16 @@ class RainbowButton extends StatelessWidget {
 }
 
 class CustomSeparator extends StatelessWidget {
-  const CustomSeparator({Key key, this.numberOfLines}) : super(key: key);
+  const CustomSeparator({Key? key, this.numberOfLines}) : super(key: key);
 
-  final int numberOfLines;
+  final int? numberOfLines;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        for (var i = 0; i < numberOfLines; i++)
+        for (var i = 0; i < numberOfLines!; i++)
           Container(
             height: 16,
             width: 1,

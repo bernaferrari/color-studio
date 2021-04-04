@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 
 class HorizontalProgressBar extends StatelessWidget {
   const HorizontalProgressBar({
-    Key key,
+    Key? key,
     this.currentValue = 0,
     this.maxValue = 100,
     this.size = 30,
@@ -14,9 +14,7 @@ class HorizontalProgressBar extends StatelessWidget {
     this.borderWidth = 0.2,
     this.backgroundColor = const Color(0x00FFFFFF),
     this.progressColor = const Color(0xFFFA7268),
-    this.changeColorValue,
     this.changeProgressColor = const Color(0xFF5F4B8B),
-    this.displayText,
   }) : super(key: key);
 
   final int currentValue;
@@ -27,9 +25,7 @@ class HorizontalProgressBar extends StatelessWidget {
   final double borderRadius;
   final Color backgroundColor;
   final Color progressColor;
-  final int changeColorValue;
   final Color changeProgressColor;
-  final String displayText;
   final Color borderColor;
   final double borderWidth;
 
@@ -81,7 +77,7 @@ class HorizontalProgressBar extends StatelessWidget {
 
 class RectangularPercentageWidget extends StatefulWidget {
   const RectangularPercentageWidget({
-    Key key,
+    Key? key,
     this.percent = 0.0,
     this.size = 30,
     this.direction = Axis.horizontal,
@@ -99,7 +95,7 @@ class RectangularPercentageWidget extends StatefulWidget {
   final VerticalDirection verticalDirection;
   final double borderRadius;
   final Color backgroundColor;
-  final Color progressColor;
+  final Color? progressColor;
   final Color borderColor;
   final double borderWidth;
 
@@ -110,7 +106,7 @@ class RectangularPercentageWidget extends StatefulWidget {
 class _RectangularPercentageWidgetState
     extends State<RectangularPercentageWidget>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
+  late AnimationController _controller;
 
   @override
   void initState() {

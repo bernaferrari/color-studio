@@ -24,8 +24,8 @@ import 'picker_list.dart';
 
 class HSVerticalPicker extends StatefulWidget {
   const HSVerticalPicker({
-    this.color,
-    this.hsLuvColor,
+    required this.color,
+    required this.hsLuvColor,
   });
 
   final Color color;
@@ -36,21 +36,21 @@ class HSVerticalPicker extends StatefulWidget {
 }
 
 class _HSVerticalPickerState extends State<HSVerticalPicker> {
-  int currentSegment;
+  int? currentSegment;
 
   @override
   void initState() {
-    currentSegment = PageStorage.of(context).readState(context,
+    currentSegment = PageStorage.of(context)!.readState(context,
             identifier: const ValueKey("verticalSelected")) ??
         0;
 
     super.initState();
   }
 
-  void onValueChanged(int newValue) {
+  void onValueChanged(int? newValue) {
     setState(() {
       currentSegment = newValue;
-      PageStorage.of(context).writeState(
+      PageStorage.of(context)!.writeState(
         context,
         currentSegment,
         identifier: const ValueKey("verticalSelected"),
@@ -136,7 +136,7 @@ class _HSVerticalPickerState extends State<HSVerticalPicker> {
           Expanded(
             child: ValueListenableBuilder(
               valueListenable: Hive.box<dynamic>("settings").listenable(),
-              builder: (_, Box box, Widget child) {
+              builder: (_, Box box, Widget? child) {
                 return currentSegment == 0
                     ? HSLuvSelector(
                         color: widget.hsLuvColor,
@@ -168,16 +168,16 @@ class HSGenericScreen extends StatefulWidget {
     this.toneSize,
   });
 
-  final HSInterColor color;
-  final HSInterType kind;
-  final List<ColorWithInter> Function() fetchHue;
-  final List<ColorWithInter> Function() fetchSat;
-  final List<ColorWithInter> Function() fetchLight;
+  final HSInterColor? color;
+  final HSInterType? kind;
+  final List<ColorWithInter> Function()? fetchHue;
+  final List<ColorWithInter> Function()? fetchSat;
+  final List<ColorWithInter> Function()? fetchLight;
 
-  final int toneSize;
-  final String hueTitle;
-  final String satTitle;
-  final String lightTitle;
+  final int? toneSize;
+  final String? hueTitle;
+  final String? satTitle;
+  final String? lightTitle;
 
   @override
   _HSGenericScreenState createState() => _HSGenericScreenState();
@@ -193,7 +193,7 @@ class _HSGenericScreenState extends State<HSGenericScreen> {
   @override
   void initState() {
     super.initState();
-    expanded = PageStorage.of(context).readState(context,
+    expanded = PageStorage.of(context)!.readState(context,
             identifier: const ValueKey<String>("VerticalSelector")) ??
         0;
   }
@@ -205,22 +205,22 @@ class _HSGenericScreenState extends State<HSGenericScreen> {
   void modifyAndSaveExpanded(int updatedValue) {
     setState(() {
       expanded = updatedValue;
-      PageStorage.of(context).writeState(context, expanded,
+      PageStorage.of(context)!.writeState(context, expanded,
           identifier: const ValueKey<String>("VerticalSelector"));
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final HSInterColor color = widget.color;
-    final Color rgbColor = widget.color.toColor();
+    final HSInterColor? color = widget.color;
+    final Color rgbColor = widget.color!.toColor();
 
     // in the ideal the world they could be calculated in the Bloc &/or in parallel.
-    final List<ColorWithInter> hue = widget.fetchHue();
+    final List<ColorWithInter> hue = widget.fetchHue!();
     final int hueLen = hue.length;
 
-    final List<ColorWithInter> tones = widget.fetchSat();
-    final List<ColorWithInter> values = widget.fetchLight();
+    final List<ColorWithInter> tones = widget.fetchSat!();
+    final List<ColorWithInter> values = widget.fetchLight!();
 
     // final isColorBrighterThanContrast =
     //     color.outputLightness() >= kLightnessThreshold;
@@ -230,8 +230,8 @@ class _HSGenericScreenState extends State<HSGenericScreen> {
     //     : Colors.white.withOpacity(0.40);
 
     final Widget hueWidget = ExpandableColorBar(
-        kind: widget.kind,
-        title: widget.hueTitle,
+        kind: widget.kind!,
+        title: widget.hueTitle!,
         expanded: expanded,
         sectionIndex: 0,
         listSize: hueLen,
@@ -244,11 +244,11 @@ class _HSGenericScreenState extends State<HSGenericScreen> {
         });
 
     final satWidget = ExpandableColorBar(
-        kind: widget.kind,
-        title: widget.satTitle,
+        kind: widget.kind!,
+        title: widget.satTitle!,
         expanded: expanded,
         sectionIndex: 1,
-        listSize: widget.toneSize,
+        listSize: widget.toneSize!,
         colorsList: tones,
         onTitlePressed: () => modifyAndSaveExpanded(1),
         onColorPressed: (c) {
@@ -257,11 +257,11 @@ class _HSGenericScreenState extends State<HSGenericScreen> {
         });
 
     final valueWidget = ExpandableColorBar(
-      kind: widget.kind,
-      title: widget.lightTitle,
+      kind: widget.kind!,
+      title: widget.lightTitle!,
       expanded: expanded,
       sectionIndex: 2,
-      listSize: widget.toneSize,
+      listSize: widget.toneSize!,
       colorsList: values,
       onTitlePressed: () => modifyAndSaveExpanded(2),
       onColorPressed: (c) {

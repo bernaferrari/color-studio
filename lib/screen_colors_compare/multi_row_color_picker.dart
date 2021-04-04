@@ -19,7 +19,7 @@ class MultiRowColorPicker extends StatelessWidget {
   const MultiRowColorPicker({
     this.moreColors = false,
     this.selected,
-    this.colorsTuple,
+    required this.colorsTuple,
   });
 
   // maximum number of items
@@ -27,7 +27,7 @@ class MultiRowColorPicker extends StatelessWidget {
 
   final RgbHSLuvTuple colorsTuple;
 
-  final ColorType selected;
+  final ColorType? selected;
 
   @override
   Widget build(BuildContext context) {
@@ -63,13 +63,13 @@ class _MultiRowColorPicker extends StatelessWidget {
     this.colorsTuple,
   });
 
-  final ColorType selected;
-  final RgbHSLuvTuple colorsTuple;
-  final List<RgbHSLuvTuple> Function(HSLuvColor) fetchHue;
-  final List<RgbHSLuvTuple> Function(HSLuvColor) fetchSat;
-  final List<RgbHSLuvTuple> Function(HSLuvColor) fetchLight;
+  final ColorType? selected;
+  final RgbHSLuvTuple? colorsTuple;
+  final List<RgbHSLuvTuple> Function(HSLuvColor)? fetchHue;
+  final List<RgbHSLuvTuple> Function(HSLuvColor)? fetchSat;
+  final List<RgbHSLuvTuple> Function(HSLuvColor)? fetchLight;
 
-  final int toneSize;
+  final int? toneSize;
 
   double interval(double value, double min, double max) {
     return math.min(math.max(value, min), max);
@@ -83,15 +83,16 @@ class _MultiRowColorPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<RgbHSLuvTuple> light = fetchLight(colorsTuple.hsluvColor);
-    final List<RgbHSLuvTuple> hue = fetchHue(colorsTuple.hsluvColor);
-    final List<RgbHSLuvTuple> tones = fetchSat(colorsTuple.hsluvColor);
+    final List<RgbHSLuvTuple> light = fetchLight!(colorsTuple!.hsluvColor);
+    final List<RgbHSLuvTuple> hue = fetchHue!(colorsTuple!.hsluvColor);
+    final List<RgbHSLuvTuple> tones = fetchSat!(colorsTuple!.hsluvColor);
 
     final hueLen = hue.length;
 
-    final borderColor = (colorsTuple.hsluvColor.lightness > kLightnessThreshold)
-        ? Colors.black.withOpacity(0.40)
-        : Colors.white.withOpacity(0.40);
+    final borderColor =
+        (colorsTuple!.hsluvColor.lightness > kLightnessThreshold)
+            ? Colors.black.withOpacity(0.40)
+            : Colors.white.withOpacity(0.40);
 
     // in the ideal the world they could be calculated in the Bloc &/or in parallel.
     final widgets = <Widget>[
@@ -125,9 +126,9 @@ class _MultiRowColorPicker extends StatelessWidget {
 
     return Theme(
       data: ThemeData.from(
-        colorScheme: (colorsTuple.hsluvColor.lightness > kLightnessThreshold)
-            ? ColorScheme.light(surface: colorsTuple.rgbColor)
-            : ColorScheme.dark(surface: colorsTuple.rgbColor),
+        colorScheme: (colorsTuple!.hsluvColor.lightness > kLightnessThreshold)
+            ? ColorScheme.light(surface: colorsTuple!.rgbColor)
+            : ColorScheme.dark(surface: colorsTuple!.rgbColor),
         textTheme: TextTheme(
           caption: GoogleFonts.b612Mono(),
           button: GoogleFonts.b612Mono(),
@@ -169,7 +170,7 @@ class _MultiRowColorPicker extends StatelessWidget {
                       SizedBox(
                         width: 48,
                         child: Text(
-                          toPartialStr(colorsTuple.hsluvColor, i),
+                          toPartialStr(colorsTuple!.hsluvColor, i),
                           textAlign: TextAlign.center,
                           style: GoogleFonts.b612Mono(fontSize: 12),
                         ),
@@ -200,16 +201,16 @@ class _MultiRowColorPicker extends StatelessWidget {
 
 class _HorizontalColorListExpanded extends StatelessWidget {
   const _HorizontalColorListExpanded({
-    @required this.category,
-    @required this.listSize,
-    @required this.colorsList,
-    @required this.isInfinite,
-    @required this.onColorPressed,
+    required this.category,
+    required this.listSize,
+    required this.colorsList,
+    required this.isInfinite,
+    required this.onColorPressed,
   });
 
   final List<RgbHSLuvTuple> colorsList;
   final String category;
-  final int listSize;
+  final int? listSize;
   final bool isInfinite;
   final ValueChanged<HSLuvColor> onColorPressed;
 
@@ -221,7 +222,7 @@ class _HorizontalColorListExpanded extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               key: PageStorageKey<String>("hPicker $category"),
               itemBuilder: (_, absoluteIndex) {
-                final index = absoluteIndex % listSize;
+                final index = absoluteIndex % listSize!;
 
                 return _ContrastItemExpanded(
                   rgbHsluvTuple: colorsList[index],
@@ -263,13 +264,13 @@ class _ContrastItemExpanded extends StatelessWidget {
     this.category = "",
   });
 
-  final RgbHSLuvTuple rgbHsluvTuple;
-  final VoidCallback onPressed;
+  final RgbHSLuvTuple? rgbHsluvTuple;
+  final VoidCallback? onPressed;
   final String category;
 
   @override
   Widget build(BuildContext context) {
-    final hsluv = rgbHsluvTuple.hsluvColor;
+    final hsluv = rgbHsluvTuple!.hsluvColor;
 
     final Color textColor = (hsluv.lightness < kLightnessThreshold)
         ? Colors.white.withOpacity(0.87)
@@ -286,13 +287,13 @@ class _ContrastItemExpanded extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         elevation: 0,
         padding: EdgeInsets.zero,
-        primary: rgbHsluvTuple.rgbColor,
+        primary: rgbHsluvTuple!.rgbColor,
         shape: const RoundedRectangleBorder(),
       ),
       onPressed: onPressed,
       child: Text(
         writtenValue,
-        style: Theme.of(context).textTheme.caption.copyWith(color: textColor),
+        style: Theme.of(context).textTheme.caption!.copyWith(color: textColor),
       ),
     );
   }

@@ -42,7 +42,7 @@ class ColorRouteInformationParser
   @override
   Future<ColorRoutePath> parseRouteInformation(
       RouteInformation routeInformation) async {
-    final uri = Uri.parse(routeInformation.location);
+    final uri = Uri.parse(routeInformation.location!);
 
     if (uri.pathSegments.length == 1) {
       if (uri.pathSegments[0] == "settings") return ColorRoutePath.settings();
@@ -70,7 +70,7 @@ class ColorRouteInformationParser
   }
 
   @override
-  RouteInformation restoreRouteInformation(ColorRoutePath path) {
+  RouteInformation? restoreRouteInformation(ColorRoutePath path) {
     print("restoreRouteInformation path is ${path.panel}");
     switch (path.panel) {
       case ScreenPanel.home:

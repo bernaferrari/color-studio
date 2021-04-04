@@ -14,13 +14,13 @@ import 'util/color_blind_from_index.dart';
 class ColorBlindnessBar extends StatelessWidget {
   const ColorBlindnessBar({this.onPressed});
 
-  final Function onPressed;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ColorsCubit, ColorsState>(builder: (_, state) {
-      final ColorWithBlind blindPrimary = getColorBlindFromIndex(
-        state.rgbColors[ColorType.Primary],
+      final ColorWithBlind? blindPrimary = getColorBlindFromIndex(
+        state.rgbColors[ColorType.Primary]!,
         state.blindnessSelected,
       );
 
@@ -53,7 +53,7 @@ class ColorBlindnessBar extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.openSans(
                           textStyle:
-                              Theme.of(context).textTheme.bodyText2.copyWith(
+                              Theme.of(context).textTheme.bodyText2!.copyWith(
                                     fontWeight: FontWeight.w600,
                                   ),
                         ),

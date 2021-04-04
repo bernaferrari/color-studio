@@ -7,15 +7,15 @@ import '../../example/screens/single_color_blindness.dart';
 
 class ColorBlindnessItem extends StatelessWidget {
   const ColorBlindnessItem({
-    Key key,
-    this.value,
-    this.groupValue,
-    this.title,
-    this.subtitle,
-    this.backgroundColor,
-    this.primaryColor,
-    this.colorWithBlindList,
-    this.onChanged,
+    Key? key,
+    required this.value,
+    required this.groupValue,
+    required this.title,
+    required this.subtitle,
+    required this.backgroundColor,
+    required this.primaryColor,
+    required this.colorWithBlindList,
+    required this.onChanged,
   }) : super(key: key);
 
   final int value;
@@ -25,7 +25,7 @@ class ColorBlindnessItem extends StatelessWidget {
   final Color backgroundColor;
   final Color primaryColor;
   final List<ColorWithBlind> colorWithBlindList;
-  final ValueChanged<int> onChanged;
+  final ValueChanged<int?> onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +57,7 @@ class ColorBlindnessItem extends StatelessWidget {
                     Text(
                       subtitle,
                       style: GoogleFonts.openSans(
-                          textStyle: Theme.of(context).textTheme.caption,
+                        textStyle: Theme.of(context).textTheme.caption,
                       ),
                       // style: Theme.of(context).textTheme.caption,
                     ),

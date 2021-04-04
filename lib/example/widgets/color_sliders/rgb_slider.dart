@@ -5,7 +5,8 @@ import 'package:flutter/rendering.dart';
 import 'single_slider.dart';
 
 class RGBSlider extends StatefulWidget {
-  const RGBSlider({Key key, this.color, this.onChanged}) : super(key: key);
+  const RGBSlider({Key? key, required this.color, required this.onChanged})
+      : super(key: key);
 
   final Function(int, int, int) onChanged;
   final Color color;
@@ -23,9 +24,9 @@ class _RGBSliderState extends State<RGBSlider> {
   int valueBlue = 0;
   int valueGreen = 0;
 
-  List<Color> colorRed;
-  List<Color> colorGreen;
-  List<Color> colorBlue;
+  late List<Color> colorRed;
+  late List<Color> colorGreen;
+  late List<Color> colorBlue;
 
   void updateColorLists() {
     final vg = valueGreen.convertToHexString();
@@ -58,8 +59,8 @@ class _RGBSliderState extends State<RGBSlider> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        SingleSlider("Red", valueRed / 255, "$valueRed", colorRed,
-            scale: 255, onChanged: (value) {
+        SingleSlider("Red", valueRed / 255, "$valueRed", colorRed, scale: 255,
+            onChanged: (value) {
           setState(() {
             valueRed = (value * 255).round();
             updateColorLists();

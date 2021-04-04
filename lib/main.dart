@@ -46,15 +46,15 @@ class BoxedApp extends StatefulWidget {
 }
 
 class _BoxedAppState extends State<BoxedApp> {
-  ColorBlindnessCubit _colorBlindnessCubit;
-  ContrastRatioCubit _contrastRatioCubit;
-  ColorsCubit _colorsCubit;
+  late ColorBlindnessCubit _colorBlindnessCubit;
+  late ContrastRatioCubit _contrastRatioCubit;
+  late ColorsCubit _colorsCubit;
 
   @override
   void initState() {
     super.initState();
 
-    final int shuffle = Hive.box<dynamic>("settings").get("shuffle");
+    final int? shuffle = Hive.box<dynamic>("settings").get("shuffle");
 
     _colorBlindnessCubit = ColorBlindnessCubit();
     _colorsCubit = ColorsCubit(
@@ -95,39 +95,40 @@ class _BoxedAppState extends State<BoxedApp> {
         final background = state.rgbColorsWithBlindness[ColorType.Background];
         final surface = state.rgbColorsWithBlindness[ColorType.Surface];
 
-        final isLightSurface = state.hsluvColors[ColorType.Surface].lightness >=
-            kLightnessThreshold;
+        final isLightSurface =
+            state.hsluvColors[ColorType.Surface]!.lightness >=
+                kLightnessThreshold;
 
         final onSurface = isLightSurface ? Colors.black : Colors.white;
 
         final onBackground =
-            state.hsluvColors[ColorType.Background].lightness >=
+            state.hsluvColors[ColorType.Background]!.lightness >=
                     kLightnessThreshold
                 ? Colors.black
                 : Colors.white;
 
-        final onPrimary = state.hsluvColors[ColorType.Primary].lightness >=
+        final onPrimary = state.hsluvColors[ColorType.Primary]!.lightness >=
                 kLightnessThreshold
             ? Colors.black
             : Colors.white;
 
         final colorScheme = isLightSurface
             ? ColorScheme.light(
-                primary: primary,
+                primary: primary!,
                 onPrimary: onPrimary,
-                secondary: secondary,
-                background: background,
+                secondary: secondary!,
+                background: background!,
                 onBackground: onBackground,
-                surface: surface,
+                surface: surface!,
                 onSurface: onSurface,
               )
             : ColorScheme.dark(
-                primary: primary,
+                primary: primary!,
                 onPrimary: onPrimary,
-                secondary: secondary,
-                background: background,
+                secondary: secondary!,
+                background: background!,
                 onBackground: onBackground,
-                surface: surface,
+                surface: surface!,
                 onSurface: onSurface,
               );
 

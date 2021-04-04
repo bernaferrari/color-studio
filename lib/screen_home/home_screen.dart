@@ -13,9 +13,9 @@ import 'scheme/card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({
-    @required this.toMultiColor,
-    @required this.toSingleColor,
-    @required this.toSettings,
+    required this.toMultiColor,
+    required this.toSingleColor,
+    required this.toSettings,
   });
 
   final VoidCallback toMultiColor;
@@ -196,7 +196,7 @@ class MiddleButton extends StatelessWidget {
               title,
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.subtitle1.copyWith(
+              style: Theme.of(context).textTheme.subtitle1!.copyWith(
                     color: Theme.of(context)
                         .colorScheme
                         .onPrimary

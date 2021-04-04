@@ -10,7 +10,7 @@ class ContrastText extends StatelessWidget {
 
   final double contrast;
   final bool withSizedBox;
-  final Color color;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +18,12 @@ class ContrastText extends StatelessWidget {
       textAlign: TextAlign.center,
       text: TextSpan(
         text: contrast.toStringAsPrecision(3),
-        style: Theme.of(context).textTheme.headline6.copyWith(color: color),
+        style: Theme.of(context).textTheme.headline6!.copyWith(color: color),
         children: <TextSpan>[
           TextSpan(
             text: ':1',
-            style: Theme.of(context).textTheme.subtitle1.copyWith(color: color),
+            style:
+                Theme.of(context).textTheme.subtitle1!.copyWith(color: color),
           ),
         ],
       ),
@@ -49,7 +50,7 @@ class HexCaption extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       color.toHexStr(),
-      style: Theme.of(context).textTheme.caption.copyWith(color: textColor),
+      style: Theme.of(context).textTheme.caption!.copyWith(color: textColor),
     );
   }
 }
@@ -84,13 +85,13 @@ class ContrastProgressBar extends StatelessWidget {
 
   Color getProgressColor(double contrast) {
     if (contrast < 3.0) {
-      return Colors.redAccent[200];
+      return Colors.redAccent[200]!;
     } else if (contrast < 4.5) {
-      return Colors.orangeAccent[200];
+      return Colors.orangeAccent[200]!;
     } else if (contrast < 7) {
-      return Colors.lightGreen[200];
+      return Colors.lightGreen[200]!;
     } else {
-      return Colors.greenAccent[200];
+      return Colors.greenAccent[200]!;
     }
   }
 
@@ -124,7 +125,7 @@ class ColorCompareWidget extends StatelessWidget {
           child: Center(
             child: Text(
               secondData.name[0],
-              style: Theme.of(context).textTheme.headline5.copyWith(
+              style: Theme.of(context).textTheme.headline5!.copyWith(
                     fontWeight: FontWeight.w500,
                     color: secondData.color,
                   ),
@@ -152,7 +153,7 @@ class ColorCompareWidget extends StatelessWidget {
                 firstData.name,
                 style: Theme.of(context)
                     .textTheme
-                    .headline6
+                    .headline6!
                     .copyWith(fontSize: 18),
                 overflow: TextOverflow.ellipsis,
               ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TitleBar extends StatelessWidget {
-  const TitleBar({this.title, this.children});
+  const TitleBar({required this.title, required this.children});
 
   final String title;
   final List<Widget> children;
@@ -14,7 +14,7 @@ class TitleBar extends StatelessWidget {
         Expanded(
           child: Text(
             title,
-            style: Theme.of(context).textTheme.headline6.copyWith(
+            style: Theme.of(context).textTheme.headline6!.copyWith(
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
           ),
