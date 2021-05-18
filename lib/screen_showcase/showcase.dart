@@ -24,16 +24,10 @@ class Showcase extends StatefulWidget {
 }
 
 class _ShowcaseState extends State<Showcase> {
-  late double sliderValue;
+  late double sliderValue = PageStorage.of(context)!
+          .readState(context, identifier: ValueKey("CardElevation")) ??
+      1 / (elevationEntriesList.length - 1);
   bool slidersMode = false;
-
-  @override
-  void initState() {
-    sliderValue = PageStorage.of(context)!
-            .readState(context, identifier: ValueKey("CardElevation")) ??
-        1 / (elevationEntriesList.length - 1);
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -1133,7 +1127,7 @@ class _PodcastCard extends StatelessWidget {
                         title,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
-                        style: GoogleFonts.muli(
+                        style: GoogleFonts.mulish(
                           fontSize: 18,
                           fontWeight: FontWeight.w700,
                           textStyle: TextStyle(color: textColor),
@@ -1141,7 +1135,7 @@ class _PodcastCard extends StatelessWidget {
                       ),
                       Text(
                         "Extremes",
-                        style: GoogleFonts.muli(
+                        style: GoogleFonts.mulish(
                           fontSize: 14,
                           fontWeight: FontWeight.w300,
                           textStyle: TextStyle(color: textColor),
@@ -1164,7 +1158,7 @@ class _PodcastCard extends StatelessWidget {
               description,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.muli(
+              style: GoogleFonts.mulish(
                 textStyle: TextStyle(
                   color: textColor,
                 ),
@@ -1182,7 +1176,7 @@ class _PodcastCard extends StatelessWidget {
                 Text(
                   subdescription,
                   maxLines: 1,
-                  style: GoogleFonts.muli(
+                  style: GoogleFonts.mulish(
                     textStyle: TextStyle(
                       color: textColor,
                     ),
@@ -1315,15 +1309,9 @@ class PrevPhotosTransparency extends StatefulWidget {
 }
 
 class _PrevPhotosTransparencyState extends State<PrevPhotosTransparency> {
-  late double sliderValue;
-
-  @override
-  void initState() {
-    sliderValue = PageStorage.of(context)!.readState(context,
-            identifier: const ValueKey("prevPhotosState")) ??
-        3 / 6;
-    super.initState();
-  }
+  late double sliderValue = PageStorage.of(context)!
+          .readState(context, identifier: const ValueKey("prevPhotosState")) ??
+      3 / 6;
 
   @override
   Widget build(BuildContext context) {

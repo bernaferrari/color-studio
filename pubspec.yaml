@@ -27,14 +27,14 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^7.0.0
   flutter_feather_icons: ^2.0.0+1
-  google_fonts: ^2.0.0
-  hive: ^2.0.2
+  google_fonts: ^2.1.0
+  hive: ^2.0.4
   hive_flutter: ^1.0.0
   hsluv: ^1.1.2
   infinite_listview: ^1.1.0
   path_provider: ^2.0.1
   replay_bloc: ^0.0.1
-  rxdart: ^0.26.0
+  rxdart: ^0.27.0
   shared_preferences: ^2.0.5
   url_launcher: ^6.0.3
   window_size:
@@ -47,7 +47,7 @@ dev_dependencies:
   flutter_launcher_icons: ^0.9.0
   flutter_test:
     sdk: flutter
-  hive_generator: ^1.0.1
+  hive_generator: ^1.1.0
 
 flutter_icons:
   # unfortunately, this only works without bugs for iOS.

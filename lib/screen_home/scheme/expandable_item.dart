@@ -27,16 +27,9 @@ class SchemeExpandableItem extends StatefulWidget {
 }
 
 class _SchemeExpandableItemState extends State<SchemeExpandableItem> {
-  late int index;
-
-  @override
-  void initState() {
-    index = PageStorage.of(context)!.readState(context,
-            identifier: const ValueKey<String>("SchemeExpandableItem")) ??
-        -1;
-
-    super.initState();
-  }
+  late int index = PageStorage.of(context)!.readState(context,
+          identifier: const ValueKey<String>("SchemeExpandableItem")) ??
+      -1;
 
   void onValueChanged(int newValue) {
     setState(() {
