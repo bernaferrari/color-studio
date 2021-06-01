@@ -61,7 +61,7 @@ class _SliderWithSelectorState extends State<SliderWithSelector> {
         Padding(
           // this is the right padding, so text don't get glued to the border.
           padding: const EdgeInsets.only(top: 8),
-          child: widget.sliders[currentSegment!],
+          child: widget.sliders[currentSegment],
         ),
       ],
     );

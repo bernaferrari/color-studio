@@ -23,7 +23,7 @@ Future<void> main() async {
   if (!kIsWeb) {
     if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
       setWindowTitle("Color Studio");
-      setWindowMinSize(Size(300, 600));
+      setWindowMinSize(Size(800, 400));
     }
   }
   await openBox();
