@@ -16,7 +16,7 @@ class ComponentsPreview extends StatelessWidget {
 
     // final colors = currentState.rgbColorsWithBlindness;
     // final HSLuvColor backgroundLuv = currentState.hsluvColors[kBackground];
-    final isiPad = MediaQuery.of(context).size.shortestSide > 600;
+    final isiPad = true; //MediaQuery.of(context).size.shortestSide > 600;
 
     // final scheme = backgroundLuv.lightness >= kLightnessThreshold
     //     ? ColorScheme.light(
