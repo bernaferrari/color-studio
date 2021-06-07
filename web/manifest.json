@@ -1,6 +1,6 @@
 {
-    "name": "colorstudio",
-    "short_name": "colorstudio",
+    "name": "Color Studio",
+    "short_name": "Color Studio",
     "start_url": ".",
     "display": "minimal-ui",
     "background_color": "#0175C2",
