@@ -18,7 +18,7 @@ import 'templates/templates_screen.dart';
 import 'vertical_picker/vertical_picker_main.dart';
 
 class ScreenSingle extends StatelessWidget {
-  const ScreenSingle();
+  const ScreenSingle({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -227,7 +227,7 @@ class _ColorContrastRow extends StatelessWidget {
 
       return Center(
         child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: 500),
+          constraints: const BoxConstraints(maxWidth: 500),
           child: ContrastCircleGroup(
             state: state,
             rgbColorsWithBlindness: rgbColors,
@@ -291,7 +291,7 @@ class ThemeBar extends StatelessWidget {
               if (isExpanded != null)
                 IconButton(
                   tooltip: "undo",
-                  icon: Icon(Icons.undo_rounded),
+                  icon: const Icon(Icons.undo_rounded),
                   onPressed: () => context.read<ColorsCubit>().undo(),
                 ),
               if (leading != null) leading!,
@@ -335,7 +335,7 @@ class ThemeBar extends StatelessWidget {
                             },
                             child: Row(
                               children: <Widget>[
-                                SizedBox(width: 8),
+                                const SizedBox(width: 8),
                                 if (selected == keysList[i])
                                   Icon(
                                     FeatherIcons.checkCircle,
@@ -348,7 +348,7 @@ class ThemeBar extends StatelessWidget {
                                     size: 16,
                                     color: contrastedColors[i],
                                   ),
-                                SizedBox(width: 4),
+                                const SizedBox(width: 4),
                                 Text(
                                   describeEnum(keysList[i]),
                                   style: Theme.of(context)
@@ -361,7 +361,7 @@ class ThemeBar extends StatelessWidget {
                                             : FontWeight.w400,
                                       ),
                                 ),
-                                SizedBox(width: 8),
+                                const SizedBox(width: 8),
                               ],
                             ),
                           ),

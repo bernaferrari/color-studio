@@ -26,7 +26,8 @@ class HSVerticalPicker extends StatefulWidget {
   const HSVerticalPicker({
     required this.color,
     required this.hsLuvColor,
-  });
+    Key? key,
+  }) : super(key: key);
 
   final Color color;
   final HSLuvColor hsLuvColor;
@@ -69,9 +70,9 @@ class _HSVerticalPickerState extends State<HSVerticalPicker> {
         backgroundColor: widget.color,
         actions: <Widget>[
           Center(child: ColorSearchButton(color: widget.color)),
-          SizedBox(width: 8),
+          const SizedBox(width: 8),
           OutlinedIconButton(
-            child: Icon(FeatherIcons.moreHorizontal, size: 16),
+            child: const Icon(FeatherIcons.moreHorizontal, size: 16),
             onPressed: () {
               showDialog<dynamic>(
                   context: context,
@@ -90,7 +91,7 @@ class _HSVerticalPickerState extends State<HSVerticalPicker> {
                             .background
                             .withOpacity(kVeryTransparent),
                         elevation: 0,
-                        child: MoreColors(activeColor: Colors.green),
+                        child: const MoreColors(activeColor: Colors.green),
                       ),
                     );
                   });
@@ -159,7 +160,8 @@ class HSGenericScreen extends StatefulWidget {
     this.satTitle,
     this.lightTitle,
     this.toneSize,
-  });
+    Key? key,
+  }) : super(key: key);
 
   final HSInterColor? color;
   final HSInterType? kind;

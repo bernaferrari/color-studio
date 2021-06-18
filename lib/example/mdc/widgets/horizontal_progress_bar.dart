@@ -112,7 +112,7 @@ class _RectangularPercentageWidgetState
   void initState() {
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 1200),
+      duration: const Duration(milliseconds: 1200),
     );
 
     _controller.addListener(() {

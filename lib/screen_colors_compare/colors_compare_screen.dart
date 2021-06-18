@@ -65,7 +65,7 @@ class ColorsCompareScreen extends StatelessWidget {
             actions: <Widget>[
               IconButton(
                 tooltip: "Undo",
-                icon: Icon(Icons.undo),
+                icon: const Icon(Icons.undo),
                 onPressed: () => context.read<ColorsCubit>().undo(),
               )
               // IconButton(
@@ -79,7 +79,7 @@ class ColorsCompareScreen extends StatelessWidget {
           body: ListView.builder(
             key: const PageStorageKey("ContrastCompareKey"),
             itemCount: state.colorsCompared.length,
-            padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
             itemBuilder: (_, _index) {
               final currentKey = state.colorsCompared.keys.toList()[_index];
 
@@ -93,8 +93,8 @@ class ColorsCompareScreen extends StatelessWidget {
                   clipBehavior: Clip.antiAlias,
                   child: AnimatedSwitcher(
                     duration: currentKey == state.selectedKey
-                        ? Duration(milliseconds: 1250)
-                        : Duration(milliseconds: 750),
+                        ? const Duration(milliseconds: 1250)
+                        : const Duration(milliseconds: 750),
                     switchInCurve: currentKey == state.selectedKey
                         ? Curves.fastOutSlowIn
                         : Curves.fastLinearToSlowEaseIn,
@@ -261,7 +261,7 @@ class CompactPicker extends StatelessWidget {
         "currentKey $currentKey | selected $selectedKey ${colorsCompared[currentKey]!.contrast}");
 
     return AnimatedSwitcher(
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
       switchInCurve: Curves.easeInOut,
       transitionBuilder: (child, animation) {
         return SizeTransition(child: child, sizeFactor: animation);
@@ -297,14 +297,12 @@ class CompactPicker extends StatelessWidget {
                         ),
                         TextSpan(
                           text: describeEnum(currentKey),
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: const TextStyle(fontWeight: FontWeight.w600),
                         ),
                       ],
                     ),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   _TopSection(
                     rgbColor: colorsCompared[currentKey]!.rgbColor,
                     hsluvColor: colorsCompared[currentKey]!.hsluvColor,
@@ -345,7 +343,7 @@ class ExpandedPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 12),
+        const SizedBox(height: 12),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -357,7 +355,7 @@ class ExpandedPicker extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
-            SizedBox(width: 16),
+            const SizedBox(width: 16),
             _TopSection(
               rgbColor: colorsMap[currentKey]!.rgbColor,
               hsluvColor: colorsMap[currentKey]!.hsluvColor,
@@ -368,7 +366,7 @@ class ExpandedPicker extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         MultiRowColorPicker(
           selected: selectedKey,
           moreColors: false,
@@ -447,7 +445,7 @@ class _ContrastWithLetters extends StatelessWidget {
           text: TextSpan(style: style, children: [
             TextSpan(
               text: contrast.toStringAsPrecision(3),
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
               ),
@@ -506,10 +504,7 @@ class _TopSectionButtons extends StatelessWidget {
               side: BorderSide(color: outlinedButtonSideColor),
               primary: contrastColor,
             ),
-            icon: Icon(
-              FeatherIcons.search,
-              size: 16,
-            ),
+            icon: const Icon(FeatherIcons.search, size: 16),
             label: Text(rgbColor.toHexStr()),
             onPressed: () {
               showSlidersDialog(context, rgbColor, currentType);
@@ -555,10 +550,7 @@ class _TopSectionButtons extends StatelessWidget {
                   primary: contrastColor,
                   elevation: 0,
                 ),
-                child: Icon(
-                  Icons.compare_arrows_rounded,
-                  size: 16,
-                ),
+                child: const Icon(Icons.compare_arrows_rounded, size: 16),
                 onPressed: () {
                   context
                       .read<MultipleContrastCompareCubit>()

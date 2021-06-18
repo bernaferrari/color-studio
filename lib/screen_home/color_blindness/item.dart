@@ -68,7 +68,7 @@ class ColorBlindnessItem extends StatelessWidget {
                 width: 12 + 12.0 * colorWithBlindList.length,
                 child: Stack(
                   children: <Widget>[
-                    SizedBox(height: 24),
+                    const SizedBox(height: 24),
                     for (int i = colorWithBlindList.length - 1; i >= 0; i--)
                       Positioned.fill(
                         left: 12.0 * i,
@@ -89,7 +89,7 @@ class ColorBlindnessItem extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
             ],
           ),
         ),

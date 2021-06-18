@@ -8,12 +8,18 @@ import '../../util/constants.dart';
 import '../../util/selected.dart';
 
 class TextFormColored extends StatelessWidget {
-  const TextFormColored(
-      {this.controller, required this.radius, this.autofocus = true});
+  const TextFormColored({
+    this.controller,
+    required this.radius,
+    required this.onSubmitted,
+    this.autofocus = true,
+    Key? key,
+  }) : super(key: key);
 
   final double radius;
   final bool autofocus;
   final TextEditingController? controller;
+  final ValueChanged<String> onSubmitted;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +31,7 @@ class TextFormColored extends StatelessWidget {
     return TextFormField(
       autofocus: autofocus,
       controller: controller,
+      onFieldSubmitted: onSubmitted,
       onChanged: (str) {
         BlocProvider.of<SliderColorBloc>(context).add(
             MoveColor(Color(int.parse("0xFF${str.padRight(6, "F")}")), false));
@@ -34,11 +41,11 @@ class TextFormColored extends StatelessWidget {
       ],
       decoration: InputDecoration(
         enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.white38, width: 2),
+          borderSide: const BorderSide(color: Colors.white38, width: 2),
           borderRadius: borderRadius,
         ),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.black26, width: 2),
+          borderSide: const BorderSide(color: Colors.black26, width: 2),
           borderRadius: borderRadius,
         ),
         filled: true,
@@ -46,8 +53,8 @@ class TextFormColored extends StatelessWidget {
                 kLumContrast)
             ? Colors.black12
             : Colors.white24,
-        prefix: Padding(
-          padding: const EdgeInsets.only(right: 8.0),
+        prefix: const Padding(
+          padding: EdgeInsets.only(right: 8.0),
           child: Icon(FeatherIcons.hash, size: 16),
         ),
         suffixIcon: SizedBox(

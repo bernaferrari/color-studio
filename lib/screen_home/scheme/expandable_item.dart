@@ -121,7 +121,7 @@ class _ExpandedAnimated extends StatelessWidget {
         child: Container(
           color: rgbColorWithBlindness,
           child: AnimatedSwitcher(
-            duration: Duration(milliseconds: 500),
+            duration: const Duration(milliseconds: 500),
             switchInCurve: Curves.easeInOut,
             transitionBuilder: (child, animation) {
               return SizeTransition(child: child, sizeFactor: animation);

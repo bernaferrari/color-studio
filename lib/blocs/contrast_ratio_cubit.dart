@@ -12,15 +12,15 @@ import '../util/constants.dart';
 import 'blocs.dart';
 
 class ContrastRatioCubit extends Cubit<ContrastRatioState> {
-  ContrastRatioCubit(ColorsCubit _colorsCubit) : super(ContrastRatioState()) {
+  ContrastRatioCubit(ColorsCubit _colorsCubit)
+      : super(const ContrastRatioState()) {
     // on first run, listen will not be called because it will already have a value.
     set(
       rgbColorsWithBlindness: _colorsCubit.state.rgbColorsWithBlindness,
       selectedColorType: _colorsCubit.state.selected,
     );
 
-    _mdcSubscription = _colorsCubit.listen((stateValue) async {
-      print("stateValue was changed $stateValue");
+    _mdcSubscription = _colorsCubit.stream.listen((stateValue) async {
       set(
         rgbColorsWithBlindness: stateValue.rgbColorsWithBlindness,
         selectedColorType: stateValue.selected,

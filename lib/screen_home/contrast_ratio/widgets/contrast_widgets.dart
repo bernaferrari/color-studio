@@ -11,7 +11,8 @@ class ContrastCircle extends StatelessWidget {
     this.circleColor,
     this.contrastingColor,
     this.sizeCondition,
-  });
+    Key? key,
+  }) : super(key: key);
 
   final double contrast;
   final String title;

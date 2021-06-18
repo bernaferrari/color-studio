@@ -30,7 +30,7 @@ class DynamicTemplatesScreen extends StatelessWidget {
       ),
       backgroundColor: backgroundColor,
       body: CustomScrollView(
-        key: PageStorageKey("TemplatesScrollView"),
+        key: const PageStorageKey("TemplatesScrollView"),
         primary: false,
         slivers: <Widget>[
           SliverPadding(
@@ -60,7 +60,7 @@ class DynamicTemplatesScreen extends StatelessWidget {
                       Colors.white
                     ],
                   );
-                  return Text("");
+                  return const Text("");
                   // return DynamicTemplatePreview(
                   //   struct.title,
                   //   struct.colors,

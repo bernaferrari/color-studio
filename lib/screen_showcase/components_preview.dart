@@ -8,6 +8,8 @@ import '../screen_single_color/screen_single.dart';
 import 'showcase.dart';
 
 class ComponentsPreview extends StatelessWidget {
+  const ComponentsPreview({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     // return BlocBuilder<MdcSelectedBloc, MdcSelectedState>(
@@ -16,7 +18,7 @@ class ComponentsPreview extends StatelessWidget {
 
     // final colors = currentState.rgbColorsWithBlindness;
     // final HSLuvColor backgroundLuv = currentState.hsluvColors[kBackground];
-    final isiPad = true; //MediaQuery.of(context).size.shortestSide > 600;
+    const isiPad = true; //MediaQuery.of(context).size.shortestSide > 600;
 
     // final scheme = backgroundLuv.lightness >= kLightnessThreshold
     //     ? ColorScheme.light(
@@ -47,20 +49,18 @@ class ComponentsPreview extends StatelessWidget {
       appBar: isiPad
           ? null
           : AppBar(
-              title: Text("Components Preview"),
+              title: const Text("Components Preview"),
               actions: <Widget>[
                 IconButton(
                   tooltip: "Edit colors",
-                  icon: Icon(FeatherIcons.sliders),
+                  icon: const Icon(FeatherIcons.sliders),
                   onPressed: () {
                     // Navigator.pushNamed(context, "/colordetails");
                   },
                 ),
                 IconButton(
                   tooltip: "Randomise colors",
-                  icon: Center(
-                    child: Icon(Icons.shuffle_rounded),
-                  ),
+                  icon: const Center(child: Icon(Icons.shuffle_rounded)),
                   onPressed: () async {
                     final box = await Hive.openBox<dynamic>('settings');
                     final int? pref = box.get('shuffle', defaultValue: 0);
@@ -75,7 +75,7 @@ class ComponentsPreview extends StatelessWidget {
       body: false
           ? Center(
               child: Row(
-                children: <Widget>[
+                children: const <Widget>[
                   Expanded(
                     child: Showcase(),
                   ),
@@ -90,7 +90,7 @@ class ComponentsPreview extends StatelessWidget {
                 ..add(
                   MoveColor(Theme.of(context).colorScheme.primary, true),
                 ),
-              child: Showcase(),
+              child: const Showcase(),
             ),
     );
     // });

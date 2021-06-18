@@ -25,7 +25,7 @@ class _ExpandedSectionState extends State<ExpandedSection>
   void prepareAnimations() {
     expandController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 250),
+      duration: const Duration(milliseconds: 250),
     );
     final Animation<double> curve = CurvedAnimation(
       parent: expandController,

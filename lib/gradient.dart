@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'gradients_json.dart';
 
 class GradientScreen extends StatelessWidget {
+  const GradientScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final flutterGradients =
@@ -17,9 +19,7 @@ class GradientScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("uiGradients"),
-      ),
+      appBar: AppBar(title: const Text("uiGradients")),
       body: Row(
         children: [
           Expanded(
@@ -120,7 +120,7 @@ class _InteractiveGradientState extends State<InteractiveGradient> {
       wLine = math.sqrt(math.pow(x2 - x1, 2) + math.pow(y2 - y1, 2));
       angle = math.atan((y2 - y1) / (x2 - x1));
 
-      print("x1: $x1 y1: $y1 line: $wLine x2: $x2 y2: $y2 angle: ${angle}");
+      print("x1: $x1 y1: $y1 line: $wLine x2: $x2 y2: $y2 angle: $angle");
     });
   }
 
@@ -156,7 +156,7 @@ class _InteractiveGradientState extends State<InteractiveGradient> {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
             colors: [Colors.red, Colors.green],
@@ -168,7 +168,7 @@ class _InteractiveGradientState extends State<InteractiveGradient> {
               left: x1,
               top: y1,
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: Colors.white,
                 ),
@@ -182,9 +182,7 @@ class _InteractiveGradientState extends State<InteractiveGradient> {
               child: Transform.rotate(
                 angle: angle,
                 child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                  ),
+                  decoration: const BoxDecoration(color: Colors.white),
                   width: wLine,
                   height: 4,
                 ),
@@ -194,7 +192,7 @@ class _InteractiveGradientState extends State<InteractiveGradient> {
               left: x2,
               top: y2,
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: Colors.white,
                 ),

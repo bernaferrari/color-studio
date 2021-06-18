@@ -13,14 +13,14 @@ import 'rgb_hsluv_tuple.dart';
 
 class MultipleContrastCompareCubit extends Cubit<MultipleColorCompareState> {
   MultipleContrastCompareCubit(ColorsCubit _colorsCubit)
-      : super(MultipleColorCompareState()) {
+      : super(const MultipleColorCompareState()) {
     set(
       rgbColors: _colorsCubit.state.rgbColors,
       hsluvColors: _colorsCubit.state.hsluvColors,
       locked: _colorsCubit.state.locked,
     );
 
-    _mdcSubscription = _colorsCubit.listen((stateValue) async {
+    _mdcSubscription = _colorsCubit.stream.listen((stateValue) async {
       set(
         rgbColors: stateValue.rgbColors,
         hsluvColors: stateValue.hsluvColors,

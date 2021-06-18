@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class Home2 extends StatelessWidget {
+  const Home2({
+    Key? key,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,12 +20,12 @@ class Home2 extends StatelessWidget {
                   style: Theme.of(context).textTheme.headline4,
                 ),
                 ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: 200),
+                  constraints: const BoxConstraints(maxWidth: 200),
                   child: Container(
                     height: 80,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
-                      gradient: LinearGradient(
+                      gradient: const LinearGradient(
                         begin: Alignment.centerLeft,
                         end: Alignment.centerRight,
                         colors: [Color(0xff00f5a0), Color(0xff00d9f5)],

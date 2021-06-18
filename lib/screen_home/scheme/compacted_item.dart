@@ -13,7 +13,8 @@ class SchemeCompactedItem extends StatelessWidget {
     this.onPressed,
     this.locked = false,
     this.expanded = false,
-  });
+    Key? key,
+  }) : super(key: key);
 
   final Color rgbColor;
   final ColorType currentType;
@@ -29,14 +30,14 @@ class SchemeCompactedItem extends StatelessWidget {
           child: TextButton(
             onPressed: onPressed,
             style: TextButton.styleFrom(
-              shape: RoundedRectangleBorder(),
+              shape: const RoundedRectangleBorder(),
               padding: EdgeInsets.zero,
             ),
             child: ConstrainedBox(
-              constraints: BoxConstraints(minHeight: 48),
+              constraints: const BoxConstraints(minHeight: 48),
               child: Row(
                 children: <Widget>[
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Container(
                     width: 24,
                     height: 24,
@@ -51,7 +52,7 @@ class SchemeCompactedItem extends StatelessWidget {
                       borderRadius: const BorderRadius.all(Radius.circular(12)),
                     ),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -77,7 +78,7 @@ class SchemeCompactedItem extends StatelessWidget {
                           ? Icons.keyboard_arrow_up_rounded
                           : Icons.keyboard_arrow_down_rounded,
                     ),
-                    SizedBox(width: 16),
+                    const SizedBox(width: 16),
                   ],
                 ],
               ),
@@ -92,15 +93,15 @@ class SchemeCompactedItem extends StatelessWidget {
           ),
           // SizedBox(width: 8),
           TextButton(
-            style: TextButton.styleFrom(shape: RoundedRectangleBorder()),
+            style: TextButton.styleFrom(shape: const RoundedRectangleBorder()),
             onPressed: () {
               context
                   .read<ColorsCubit>()
                   .updateLock(shouldLock: !locked, selectedLock: currentType);
             },
             child: Container(
-              padding: EdgeInsets.all(8),
-              margin: EdgeInsets.symmetric(horizontal: 8),
+              padding: const EdgeInsets.all(8),
+              margin: const EdgeInsets.symmetric(horizontal: 8),
               decoration: BoxDecoration(
                 color: !locked
                     ? null
@@ -149,7 +150,7 @@ class SchemeCompactedItem extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Icon(
                     locked ? FeatherIcons.lock : FeatherIcons.unlock,
                     size: 16,

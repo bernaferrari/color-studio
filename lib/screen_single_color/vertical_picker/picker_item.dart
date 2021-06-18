@@ -15,7 +15,8 @@ class ColorCompareWidgetDetails extends StatelessWidget {
     this.compactText = true,
     this.category = "",
     this.kind,
-  });
+    Key? key,
+  }) : super(key: key);
 
   final ColorWithInter? color;
   final VoidCallback? onPressed;

@@ -7,7 +7,7 @@ import '../../util/color_util.dart';
 import '../../util/widget_space.dart';
 
 class TemplatePreview extends StatelessWidget {
-  TemplatePreview(this.title, this.colors, this.contrastingColors);
+  const TemplatePreview(this.title, this.colors, this.contrastingColors);
 
   final String title;
   final List<Color> colors;
@@ -77,7 +77,7 @@ class TemplatePreview extends StatelessWidget {
           // ),
           Container(
             color: onBackground.withOpacity(0.10),
-            padding: EdgeInsets.symmetric(vertical: 8),
+            padding: const EdgeInsets.symmetric(vertical: 8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: spaceRow(8.0, [

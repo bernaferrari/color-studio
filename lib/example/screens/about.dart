@@ -13,7 +13,9 @@ import '../../util/constants.dart';
 import '../../util/shuffle_color.dart';
 
 class AboutScreen extends StatelessWidget {
-  const AboutScreen({required this.toExportPage, this.isSplitView = false});
+  const AboutScreen(
+      {required this.toExportPage, this.isSplitView = false, Key? key})
+      : super(key: key);
 
   final bool isSplitView;
   final VoidCallback toExportPage;
@@ -29,7 +31,7 @@ class AboutScreen extends StatelessWidget {
         iconTheme:
             IconThemeData(color: Theme.of(context).colorScheme.onSurface),
         centerTitle: isSplitView,
-        leading: isSplitView ? SizedBox.shrink() : null,
+        leading: isSplitView ? const SizedBox.shrink() : null,
       ),
       body: Center(
         child: ConstrainedBox(
@@ -37,24 +39,18 @@ class AboutScreen extends StatelessWidget {
           child: ListView(
             key: const PageStorageKey("about"),
             children: <Widget>[
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
+              const TranslucentCard(child: _ContactInfo()),
               TranslucentCard(
-                child: _ContactInfo(),
-              ),
-              TranslucentCard(
-                margin: EdgeInsets.only(right: 16, left: 16, top: 8),
+                margin: const EdgeInsets.only(right: 16, left: 16, top: 8),
                 child: InkWell(
                   onTap: toExportPage,
-                  child: ColorExport(),
+                  child: const ColorExport(),
                 ),
               ),
-              TranslucentCard(
-                child: ShuffleDarkSection(),
-              ),
-              TranslucentCard(
-                child: GDPR(),
-              ),
-              SizedBox(height: 8),
+              const TranslucentCard(child: ShuffleDarkSection()),
+              const TranslucentCard(child: GDPR()),
+              const SizedBox(height: 8),
             ],
           ),
         ),
@@ -105,21 +101,21 @@ class _ContactInfo extends StatelessWidget {
           children: <Widget>[
             const SizedBox(width: 32),
             IconButton(
-              icon: Icon(FeatherIcons.github),
+              icon: const Icon(FeatherIcons.github),
               tooltip: "GitHub",
               onPressed: () async {
                 _launchURL("https://github.com/bernaferrari");
               },
             ),
             IconButton(
-              icon: Icon(FeatherIcons.twitter),
+              icon: const Icon(FeatherIcons.twitter),
               tooltip: "Twitter",
               onPressed: () async {
                 _launchURL("https://twitter.com/bernaferrari");
               },
             ),
             IconButton(
-              icon: Icon(FeatherIcons.tag),
+              icon: const Icon(FeatherIcons.tag),
               tooltip: "Reddit",
               onPressed: () async {
                 _launchURL("https://www.reddit.com/user/bernaferrari");
@@ -129,7 +125,7 @@ class _ContactInfo extends StatelessWidget {
               },
             ),
             IconButton(
-              icon: Icon(FeatherIcons.linkedin),
+              icon: const Icon(FeatherIcons.linkedin),
               tooltip: "LinkedIn",
               onPressed: () async {
                 _launchURL(
@@ -137,7 +133,7 @@ class _ContactInfo extends StatelessWidget {
               },
             ),
             IconButton(
-              icon: Icon(FeatherIcons.mail),
+              icon: const Icon(FeatherIcons.mail),
               tooltip: "Email",
               onPressed: () async {
                 const url =
@@ -167,7 +163,7 @@ class _ContactInfo extends StatelessWidget {
 }
 
 class ColorCompare extends StatelessWidget {
-  const ColorCompare();
+  const ColorCompare({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -183,7 +179,7 @@ class ColorCompare extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Icon(FeatherIcons.menu, size: 20),
+                  const Icon(FeatherIcons.menu, size: 20),
                   const SizedBox(width: 16),
                   Text(
                     "Compare",
@@ -206,7 +202,7 @@ class ColorCompare extends StatelessWidget {
 }
 
 class ColorExport extends StatelessWidget {
-  const ColorExport();
+  const ColorExport({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -215,7 +211,7 @@ class ColorExport extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Icon(FeatherIcons.share, size: 20),
+          const Icon(FeatherIcons.share, size: 20),
           const SizedBox(width: 16),
           Text(
             "Export",
@@ -230,7 +226,7 @@ class ColorExport extends StatelessWidget {
 }
 
 class ShuffleDarkSection extends StatelessWidget {
-  const ShuffleDarkSection();
+  const ShuffleDarkSection({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -257,7 +253,7 @@ class ShuffleDarkSection extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Icon(FeatherIcons.shuffle, size: 20),
+                            const Icon(FeatherIcons.shuffle, size: 20),
                             const SizedBox(width: 16),
                             Text(
                               "Random Theme Settings",
@@ -270,14 +266,14 @@ class ShuffleDarkSection extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Icon(FeatherIcons.chevronRight),
+                      const Icon(FeatherIcons.chevronRight),
                       const SizedBox(width: 16),
                     ],
                   ),
                 ),
               ),
               RadioListTile(
-                  title: Text("Material Dark"),
+                  title: const Text("Material Dark"),
                   value: 0,
                   activeColor: primary,
                   groupValue: selected,
@@ -289,7 +285,7 @@ class ShuffleDarkSection extends StatelessWidget {
                         );
                   }),
               RadioListTile(
-                  title: Text("Material Light"),
+                  title: const Text("Material Light"),
                   value: 1,
                   activeColor: primary,
                   groupValue: selected,
@@ -301,7 +297,7 @@ class ShuffleDarkSection extends StatelessWidget {
                         );
                   }),
               RadioListTile(
-                  title: Text("Material Dark or Light"),
+                  title: const Text("Material Dark or Light"),
                   value: 2,
                   activeColor: primary,
                   groupValue: selected,
@@ -313,7 +309,7 @@ class ShuffleDarkSection extends StatelessWidget {
                         );
                   }),
               RadioListTile(
-                  title: Text("Truly Random"),
+                  title: const Text("Truly Random"),
                   value: 3,
                   activeColor: primary,
                   groupValue: selected,
@@ -331,7 +327,7 @@ class ShuffleDarkSection extends StatelessWidget {
 }
 
 class ShuffleMoleSection extends StatelessWidget {
-  const ShuffleMoleSection();
+  const ShuffleMoleSection({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -351,7 +347,7 @@ class ShuffleMoleSection extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Icon(FeatherIcons.penTool),
+                      const Icon(FeatherIcons.penTool),
                       const SizedBox(width: 16),
                       Text(
                         "Random Mole Theme",
@@ -363,7 +359,7 @@ class ShuffleMoleSection extends StatelessWidget {
                 ],
               ),
             ),
-            Icon(FeatherIcons.chevronRight),
+            const Icon(FeatherIcons.chevronRight),
             const SizedBox(width: 16),
           ],
         ),
@@ -373,7 +369,7 @@ class ShuffleMoleSection extends StatelessWidget {
 }
 
 class MoreColors extends StatelessWidget {
-  const MoreColors({required this.activeColor});
+  const MoreColors({required this.activeColor, Key? key}) : super(key: key);
 
   final Color activeColor;
 
@@ -405,7 +401,7 @@ class MoreColors extends StatelessWidget {
 }
 
 class GDPR extends StatelessWidget {
-  const GDPR();
+  const GDPR({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -415,7 +411,7 @@ class GDPR extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Icon(FeatherIcons.shield),
+            const Icon(FeatherIcons.shield),
             const SizedBox(width: 16),
             Text(
               "Privacy Policy",
@@ -440,7 +436,8 @@ class TranslucentCard extends StatelessWidget {
   const TranslucentCard({
     this.child,
     this.margin = const EdgeInsets.only(left: 16, right: 16, top: 8),
-  });
+    Key? key,
+  }) : super(key: key);
 
   final Widget? child;
   final EdgeInsetsGeometry margin;

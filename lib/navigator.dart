@@ -13,6 +13,8 @@ import 'screen_showcase/components_preview.dart';
 import 'screen_single_color/screen_single.dart';
 
 class ColorStudioApp extends StatefulWidget {
+  const ColorStudioApp({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _ColorStudioAppState();
 }
@@ -28,7 +30,7 @@ class _ColorStudioAppState extends State<ColorStudioApp> {
       title: 'Color Studio',
       theme: Theme.of(context).copyWith(
         // this is needed so iPad and Web work the same way.
-        visualDensity: VisualDensity(),
+        visualDensity: const VisualDensity(),
       ),
       debugShowCheckedModeBanner: false,
       routerDelegate: _routerDelegate,
@@ -71,28 +73,25 @@ class ColorRouteInformationParser
 
   @override
   RouteInformation? restoreRouteInformation(ColorRoutePath path) {
-    print("restoreRouteInformation path is ${path.panel}");
     switch (path.panel) {
       case ScreenPanel.home:
-        return RouteInformation(location: '/');
+        return const RouteInformation(location: '/');
       case ScreenPanel.home2:
-        return RouteInformation(location: '/home2');
+        return const RouteInformation(location: '/home2');
       case ScreenPanel.gradient:
-        return RouteInformation(location: '/gradient');
+        return const RouteInformation(location: '/gradient');
       case ScreenPanel.multiColor:
-        return RouteInformation(location: '/multiColor');
+        return const RouteInformation(location: '/multiColor');
       case ScreenPanel.settings:
-        return RouteInformation(location: '/settings');
+        return const RouteInformation(location: '/settings');
       case ScreenPanel.colorExport:
-        return RouteInformation(location: '/colorExport');
+        return const RouteInformation(location: '/colorExport');
       case ScreenPanel.singleColor:
-        return RouteInformation(location: '/singleColor');
+        return const RouteInformation(location: '/singleColor');
       case ScreenPanel.preview:
         // This should never exist.
-        return RouteInformation(location: '/');
+        return const RouteInformation(location: '/');
     }
-
-    return null;
   }
 }
 
@@ -116,7 +115,7 @@ class ColorRouterDelegate extends RouterDelegate<ColorRoutePath>
     return Navigator(
       pages: [
         MaterialPage<dynamic>(
-          key: ValueKey("two panels"),
+          key: const ValueKey("two panels"),
           child: Row(
             children: [
               Expanded(
@@ -126,7 +125,7 @@ class ColorRouterDelegate extends RouterDelegate<ColorRoutePath>
                     key: navigatorKey,
                     pages: [
                       MaterialPage<dynamic>(
-                        key: ValueKey("Scheme/Contrast/Blind"),
+                        key: const ValueKey("Scheme/Contrast/Blind"),
                         child: HomeScreen(
                           toMultiColor: _handleMultiColor,
                           toSingleColor: _handleSingleColor,
@@ -135,7 +134,7 @@ class ColorRouterDelegate extends RouterDelegate<ColorRoutePath>
                       ),
                       if (selectedScreen == ScreenPanel.multiColor)
                         MaterialPage<dynamic>(
-                          key: ValueKey("Multiple Color Compare"),
+                          key: const ValueKey("Multiple Color Compare"),
                           child: BlocProvider<MultipleContrastCompareCubit>(
                             create: (context) => MultipleContrastCompareCubit(
                               BlocProvider.of<ColorsCubit>(context),
@@ -144,25 +143,22 @@ class ColorRouterDelegate extends RouterDelegate<ColorRoutePath>
                           ),
                         ),
                       if (selectedScreen == ScreenPanel.singleColor)
-                        MaterialPage<dynamic>(
+                        const MaterialPage<dynamic>(
                           key: ValueKey("Single Color"),
-                          child: const ScreenSingle(),
+                          child: ScreenSingle(),
                         ),
                       if (selectedScreen == ScreenPanel.settings)
                         MaterialPage<dynamic>(
-                          key: ValueKey("About Screen"),
-                          child: AboutScreen(
-                            toExportPage: toExportPage,
-                          ),
+                          key: const ValueKey("About Screen"),
+                          child: AboutScreen(toExportPage: toExportPage),
                         ),
                       if (selectedScreen == ScreenPanel.colorExport)
-                        MaterialPage<dynamic>(
+                        const MaterialPage<dynamic>(
                           key: ValueKey("Color Export Screen"),
                           child: ExportColorsScreen(),
                         ),
                     ],
                     onPopPage: (route, dynamic result) {
-                      print("POP1 ");
                       if (!route.didPop(result)) {
                         return false;
                       }
@@ -186,14 +182,13 @@ class ColorRouterDelegate extends RouterDelegate<ColorRoutePath>
                 child: ClipRRect(
                   clipBehavior: Clip.antiAlias,
                   child: Navigator(
-                    pages: [
+                    pages: const [
                       MaterialPage<dynamic>(
                         key: ValueKey("ComponentsPreview"),
                         child: ComponentsPreview(),
                       ),
                     ],
                     onPopPage: (route, dynamic result) {
-                      print("Pop3 ");
                       if (!route.didPop(result)) {
                         return false;
                       }
@@ -213,19 +208,17 @@ class ColorRouterDelegate extends RouterDelegate<ColorRoutePath>
           ),
         ),
         if (selectedScreen == ScreenPanel.home2)
-          MaterialPage<dynamic>(
+          const MaterialPage<dynamic>(
             key: ValueKey("two panels2"),
             child: Home2(),
           ),
         if (selectedScreen == ScreenPanel.gradient)
-          MaterialPage<dynamic>(
+          const MaterialPage<dynamic>(
             key: ValueKey("gradient"),
             child: GradientScreen(),
           ),
       ],
       onPopPage: (route, dynamic result) {
-        print("POP2 ");
-
         if (!route.didPop(result)) {
           return false;
         }
@@ -248,7 +241,6 @@ class ColorRouterDelegate extends RouterDelegate<ColorRoutePath>
 
   @override
   Future<void> setNewRoutePath(ColorRoutePath path) async {
-    print("setNewRoutePath is ${path.panel}");
     selectedScreen = path.panel;
     return;
     // if (path.isUnknown) {

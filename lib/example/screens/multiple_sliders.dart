@@ -40,11 +40,11 @@ class MultipleSliders extends StatelessWidget {
 
       return Scaffold(
         appBar: AppBar(
-          title: Text("Multiple Sliders"),
+          title: const Text("Multiple Sliders"),
           centerTitle: isSplitView,
           elevation: 0,
           backgroundColor: color,
-          leading: isSplitView ? SizedBox.shrink() : null,
+          leading: isSplitView ? const SizedBox.shrink() : null,
           actions: <Widget>[
             ColorSearchButton(color: color),
           ],

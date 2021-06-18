@@ -12,7 +12,10 @@ import '../screens/single_color_blindness.dart';
 import 'util/color_blind_from_index.dart';
 
 class ColorBlindnessBar extends StatelessWidget {
-  const ColorBlindnessBar({this.onPressed});
+  const ColorBlindnessBar({
+    this.onPressed,
+    Key? key,
+  }) : super(key: key);
 
   final VoidCallback? onPressed;
 
@@ -26,8 +29,8 @@ class ColorBlindnessBar extends StatelessWidget {
 
       return Center(
         child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: 500),
-          child: Container(
+          constraints: const BoxConstraints(maxWidth: 500),
+          child: SizedBox(
             height: 56,
             child: Row(
               children: <Widget>[
@@ -35,10 +38,7 @@ class ColorBlindnessBar extends StatelessWidget {
                 OutlinedIconButton(
                   child: Transform.rotate(
                     angle: 0.5 * math.pi,
-                    child: Icon(
-                      FeatherIcons.sliders,
-                      size: 16,
-                    ),
+                    child: const Icon(FeatherIcons.sliders, size: 16),
                   ),
                   onPressed: onPressed,
                 ),
@@ -94,9 +94,9 @@ class ColorBlindnessBar extends StatelessWidget {
                         child: TextButton(
                           style: TextButton.styleFrom(
                             padding: EdgeInsets.zero,
-                            shape: RoundedRectangleBorder(),
+                            shape: const RoundedRectangleBorder(),
                           ),
-                          child: Icon(FeatherIcons.chevronLeft),
+                          child: const Icon(FeatherIcons.chevronLeft),
                           onPressed: () {
                             context.read<ColorBlindnessCubit>().decrement();
                           },
@@ -116,9 +116,9 @@ class ColorBlindnessBar extends StatelessWidget {
                         child: TextButton(
                           style: TextButton.styleFrom(
                             padding: EdgeInsets.zero,
-                            shape: RoundedRectangleBorder(),
+                            shape: const RoundedRectangleBorder(),
                           ),
-                          child: Icon(FeatherIcons.chevronRight),
+                          child: const Icon(FeatherIcons.chevronRight),
                           onPressed: () {
                             context.read<ColorBlindnessCubit>().increment();
                           },

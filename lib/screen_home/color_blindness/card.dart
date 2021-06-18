@@ -13,8 +13,9 @@ class ColorBlindnessCard extends StatefulWidget {
 
   const ColorBlindnessCard(
     this.rgbColors,
-    this.locked,
-  );
+    this.locked, {
+    Key? key,
+  }) : super(key: key);
 
   @override
   _ColorBlindnessCardState createState() => _ColorBlindnessCardState();
@@ -69,7 +70,7 @@ class _ColorBlindnessCardState extends State<ColorBlindnessCard> {
           ),
           Container(
             height: 1,
-            margin: EdgeInsets.only(top: 1),
+            margin: const EdgeInsets.only(top: 1),
             width: double.infinity,
             color: Theme.of(context).colorScheme.onSurface.withOpacity(0.20),
           ),

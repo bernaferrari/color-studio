@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
 class ContainerWithNumber extends StatelessWidget {
-  const ContainerWithNumber(this.letter, this.backgroundColor, this.indexColor);
+  const ContainerWithNumber(
+    this.letter,
+    this.backgroundColor,
+    this.indexColor, {
+    Key? key,
+  }) : super(key: key);
 
   final String letter;
   final Color backgroundColor;

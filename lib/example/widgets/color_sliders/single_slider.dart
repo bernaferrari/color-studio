@@ -6,10 +6,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-extension on int {
-  String convertToHexString() => toRadixString(16).padLeft(2, '0');
-}
-
 class SingleSlider extends StatelessWidget {
   const SingleSlider(
     this.title,
@@ -18,7 +14,8 @@ class SingleSlider extends StatelessWidget {
     this.colorList, {
     required this.scale,
     required this.onChanged,
-  });
+    Key? key,
+  }) : super(key: key);
 
   final String title;
   final double value;
@@ -48,7 +45,7 @@ class SingleSlider extends StatelessWidget {
           width: 36,
           height: 36,
           child: IconButton(
-            icon: Icon(FeatherIcons.minus, size: 20),
+            icon: const Icon(FeatherIcons.minus, size: 20),
             onPressed: () {
               onChanged(math.max(value - 1 / scale, 0));
             },
@@ -59,7 +56,7 @@ class SingleSlider extends StatelessWidget {
           width: 36,
           height: 36,
           child: IconButton(
-            icon: Icon(FeatherIcons.plus, size: 20),
+            icon: const Icon(FeatherIcons.plus, size: 20),
             onPressed: () {
               onChanged(math.min(value + 1 / scale, 1));
             },
@@ -89,18 +86,12 @@ class _GradientRoundedRectSliderTrackShape extends SliderTrackShape
     bool isDiscrete = false,
     bool isEnabled = false,
   }) {
-    assert(context != null);
-    assert(offset != null);
-    assert(parentBox != null);
-    assert(sliderTheme != null);
     assert(sliderTheme.disabledActiveTrackColor != null);
     assert(sliderTheme.disabledInactiveTrackColor != null);
     assert(sliderTheme.activeTrackColor != null);
     assert(sliderTheme.inactiveTrackColor != null);
     assert(sliderTheme.thumbShape != null);
-    assert(enableAnimation != null);
-    assert(textDirection != null);
-    assert(thumbCenter != null);
+
     // If the slider track height is less than or equal to 0, then it makes no
     // difference whether the track is painted or not, therefore the painting
     // can be a no-op.
@@ -201,10 +192,6 @@ class _RoundSliderThumbShape2 extends SliderComponentShape {
     double? textScaleFactor,
     Size? sizeWithOverflow,
   }) {
-    assert(context != null);
-    assert(center != null);
-    assert(enableAnimation != null);
-    assert(sliderTheme != null);
     assert(sliderTheme.disabledThumbColor != null);
     assert(sliderTheme.thumbColor != null);
 
@@ -225,7 +212,7 @@ class _RoundSliderThumbShape2 extends SliderComponentShape {
 
     final textStyle = GoogleFonts.b612Mono(
       fontSize: 14,
-      textStyle: TextStyle(color: Colors.black),
+      textStyle: const TextStyle(color: Colors.black),
     );
     final textSpan = TextSpan(
       text: strValue,

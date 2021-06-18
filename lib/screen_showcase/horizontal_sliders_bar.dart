@@ -67,7 +67,7 @@ class HorizontalSlidersBar extends StatelessWidget {
             leading: Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: OutlinedIconButton(
-                child: Icon(FeatherIcons.x, size: 16),
+                child: const Icon(FeatherIcons.x, size: 16),
                 onPressed: onPressed as void Function()?,
               ),
             ),

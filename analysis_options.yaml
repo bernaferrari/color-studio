@@ -1,14 +1,4 @@
-include: package:effective_dart/analysis_options.yaml
-
-# Specify analysis options.
-#
-# Until there are meta linter rules, each desired lint must be explicitly enabled.
-# See: https://github.com/dart-lang/linter/issues/288
-#
-# For a list of lints, see: http://dart-lang.github.io/linter/lints/
-# See the configuration guide for more
-# https://github.com/dart-lang/sdk/tree/master/pkg/analyzer#configuring-the-analyzer
-
+include: package:flutter_lints/flutter.yaml
 
 analyzer:
   strong-mode:

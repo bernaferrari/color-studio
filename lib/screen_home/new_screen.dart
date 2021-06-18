@@ -257,7 +257,7 @@ class NewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cupertinoiOS = [
+    const cupertinoiOS = [
       Color(0xff0087FA),
       Color(0xff27D265),
       Color(0xff535EE1),
@@ -269,7 +269,7 @@ class NewScreen extends StatelessWidget {
       Color(0xffFFD53D)
     ];
 
-    final cupertinoiOSAccessible = [
+    const cupertinoiOSAccessible = [
       Color(0xff1E9EFA),
       Color(0xff26DC69),
       Color(0xff747CF9),
@@ -281,7 +281,7 @@ class NewScreen extends StatelessWidget {
       Color(0xffFDD145)
     ];
 
-    final materialA400 = [
+    const materialA400 = [
       Color(0xffFF1744),
       Color(0xffF50057),
       Color(0xffD500F9),
@@ -300,7 +300,7 @@ class NewScreen extends StatelessWidget {
       Color(0xffFF3D00),
     ];
 
-    final alternateBlue = [
+    const alternateBlue = [
       // Apple
       Color(0xff1E9EFA),
       Color(0xff0091FA),
@@ -318,7 +318,7 @@ class NewScreen extends StatelessWidget {
 
     final hsluv = HSLuvColor.fromColor(rgbColors![ColorType.Primary]!);
 
-    final grayColors = [
+    const grayColors = [
       [
         // Apple
         Color(0xff000000),
@@ -341,7 +341,7 @@ class NewScreen extends StatelessWidget {
       ],
     ];
 
-    final background = blendColorWithBackground(Color(0xff0087FA));
+    final background = blendColorWithBackground(const Color(0xff0087FA));
 
     final combinationsDynamic = [
       // [
@@ -455,11 +455,11 @@ class NewScreen extends StatelessWidget {
                   activeColor: Theme.of(context).colorScheme.primary,
                   value: true,
                   onChanged: (value) {},
-                  title: Text("High Contrast"),
+                  title: const Text("High Contrast"),
                 ),
               ),
             ),
-            SizedBox(width: 16),
+            const SizedBox(width: 16),
             Expanded(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(16),
@@ -468,13 +468,13 @@ class NewScreen extends StatelessWidget {
                   activeColor: Theme.of(context).colorScheme.primary,
                   value: true,
                   onChanged: (value) {},
-                  title: Text("Dark Theme"),
+                  title: const Text("Dark Theme"),
                 ),
               ),
             ),
           ],
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         // Card(
         //   child: Padding(
         //     padding: const EdgeInsets.all(16.0),
@@ -505,11 +505,11 @@ class NewScreen extends StatelessWidget {
         //     ),
         //   ),
         // ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         SizedBox(
           height: 600,
           child: CustomScrollView(
-            key: PageStorageKey("TemplatesScrollView"),
+            key: const PageStorageKey("TemplatesScrollView"),
             primary: false,
             slivers: <Widget>[
               SliverToBoxAdapter(
@@ -555,7 +555,7 @@ class NewScreen extends StatelessWidget {
                                 selected: d == rgbColors![ColorType.Primary],
                               ),
                             ),
-                            RainbowButton(),
+                            const RainbowButton(),
                           ],
                         ),
                       ],
@@ -563,7 +563,7 @@ class NewScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SliverPadding(padding: EdgeInsets.all(8)),
+              const SliverPadding(padding: EdgeInsets.all(8)),
               SliverGrid(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4,
@@ -665,7 +665,7 @@ class ColorButton extends StatelessWidget {
       height: 28,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          shape: CircleBorder(),
+          shape: const CircleBorder(),
           primary: color,
           side: BorderSide(
             color: Colors.white.withOpacity(0.20),
@@ -681,7 +681,7 @@ class ColorButton extends StatelessWidget {
             ? Container(
                 width: 8,
                 height: 8,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   shape: BoxShape.circle,
                 ),
@@ -707,7 +707,7 @@ class RainbowButton extends StatelessWidget {
       height: 28,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          shape: CircleBorder(),
+          shape: const CircleBorder(),
           padding: EdgeInsets.zero,
           side: BorderSide(
             color: Colors.white.withOpacity(0.20),
@@ -718,7 +718,7 @@ class RainbowButton extends StatelessWidget {
         child: Container(
           width: 28,
           height: 28,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,

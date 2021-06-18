@@ -47,7 +47,7 @@ class SchemeExpandedItem extends StatelessWidget {
     ];
 
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
@@ -90,7 +90,7 @@ class SchemeExpandedItem extends StatelessWidget {
 }
 
 class TopRow extends StatelessWidget {
-  const TopRow(this.color, this.selected);
+  const TopRow(this.color, this.selected, {Key? key}) : super(key: key);
 
   final Color color;
   final ColorType selected;
@@ -118,13 +118,8 @@ class TopRow extends StatelessWidget {
           children: spaceRow(
             8.0,
             <Widget>[
-              ColorSearchButton(
-                color: color,
-                selected: selected,
-              ),
-              Expanded(
-                child: SizedBox.shrink(),
-              ),
+              ColorSearchButton(color: color, selected: selected),
+              const Expanded(child: SizedBox.shrink()),
               Container(
                 height: 36,
                 padding: const EdgeInsets.all(8.0),
@@ -155,7 +150,7 @@ class TopRow extends StatelessWidget {
               ),
               if (largeScreen)
                 OutlinedIconButton(
-                  child: Icon(Icons.shuffle_rounded, size: 16),
+                  child: const Icon(Icons.shuffle_rounded, size: 16),
                   onPressed: () {
                     final rng = Random();
 

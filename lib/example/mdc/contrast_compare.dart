@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 
 import '../../util/color_util.dart';
 import '../../util/constants.dart';
-import '../util/constants.dart';
 import 'widgets/horizontal_progress_bar.dart';
 
 class ContrastText extends StatelessWidget {
-  const ContrastText(this.contrast, {this.color, this.withSizedBox = true});
+  const ContrastText(
+    this.contrast, {
+    this.color,
+    this.withSizedBox = true,
+    Key? key,
+  }) : super(key: key);
 
   final double contrast;
   final bool withSizedBox;
@@ -59,7 +63,8 @@ class ContrastProgressBar extends StatelessWidget {
   const ContrastProgressBar({
     this.contrast = 0.5,
     this.direction = Axis.horizontal,
-  });
+    Key? key,
+  }) : super(key: key);
 
   final double contrast;
   final Axis direction;

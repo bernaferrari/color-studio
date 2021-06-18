@@ -25,7 +25,7 @@ class Showcase extends StatefulWidget {
 
 class _ShowcaseState extends State<Showcase> {
   late double sliderValue = PageStorage.of(context)!
-          .readState(context, identifier: ValueKey("CardElevation")) ??
+          .readState(context, identifier: const ValueKey("CardElevation")) ??
       1 / (elevationEntriesList.length - 1);
   bool slidersMode = false;
 
@@ -56,8 +56,8 @@ class _ShowcaseState extends State<Showcase> {
               //   primary: primaryColor,
               //   background: backgroundColor,
               // ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.0),
                 child: PageHeader(
                   title: "Preview",
                   subtitle: "Simulate real-world scenarios and components",
@@ -114,12 +114,12 @@ class _ShowcaseState extends State<Showcase> {
                 primary: primaryColor,
                 elevation: currentElevation,
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               _PrevPodcasts(
                 primary: primaryColor,
                 elevation: currentElevation,
               ),
-              SizedBox(height: 48),
+              const SizedBox(height: 48),
               const SizedBox(height: 16),
             ],
           ),
@@ -203,7 +203,8 @@ class SafariBar extends StatelessWidget {
     required this.color,
     required this.bgColor,
     required this.secondaryColor,
-  });
+    Key? key,
+  }) : super(key: key);
 
   final Color color;
   final Color secondaryColor;
@@ -232,7 +233,7 @@ class SafariBar extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     const SizedBox(width: 16),
-                    Icon(FeatherIcons.alignCenter, size: 24),
+                    const Icon(FeatherIcons.alignCenter, size: 24),
                     Expanded(
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -249,7 +250,7 @@ class SafariBar extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Icon(FeatherIcons.x, size: 24),
+                    const Icon(FeatherIcons.x, size: 24),
                     const SizedBox(width: 16),
                   ],
                 ),
@@ -316,12 +317,12 @@ class _PrevPodcast extends StatelessWidget {
           ),
           textAlign: TextAlign.center,
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Card(
           shape: ContinuousRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
-          margin: EdgeInsets.all(8),
+          margin: const EdgeInsets.all(8),
           elevation: elevation!.toDouble(),
           clipBehavior: Clip.antiAlias,
           child: Column(
@@ -473,7 +474,7 @@ class _PrevClock extends StatelessWidget {
       children: <Widget>[
         OutlinedButton(
           style: OutlinedButton.styleFrom(
-            shape: CircleBorder(),
+            shape: const CircleBorder(),
             side: BorderSide(
               width: 2,
               color: Theme.of(context).colorScheme.onBackground,
@@ -547,8 +548,8 @@ class _PrevShowcase extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          SizedBox(height: 24),
-          SizedBox(width: 16),
+          const SizedBox(height: 24),
+          const SizedBox(width: 16),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -587,7 +588,7 @@ class _PrevShowcase extends StatelessWidget {
                   textStyle: TextStyle(color: primary),
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Container(
                 width: double.infinity,
                 height: 4,
@@ -596,7 +597,7 @@ class _PrevShowcase extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16),
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
             ],
           ),
         ],
@@ -615,8 +616,8 @@ class _PrevThankful extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        SizedBox(height: 24),
-        SizedBox(width: 16),
+        const SizedBox(height: 24),
+        const SizedBox(width: 16),
         Column(
           children: <Widget>[
             Text(
@@ -635,7 +636,7 @@ class _PrevThankful extends StatelessWidget {
                 textStyle: TextStyle(color: primary),
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
           ],
         ),
       ],
@@ -653,7 +654,7 @@ class _PrevSpotify extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        SizedBox(height: 24),
+        const SizedBox(height: 24),
         Wrap(
           alignment: WrapAlignment.center,
           crossAxisAlignment: WrapCrossAlignment.center,
@@ -684,14 +685,15 @@ class _PrevSpotify extends StatelessWidget {
                     color: Theme.of(context).colorScheme.onBackground,
                   ),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary: primary,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12, horizontal: 24),
                   ),
                   child: Text(
                     "TAKE A LOOK",
@@ -751,7 +753,7 @@ class _PrevSpotify extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 24),
+        const SizedBox(height: 24),
       ],
     );
   }
@@ -780,10 +782,10 @@ class _PrevFacebook extends StatelessWidget {
 
     return Card(
       elevation: elevation.toDouble(),
-      margin: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Column(
         children: <Widget>[
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Text(
             "Bernardo Ferrari",
             style: GoogleFonts.lato(
@@ -793,12 +795,12 @@ class _PrevFacebook extends StatelessWidget {
                   TextStyle(color: Theme.of(context).colorScheme.onSurface),
             ),
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               for (int i = 0; i < icons.length; i++) ...[
-                SizedBox(width: 12),
+                const SizedBox(width: 12),
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
@@ -815,7 +817,7 @@ class _PrevFacebook extends StatelessWidget {
                         color: Theme.of(context).colorScheme.onPrimary,
                       ),
                     ),
-                    SizedBox(height: 4),
+                    const SizedBox(height: 4),
                     Text(
                       messages[i],
                       style: GoogleFonts.lato(
@@ -827,11 +829,11 @@ class _PrevFacebook extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(width: 12),
+                const SizedBox(width: 12),
               ],
             ],
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: SizedBox(
@@ -857,7 +859,7 @@ class _PrevFacebook extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
         ],
       ),
     );
@@ -899,7 +901,7 @@ class _PrevTrip extends StatelessWidget {
 
     return Column(
       children: <Widget>[
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Text(
           "Plan a Trip",
           style: GoogleFonts.oxygen(
@@ -908,7 +910,7 @@ class _PrevTrip extends StatelessWidget {
             color: Theme.of(context).colorScheme.onBackground,
           ),
         ),
-        SizedBox(height: 24),
+        const SizedBox(height: 24),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Row(
@@ -933,7 +935,7 @@ class _PrevTrip extends StatelessWidget {
                       ),
                       onPressed: () {},
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Text(
                       messages[i],
                       style: GoogleFonts.oxygen(
@@ -948,7 +950,7 @@ class _PrevTrip extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Card(
           margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
           elevation: elevation.toDouble(),
@@ -966,7 +968,7 @@ class _PrevTrip extends StatelessWidget {
                     Text("Flight", style: boldStyle),
                   ],
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 for (int i = 0; i < time.length; i++)
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -988,7 +990,7 @@ class _PrevTrip extends StatelessWidget {
           ),
           color: surface,
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
       ],
     );
   }
@@ -1054,7 +1056,7 @@ class _PrevPodcasts extends StatelessWidget {
               "278 years of Alcatraz's history. From Silicon Valley's luxury condominium to a prison no one can escape.",
           subdescription: "Yesterday • 34 MINS",
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         _PodcastCard(
           elevation: elevation,
           primaryColor: Theme.of(context).colorScheme.onSurface,
@@ -1093,7 +1095,7 @@ class _PodcastCard extends StatelessWidget {
 
     return Card(
       elevation: elevation.toDouble(),
-      margin: EdgeInsets.symmetric(horizontal: 16),
+      margin: const EdgeInsets.symmetric(horizontal: 16),
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
@@ -1118,7 +1120,7 @@ class _PodcastCard extends StatelessWidget {
                     size: 36,
                   ),
                 ),
-                SizedBox(width: margin),
+                const SizedBox(width: margin),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -1153,7 +1155,7 @@ class _PodcastCard extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               description,
               maxLines: 2,
@@ -1164,7 +1166,7 @@ class _PodcastCard extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: margin),
+            const SizedBox(height: margin),
             Row(
               children: <Widget>[
                 Icon(
@@ -1172,7 +1174,7 @@ class _PodcastCard extends StatelessWidget {
                   size: 36,
                   color: textColor,
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Text(
                   subdescription,
                   maxLines: 1,
@@ -1203,8 +1205,8 @@ class _PrevCupertino extends StatelessWidget {
 
     return Column(children: <Widget>[
       const SizedBox(height: 8),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
+      const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
         child: _ShowcaseTitle("Cupertino"),
       ),
       SafariBar(
@@ -1227,7 +1229,7 @@ class _PrevCupertino extends StatelessWidget {
                   "Inbox",
                   style: TextStyle(color: onSurface.withOpacity(0.452)),
                 ),
-                icon: Icon(FeatherIcons.inbox, size: 24),
+                icon: const Icon(FeatherIcons.inbox, size: 24),
                 onPressed: () {},
               ),
               TextButton.icon(
@@ -1235,7 +1237,7 @@ class _PrevCupertino extends StatelessWidget {
                   "Apps",
                   style: TextStyle(color: onSurface.withOpacity(0.452)),
                 ),
-                icon: Icon(FeatherIcons.layers, size: 24),
+                icon: const Icon(FeatherIcons.layers, size: 24),
                 onPressed: () {},
               ),
               TextButton.icon(
@@ -1243,7 +1245,7 @@ class _PrevCupertino extends StatelessWidget {
                   "Discover",
                   style: TextStyle(color: onSurface.withOpacity(0.452)),
                 ),
-                icon: Icon(FeatherIcons.award, size: 24),
+                icon: const Icon(FeatherIcons.award, size: 24),
                 onPressed: () {},
               )
             ],
@@ -1260,7 +1262,8 @@ class WrapWithFrostyBackground extends StatelessWidget {
     required this.backgroundColor,
     this.updateSystemUiOverlay = true,
     this.border,
-  });
+    Key? key,
+  }) : super(key: key);
 
   final Border? border;
   final Widget child;
@@ -1300,7 +1303,10 @@ class WrapWithFrostyBackground extends StatelessWidget {
 }
 
 class PrevPhotosTransparency extends StatefulWidget {
-  const PrevPhotosTransparency({required this.primary});
+  const PrevPhotosTransparency({
+    required this.primary,
+    Key? key,
+  }) : super(key: key);
 
   final Color primary;
 
@@ -1396,7 +1402,7 @@ class _PrevPhotos extends StatelessWidget {
           ),
         ),
         PrevPhotosTransparency(primary: primary),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         // Card(
         //   elevation: 0,
         //   clipBehavior: Clip.antiAlias,
@@ -1429,7 +1435,7 @@ class _PrevPhotos extends StatelessWidget {
             color: Theme.of(context).colorScheme.onBackground,
           ),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Wrap(
           key: const PageStorageKey("photosOverlay"),
           // scrollDirection: Axis.horizontal,
@@ -1446,7 +1452,7 @@ class _PrevPhotos extends StatelessWidget {
               ),
           ],
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Text(
           "Icons",
           style: GoogleFonts.heebo(
@@ -1475,7 +1481,7 @@ class _PrevPhotos extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   elevation: 0,
                   primary: color.withOpacity(i),
-                  shape: RoundedRectangleBorder(),
+                  shape: const RoundedRectangleBorder(),
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,

@@ -5,11 +5,12 @@ class PageHeader extends StatelessWidget {
   const PageHeader({
     required this.title,
     required this.subtitle,
-    required this.iconData,
     this.isFeather = false,
-  });
+    this.iconData,
+    Key? key,
+  }) : super(key: key);
 
-  final IconData /*?*/ iconData;
+  final IconData? iconData;
   final String title;
   final String subtitle;
   final bool isFeather;
@@ -21,14 +22,14 @@ class PageHeader extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        SizedBox(height: 24),
+        const SizedBox(height: 24),
         Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (iconData != null)
               Container(
-                padding: EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                     shape: BoxShape.circle, color: primary.withOpacity(0.10)),
                 child: Icon(
@@ -53,7 +54,7 @@ class PageHeader extends StatelessWidget {
             textStyle: TextStyle(color: primary),
           ),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Container(
           width: double.infinity,
           height: 4,

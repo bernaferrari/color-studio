@@ -32,14 +32,14 @@ class ColorBlindnessItemSimplified extends StatelessWidget {
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
         backgroundColor: value == groupValue ? primaryColor : null,
-        padding: EdgeInsets.all(24),
+        padding: const EdgeInsets.all(24),
       ),
       onPressed: () => onChanged(value),
       child: SizedBox(
         width: 12 + 12.0 * colorWithBlindList.length,
         child: Stack(
           children: <Widget>[
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             for (int i = colorWithBlindList.length - 1; i >= 0; i--)
               Positioned.fill(
                 left: 12.0 * i,

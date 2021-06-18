@@ -9,7 +9,6 @@ import '../../util/constants.dart';
 import '../../util/selected.dart';
 import '../../util/shuffle_color.dart';
 import '../mdc/util/elevation_overlay.dart';
-import '../util/constants.dart';
 
 class Components extends StatelessWidget {
   const Components(
@@ -35,7 +34,7 @@ class Components extends StatelessWidget {
           shrinkWrap: true,
           key: const PageStorageKey("mdc"),
           children: <Widget>[
-            Padding(padding: EdgeInsets.all(4)),
+            const Padding(padding: EdgeInsets.all(4)),
             Text(
               "Material Components",
               style: Theme.of(context).textTheme.headline6,
@@ -272,7 +271,8 @@ class Components extends StatelessWidget {
 }
 
 class ElevatedCardSample extends StatelessWidget {
-  const ElevatedCardSample(this.entry, this.primary, this.color);
+  const ElevatedCardSample(this.entry, this.primary, this.color, {Key? key})
+      : super(key: key);
 
   final ElevationOverlay2 entry;
   final Color color;
@@ -307,9 +307,9 @@ class ElevatedCardSample extends StatelessWidget {
                   .headline6!
                   .copyWith(color: primary),
             ),
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
             Text(
-              "${colorWithElevation.toHexStr()}",
+              colorWithElevation.toHexStr(),
               style: Theme.of(context)
                   .textTheme
                   .caption!
@@ -343,9 +343,7 @@ class _NavigationBarSampleState extends State<NavigationBarSample> {
       child: BottomNavigationBar(
         selectedItemColor: widget.color,
         backgroundColor: widget.bgColor,
-        selectedLabelStyle: TextStyle(
-          fontWeight: FontWeight.w500,
-        ),
+        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w500),
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(FeatherIcons.home),
@@ -372,10 +370,12 @@ class _NavigationBarSampleState extends State<NavigationBarSample> {
 }
 
 class ComponentsSample extends StatefulWidget {
-  const ComponentsSample(
-      {required this.primaryColor,
-      required this.contrastColor,
-      required this.surfaceColor});
+  const ComponentsSample({
+    required this.primaryColor,
+    required this.contrastColor,
+    required this.surfaceColor,
+    Key? key,
+  }) : super(key: key);
 
   final Color primaryColor;
   final Color surfaceColor;
@@ -427,8 +427,8 @@ class _ComponentsSampleState extends State<ComponentsSample> {
             const SizedBox(width: 16),
             Expanded(
               child: RaisedButton.icon(
-                label: Text("Sun"),
-                icon: Icon(FeatherIcons.sun, size: 16),
+                label: const Text("Sun"),
+                icon: const Icon(FeatherIcons.sun, size: 16),
                 color: widget.primaryColor,
                 textColor: widget.surfaceColor,
                 onPressed: () {},
@@ -437,11 +437,8 @@ class _ComponentsSampleState extends State<ComponentsSample> {
             const SizedBox(width: 16),
             Expanded(
               child: OutlineButton.icon(
-                icon: Icon(
-                  FeatherIcons.hexagon,
-                  size: 16,
-                ),
-                label: Text("Hex", overflow: TextOverflow.ellipsis),
+                icon: const Icon(FeatherIcons.hexagon, size: 16),
+                label: const Text("Hex", overflow: TextOverflow.ellipsis),
                 textColor: widget.primaryColor,
                 onPressed: () {},
               ),
@@ -449,8 +446,8 @@ class _ComponentsSampleState extends State<ComponentsSample> {
             const SizedBox(width: 16),
             Expanded(
               child: RaisedButton.icon(
-                label: Text("Moon"),
-                icon: Icon(FeatherIcons.shuffle, size: 16),
+                label: const Text("Moon"),
+                icon: const Icon(FeatherIcons.shuffle, size: 16),
                 color: widget.primaryColor,
                 textColor: contrastingRGBColor(widget.primaryColor),
                 onPressed: () {},
@@ -512,7 +509,7 @@ class _SliderWithSelectorComponentsState
                     end: 0,
                     textDirection: TextDirection.ltr,
                     child: IconButton(
-                      icon: Icon(FeatherIcons.chevronDown),
+                      icon: const Icon(FeatherIcons.chevronDown),
                       tooltip: "Minimize",
                       onPressed: () {
                         setState(() {
@@ -574,7 +571,7 @@ class _SliderWithSelectorComponentsState
                 child: FlatButton.icon(
                   label: const Text("Expand"),
                   padding: EdgeInsets.zero,
-                  icon: Icon(FeatherIcons.chevronUp),
+                  icon: const Icon(FeatherIcons.chevronUp),
                   onPressed: () {
                     setState(() {
                       _isExpanded = true;

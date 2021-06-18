@@ -9,8 +9,9 @@ import 'list_simplified.dart';
 class ColorBlindnessCardSimplified extends StatelessWidget {
   const ColorBlindnessCardSimplified(
     this.rgbColors,
-    this.locked,
-  );
+    this.locked, {
+    Key? key,
+  }) : super(key: key);
 
   final Map<ColorType, Color> rgbColors;
   final Map<ColorType, bool> locked;
@@ -49,7 +50,7 @@ class ColorBlindnessCardSimplified extends StatelessWidget {
           ),
           Container(
             height: 1,
-            margin: EdgeInsets.only(top: 1),
+            margin: const EdgeInsets.only(top: 1),
             width: double.infinity,
             color: Theme.of(context).colorScheme.onSurface.withOpacity(0.20),
           ),

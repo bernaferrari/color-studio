@@ -10,7 +10,8 @@ class ColorSearchButton extends StatelessWidget {
   const ColorSearchButton({
     required this.color,
     this.selected,
-  });
+    Key? key,
+  }) : super(key: key);
 
   final Color color;
   final ColorType? selected;
@@ -23,7 +24,7 @@ class ColorSearchButton extends StatelessWidget {
     return SizedBox(
       height: 36,
       child: OutlineButton.icon(
-        icon: Icon(FeatherIcons.search, size: 16),
+        icon: const Icon(FeatherIcons.search, size: 16),
         color: color,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),

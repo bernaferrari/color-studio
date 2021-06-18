@@ -8,7 +8,11 @@ import '../../contrast_util.dart';
 import 'vertical_picker_main.dart';
 
 class HSLuvSelector extends StatelessWidget {
-  const HSLuvSelector({this.color, this.moreColors = false});
+  const HSLuvSelector({
+    this.color,
+    this.moreColors = false,
+    Key? key,
+  }) : super(key: key);
 
   // initial color
   final HSLuvColor? color;

@@ -7,7 +7,8 @@ class SliderWithSelector extends StatefulWidget {
     required this.color,
     required this.thumbColor,
     required this.context,
-  });
+    Key? key,
+  }) : super(key: key);
 
   final List<Widget> sliders;
   final Color color;

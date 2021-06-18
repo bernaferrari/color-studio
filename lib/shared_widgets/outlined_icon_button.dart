@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class OutlinedIconButton extends StatelessWidget {
-  const OutlinedIconButton({this.child, this.borderColor, this.onPressed});
+  const OutlinedIconButton(
+      {this.child, this.borderColor, this.onPressed, Key? key})
+      : super(key: key);
 
   final VoidCallback? onPressed;
   final Widget? child;
@@ -14,7 +16,7 @@ class OutlinedIconButton extends StatelessWidget {
       height: 36,
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
-          shape: CircleBorder(),
+          shape: const CircleBorder(),
           side: BorderSide(
             color: borderColor ??
                 Theme.of(context).colorScheme.onSurface.withOpacity(0.7),

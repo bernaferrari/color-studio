@@ -20,7 +20,8 @@ class MultiRowColorPicker extends StatelessWidget {
     this.moreColors = false,
     this.selected,
     required this.colorsTuple,
-  });
+    Key? key,
+  }) : super(key: key);
 
   // maximum number of items
   final bool moreColors;

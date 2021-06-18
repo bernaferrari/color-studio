@@ -23,12 +23,12 @@ Future<void> main() async {
   if (!kIsWeb) {
     if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
       setWindowTitle("Color Studio");
-      setWindowMinSize(Size(800, 400));
+      setWindowMinSize(const Size(800, 400));
     }
   }
   await openBox();
   Bloc.observer = SimpleBlocObserver();
-  runApp(BoxedApp());
+  runApp(const BoxedApp());
 }
 
 Future openBox() async {
@@ -41,6 +41,8 @@ Future openBox() async {
 }
 
 class BoxedApp extends StatefulWidget {
+  const BoxedApp({Key? key}) : super(key: key);
+
   @override
   _BoxedAppState createState() => _BoxedAppState();
 }
@@ -87,7 +89,7 @@ class _BoxedAppState extends State<BoxedApp> {
       ],
       child: BlocBuilder<ColorsCubit, ColorsState>(builder: (_, state) {
         if (state.rgbColors.isEmpty) {
-          return SizedBox.shrink();
+          return const SizedBox.shrink();
         }
 
         final primary = state.rgbColorsWithBlindness[ColorType.Primary];
@@ -156,7 +158,7 @@ class _BoxedAppState extends State<BoxedApp> {
               margin: EdgeInsets.zero,
             ),
           ),
-          child: ColorStudioApp(),
+          child: const ColorStudioApp(),
         );
       }),
     );

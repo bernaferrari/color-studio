@@ -24,7 +24,7 @@ class TemplatesScreen extends StatelessWidget {
       ),
       backgroundColor: backgroundColor,
       body: CustomScrollView(
-        key: PageStorageKey("TemplatesScrollView"),
+        key: const PageStorageKey("TemplatesScrollView"),
         primary: false,
         slivers: <Widget>[
           SliverPadding(

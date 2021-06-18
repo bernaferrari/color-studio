@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 class WidgetWithSelector extends StatelessWidget {
-  const WidgetWithSelector({required this.child, required this.selector});
+  const WidgetWithSelector({
+    required this.child,
+    required this.selector,
+    Key? key,
+  }) : super(key: key);
 
   final Widget child;
   final Widget? selector;

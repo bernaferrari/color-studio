@@ -37,7 +37,10 @@ Future<void> showSlidersDialog(
 }
 
 class UpdateColorDialog extends StatelessWidget {
-  const UpdateColorDialog(this.color);
+  const UpdateColorDialog(
+    this.color, {
+    Key? key,
+  }) : super(key: key);
 
   final Color color;
 
@@ -106,13 +109,18 @@ class UpdateColorDialog extends StatelessWidget {
           child: AlertDialog(
             contentPadding: const EdgeInsets.all(24),
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(radius)),
+              borderRadius: BorderRadius.circular(radius),
+            ),
             backgroundColor: color,
             content: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                TextFormColored(controller: controller, radius: radius),
+                TextFormColored(
+                  controller: controller,
+                  radius: radius,
+                  onSubmitted: (_) => Navigator.of(context).pop(color),
+                ),
                 Card(
                   elevation: 0,
                   shape: const RoundedRectangleBorder(
@@ -173,16 +181,16 @@ class UpdateColorDialog extends StatelessWidget {
                 SizedBox(
                   width: 500,
                   height: 36,
-                  child: FlatButton.icon(
-                    color: thumbColor,
-                    onPressed: () {
-                      Navigator.of(context).pop(color);
-                    },
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(color: surface),
-                      borderRadius: BorderRadius.circular(24.0),
+                  child: TextButton.icon(
+                    style: TextButton.styleFrom(
+                      primary: scheme.onSurface,
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(color: surface),
+                        borderRadius: BorderRadius.circular(24.0),
+                      ),
                     ),
-                    icon: Icon(FeatherIcons.check, size: 16),
+                    onPressed: () => Navigator.of(context).pop(color),
+                    icon: const Icon(FeatherIcons.check, size: 16),
                     label: const Text("Select"),
                   ),
                 ),
@@ -196,7 +204,7 @@ class UpdateColorDialog extends StatelessWidget {
     );
   }
 
-  // this is necessary because of https://github.com/flutter/flutter/issues/11416
+// this is necessary because of https://github.com/flutter/flutter/issues/11416
   void setTextAndPosition(TextEditingController controller, String newText,
       {int? caretPosition}) {
     final int offset = caretPosition ?? newText.length;

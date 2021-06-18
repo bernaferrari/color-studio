@@ -12,8 +12,9 @@ import 'contrast_circle_group.dart';
 
 class ContrastRatioCard extends StatelessWidget {
   const ContrastRatioCard(
-    this.rgbColorsWithBlindness,
-  );
+    this.rgbColorsWithBlindness, {
+    Key? key,
+  }) : super(key: key);
 
   final Map<ColorType, Color> rgbColorsWithBlindness;
 
@@ -31,7 +32,7 @@ class ContrastRatioCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            TitleBar(
+            const TitleBar(
               title: "Contrast Ratio",
               children: <Widget>[
                 SizedBox(height: 48),
@@ -63,7 +64,7 @@ class ContrastRatioCard extends StatelessWidget {
             ),
             Container(
               height: 1,
-              margin: EdgeInsets.all(1),
+              margin: const EdgeInsets.all(1),
               width: double.infinity,
               color: Theme.of(context).colorScheme.onSurface.withOpacity(0.20),
             ),
@@ -101,7 +102,7 @@ class ContrastRatioCard extends StatelessWidget {
                                     currentType == state.selectedColorType
                                         ? Theme.of(context).colorScheme.primary
                                         : null,
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                   vertical: 12,
                                   horizontal: 8,
                                 ),

@@ -1,5 +1,3 @@
-import 'package:colorstudio/screen_home/color_blindness/card_simplified.dart';
-import 'package:colorstudio/screen_home/page_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -8,7 +6,6 @@ import '../blocs/blocs.dart';
 import '../util/widget_space.dart';
 import 'color_blindness/card.dart';
 import 'contrast_ratio/card.dart';
-import 'new_screen.dart';
 import 'scheme/card.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -16,7 +13,8 @@ class HomeScreen extends StatelessWidget {
     required this.toMultiColor,
     required this.toSingleColor,
     required this.toSettings,
-  });
+    Key? key,
+  }) : super(key: key);
 
   final VoidCallback toMultiColor;
   final VoidCallback toSingleColor;
@@ -26,7 +24,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ColorsCubit, ColorsState>(builder: (_, state) {
       if (state.rgbColors.isEmpty) {
-        return SizedBox.shrink();
+        return const SizedBox.shrink();
       }
 
       final bool isiPad = MediaQuery.of(context).size.width > 600;
@@ -35,7 +33,7 @@ class HomeScreen extends StatelessWidget {
         body: SingleChildScrollView(
           child: Center(
             child: ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: 600),
+              constraints: const BoxConstraints(maxWidth: 600),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -45,9 +43,9 @@ class HomeScreen extends StatelessWidget {
                       Row(
                         children: <Widget>[
                           if (isiPad)
-                            SizedBox(width: 24)
+                            const SizedBox(width: 24)
                           else
-                            SizedBox(width: 16),
+                            const SizedBox(width: 16),
                           // if (!isiPad) ...[
                           //   Expanded(
                           //     child: RaisedButton.icon(
@@ -158,7 +156,12 @@ class HomeScreen extends StatelessWidget {
 }
 
 class MiddleButton extends StatelessWidget {
-  const MiddleButton(this.title, this.iconData, this.toPage);
+  const MiddleButton(
+    this.title,
+    this.iconData,
+    this.toPage, {
+    Key? key,
+  }) : super(key: key);
 
   final String title;
   final IconData iconData;
@@ -169,7 +172,7 @@ class MiddleButton extends StatelessWidget {
     return Expanded(
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
@@ -179,7 +182,7 @@ class MiddleButton extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                 color:
                     Theme.of(context).colorScheme.onPrimary.withOpacity(0.90),
@@ -191,7 +194,7 @@ class MiddleButton extends StatelessWidget {
                 size: 24,
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               title,
               textAlign: TextAlign.center,

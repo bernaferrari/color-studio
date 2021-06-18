@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 class TitleBar extends StatelessWidget {
-  const TitleBar({required this.title, required this.children});
+  const TitleBar({
+    required this.title,
+    required this.children,
+    Key? key,
+  }) : super(key: key);
 
   final String title;
   final List<Widget> children;
@@ -10,7 +14,7 @@ class TitleBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        SizedBox(width: 16),
+        const SizedBox(width: 16),
         Expanded(
           child: Text(
             title,

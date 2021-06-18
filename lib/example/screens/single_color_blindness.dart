@@ -11,7 +11,11 @@ import '../mdc/components.dart';
 import '../widgets/update_color_dialog.dart';
 
 class SingleColorBlindness extends StatelessWidget {
-  const SingleColorBlindness({this.isSplitView = false, required this.color});
+  const SingleColorBlindness({
+    this.isSplitView = false,
+    required this.color,
+    Key? key,
+  }) : super(key: key);
 
   final Color color;
   final bool isSplitView;
@@ -25,7 +29,7 @@ class SingleColorBlindness extends StatelessWidget {
         backgroundColor: color,
         elevation: 0,
         centerTitle: isSplitView,
-        leading: isSplitView ? SizedBox.shrink() : null,
+        leading: isSplitView ? const SizedBox.shrink() : null,
         title: Text(
           "Color Blindness",
           style: Theme.of(context).textTheme.headline6,

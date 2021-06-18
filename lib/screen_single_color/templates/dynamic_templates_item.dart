@@ -9,7 +9,7 @@ import '../../blocs/blocs.dart';
 import '../../util/widget_space.dart';
 
 class DynamicTemplatePreview extends StatelessWidget {
-  DynamicTemplatePreview({
+  const DynamicTemplatePreview({
     required this.backgroundColor,
     required this.surfaceColor,
     this.title = '',
@@ -349,7 +349,7 @@ class HexButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           primary: color,
           elevation: 0,
-          shape: CircleBorder(
+          shape: const CircleBorder(
               // borderRadius: BorderRadius.circular(8.0),
               ),
         ),
@@ -366,7 +366,8 @@ class RowColorItem extends StatelessWidget {
   const RowColorItem({
     required this.color,
     this.isPrimary = false,
-  });
+    Key? key,
+  }) : super(key: key);
 
   final Color color;
   final bool isPrimary;
@@ -415,7 +416,7 @@ class _CalendarView extends StatelessWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(4),
                 topRight: Radius.circular(4),
                 bottomLeft: Radius.circular(0),
@@ -423,7 +424,7 @@ class _CalendarView extends StatelessWidget {
               ),
               color: Theme.of(context).colorScheme.primary,
             ),
-            child: Text(
+            child: const Text(
               "DEC",
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -437,7 +438,7 @@ class _CalendarView extends StatelessWidget {
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(0),
                   topRight: Radius.circular(0),
                   bottomLeft: Radius.circular(4),
@@ -445,7 +446,7 @@ class _CalendarView extends StatelessWidget {
                 ),
                 color: Theme.of(context).colorScheme.surface,
               ),
-              child: Center(
+              child: const Center(
                 child: Text(
                   "5",
                   style: TextStyle(
@@ -478,7 +479,7 @@ class _MissionControlView extends StatelessWidget {
               height: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(4),
-                color: Color(0xff383838),
+                color: const Color(0xff383838),
               ),
             ),
           ),
@@ -492,7 +493,7 @@ class _MissionControlView extends StatelessWidget {
                 height: 16,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(4),
-                  color: Color(0xffeb5757),
+                  color: const Color(0xffeb5757),
                 ),
               ),
             ),
@@ -504,7 +505,7 @@ class _MissionControlView extends StatelessWidget {
             child: Container(
               height: 4,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(4),
                   topRight: Radius.circular(4),
                   bottomLeft: Radius.circular(0),

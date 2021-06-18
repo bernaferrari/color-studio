@@ -71,10 +71,9 @@ class _SelectorItem extends StatelessWidget {
 
     final String writtenValue = when<String>({
       () => category == hueStr: () => hsLuvColor!.hue.round().toString(),
-      () => category == satStr: () =>
-          "${hsLuvColor!.saturation.toStringAsFixed(0)}",
+      () => category == satStr: () => hsLuvColor!.saturation.toStringAsFixed(0),
       () => category == lightStr || category == valueStr: () =>
-          "${hsLuvColor!.lightness.toStringAsFixed(0)}",
+          hsLuvColor!.lightness.toStringAsFixed(0),
     });
 
     final cornerText = Text(

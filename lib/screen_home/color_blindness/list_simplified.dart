@@ -8,8 +8,11 @@ import '../../util/constants.dart';
 import 'item_simplified.dart';
 
 class ColorBlindnessListSimplified extends StatelessWidget {
-  const ColorBlindnessListSimplified(
-      {required this.contrastedList, required this.locked});
+  const ColorBlindnessListSimplified({
+    required this.contrastedList,
+    required this.locked,
+    Key? key,
+  }) : super(key: key);
 
   final Map<ColorType, Color> contrastedList;
   final Map<ColorType, bool> locked;

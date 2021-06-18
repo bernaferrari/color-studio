@@ -12,7 +12,10 @@ import '../mdc/components.dart';
 import '../widgets/update_color_dialog.dart';
 
 class ColorLibrary extends StatelessWidget {
-  const ColorLibrary({required this.backgroundColor});
+  const ColorLibrary({
+    required this.backgroundColor,
+    Key? key,
+  }) : super(key: key);
 
   final Color backgroundColor;
 

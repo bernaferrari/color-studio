@@ -53,7 +53,7 @@ class ColorSchemeCard extends StatelessWidget {
           ),
           Container(
             height: 1,
-            margin: EdgeInsets.all(1),
+            margin: const EdgeInsets.all(1),
             width: double.infinity,
             color: Theme.of(context).colorScheme.onSurface.withOpacity(0.20),
           ),

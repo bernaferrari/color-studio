@@ -10,6 +10,8 @@ import '../../util/constants.dart';
 import '../../util/widget_space.dart';
 
 class ExportColorsScreen extends StatelessWidget {
+  const ExportColorsScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ColorsCubit, ColorsState>(builder: (_, state) {
@@ -34,7 +36,7 @@ class ExportColorsScreen extends StatelessWidget {
 
       return Scaffold(
         appBar: AppBar(
-          title: Text("Export Colors"),
+          title: const Text("Export Colors"),
         ),
         backgroundColor: background,
         body: SingleChildScrollView(
@@ -46,7 +48,7 @@ class ExportColorsScreen extends StatelessWidget {
                 children: spaceColumn(
                   24,
                   [
-                    SizedBox(),
+                    const SizedBox(),
                     _CardTitle(primary, background, surface, onPrimary,
                         onBackground, onSurface, "Flutter"),
                     _CardTitle(primary, background, surface, onPrimary,
@@ -228,7 +230,7 @@ colorScheme.onSurfaceColor = ColorFromRGB(0x${onSurface.toStr()});
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Row(
               children: <Widget>[
                 Expanded(
@@ -238,8 +240,8 @@ colorScheme.onSurfaceColor = ColorFromRGB(0x${onSurface.toStr()});
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    label: Text("Copy"),
-                    icon: Icon(FeatherIcons.copy, size: 16),
+                    label: const Text("Copy"),
+                    icon: const Icon(FeatherIcons.copy, size: 16),
                     onPressed: () {
                       Clipboard.setData(ClipboardData(text: retrievedText));
 

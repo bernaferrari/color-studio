@@ -29,17 +29,17 @@ class SameAs extends StatelessWidget {
       child: Column(
         children: <Widget>[
           // Divider(height: 0, color: textColor),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Text(
             color.toHexStr(),
             style: TextStyle(color: textColor, fontWeight: FontWeight.w600),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             sameAs(),
             style: TextStyle(color: textColor, fontWeight: FontWeight.w300),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           OutlinedButton.icon(
             style: OutlinedButton.styleFrom(
                 // highlightedBorderColor: textColor.withOpacity(0.70),
@@ -59,12 +59,12 @@ class SameAs extends StatelessWidget {
             label: Text(
               "Manual",
               style: GoogleFonts.b612Mono(
-                textStyle: TextStyle(fontWeight: FontWeight.w700),
+                textStyle: const TextStyle(fontWeight: FontWeight.w700),
                 color: textColor,
               ),
             ),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           if (children != null) ...children!
         ],
       ),
