@@ -7,7 +7,9 @@ fact, that your creativity may get blocked. There is no intuitive way to know wh
 gets even harder when you deal with multiple colors. Even harder when you want these colors to follow a design
 specification and form a coherent theme. This project aims to help solve these problems.
 
-<a href="https://bernaferrari.github.io/color-studio"><img src="assets/try_here.png" height="50"/></a> [<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="80">](https://play.google.com/store/apps/details?id=com.bernaferrari.colorstudio)
+<a href="https://bernaferrari.github.io/color-studio"><img src="assets/try_web.png" height="70"/></a> <a href="https://github.com/bernaferrari/color-studio/releases"><img src="assets/try_macOS.png" height="70"/></a>
+
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="80">](https://play.google.com/store/apps/details?id=com.bernaferrari.colorstudio)
 
 | Main | Single Selector |
 |:-:|:-:|
