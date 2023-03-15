@@ -64,7 +64,7 @@ class SchemeCompactedItem extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context)
                               .textTheme
-                              .subtitle1!
+                              .titleMedium!
                               .copyWith(
                                 color: Theme.of(context).colorScheme.onSurface,
                               ),
@@ -129,7 +129,7 @@ class SchemeCompactedItem extends StatelessWidget {
                     children: [
                       Text(
                         locked ? "AUTO" : "MANUAL",
-                        style: Theme.of(context).textTheme.caption!.copyWith(
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
                               color: Theme.of(context)
                                   .colorScheme
                                   .onSurface
@@ -145,7 +145,7 @@ class SchemeCompactedItem extends StatelessWidget {
                         visible: false,
                         child: Text(
                           "MANUAL",
-                          style: Theme.of(context).textTheme.caption,
+                          style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ),
                     ],

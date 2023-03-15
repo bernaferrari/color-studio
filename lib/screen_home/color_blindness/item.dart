@@ -52,12 +52,12 @@ class ColorBlindnessItem extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       title,
-                      style: Theme.of(context).textTheme.subtitle1,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     Text(
                       subtitle,
                       style: GoogleFonts.openSans(
-                        textStyle: Theme.of(context).textTheme.caption,
+                        textStyle: Theme.of(context).textTheme.bodySmall,
                       ),
                       // style: Theme.of(context).textTheme.caption,
                     ),

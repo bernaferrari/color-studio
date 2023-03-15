@@ -22,12 +22,12 @@ class ContrastText extends StatelessWidget {
       textAlign: TextAlign.center,
       text: TextSpan(
         text: contrast.toStringAsPrecision(3),
-        style: Theme.of(context).textTheme.headline6!.copyWith(color: color),
+        style: Theme.of(context).textTheme.titleLarge!.copyWith(color: color),
         children: <TextSpan>[
           TextSpan(
             text: ':1',
             style:
-                Theme.of(context).textTheme.subtitle1!.copyWith(color: color),
+                Theme.of(context).textTheme.titleMedium!.copyWith(color: color),
           ),
         ],
       ),
@@ -45,7 +45,7 @@ class ContrastText extends StatelessWidget {
 }
 
 class HexCaption extends StatelessWidget {
-  const HexCaption(this.color, this.textColor);
+  const HexCaption(this.color, this.textColor, {super.key});
 
   final Color color;
   final Color textColor;
@@ -54,7 +54,7 @@ class HexCaption extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       color.toHexStr(),
-      style: Theme.of(context).textTheme.caption!.copyWith(color: textColor),
+      style: Theme.of(context).textTheme.bodySmall!.copyWith(color: textColor),
     );
   }
 }
@@ -114,7 +114,7 @@ class ContrastProgressBar extends StatelessWidget {
 }
 
 class ColorCompareWidget extends StatelessWidget {
-  const ColorCompareWidget(this.firstData, this.secondData);
+  const ColorCompareWidget(this.firstData, this.secondData, {super.key});
 
   final ColorSchemeData firstData;
   final ColorSchemeData secondData;
@@ -127,15 +127,6 @@ class ColorCompareWidget extends StatelessWidget {
           width: 48,
           height: 48,
           margin: const EdgeInsets.only(right: 16),
-          child: Center(
-            child: Text(
-              secondData.name[0],
-              style: Theme.of(context).textTheme.headline5!.copyWith(
-                    fontWeight: FontWeight.w500,
-                    color: secondData.color,
-                  ),
-            ),
-          ),
           decoration: BoxDecoration(
             color: firstData.color,
             // we want primary color border on surface but not the opposite
@@ -145,6 +136,15 @@ class ColorCompareWidget extends StatelessWidget {
                 : const Border(),
             borderRadius: const BorderRadius.all(Radius.circular(16)),
           ),
+          child: Center(
+            child: Text(
+              secondData.name[0],
+              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                    fontWeight: FontWeight.w500,
+                    color: secondData.color,
+                  ),
+            ),
+          ),
         ),
         Expanded(
           child: Column(
@@ -152,13 +152,13 @@ class ColorCompareWidget extends StatelessWidget {
             children: <Widget>[
               Text(
                 firstData.color.toHexStr(),
-                style: Theme.of(context).textTheme.caption,
+                style: Theme.of(context).textTheme.bodySmall,
               ),
               Text(
                 firstData.name,
                 style: Theme.of(context)
                     .textTheme
-                    .headline6!
+                    .titleLarge!
                     .copyWith(fontSize: 18),
                 overflow: TextOverflow.ellipsis,
               ),

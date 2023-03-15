@@ -7,7 +7,7 @@ import '../../example/mdc/contrast_compare.dart';
 import '../../example/mdc/util/elevation_overlay.dart';
 
 class DarkModeSurfaceContrast extends StatelessWidget {
-  const DarkModeSurfaceContrast(this.elevationValues);
+  const DarkModeSurfaceContrast(this.elevationValues, {super.key});
 
   final List<ColorContrast> elevationValues;
 
@@ -24,11 +24,11 @@ class DarkModeSurfaceContrast extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text("0pt", style: Theme.of(context).textTheme.overline),
+                Text("0pt", style: Theme.of(context).textTheme.labelSmall),
                 ContrastText(elevationValues[0].contrast, withSizedBox: true),
                 Text(
                   getContrastLetters(elevationValues[0].contrast),
-                  style: Theme.of(context).textTheme.overline,
+                  style: Theme.of(context).textTheme.labelSmall,
                 ),
               ],
             ),
@@ -43,7 +43,7 @@ class DarkModeSurfaceContrast extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text("24pt", style: Theme.of(context).textTheme.overline),
+                Text("24pt", style: Theme.of(context).textTheme.labelSmall),
                 ContrastText(
                   elevationValues[elevationEntriesList.length - 1].contrast,
                   withSizedBox: true,
@@ -52,7 +52,7 @@ class DarkModeSurfaceContrast extends StatelessWidget {
                   getContrastLetters(
                     elevationValues[elevationEntriesList.length - 1].contrast,
                   ),
-                  style: Theme.of(context).textTheme.overline,
+                  style: Theme.of(context).textTheme.labelSmall,
                 ),
               ],
             ),
@@ -95,7 +95,7 @@ class _VerticalBarWithText extends StatelessWidget {
             child: Text(
               elevationEntries[i].elevation.toString(),
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.caption!.copyWith(
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
                     color: Theme.of(context).colorScheme.primary,
                   ),
             ),

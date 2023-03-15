@@ -1,8 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/blocs.dart';
@@ -222,7 +220,7 @@ class DynamicTemplatePreview extends StatelessWidget {
 
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.background,
         padding: const EdgeInsets.all(8.0),
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -265,7 +263,7 @@ class DynamicTemplatePreview extends StatelessWidget {
                   children: spaceColumn(
                     4,
                     [
-                      Text(
+                      const Text(
                         "Sat, Dec 5",
                         textAlign: TextAlign.start,
                         style: TextStyle(
@@ -338,7 +336,7 @@ class HexButton extends StatelessWidget {
   final Color color;
   final Color onColor;
 
-  const HexButton(this.text, this.color, this.onColor);
+  const HexButton(this.text, this.color, this.onColor, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -347,7 +345,7 @@ class HexButton extends StatelessWidget {
       height: 24,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: color,
+          backgroundColor: color,
           elevation: 0,
           shape: const CircleBorder(
               // borderRadius: BorderRadius.circular(8.0),

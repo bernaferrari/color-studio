@@ -12,15 +12,15 @@ import '../blocs.dart';
 import 'rgb_hsluv_tuple.dart';
 
 class MultipleContrastCompareCubit extends Cubit<MultipleColorCompareState> {
-  MultipleContrastCompareCubit(ColorsCubit _colorsCubit)
+  MultipleContrastCompareCubit(ColorsCubit colorsCubit)
       : super(const MultipleColorCompareState()) {
     set(
-      rgbColors: _colorsCubit.state.rgbColors,
-      hsluvColors: _colorsCubit.state.hsluvColors,
-      locked: _colorsCubit.state.locked,
+      rgbColors: colorsCubit.state.rgbColors,
+      hsluvColors: colorsCubit.state.hsluvColors,
+      locked: colorsCubit.state.locked,
     );
 
-    _mdcSubscription = _colorsCubit.stream.listen((stateValue) async {
+    _mdcSubscription = colorsCubit.stream.listen((stateValue) async {
       set(
         rgbColors: stateValue.rgbColors,
         hsluvColors: stateValue.hsluvColors,
@@ -52,11 +52,11 @@ class MultipleContrastCompareCubit extends Cubit<MultipleColorCompareState> {
     Map? locked,
     ColorType? selectedKey,
   }) {
-    final colorsCompared = <ColorType /*!*/, ColorCompareContrast>{};
-    final _selectedKey = selectedKey ?? state.selectedKey;
+    final colorsCompared = <ColorType, ColorCompareContrast>{};
+    final ColorType selectedKeyLocal = selectedKey ?? state.selectedKey;
 
     for (var key in rgbColors.keys) {
-      if (key == _selectedKey) {
+      if (key == selectedKeyLocal) {
         colorsCompared[key] = ColorCompareContrast.withoutRange(
           rgbColor: rgbColors[key]!,
           hsluvColor: hsluvColors![key]!,
@@ -78,7 +78,7 @@ class MultipleContrastCompareCubit extends Cubit<MultipleColorCompareState> {
           RgbHSLuvTupleWithContrast(
             rgbColor: updatedLuv.toColor(),
             hsluvColor: updatedLuv,
-            againstColor: rgbColors[_selectedKey]!,
+            againstColor: rgbColors[selectedKeyLocal]!,
           ),
         );
       }
@@ -88,7 +88,7 @@ class MultipleContrastCompareCubit extends Cubit<MultipleColorCompareState> {
         hsluvColor: hsluvColors![key]!,
         name: key,
         colorsRange: colorsRange,
-        againstColor: rgbColors[_selectedKey]!,
+        againstColor: rgbColors[selectedKeyLocal]!,
       );
     }
 
@@ -98,7 +98,7 @@ class MultipleContrastCompareCubit extends Cubit<MultipleColorCompareState> {
         locked: state.locked,
         originalRgb: rgbColors,
         originalHsluv: hsluvColors!,
-        selectedKey: _selectedKey,
+        selectedKey: selectedKeyLocal,
       ),
     );
   }

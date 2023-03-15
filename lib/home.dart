@@ -17,7 +17,7 @@ class Home2 extends StatelessWidget {
               children: [
                 Text(
                   "Color Studio",
-                  style: Theme.of(context).textTheme.headline4,
+                  style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 200),
@@ -34,7 +34,7 @@ class Home2 extends StatelessWidget {
                     child: Center(
                       child: Text(
                         "Gradient",
-                        style: Theme.of(context).textTheme.headline6!.copyWith(
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
                               color: Colors.black,
                             ),
                       ),

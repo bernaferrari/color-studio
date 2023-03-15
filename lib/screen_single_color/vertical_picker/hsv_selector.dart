@@ -9,7 +9,7 @@ import 'vertical_picker_main.dart';
 class HSVSelector extends StatelessWidget {
   final bool? moreColors;
 
-  const HSVSelector({this.color, this.moreColors = false});
+  const HSVSelector({super.key, this.color, this.moreColors = false});
 
   // initial color
   final Color? color;

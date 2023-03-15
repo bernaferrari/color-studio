@@ -41,7 +41,7 @@ class ColorCompareWidgetDetails extends StatelessWidget {
 
     final Widget cornerText = Text(
       writtenValue,
-      style: Theme.of(context).textTheme.caption!.copyWith(color: textColor),
+      style: Theme.of(context).textTheme.bodySmall!.copyWith(color: textColor),
     );
 
     final Widget centeredText =
@@ -51,7 +51,7 @@ class ColorCompareWidgetDetails extends StatelessWidget {
       height: 56,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: color!.color,
+          backgroundColor: color!.color,
           elevation: 0,
           padding: EdgeInsets.zero,
           shape: const RoundedRectangleBorder(),
@@ -79,7 +79,7 @@ class ColorCompareWidgetDetails extends StatelessWidget {
 
   Widget richTextColorToHSV(BuildContext context, HSInterColor hsi,
       Color textColor, String category) {
-    final TextStyle theme = Theme.of(context).textTheme.caption!;
+    final TextStyle theme = Theme.of(context).textTheme.bodySmall!;
 
     final shortestSide = MediaQuery.of(context).size.width;
 

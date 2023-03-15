@@ -23,16 +23,20 @@ class ColorSearchButton extends StatelessWidget {
 
     return SizedBox(
       height: 36,
-      child: OutlineButton.icon(
+      child: OutlinedButton.icon(
         icon: const Icon(FeatherIcons.search, size: 16),
-        color: color,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+        style: OutlinedButton.styleFrom(
+          backgroundColor: color,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          side: BorderSide(color: onSurface),
+          foregroundColor: onSurface,
+          // highlightedBorderColor: onSurface,
         ),
-        borderSide: BorderSide(color: onSurface),
-        highlightedBorderColor: onSurface,
+
         label: Text(color.toHexStr()),
-        textColor: onSurface,
+        // textColor: onSurface,
         onPressed: () {
           showSlidersDialog(context, color, selected);
         },

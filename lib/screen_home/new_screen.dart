@@ -518,7 +518,7 @@ class NewScreen extends StatelessWidget {
                   child: Text(
                     "Dynamic Themes",
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
               ),
@@ -596,7 +596,7 @@ class NewScreen extends StatelessWidget {
                   child: Text(
                     "Static Themes",
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
               ),
@@ -666,7 +666,7 @@ class ColorButton extends StatelessWidget {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           shape: const CircleBorder(),
-          primary: color,
+          backgroundColor: color,
           side: BorderSide(
             color: Colors.white.withOpacity(0.20),
             width: 1,

@@ -9,6 +9,7 @@ import '../../util/constants.dart';
 
 class SameAs extends StatelessWidget {
   const SameAs({
+    super.key,
     required this.selected,
     required this.color,
     required this.lightness,

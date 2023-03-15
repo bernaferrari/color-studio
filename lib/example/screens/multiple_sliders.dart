@@ -7,7 +7,8 @@ import '../widgets/color_sliders.dart';
 import '../widgets/loading_indicator.dart';
 
 class MultipleSliders extends StatelessWidget {
-  const MultipleSliders({required this.color, this.isSplitView = false});
+  const MultipleSliders(
+      {super.key, required this.color, this.isSplitView = false});
 
   final Color color;
   final bool isSplitView;

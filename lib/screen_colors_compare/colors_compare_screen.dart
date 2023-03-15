@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -52,8 +50,8 @@ class ColorsCompareScreen extends StatelessWidget {
         data: ThemeData.from(
           colorScheme: colorScheme,
           textTheme: TextTheme(
-            caption: GoogleFonts.b612Mono(),
-            button: GoogleFonts.b612Mono(),
+            bodySmall: GoogleFonts.b612Mono(),
+            labelLarge: GoogleFonts.b612Mono(),
           ),
         ).copyWith(
           cardTheme: Theme.of(context).cardTheme,
@@ -80,8 +78,8 @@ class ColorsCompareScreen extends StatelessWidget {
             key: const PageStorageKey("ContrastCompareKey"),
             itemCount: state.colorsCompared.length,
             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-            itemBuilder: (_, _index) {
-              final currentKey = state.colorsCompared.keys.toList()[_index];
+            itemBuilder: (_, index) {
+              final currentKey = state.colorsCompared.keys.toList()[index];
 
               return Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -100,8 +98,8 @@ class ColorsCompareScreen extends StatelessWidget {
                         : Curves.fastLinearToSlowEaseIn,
                     transitionBuilder: (child, animation) {
                       return SizeTransition(
-                        child: FadeTransition(child: child, opacity: animation),
                         sizeFactor: animation,
+                        child: FadeTransition(opacity: animation, child: child),
                       );
 
                       // return SizeTransition(
@@ -264,7 +262,7 @@ class CompactPicker extends StatelessWidget {
       duration: const Duration(milliseconds: 500),
       switchInCurve: Curves.easeInOut,
       transitionBuilder: (child, animation) {
-        return SizeTransition(child: child, sizeFactor: animation);
+        return SizeTransition(sizeFactor: animation, child: child);
       },
       child: (locked[colorsCompared[currentKey]!.name] == true)
           ? SameAs(
@@ -498,11 +496,11 @@ class _TopSectionButtons extends StatelessWidget {
         <Widget>[
           OutlinedButton.icon(
             style: OutlinedButton.styleFrom(
+              foregroundColor: contrastColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(defaultRadius),
               ),
               side: BorderSide(color: outlinedButtonSideColor),
-              primary: contrastColor,
             ),
             icon: const Icon(FeatherIcons.search, size: 16),
             label: Text(rgbColor.toHexStr()),
@@ -517,12 +515,12 @@ class _TopSectionButtons extends StatelessWidget {
             width: 36,
             child: OutlinedButton(
               style: OutlinedButton.styleFrom(
+                foregroundColor: contrastColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(defaultRadius),
                 ),
                 side: BorderSide(color: outlinedButtonSideColor),
                 padding: EdgeInsets.zero,
-                primary: contrastColor,
               ),
               child: Icon(
                 Icons.shuffle_rounded,
@@ -542,12 +540,12 @@ class _TopSectionButtons extends StatelessWidget {
               width: 36,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
+                  foregroundColor: contrastColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(defaultRadius),
                   ),
                   padding: EdgeInsets.zero,
                   side: BorderSide(color: outlinedButtonSideColor),
-                  primary: contrastColor,
                   elevation: 0,
                 ),
                 child: const Icon(Icons.compare_arrows_rounded, size: 16),

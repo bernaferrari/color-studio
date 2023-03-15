@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SectionCard extends StatelessWidget {
-  const SectionCard({this.child, this.color});
+  const SectionCard({super.key, this.child, this.color});
 
   final Widget? child;
   final Color? color;

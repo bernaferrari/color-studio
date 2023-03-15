@@ -77,7 +77,7 @@ class GradientScreen extends StatelessWidget {
 class InteractiveGradient extends StatefulWidget {
   final BoxConstraints constraints;
 
-  const InteractiveGradient(this.constraints);
+  const InteractiveGradient(this.constraints, {super.key});
 
   @override
   _InteractiveGradientState createState() => _InteractiveGradientState();

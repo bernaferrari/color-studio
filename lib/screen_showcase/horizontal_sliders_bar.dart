@@ -11,7 +11,7 @@ import '../shared_widgets/outlined_icon_button.dart';
 import '../util/constants.dart';
 
 class HorizontalSlidersBar extends StatelessWidget {
-  const HorizontalSlidersBar({this.onPressed});
+  const HorizontalSlidersBar({super.key, this.onPressed});
 
   final Function? onPressed;
 
@@ -67,8 +67,8 @@ class HorizontalSlidersBar extends StatelessWidget {
             leading: Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: OutlinedIconButton(
-                child: const Icon(FeatherIcons.x, size: 16),
                 onPressed: onPressed as void Function()?,
+                child: const Icon(FeatherIcons.x, size: 16),
               ),
             ),
           ),

@@ -5,7 +5,7 @@ import 'templates_item.dart';
 import 'templates_themes.dart';
 
 class TemplatesScreen extends StatelessWidget {
-  const TemplatesScreen({required this.backgroundColor});
+  const TemplatesScreen({super.key, required this.backgroundColor});
 
   final Color backgroundColor;
 
@@ -14,7 +14,7 @@ class TemplatesScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Pre-Defined Templates",
-            style: Theme.of(context).textTheme.headline6),
+            style: Theme.of(context).textTheme.titleLarge),
         elevation: 0,
         centerTitle: false,
         actions: <Widget>[

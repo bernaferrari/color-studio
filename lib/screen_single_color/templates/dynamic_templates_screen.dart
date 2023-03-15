@@ -8,6 +8,7 @@ import 'templates_themes.dart';
 
 class DynamicTemplatesScreen extends StatelessWidget {
   const DynamicTemplatesScreen({
+    super.key,
     required this.backgroundColor,
     required this.state,
   });
@@ -20,7 +21,7 @@ class DynamicTemplatesScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Dynamic Templates",
-            style: Theme.of(context).textTheme.headline6),
+            style: Theme.of(context).textTheme.titleLarge),
         elevation: 0,
         centerTitle: false,
         actions: <Widget>[

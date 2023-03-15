@@ -36,11 +36,11 @@ class ColorBlindnessBar extends StatelessWidget {
               children: <Widget>[
                 const SizedBox(width: 8),
                 OutlinedIconButton(
+                  onPressed: onPressed,
                   child: Transform.rotate(
                     angle: 0.5 * math.pi,
                     child: const Icon(FeatherIcons.sliders, size: 16),
                   ),
-                  onPressed: onPressed,
                 ),
                 const SizedBox(width: 8),
                 Expanded(
@@ -53,7 +53,7 @@ class ColorBlindnessBar extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.openSans(
                           textStyle:
-                              Theme.of(context).textTheme.bodyText2!.copyWith(
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
                                     fontWeight: FontWeight.w600,
                                   ),
                         ),
@@ -61,7 +61,7 @@ class ColorBlindnessBar extends StatelessWidget {
                       Text(
                         blindPrimary?.affects ?? "None selected",
                         style: GoogleFonts.openSans(
-                          textStyle: Theme.of(context).textTheme.caption,
+                          textStyle: Theme.of(context).textTheme.bodySmall,
                         ),
                         maxLines: 2,
                       ),

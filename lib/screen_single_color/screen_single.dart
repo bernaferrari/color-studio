@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
 import '../blocs/blocs.dart';
-import '../blocs/colors_cubit.dart';
 import '../example/mdc/components.dart';
 import '../example/screens/color_library.dart';
 import '../example/widgets/loading_indicator.dart';
@@ -41,7 +40,7 @@ class ScreenSingle extends StatelessWidget {
       return Theme(
         data: ThemeData.from(
           colorScheme: colorScheme,
-          textTheme: TextTheme(button: GoogleFonts.b612Mono()),
+          textTheme: TextTheme(labelLarge: GoogleFonts.b612Mono()),
         ).copyWith(
           cardTheme: Theme.of(context).cardTheme,
           buttonTheme: Theme.of(context).buttonTheme.copyWith(
@@ -241,6 +240,7 @@ class _ColorContrastRow extends StatelessWidget {
 
 class ThemeBar extends StatelessWidget {
   const ThemeBar({
+    super.key,
     this.selected,
     this.rgbColors,
     this.locked,
@@ -353,7 +353,7 @@ class ThemeBar extends StatelessWidget {
                                   describeEnum(keysList[i]),
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText2!
+                                      .bodyMedium!
                                       .copyWith(
                                         color: contrastedColors[i],
                                         fontWeight: (selected == keysList[i])

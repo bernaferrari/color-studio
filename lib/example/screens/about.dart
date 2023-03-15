@@ -1,10 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -25,7 +21,7 @@ class AboutScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
-        title: Text("About", style: Theme.of(context).textTheme.headline6),
+        title: Text("About", style: Theme.of(context).textTheme.titleLarge),
         backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0,
         iconTheme:
@@ -70,7 +66,7 @@ class _ContactInfo extends StatelessWidget {
         Text(
           "Color Studio",
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.headline6!.copyWith(
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
               ),
@@ -79,7 +75,7 @@ class _ContactInfo extends StatelessWidget {
         Text(
           "Designed & developed by Bernardo Ferrari.",
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.subtitle2,
+          style: Theme.of(context).textTheme.titleSmall,
         ),
         const SizedBox(height: 8),
         Padding(
@@ -87,13 +83,13 @@ class _ContactInfo extends StatelessWidget {
           child: Text(
             "If you have ideas or suggestions, please get in touch!",
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodyText2,
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
         const SizedBox(height: 8),
         Text("This app is open source.",
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.caption),
+            style: Theme.of(context).textTheme.bodySmall),
         const SizedBox(height: 8),
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -186,7 +182,7 @@ class ColorCompare extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: Theme.of(context)
                         .textTheme
-                        .headline6!
+                        .titleLarge!
                         .copyWith(fontSize: 18),
                   ),
                 ],
@@ -217,7 +213,7 @@ class ColorExport extends StatelessWidget {
             "Export",
             textAlign: TextAlign.center,
             style:
-                Theme.of(context).textTheme.headline6!.copyWith(fontSize: 18),
+                Theme.of(context).textTheme.titleLarge!.copyWith(fontSize: 18),
           ),
         ],
       ),
@@ -260,7 +256,7 @@ class ShuffleDarkSection extends StatelessWidget {
                               textAlign: TextAlign.center,
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline6!
+                                  .titleLarge!
                                   .copyWith(fontSize: 18),
                             ),
                           ],
@@ -352,7 +348,7 @@ class ShuffleMoleSection extends StatelessWidget {
                       Text(
                         "Random Mole Theme",
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline6,
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ],
                   ),
@@ -385,11 +381,11 @@ class MoreColors extends StatelessWidget {
           activeColor: activeColor,
           subtitle: Text(
             "Duplicate the number of colors in HSLuv/HSV pickers.",
-            style: Theme.of(context).textTheme.caption,
+            style: Theme.of(context).textTheme.bodySmall,
           ),
           title: Text(
             "More Colors",
-            style: Theme.of(context).textTheme.headline6,
+            style: Theme.of(context).textTheme.titleLarge,
           ),
           onChanged: (value) {
             box.put('moreItems', value);
@@ -416,7 +412,7 @@ class GDPR extends StatelessWidget {
             Text(
               "Privacy Policy",
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
           ],
         ),

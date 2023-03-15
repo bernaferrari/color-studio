@@ -1,10 +1,7 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -17,14 +14,14 @@ import '../util/widget_space.dart';
 import 'horizontal_sliders_bar.dart';
 
 class Showcase extends StatefulWidget {
-  const Showcase();
+  const Showcase({super.key});
 
   @override
   _ShowcaseState createState() => _ShowcaseState();
 }
 
 class _ShowcaseState extends State<Showcase> {
-  late double sliderValue = PageStorage.of(context)!
+  late double sliderValue = PageStorage.of(context)
           .readState(context, identifier: const ValueKey("CardElevation")) ??
       1 / (elevationEntriesList.length - 1);
   bool slidersMode = false;
@@ -145,7 +142,7 @@ class _ShowcaseState extends State<Showcase> {
             duration: const Duration(milliseconds: 400),
             switchInCurve: Curves.easeInOut,
             transitionBuilder: (child, animation) {
-              return SizeTransition(child: child, sizeFactor: animation);
+              return SizeTransition(sizeFactor: animation, child: child);
             },
             child: slidersMode
                 ? HorizontalSlidersBar(onPressed: () {
@@ -171,7 +168,7 @@ class _ShowcaseState extends State<Showcase> {
               Text(
                 "Elevation",
                 style: GoogleFonts.openSans(
-                  textStyle: Theme.of(context).textTheme.caption!.copyWith(
+                  textStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
                         color: Theme.of(context).colorScheme.onBackground,
                       ),
                 ),
@@ -184,7 +181,7 @@ class _ShowcaseState extends State<Showcase> {
                   onChanged: (changed) {
                     setState(() {
                       sliderValue = changed;
-                      PageStorage.of(context)!.writeState(context, sliderValue,
+                      PageStorage.of(context).writeState(context, sliderValue,
                           identifier: const ValueKey("CardElevation"));
                     });
                   },
@@ -383,7 +380,7 @@ class _PrevStore extends StatelessWidget {
       children: <Widget>[
         Text(
           "Rddt",
-          style: Theme.of(context).textTheme.headline5!.copyWith(
+          style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                 color: Theme.of(context).colorScheme.onBackground,
                 fontWeight: FontWeight.w600,
               ),
@@ -392,7 +389,7 @@ class _PrevStore extends StatelessWidget {
           "Alien Labs",
           style: Theme.of(context)
               .textTheme
-              .bodyText1!
+              .bodyLarge!
               .copyWith(color: primary, fontWeight: FontWeight.w600),
         ),
         Row(
@@ -421,7 +418,7 @@ class _PrevStore extends StatelessWidget {
             ),
           ],
         ),
-        Container(
+        SizedBox(
           width: 224,
           child: HorizontalProgressBar(
             currentValue: 50,
@@ -440,7 +437,7 @@ class _PrevStore extends StatelessWidget {
             16,
             <Widget>[
               ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: primary),
+                style: ElevatedButton.styleFrom(backgroundColor: primary),
                 child: Text(
                   "Update",
                   style: TextStyle(color: background),
@@ -498,7 +495,7 @@ class _PrevClock extends StatelessWidget {
                   text: ' 17',
                   style: Theme.of(context)
                       .textTheme
-                      .headline6!
+                      .titleLarge!
                       .copyWith(fontSize: 24, color: primary),
                 ),
               ],
@@ -565,7 +562,7 @@ class _PrevShowcase extends StatelessWidget {
                   ),
                   Text(
                     "Preview",
-                    style: Theme.of(context).textTheme.headline4!.copyWith(
+                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                           fontWeight: FontWeight.w600,
                           color: primary,
                         ),
@@ -688,7 +685,7 @@ class _PrevSpotify extends StatelessWidget {
                 const SizedBox(height: 8),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: primary,
+                    backgroundColor: primary,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
@@ -806,7 +803,7 @@ class _PrevFacebook extends StatelessWidget {
                   children: <Widget>[
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: primary,
+                        backgroundColor: primary,
                         elevation: 0,
                         padding: const EdgeInsets.all(24.0),
                         shape: const CircleBorder(),
@@ -841,8 +838,8 @@ class _PrevFacebook extends StatelessWidget {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
+                  backgroundColor: primary,
                   elevation: 0,
-                  primary: primary,
                 ),
                 child: Text(
                   "VIEW PROFILE ON APP",
@@ -924,7 +921,7 @@ class _PrevTrip extends StatelessWidget {
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
-                        primary: primary.withOpacity(0.20),
+                        backgroundColor: primary.withOpacity(0.20),
                         shape: const CircleBorder(),
                         padding: const EdgeInsets.all(36.0),
                       ),
@@ -954,6 +951,7 @@ class _PrevTrip extends StatelessWidget {
         Card(
           margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
           elevation: elevation.toDouble(),
+          color: surface,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -988,7 +986,6 @@ class _PrevTrip extends StatelessWidget {
               ],
             ),
           ),
-          color: surface,
         ),
         const SizedBox(height: 16),
       ],
@@ -1315,7 +1312,7 @@ class PrevPhotosTransparency extends StatefulWidget {
 }
 
 class _PrevPhotosTransparencyState extends State<PrevPhotosTransparency> {
-  late double sliderValue = PageStorage.of(context)!
+  late double sliderValue = PageStorage.of(context)
           .readState(context, identifier: const ValueKey("prevPhotosState")) ??
       3 / 6;
 
@@ -1330,7 +1327,7 @@ class _PrevPhotosTransparencyState extends State<PrevPhotosTransparency> {
             const SizedBox(width: 16),
             Text(
               "interval",
-              style: Theme.of(context).textTheme.caption!.copyWith(
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
                     color: Theme.of(context).colorScheme.onBackground,
                   ),
             ),
@@ -1342,7 +1339,7 @@ class _PrevPhotosTransparencyState extends State<PrevPhotosTransparency> {
                 onChanged: (changed) {
                   setState(() {
                     sliderValue = changed;
-                    PageStorage.of(context)!.writeState(context, sliderValue,
+                    PageStorage.of(context).writeState(context, sliderValue,
                         identifier: const ValueKey("prevPhotosState"));
                   });
                 },
@@ -1350,7 +1347,7 @@ class _PrevPhotosTransparencyState extends State<PrevPhotosTransparency> {
             ),
           ],
         ),
-        Container(
+        SizedBox(
           height: 100,
           child: ListView(
             key: const PageStorageKey("photosSemiTransparent"),
@@ -1386,8 +1383,6 @@ class _PrevPhotos extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final onBackground = Theme.of(context).colorScheme.onBackground;
-    final onSurface = Theme.of(context).colorScheme.onSurface;
     final secondary = Theme.of(context).colorScheme.secondary;
 
     return Column(
@@ -1480,7 +1475,7 @@ class _PrevPhotos extends StatelessWidget {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   elevation: 0,
-                  primary: color.withOpacity(i),
+                  backgroundColor: color.withOpacity(i),
                   shape: const RoundedRectangleBorder(),
                 ),
                 child: Column(
@@ -1511,7 +1506,7 @@ class _ShowcaseTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: Theme.of(context).textTheme.headline6!.copyWith(
+      style: Theme.of(context).textTheme.titleLarge!.copyWith(
             color: Theme.of(context).colorScheme.onBackground,
           ),
     );
@@ -1569,8 +1564,8 @@ class _PhotosElevationOverlay extends StatelessWidget {
         ElevatedButton(
           style: ElevatedButton.styleFrom(
             shape: const CircleBorder(),
+            backgroundColor: surface,
             elevation: elevation,
-            primary: surface,
             padding: const EdgeInsets.all(24.0),
           ),
           onPressed: () {},
@@ -1583,7 +1578,7 @@ class _PhotosElevationOverlay extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           "${elevation.round()} pt",
-          style: Theme.of(context).textTheme.caption!.copyWith(
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 color: Theme.of(context).colorScheme.onBackground,
               ),
         )
@@ -1606,8 +1601,8 @@ class _PhotosSemiTransparent extends StatelessWidget {
         ElevatedButton(
           style: ElevatedButton.styleFrom(
             shape: const CircleBorder(),
+            backgroundColor: primary.withOpacity(opacity),
             elevation: 0,
-            primary: primary.withOpacity(opacity),
             padding: const EdgeInsets.all(24.0),
           ),
           onPressed: () {},
@@ -1620,7 +1615,7 @@ class _PhotosSemiTransparent extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           "${(opacity * 100).round()}%",
-          style: Theme.of(context).textTheme.caption!.copyWith(
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 color: Theme.of(context).colorScheme.onBackground,
               ),
         ),

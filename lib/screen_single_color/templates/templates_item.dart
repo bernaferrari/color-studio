@@ -7,7 +7,8 @@ import '../../util/color_util.dart';
 import '../../util/widget_space.dart';
 
 class TemplatePreview extends StatelessWidget {
-  const TemplatePreview(this.title, this.colors, this.contrastingColors);
+  const TemplatePreview(this.title, this.colors, this.contrastingColors,
+      {super.key});
 
   final String title;
   final List<Color> colors;
@@ -33,7 +34,7 @@ class TemplatePreview extends StatelessWidget {
             child: Text(
               title,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.headline6!.copyWith(
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(
                     fontFamily: "",
                     fontWeight: FontWeight.w900,
                     color: primary,
@@ -44,8 +45,7 @@ class TemplatePreview extends StatelessWidget {
             child: Center(
               child: ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  primary: primary,
+                  elevation: 0, backgroundColor: primary,
                   // textStyle: TextStyle(color: primary),
                   // side: BorderSide(color: primary),
                   shape: RoundedRectangleBorder(
@@ -60,7 +60,7 @@ class TemplatePreview extends StatelessWidget {
                 label: Text(
                   "Select Theme",
                   style: GoogleFonts.b612Mono(
-                    textStyle: Theme.of(context).textTheme.bodyText1,
+                    textStyle: Theme.of(context).textTheme.bodyLarge,
                     fontSize: 12,
                     color: onPrimary,
                   ),
@@ -101,13 +101,13 @@ class HexButton extends StatelessWidget {
   final Color color;
   final Color onColor;
 
-  const HexButton(this.text, this.color, this.onColor);
+  const HexButton(this.text, this.color, this.onColor, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: color,
+        backgroundColor: color,
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.0),
@@ -119,7 +119,7 @@ class HexButton extends StatelessWidget {
       child: Text(
         text,
         style: GoogleFonts.b612Mono(
-          textStyle: Theme.of(context).textTheme.bodyText2,
+          textStyle: Theme.of(context).textTheme.bodyMedium,
           fontSize: 10,
           color: onColor,
         ),

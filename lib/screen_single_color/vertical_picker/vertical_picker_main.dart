@@ -2,10 +2,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
@@ -37,14 +35,14 @@ class HSVerticalPicker extends StatefulWidget {
 }
 
 class _HSVerticalPickerState extends State<HSVerticalPicker> {
-  late int currentSegment = PageStorage.of(context)!
+  late int currentSegment = PageStorage.of(context)
           .readState(context, identifier: const ValueKey("verticalSelected")) ??
       0;
 
   void onValueChanged(int? newValue) {
     setState(() {
       currentSegment = newValue!;
-      PageStorage.of(context)!.writeState(
+      PageStorage.of(context).writeState(
         context,
         currentSegment,
         identifier: const ValueKey("verticalSelected"),
@@ -63,11 +61,14 @@ class _HSVerticalPickerState extends State<HSVerticalPicker> {
       appBar: AppBar(
         title: Text(
           "${currentSegment == 0 ? "HSLuv" : "HSV"} Picker",
-          style: Theme.of(context).textTheme.headline6,
+          style: Theme.of(context).textTheme.titleLarge,
         ),
         elevation: 0,
         centerTitle: false,
         backgroundColor: widget.color,
+        leading: BackButton(
+          color: Theme.of(context).colorScheme.onBackground,
+        ),
         actions: <Widget>[
           Center(child: ColorSearchButton(color: widget.color)),
           const SizedBox(width: 8),
@@ -183,7 +184,7 @@ class _HSGenericScreenState extends State<HSGenericScreen> {
   double addSaturation = 0.0;
   bool satSelected = false;
   bool fiveSelected = false;
-  late int expanded = PageStorage.of(context)!.readState(context,
+  late int expanded = PageStorage.of(context).readState(context,
           identifier: const ValueKey<String>("VerticalSelector")) ??
       0;
 
@@ -194,7 +195,7 @@ class _HSGenericScreenState extends State<HSGenericScreen> {
   void modifyAndSaveExpanded(int updatedValue) {
     setState(() {
       expanded = updatedValue;
-      PageStorage.of(context)!.writeState(context, expanded,
+      PageStorage.of(context).writeState(context, expanded,
           identifier: const ValueKey<String>("VerticalSelector"));
     });
   }
@@ -264,8 +265,8 @@ class _HSGenericScreenState extends State<HSGenericScreen> {
     return Theme(
       data: Theme.of(context).copyWith(
         textTheme: Theme.of(context).textTheme.copyWith(
-              caption: GoogleFonts.b612Mono(),
-              button: GoogleFonts.b612Mono(),
+              bodySmall: GoogleFonts.b612Mono(),
+              labelLarge: GoogleFonts.b612Mono(),
             ),
         cardTheme: Theme.of(context).cardTheme.copyWith(
               margin: EdgeInsets.zero,

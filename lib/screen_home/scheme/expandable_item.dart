@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hsluv/hsluvcolor.dart';
@@ -14,8 +13,9 @@ class SchemeExpandableItem extends StatefulWidget {
     this.rgbColors,
     this.colorWithBlindness,
     this.hsluvColors,
-    this.locked,
-  );
+    this.locked, {
+    super.key,
+  });
 
   final Map<ColorType, Color> rgbColors;
   final Map<ColorType, Color> colorWithBlindness;
@@ -23,18 +23,18 @@ class SchemeExpandableItem extends StatefulWidget {
   final Map<ColorType, bool> locked;
 
   @override
-  _SchemeExpandableItemState createState() => _SchemeExpandableItemState();
+  State<SchemeExpandableItem> createState() => _SchemeExpandableItemState();
 }
 
 class _SchemeExpandableItemState extends State<SchemeExpandableItem> {
-  late int index = PageStorage.of(context)!.readState(context,
+  late int index = PageStorage.of(context).readState(context,
           identifier: const ValueKey<String>("SchemeExpandableItem")) ??
       -1;
 
   void onValueChanged(int newValue) {
     setState(() {
       index = newValue;
-      PageStorage.of(context)!.writeState(
+      PageStorage.of(context).writeState(
         context,
         index,
         identifier: const ValueKey<String>("SchemeExpandableItem"),
@@ -102,8 +102,8 @@ class _ExpandedAnimated extends StatelessWidget {
         data: ThemeData.from(
           colorScheme: scheme,
           textTheme: TextTheme(
-            button: GoogleFonts.lato(),
-            bodyText2: GoogleFonts.lato(
+            labelLarge: GoogleFonts.lato(),
+            bodyMedium: GoogleFonts.lato(
               fontWeight: FontWeight.w400,
               fontSize: 14,
             ),
@@ -124,7 +124,7 @@ class _ExpandedAnimated extends StatelessWidget {
             duration: const Duration(milliseconds: 500),
             switchInCurve: Curves.easeInOut,
             transitionBuilder: (child, animation) {
-              return SizeTransition(child: child, sizeFactor: animation);
+              return SizeTransition(sizeFactor: animation, child: child);
             },
             child: (isLocked ?? false)
                 ? SameAs(

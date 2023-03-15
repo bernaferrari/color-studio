@@ -93,7 +93,7 @@ class _CardTitle extends StatelessWidget {
           style: GoogleFonts.firaSans(
             textStyle: Theme.of(context)
                 .textTheme
-                .headline6!
+                .titleLarge!
                 .copyWith(color: onBackground),
           ),
         ),

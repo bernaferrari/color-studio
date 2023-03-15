@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:infinite_listview/infinite_listview.dart';
 
@@ -8,6 +10,7 @@ import 'picker_item.dart';
 
 class ExpandableColorBar extends StatelessWidget {
   const ExpandableColorBar({
+    super.key,
     required this.kind,
     required this.title,
     required this.expanded,
@@ -52,27 +55,36 @@ class ExpandableColorBar extends StatelessWidget {
         ),
       ),
       Expanded(
-        child: Card(
-          child: isInfinite
-              ? InfiniteListView.builder(
-                  key: PageStorageKey<String>("$kind $sectionIndex"),
-                  itemBuilder: (_, absoluteIndex) {
-                    return colorCompare(absoluteIndex % listSize);
-                  },
-                )
-              : MediaQuery.removePadding(
-                  // this is necessary on iOS, else there will be a bottom padding.
-                  removeBottom: true,
-                  context: context,
-                  child: ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: listSize,
+        child: ScrollConfiguration(
+          behavior: ScrollConfiguration.of(context).copyWith(
+            dragDevices: {
+              PointerDeviceKind.touch,
+              PointerDeviceKind.mouse,
+            },
+            scrollbars: false,
+          ),
+          child: Card(
+            child: isInfinite
+                ? InfiniteListView.builder(
                     key: PageStorageKey<String>("$kind $sectionIndex"),
-                    itemBuilder: (_, index) {
-                      return colorCompare(index);
+                    itemBuilder: (_, absoluteIndex) {
+                      return colorCompare(absoluteIndex % listSize);
                     },
+                  )
+                : MediaQuery.removePadding(
+                    // this is necessary on iOS, else there will be a bottom padding.
+                    removeBottom: true,
+                    context: context,
+                    child: ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: listSize,
+                      key: PageStorageKey<String>("$kind $sectionIndex"),
+                      itemBuilder: (_, index) {
+                        return colorCompare(index);
+                      },
+                    ),
                   ),
-                ),
+          ),
         ),
       ),
     ]);
@@ -98,7 +110,7 @@ class _ExpandableTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       style: TextButton.styleFrom(
-        primary: Theme.of(context).colorScheme.onBackground,
+        foregroundColor: Theme.of(context).colorScheme.onBackground,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(defaultRadius),
         ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
@@ -183,7 +182,7 @@ class UpdateColorDialog extends StatelessWidget {
                   height: 36,
                   child: TextButton.icon(
                     style: TextButton.styleFrom(
-                      primary: scheme.onSurface,
+                      foregroundColor: scheme.onSurface,
                       shape: RoundedRectangleBorder(
                         side: BorderSide(color: surface),
                         borderRadius: BorderRadius.circular(24.0),

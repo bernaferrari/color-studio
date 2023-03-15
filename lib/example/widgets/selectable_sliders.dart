@@ -23,7 +23,7 @@ class SliderWithSelector extends StatefulWidget {
 }
 
 class _SliderWithSelectorState extends State<SliderWithSelector> {
-  late int currentSegment = PageStorage.of(widget.context)!.readState(
+  late int currentSegment = PageStorage.of(widget.context).readState(
         widget.context,
         identifier: const ValueKey("Selectable Sliders"),
       ) ??
@@ -38,7 +38,7 @@ class _SliderWithSelectorState extends State<SliderWithSelector> {
   void onValueChanged(int? newValue) {
     setState(() {
       currentSegment = newValue!;
-      PageStorage.of(widget.context)!.writeState(
+      PageStorage.of(widget.context).writeState(
         widget.context,
         currentSegment,
         identifier: const ValueKey("Selectable Sliders"),

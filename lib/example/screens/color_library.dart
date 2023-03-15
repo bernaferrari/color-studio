@@ -1,6 +1,5 @@
 import 'dart:math' as math;
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../shared_widgets/color_search_button.dart';
@@ -26,8 +25,8 @@ class ColorLibrary extends StatelessWidget {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        title:
-            Text("Color Library", style: Theme.of(context).textTheme.headline6),
+        title: Text("Color Library",
+            style: Theme.of(context).textTheme.titleLarge),
         elevation: 0,
         centerTitle: false,
         actions: <Widget>[
@@ -69,8 +68,8 @@ class ColorLibrary extends StatelessWidget {
                               ),
                               borderRadius: BorderRadius.circular(8),
                             ),
+                            backgroundColor: colorsList[i],
                             elevation: 0,
-                            primary: colorsList[i],
                             padding: const EdgeInsets.all(8),
                           ),
                           onPressed: () {
@@ -92,7 +91,7 @@ class ColorLibrary extends StatelessWidget {
 //                                }),
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText1!
+                                  .bodyLarge!
                                   .copyWith(
                                     color: contrastingRGBColor(colorsList[i])
                                         .withOpacity(0.70),

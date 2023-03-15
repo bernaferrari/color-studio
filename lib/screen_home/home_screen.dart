@@ -177,6 +177,7 @@ class MiddleButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
           ),
         ),
+        onPressed: toPage,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -199,7 +200,7 @@ class MiddleButton extends StatelessWidget {
               title,
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.subtitle1!.copyWith(
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(
                     color: Theme.of(context)
                         .colorScheme
                         .onPrimary
@@ -208,7 +209,6 @@ class MiddleButton extends StatelessWidget {
             ),
           ],
         ),
-        onPressed: toPage,
       ),
     );
   }

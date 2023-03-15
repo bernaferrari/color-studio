@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/blocs.dart';
-import '../../blocs/contrast_ratio_cubit.dart';
 import '../../example/widgets/loading_indicator.dart';
 import '../../util/constants.dart';
 import '../../util/widget_space.dart';
@@ -112,7 +111,7 @@ class ContrastRatioCard extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .subtitle1!
+                                    .titleMedium!
                                     .copyWith(
                                       color:
                                           currentType == state.selectedColorType

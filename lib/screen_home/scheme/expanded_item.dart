@@ -123,29 +123,29 @@ class TopRow extends StatelessWidget {
               Container(
                 height: 36,
                 padding: const EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                ),
                 child: Center(
                   child: Text(
                     "${contrastWhite.toStringAsPrecision(3)}$whiteLetter",
                     style: TextStyle(color: color),
                   ),
                 ),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                ),
               ),
               Container(
                 height: 36,
                 padding: const EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(16),
+                ),
                 child: Center(
                   child: Text(
                     "${contrastBlack.toStringAsPrecision(3)}$blackLetter",
                     style: TextStyle(color: color),
                   ),
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(16),
                 ),
               ),
               if (largeScreen)

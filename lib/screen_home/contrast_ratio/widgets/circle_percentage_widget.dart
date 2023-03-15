@@ -6,6 +6,7 @@ import 'circle_percentage_painter.dart';
 
 class CirclePercentageWidget extends StatefulWidget {
   const CirclePercentageWidget({
+    super.key,
     this.title = "",
     this.subtitle = "",
     this.percent = 0.0,
@@ -83,7 +84,7 @@ class _CirclePercentageWidgetState extends State<CirclePercentageWidget>
             Text(
               "${widget.title} x",
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyText1!.copyWith(
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     fontSize: isLargeSize ? 16 : 14,
                     fontWeight: FontWeight.w200,
                     color: Theme.of(context).colorScheme.onSurface,
@@ -92,7 +93,7 @@ class _CirclePercentageWidgetState extends State<CirclePercentageWidget>
             Text(
               widget.subtitle,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyText1!.copyWith(
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     fontSize: isLargeSize ? 16 : 14,
                     fontWeight: FontWeight.w600,
                     color: Theme.of(context).colorScheme.onSurface,
@@ -109,7 +110,7 @@ class _CirclePercentageWidgetState extends State<CirclePercentageWidget>
                 child: Text(
                   "Background x",
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         fontSize: isLargeSize ? 16 : 14,
                         fontWeight: FontWeight.w200,
                       ),
@@ -148,7 +149,7 @@ class _CirclePercentageWidgetState extends State<CirclePercentageWidget>
                   ),
                   Text(
                     getContrastLetters(widget.contrastValue),
-                    style: Theme.of(context).textTheme.overline!.copyWith(
+                    style: Theme.of(context).textTheme.labelSmall!.copyWith(
                           color: widget.contrastingColor,
                         ),
                   ),

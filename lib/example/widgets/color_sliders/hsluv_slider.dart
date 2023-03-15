@@ -2,7 +2,6 @@ import 'dart:math' as math;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:hsluv/hsluvcolor.dart';
 
 import 'single_slider.dart';

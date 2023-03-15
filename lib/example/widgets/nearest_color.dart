@@ -26,7 +26,7 @@ class NearestColor extends StatelessWidget {
           return Text(
             (snapshot.data as NamedColor).name,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.caption!.copyWith(),
+            style: Theme.of(context).textTheme.bodySmall!.copyWith(),
           );
         },
       ),
@@ -49,7 +49,7 @@ class NearestColor extends StatelessWidget {
 }
 
 class AnimatedText extends StatefulWidget {
-  const AnimatedText(this.text);
+  const AnimatedText(this.text, {super.key});
 
   final String text;
 
@@ -79,7 +79,7 @@ class _AnimatedTextState extends State<AnimatedText> {
       child: Text(
         widget.text,
         textAlign: TextAlign.center,
-        style: Theme.of(context).textTheme.caption!.copyWith(),
+        style: Theme.of(context).textTheme.bodySmall!.copyWith(),
       ),
     );
   }

@@ -14,7 +14,7 @@ class _ColorContrast {
 }
 
 extension on String {
-  Color hexToColor() => Color(int.parse("0xFF${this}"));
+  Color hexToColor() => Color(int.parse("0xFF$this"));
 }
 
 Color shuffleColor(Color currentColor) {

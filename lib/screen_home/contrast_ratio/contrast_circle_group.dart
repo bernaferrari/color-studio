@@ -7,6 +7,7 @@ import 'widgets/contrast_widgets.dart';
 
 class ContrastCircleGroup extends StatelessWidget {
   const ContrastCircleGroup({
+    super.key,
     required this.state,
     required this.rgbColorsWithBlindness,
     required this.isInCard,

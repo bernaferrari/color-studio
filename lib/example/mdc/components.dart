@@ -11,10 +11,12 @@ import '../../util/shuffle_color.dart';
 import '../mdc/util/elevation_overlay.dart';
 
 class Components extends StatelessWidget {
-  const Components(
-      {required this.primaryColor,
-      required this.surfaceColor,
-      required this.backgroundColor});
+  const Components({
+    super.key,
+    required this.primaryColor,
+    required this.surfaceColor,
+    required this.backgroundColor,
+  });
 
   final Color primaryColor;
   final Color surfaceColor;
@@ -37,7 +39,7 @@ class Components extends StatelessWidget {
             const Padding(padding: EdgeInsets.all(4)),
             Text(
               "Material Components",
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context).textTheme.titleLarge,
               textAlign: TextAlign.center,
             ),
             ComponentsSample(
@@ -290,9 +292,11 @@ class ElevatedCardSample extends StatelessWidget {
       data: Theme.of(context).copyWith(
         colorScheme: Theme.of(context).colorScheme.copyWith(surface: color),
       ),
-      child: RaisedButton(
-        color: color,
-        elevation: entry.elevation.toDouble(),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: color,
+          elevation: entry.elevation.toDouble(),
+        ),
         onPressed: () {
           colorSelected(context, colorWithElevation);
         },
@@ -304,7 +308,7 @@ class ElevatedCardSample extends StatelessWidget {
               "${entry.elevation.toInt()} pt",
               style: Theme.of(context)
                   .textTheme
-                  .headline6!
+                  .titleLarge!
                   .copyWith(color: primary),
             ),
             const SizedBox(height: 4),
@@ -312,7 +316,7 @@ class ElevatedCardSample extends StatelessWidget {
               colorWithElevation.toHexStr(),
               style: Theme.of(context)
                   .textTheme
-                  .caption!
+                  .bodySmall!
                   .copyWith(color: primary.withOpacity(0.7)),
             ),
           ],
@@ -426,30 +430,38 @@ class _ComponentsSampleState extends State<ComponentsSample> {
           children: <Widget>[
             const SizedBox(width: 16),
             Expanded(
-              child: RaisedButton.icon(
+              child: ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: widget.primaryColor,
+                  textStyle: TextStyle(
+                      color: widget.surfaceColor),
+                ),
                 label: const Text("Sun"),
                 icon: const Icon(FeatherIcons.sun, size: 16),
-                color: widget.primaryColor,
-                textColor: widget.surfaceColor,
                 onPressed: () {},
               ),
             ),
             const SizedBox(width: 16),
             Expanded(
-              child: OutlineButton.icon(
+              child: OutlinedButton.icon(
+                style: OutlinedButton.styleFrom(
+                  textStyle: TextStyle(color: widget.primaryColor),
+                ),
                 icon: const Icon(FeatherIcons.hexagon, size: 16),
                 label: const Text("Hex", overflow: TextOverflow.ellipsis),
-                textColor: widget.primaryColor,
                 onPressed: () {},
               ),
             ),
             const SizedBox(width: 16),
             Expanded(
-              child: RaisedButton.icon(
+              child: ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: widget.primaryColor,
+                  textStyle: TextStyle(
+                      color: contrastingRGBColor(widget.primaryColor)),
+                ),
                 label: const Text("Moon"),
                 icon: const Icon(FeatherIcons.shuffle, size: 16),
-                color: widget.primaryColor,
-                textColor: contrastingRGBColor(widget.primaryColor),
                 onPressed: () {},
               ),
             ),
@@ -463,7 +475,7 @@ class _ComponentsSampleState extends State<ComponentsSample> {
 
 class SliderWithSelectorComponents extends StatefulWidget {
   const SliderWithSelectorComponents(this.rgb, this.hsv, this.hsl,
-      {this.initiallyExpanded = true});
+      {super.key, this.initiallyExpanded = true});
 
   final Widget rgb;
   final Widget hsv;
@@ -482,11 +494,11 @@ class _SliderWithSelectorComponentsState
 
   @override
   void initState() {
-    _isExpanded = PageStorage.of(context)!
+    _isExpanded = PageStorage.of(context)
             .readState(context, identifier: const ValueKey("expanded")) ??
         widget.initiallyExpanded;
 
-    final List<bool>? wasSelected = PageStorage.of(context)!
+    final List<bool>? wasSelected = PageStorage.of(context)
         .readState(context, identifier: const ValueKey("PWSS"));
 
     if (wasSelected != null) {
@@ -514,7 +526,7 @@ class _SliderWithSelectorComponentsState
                       onPressed: () {
                         setState(() {
                           _isExpanded = false;
-                          PageStorage.of(context)!.writeState(
+                          PageStorage.of(context).writeState(
                             context,
                             _isExpanded,
                             identifier: const ValueKey("expanded"),
@@ -529,11 +541,6 @@ class _SliderWithSelectorComponentsState
                       children: <Widget>[
                         ToggleButtons(
                           textStyle: GoogleFonts.b612Mono(),
-                          children: const <Widget>[
-                            Text("RGB"),
-                            Text("HSV"),
-                            Text("HSL"),
-                          ],
                           onPressed: (index) {
                             setState(() {
                               for (int buttonIndex = 0;
@@ -545,12 +552,17 @@ class _SliderWithSelectorComponentsState
                                   isSelected[buttonIndex] = false;
                                 }
                               }
-                              PageStorage.of(context)!.writeState(
+                              PageStorage.of(context).writeState(
                                   context, isSelected,
                                   identifier: const ValueKey("PWSS"));
                             });
                           },
                           isSelected: isSelected,
+                          children: const <Widget>[
+                            Text("RGB"),
+                            Text("HSV"),
+                            Text("HSL"),
+                          ],
                         ),
                         Padding(
                           // this is the right padding, so text don't get glued to the border.
@@ -568,14 +580,16 @@ class _SliderWithSelectorComponentsState
               )
             : SizedBox(
                 width: 818,
-                child: FlatButton.icon(
+                child: TextButton.icon(
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                  ),
                   label: const Text("Expand"),
-                  padding: EdgeInsets.zero,
                   icon: const Icon(FeatherIcons.chevronUp),
                   onPressed: () {
                     setState(() {
                       _isExpanded = true;
-                      PageStorage.of(context)!.writeState(
+                      PageStorage.of(context).writeState(
                         context,
                         _isExpanded,
                         identifier: const ValueKey("expanded"),
@@ -590,7 +604,7 @@ class _SliderWithSelectorComponentsState
 }
 
 class ExpandedSection3 extends StatefulWidget {
-  const ExpandedSection3({this.child});
+  const ExpandedSection3({super.key, this.child});
 
   final Widget? child;
 

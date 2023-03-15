@@ -8,7 +8,7 @@ import '../../util/constants.dart';
 import '../../util/when.dart';
 
 class FlatColorPicker extends StatelessWidget {
-  const FlatColorPicker({this.kind, this.selected, this.colors});
+  const FlatColorPicker({super.key, this.kind, this.selected, this.colors});
 
   final String? kind;
   final ColorType? selected;
@@ -80,15 +80,15 @@ class _SelectorItem extends StatelessWidget {
       writtenValue,
       style: Theme.of(context)
           .textTheme
-          .caption!
+          .bodySmall!
           .copyWith(color: textColor, fontWeight: FontWeight.w700),
     );
 
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         elevation: 0,
+        backgroundColor: color,
         padding: EdgeInsets.zero,
-        primary: color,
         shape: const RoundedRectangleBorder(),
       ),
       onPressed: onPressed,

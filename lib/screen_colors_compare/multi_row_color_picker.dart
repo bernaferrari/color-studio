@@ -1,8 +1,7 @@
 import 'dart:math' as math;
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hsluv/hsluvcolor.dart';
@@ -131,8 +130,8 @@ class _MultiRowColorPicker extends StatelessWidget {
             ? ColorScheme.light(surface: colorsTuple!.rgbColor)
             : ColorScheme.dark(surface: colorsTuple!.rgbColor),
         textTheme: TextTheme(
-          caption: GoogleFonts.b612Mono(),
-          button: GoogleFonts.b612Mono(),
+          bodySmall: GoogleFonts.b612Mono(),
+          labelLarge: GoogleFonts.b612Mono(),
         ),
       ).copyWith(
         buttonTheme: ButtonThemeData(shape: shape),
@@ -217,33 +216,22 @@ class _HorizontalColorListExpanded extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: isInfinite
-          ? InfiniteListView.builder(
-              scrollDirection: Axis.horizontal,
-              key: PageStorageKey<String>("hPicker $category"),
-              itemBuilder: (_, absoluteIndex) {
-                final index = absoluteIndex % listSize!;
-
-                return _ContrastItemExpanded(
-                  rgbHsluvTuple: colorsList[index],
-                  category: category,
-                  onPressed: () => onColorPressed(
-                    colorsList[index].hsluvColor,
-                  ),
-                );
-              },
-            )
-          : MediaQuery.removePadding(
-              // this is necessary on iOS, else there will be a bottom padding.
-              removeBottom: true,
-              context: context,
-              child: ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                itemCount: listSize,
+    return ScrollConfiguration(
+      behavior: ScrollConfiguration.of(context).copyWith(
+        dragDevices: {
+          PointerDeviceKind.touch,
+          PointerDeviceKind.mouse,
+        },
+        scrollbars: false,
+      ),
+      child: Card(
+        child: isInfinite
+            ? InfiniteListView.builder(
                 scrollDirection: Axis.horizontal,
                 key: PageStorageKey<String>("hPicker $category"),
-                itemBuilder: (_, index) {
+                itemBuilder: (_, absoluteIndex) {
+                  final index = absoluteIndex % listSize!;
+
                   return _ContrastItemExpanded(
                     rgbHsluvTuple: colorsList[index],
                     category: category,
@@ -252,8 +240,28 @@ class _HorizontalColorListExpanded extends StatelessWidget {
                     ),
                   );
                 },
+              )
+            : MediaQuery.removePadding(
+                // this is necessary on iOS, else there will be a bottom padding.
+                removeBottom: true,
+                context: context,
+                child: ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: listSize,
+                  scrollDirection: Axis.horizontal,
+                  key: PageStorageKey<String>("hPicker $category"),
+                  itemBuilder: (_, index) {
+                    return _ContrastItemExpanded(
+                      rgbHsluvTuple: colorsList[index],
+                      category: category,
+                      onPressed: () => onColorPressed(
+                        colorsList[index].hsluvColor,
+                      ),
+                    );
+                  },
+                ),
               ),
-            ),
+      ),
     );
   }
 }
@@ -287,14 +295,15 @@ class _ContrastItemExpanded extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         elevation: 0,
+        backgroundColor: rgbHsluvTuple!.rgbColor,
         padding: EdgeInsets.zero,
-        primary: rgbHsluvTuple!.rgbColor,
         shape: const RoundedRectangleBorder(),
       ),
       onPressed: onPressed,
       child: Text(
         writtenValue,
-        style: Theme.of(context).textTheme.caption!.copyWith(color: textColor),
+        style:
+            Theme.of(context).textTheme.bodySmall!.copyWith(color: textColor),
       ),
     );
   }

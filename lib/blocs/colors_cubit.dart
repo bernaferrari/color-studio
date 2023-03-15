@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ui';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -122,11 +121,11 @@ class ColorsCubit extends ReplayCubit<ColorsState> {
 
     // Background needs to call [findColor] before Surface does, else
     // Surface will receive the previous Background color.
-    [
+    for (var key in [
       ColorType.Background,
       ColorType.Surface,
       ColorType.Secondary,
-    ].forEach((key) {
+    ]) {
       // if it is null, Dart throws an exception
       if (lock[key] == true) {
         final updatedColor = _findColor(allRgb, key);
@@ -136,7 +135,7 @@ class ColorsCubit extends ReplayCubit<ColorsState> {
           currentSelected = ColorType.Primary;
         }
       }
-    });
+    }
 
     emit(
       state.copyWith(
@@ -156,20 +155,20 @@ class ColorsCubit extends ReplayCubit<ColorsState> {
   }) {
     assert(rgbColor != null || hsLuvColor != null);
 
-    final _selected = selected ?? state.selected;
+    final selectedLocal = selected ?? state.selected;
 
     final allLuv = Map<ColorType, HSLuvColor>.from(state.hsluvColors);
     final allRgb = Map<ColorType, Color>.from(state.rgbColors);
 
     if (rgbColor != null && hsLuvColor != null) {
-      allLuv[_selected] = hsLuvColor;
-      allRgb[_selected] = rgbColor;
+      allLuv[selectedLocal] = hsLuvColor;
+      allRgb[selectedLocal] = rgbColor;
     } else if (rgbColor != null) {
-      allLuv[_selected] = HSLuvColor.fromColor(rgbColor);
-      allRgb[_selected] = rgbColor;
+      allLuv[selectedLocal] = HSLuvColor.fromColor(rgbColor);
+      allRgb[selectedLocal] = rgbColor;
     } else {
-      allLuv[_selected] = hsLuvColor!;
-      allRgb[_selected] = hsLuvColor.toColor();
+      allLuv[selectedLocal] = hsLuvColor!;
+      allRgb[selectedLocal] = hsLuvColor.toColor();
     }
 
     _updateLocked(state, allRgb);
@@ -182,16 +181,16 @@ class ColorsCubit extends ReplayCubit<ColorsState> {
           allRgb,
           state.blindnessSelected,
         ),
-        selected: _selected,
+        selected: selectedLocal,
       ),
     );
   }
 
   void updateRgbColor({ColorType? selected, required Color rgbColor}) {
-    final _selected = selected ?? state.selected;
+    final selectedLocal = selected ?? state.selected;
 
     final allRgb = Map<ColorType, Color>.from(state.rgbColors);
-    allRgb[_selected] = rgbColor;
+    allRgb[selectedLocal] = rgbColor;
 
     emit(
       state.copyWith(
@@ -201,7 +200,7 @@ class ColorsCubit extends ReplayCubit<ColorsState> {
           allRgb,
           state.blindnessSelected,
         ),
-        selected: _selected,
+        selected: selectedLocal,
       ),
     );
   }

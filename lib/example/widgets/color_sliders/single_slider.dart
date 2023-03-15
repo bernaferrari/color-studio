@@ -1,8 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -83,6 +81,7 @@ class _GradientRoundedRectSliderTrackShape extends SliderTrackShape
     required Animation<double> enableAnimation,
     required TextDirection textDirection,
     required Offset thumbCenter,
+    Offset? secondaryOffset,
     bool isDiscrete = false,
     bool isEnabled = false,
   }) {
@@ -151,10 +150,9 @@ class _GradientRoundedRectSliderTrackShape extends SliderTrackShape
 class _RoundSliderThumbShape2 extends SliderComponentShape {
   /// Create a slider thumb that draws a circle.
   const _RoundSliderThumbShape2({
-    this.enabledThumbRadius = 20.0,
-    this.disabledThumbRadius,
     this.strValue,
-  });
+  })  : enabledThumbRadius = 10,
+        disabledThumbRadius = 10;
 
   final String? strValue;
 

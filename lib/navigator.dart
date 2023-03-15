@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'blocs/blocs.dart';
-import 'blocs/colors_cubit.dart';
 import 'example/screens/about.dart';
 import 'example/screens/export_colors.dart';
 import 'gradient.dart';

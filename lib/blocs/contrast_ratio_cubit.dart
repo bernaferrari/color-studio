@@ -47,27 +47,27 @@ class ContrastRatioCubit extends Cubit<ContrastRatioState> {
     }
 
     final rgb = rgbColorsWithBlindness ?? state.rgbColorsWithBlindness;
-    final _contrastSectionType = selectedColorType ?? state.selectedColorType;
+    final contrastSectionType = selectedColorType ?? state.selectedColorType;
 
-    if (_contrastSectionType == ColorType.Primary ||
-        _contrastSectionType == ColorType.Secondary) {
+    if (contrastSectionType == ColorType.Primary ||
+        contrastSectionType == ColorType.Secondary) {
       emit(
         ContrastRatioState(
           contrastValues: [
             calculateContrast(
-              rgb[_contrastSectionType]!,
+              rgb[contrastSectionType]!,
               rgb[ColorType.Background]!,
             ),
             calculateContrast(
-              rgb[_contrastSectionType]!,
+              rgb[contrastSectionType]!,
               rgb[ColorType.Surface]!,
             ),
           ],
-          selectedColorType: _contrastSectionType,
+          selectedColorType: contrastSectionType,
           rgbColorsWithBlindness: rgb,
         ),
       );
-    } else if (_contrastSectionType == ColorType.Background) {
+    } else if (contrastSectionType == ColorType.Background) {
       // when secondary, compare against background and surface
       emit(
         ContrastRatioState(
@@ -81,11 +81,11 @@ class ContrastRatioCubit extends Cubit<ContrastRatioState> {
               rgb[ColorType.Background]!,
             ),
           ],
-          selectedColorType: _contrastSectionType,
+          selectedColorType: contrastSectionType,
           rgbColorsWithBlindness: rgb,
         ),
       );
-    } else if (_contrastSectionType == ColorType.Surface) {
+    } else if (contrastSectionType == ColorType.Surface) {
       // when secondary, compare against background and surface
       emit(
         ContrastRatioState(
@@ -99,7 +99,7 @@ class ContrastRatioCubit extends Cubit<ContrastRatioState> {
               rgb[ColorType.Surface]!,
             ),
           ],
-          selectedColorType: _contrastSectionType,
+          selectedColorType: contrastSectionType,
           rgbColorsWithBlindness: rgb,
         ),
       );
@@ -118,7 +118,7 @@ class ContrastRatioCubit extends Cubit<ContrastRatioState> {
                 rgb[ColorType.Primary]!,
               ),
           ],
-          selectedColorType: _contrastSectionType,
+          selectedColorType: contrastSectionType,
           rgbColorsWithBlindness: rgb,
         ),
       );

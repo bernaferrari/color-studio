@@ -1,10 +1,7 @@
 import 'dart:io';
 
-import 'package:bloc/bloc.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
@@ -27,7 +24,7 @@ Future<void> main() async {
     }
   }
   await openBox();
-  Bloc.observer = SimpleBlocObserver();
+  BlocOverrides.runZoned(() {}, blocObserver: SimpleBlocObserver());
   runApp(const BoxedApp());
 }
 
@@ -138,11 +135,11 @@ class _BoxedAppState extends State<BoxedApp> {
           data: ThemeData.from(
             colorScheme: colorScheme,
             textTheme: TextTheme(
-              headline6: GoogleFonts.openSans(fontWeight: FontWeight.w700),
-              subtitle1: GoogleFonts.openSans(fontWeight: FontWeight.w700),
-              subtitle2: GoogleFonts.openSans(fontWeight: FontWeight.w400),
-              bodyText2: GoogleFonts.lato(),
-              caption: GoogleFonts.openSans(),
+              titleLarge: GoogleFonts.openSans(fontWeight: FontWeight.w700),
+              titleMedium: GoogleFonts.openSans(fontWeight: FontWeight.w700),
+              titleSmall: GoogleFonts.openSans(fontWeight: FontWeight.w400),
+              bodyMedium: GoogleFonts.lato(),
+              bodySmall: GoogleFonts.openSans(),
             ),
           ).copyWith(
             cardTheme: CardTheme(
